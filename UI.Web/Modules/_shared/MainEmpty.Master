@@ -1,0 +1,166 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainEmpty.Master.cs" Inherits="UI.Web.Modules._shared.MainEmpty" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="author" content="CMGS">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CMGS Assets Management">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="/wwwroot/images/favicon.png">
+    <!-- Page Title  -->
+    <title>CMGS | Assets Management</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="/wwwroot/assets/css/dashlite.rtl.css?ver=2.4.0">
+    <link id="skin-default" rel="stylesheet" href="/wwwroot/assets/css/theme.css?ver=2.4.0">
+    <link rel="stylesheet" href="/wwwroot/assets/css/libs/jstree.css?ver=2.4.0">
+
+    <script src="/wwwroot/assets/js/bundle.js?ver=2.4.0"></script>
+    <script src="/wwwroot/assets/js/scripts.js?ver=2.4.0"></script>
+    <script src="/wwwroot/assets/js/FormValidation.js?ver=2.4.0"></script>
+    <script src="/wwwroot/assets/js/libs/jstree.js?ver=2.4.0"></script>
+
+    <!---OrgChart-->
+    <link rel="stylesheet" href="/wwwroot/js/libs/orgChart/css/stiff-chart.css" />
+     <link rel="stylesheet" href="/wwwroot/js/libs/orgChart/css/custom.css" />
+    <!-- OrgChart  -->
+    <script type="text/javascript" src="/wwwroot/js/libs/orgChart/js/stiffChart.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+        });
+
+        var plus = new Image();
+        var minus = new Image();
+        function preloadImages() {
+            //alert("PRE");
+            plus.src = "<%= GetGlobalResourceObject("Utilities", "Assetspath")%>images/plus.gif";
+            minus.src = "<%= GetGlobalResourceObject("Utilities", "Assetspath")%>images/minus.gif";
+
+        }
+
+        listen("load", window, preloadImages);
+
+
+        function ControlGrid(imgName, rowIndex, rowID) {
+            //alert("CONTROL GRID");
+            //alert(imgName);
+            //alert(rowIndex);
+            //alert(rowID);
+            rowIndex = rowIndex + 2;
+
+            var myrow = "";
+            if (rowIndex < 10)
+                myrow = "ctl00_ContentPlaceHolder1_grdData_ctl0" + rowIndex;
+            else
+                myrow = "ctl00_ContentPlaceHolder1_grdData_ctl" + rowIndex;
+            var row = document.getElementById(myrow);
+            //  alert("IMG NAME: "+imgName+" and ROW INDEX: "+rowIndex+" ID: "+rowID);
+            //alert("MYROW: "+myrow+" AND VALUE FOUND: "+row);
+            if (row.style.display == "") {
+                row.style.display = "none";
+                document.getElementById(imgName).src = plus.src;
+            }
+            else {
+                row.style.display = "";
+                document.getElementById(imgName).src = minus.src;
+            }
+        }
+        function Checklist(obj, list) {
+            //  alert("CHECK SYSTEM: "+obj.checked);
+            if (list != "") {
+                var data = list.split(",");
+                //alert("LIST IS: "+data.length)
+                for (var i = 0; i < data.length; i++) {
+                    document.getElementById(data[i]).checked = obj.checked;
+                }
+            }
+        }
+
+        function ToggleWindow(img, pnl) {
+            // alert("ToggleWindow")
+            var p = document.getElementById(pnl);
+            //  alert(p);
+            var i = document.getElementById(img);
+            // alert(i);
+            if (p.style.display == "none") {
+                i.src = minus.src;
+                p.style.display = "";
+            }
+            else {
+                i.src = plus.src;
+                p.style.display = "none";
+            }
+            //  alert("before out")
+            //  alert(p.style.display);
+
+        }
+
+    </script>
+
+
+     <script src="/wwwroot/js/libs/ComboTree/comboTreePlugin.js"></script>
+    <link href="/wwwroot/js/libs/ComboTree/style.css" rel="stylesheet">
+ 
+
+
+
+</head>
+<body dir="rtl" class="nk-body ui-rounder npc-default  has-rtl">
+
+    <div class="nk-app-root">
+
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+
+
+                                <form id="form1" runat="server">
+
+                                    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnablePartialRendering="true" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" CombineScripts="true" ScriptMode="Release">
+                                        <CompositeScript>
+                                            <Scripts>
+
+                                                <asp:ScriptReference Name="Common.Common.js" Assembly="AjaxControlToolkit, Version=3.5.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" />
+                                                <asp:ScriptReference Name="ExtenderBase.BaseScripts.js" Assembly="AjaxControlToolkit, Version=3.5.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" />
+                                                <asp:ScriptReference Name="AsyncFileUpload.AsyncFileUpload.js" Assembly="AjaxControlToolkit, Version=3.5.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" />
+
+                                            </Scripts>
+                                        </CompositeScript>
+                                    </asp:ToolkitScriptManager>
+
+                                    <div>
+                                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                                        </asp:ContentPlaceHolder>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+
+    <!-- app-root @e -->
+    <!-- JavaScript -->
+
+
+
+</body>
+</html>

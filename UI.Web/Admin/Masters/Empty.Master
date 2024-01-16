@@ -1,0 +1,331 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Empty.Master.cs" Inherits="UI.Web.Admin.Masters.Empty" %>
+<!DOCTYPE html>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<html lang="en">
+
+
+<head runat="server">
+   
+	<title>GCS | Customs Bonded Warehouse</title>
+
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>images/icons/favicon.ico">
+    <link rel="apple-touch-icon" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>images/icons/favicon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>images/icons/favicon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>images/icons/favicon-114x114.png">
+    <!--Loading bootstrap css-->
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/font-awesome/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap/css/bootstrap.min.css">
+    <!--LOADING STYLESHEET FOR PAGE-->
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-colorpicker/css/colorpicker.css">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-datepicker/css/datepicker.css">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-daterangepicker/daterangepicker-bs3.css">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-clockface/css/clockface.css">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-switch/css/bootstrap-switch.css">
+
+    <!--LOADING STYLESHEET FOR PAGE-->
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/jquery-tablesorter/themes/blue/style-custom.css">
+
+
+
+    <!--Loading style vendors-->
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/animate.css/animate.css">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/jquery-pace/pace.css">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/iCheck/skins/all.css">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/jquery-news-ticker/jquery.news-ticker.css">
+    <!--Loading style-->
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>css/themes/style1/yellow-blue.css" id="theme-change" class="style-change color-change">
+    <link type="text/css" rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>css/style-responsive.css">
+ 
+      <!--LOADING STYLESHEET FOR Dialog-->
+
+     <link rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>Assets/zebra-dialog/public/css/zebra_dialog.css" type="text/css">
+    <link rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>Assets/zebra-dialog/examples/public/css/style.css" type="text/css">
+    <link rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>Assets/zebra-dialog/examples/libraries/highlight/public/css/ir_black.css" type="text/css">
+
+
+    <link href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>styles/LightStyle.css" rel="stylesheet" />
+    
+
+     <!--LOADING General SCRIPTS-->
+     <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>js/jquery-1.10.2.min.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>js/jquery-ui.js"></script>
+    <!--loading bootstrap js-->
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>js/html5shiv.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>js/respond.min.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/metisMenu/jquery.metisMenu.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/slimScroll/jquery.slimscroll.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/jquery-cookie/jquery.cookie.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/iCheck/icheck.min.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/iCheck/custom.min.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>js/jquery.menu.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/jquery-pace/pace.min.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/holder/holder.js"></script>
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/responsive-tabs/responsive-tabs.js"></script>
+
+      <link rel="stylesheet" href="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>Assets/colorbox/example4/colorbox.css" />
+		<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>Assets/colorbox/colorbox/jquery.colorbox.js"></script>
+
+		<script>
+		    $(document).ready(function () {
+		        //Examples of how to assign the ColorBox event to elements
+		        $(".group1").colorbox({ rel: 'group1' });
+		        $(".group2").colorbox({ rel: 'group2', transition: "fade" });
+		        $(".group3").colorbox({ rel: 'group3', transition: "none", width: "75%", height: "75%" });
+		        $(".group4").colorbox({ rel: 'group4', slideshow: true });
+		        $(".ajax").colorbox();
+		        $(".youtube").colorbox({ iframe: true, innerWidth: 425, innerHeight: 344 });
+		        $(".iframe").colorbox({ iframe: true, width: "95%", height: "95%" });
+		        $(".inline").colorbox({ inline: true, width: "50%" });
+		        $(".callbacks").colorbox({
+		            onOpen: function () { alert('onOpen: colorbox is about to open'); },
+		            onLoad: function () { alert('onLoad: colorbox has started to load the targeted content'); },
+		            onComplete: function () { alert('onComplete: colorbox has displayed the loaded content'); },
+		            onCleanup: function () { alert('onCleanup: colorbox has begun the close process'); },
+		            onClosed: function () { alert('onClosed: colorbox has completely closed'); }
+		        });
+
+		        //Example of preserving a JavaScript event for inline calls.
+		        $("#click").click(function () {
+		            $('#click').css({ "background-color": "#f00", "color": "#fff", "cursor": "inherit" }).text("Open this window again and this message will still be here.");
+		            return false;
+		        });
+
+
+		      
+		    });
+
+
+
+		  
+		</script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="sidebar-colors">
+       <form id="form1" runat="server">
+    <div>
+     
+        
+        <!--END TOPBAR-->
+        <div id="wrapper">
+          
+         
+            <!--BEGIN PAGE WRAPPER-->
+            <div id="page-wrapper" style="margin-left:0px">
+             
+                <%--    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePartialRendering="True">
+                    </asp:ScriptManager>--%>
+                 
+                
+                  <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnablePartialRendering="true" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" CombineScripts="true" ScriptMode="Release"    >
+ <CompositeScript>
+      <Scripts>
+         
+          <asp:ScriptReference Name="Common.Common.js" Assembly="AjaxControlToolkit, Version=3.5.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" />
+          <asp:ScriptReference Name="ExtenderBase.BaseScripts.js" Assembly="AjaxControlToolkit, Version=3.5.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" />
+          <asp:ScriptReference Name="AsyncFileUpload.AsyncFileUpload.js" Assembly="AjaxControlToolkit, Version=3.5.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" />
+
+      </Scripts>
+  </CompositeScript>
+    </asp:ToolkitScriptManager>
+
+                
+
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+              
+            
+            </div>
+            <!--END PAGE WRAPPER-->
+        </div>
+    </div>
+   
+      </form>
+    <!--LOADING SCRIPTS FOR Froms-->
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/moment/moment.js"></script>
+<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-clockface/js/clockface.js"></script>
+<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/jquery-maskedinput/jquery-maskedinput.js"></script>
+<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>js/form-components.js"></script>
+
+   <!--LOADING SCRIPTS FOR PAGE-->
+<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>vendors/jquery-tablesorter/jquery.tablesorter.js"></script>
+<script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>js/table-advanced.js"></script>
+
+    <!--CORE JAVASCRIPT-->
+    <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>js/main.js"></script>
+
+     <%--Dialog call--%>
+
+     
+   
+
+<%--    <script type="text/javascript" src="/Assets/zebra-dialog/examples/public/javascript/jquery-1.7.2.js"></script>--%>
+    <script type="text/javascript" src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>Assets/zebra-dialog/examples/libraries/highlight/public/javascript/highlight.js"></script>
+    <script type="text/javascript" src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>Assets/zebra-dialog/public/javascript/zebra_dialog.js"></script>
+
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+        </script>
+
+    <%--End of Call Dialog--%>
+      <script src="<%= GetGlobalResourceObject("Utilities", "resourcespath")%>js/Basic.js"></script>
+   
+
+    <script language="javascript" type="text/javascript">
+        function CheckAllDataGridCheckBoxes(aspCheckBoxID, checkVal) {
+            re = new RegExp(':' + aspCheckBoxID + '$')  //generated control name starts with a colon
+            for (i = 0; i < document.forms[0].elements.length; i++) {
+                elm = document.forms[0].elements[i]
+                if (elm.type == 'checkbox') {
+                    if (elm.name.indexOf(aspCheckBoxID) != -1) {
+                        elm.checked = checkVal
+                    }
+                }
+            }
+        }
+        function isItemChecked() {
+            for (i = 0; i < document.forms[0].elements.length; i++) {
+                elm = document.forms[0].elements[i]
+                if (elm.type == 'checkbox') {
+                    if (elm.name.indexOf("chkItem") != -1) {
+                        if (elm.checked) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        function checkDelete() {
+            if (!isItemChecked()) {
+                alert("Sorry, Please Select One record for action");
+                return false;
+            }
+            return confirm("are you sure you want to delete selected items?");
+        }
+        function listen(evnt, elem, func) {
+            if (elem.addEventListener) // W3C DOM
+                elem.addEventListener(evnt, func, false);
+
+            else if (elem.attachEvent) { // IE DOM
+                var r = elem.attachEvent("on" + evnt, func);
+                return r;
+            }
+            //                else 
+            //                    window.alert('I\'m sorry Dave, I\'m afraid I can\'t do that.');
+        }
+        var plus = new Image();
+        var minus = new Image();
+        function preloadImages() {
+            //alert("PRE");
+            plus.src = "<%= GetGlobalResourceObject("Utilities", "resourcespath")%>images/plus.gif";
+            minus.src = "<%= GetGlobalResourceObject("Utilities", "resourcespath")%>images/minus.gif";
+
+        }
+        listen("load", window, preloadImages);
+
+        function ToggleWindow(img, pnl) {
+           // alert("ToggleWindow")
+            var p = document.getElementById(pnl);
+          //  alert(p);
+            var i = document.getElementById(img);
+           // alert(i);
+            if (p.style.display == "none") {
+                i.src = minus.src;
+                p.style.display = "";
+            }
+            else {
+                i.src = plus.src;
+                p.style.display = "none";
+            }
+          //  alert("before out")
+          //  alert(p.style.display);
+
+        }
+
+
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+        //function NumberKey(evt) {
+        //    var charCode = (evt.which) ? evt.which : event.keyCode
+        //    if (charCode == 13) {
+        //        var btn = getObjById("btnAddItem")
+        //        //alert("Enter Key "+btn.value);
+        //        btn.click();
+        //    }
+
+        //}
+
+
+
+        function getObjById(id) {
+            for (var i = 0; i < document.forms[0].elements.length; i++) {
+                elm = document.forms[0].elements[i]
+                if (elm.id.indexOf(id) != -1) {
+                    return elm;
+                }
+            }
+            return null;
+        }
+
+        function FocusInput() {
+            // alert("FOCUS STARTED");
+            var ff = document.getElementById("txtDefault").value;
+            var bar = getObjById(barid);
+
+            if (bar) {
+                try {
+                    bar.focus();
+                    bar.focus();
+                }
+                catch (error) {
+                    setTimeout("FocusInput()", 1000);
+                }
+            }
+            //alert("FOCUS END");
+        }
+        function FocusInput2() {
+            // alert("FOCUS STARTED");
+            var ff = document.getElementById("txtDefault").value;
+            var bar = getObjById(barid2);
+
+            if (bar) {
+                try {
+                    bar.focus();
+
+                }
+                catch (error) {
+                    setTimeout("FocusInput2()", 1000);
+                }
+            }
+
+        }
+
+    </script>
+</body>
+</html>

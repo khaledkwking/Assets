@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="58440ef7c58e44119320aaf65a1ded1f" Name="Diagram1" ZoomLevel="152">
+        <EntityTypeShape EntityType="AssetsModel.AssetsAvailabilityStatus" Width="1.5" PointX="6" PointY="1.5" />
+        <EntityTypeShape EntityType="AssetsModel.AssetsEventTracking" Width="1.5" PointX="8.25" PointY="14.75" />
+        <EntityTypeShape EntityType="AssetsModel.AssetsEventTrackingHeader" Width="1.5" PointX="6" PointY="26.125" />
+        <EntityTypeShape EntityType="AssetsModel.AssetsItemUnits" Width="1.5" PointX="5.25" PointY="7.75" />
+        <EntityTypeShape EntityType="AssetsModel.AssetsTrackingActions" Width="1.5" PointX="6" PointY="31.75" />
+        <EntityTypeShape EntityType="AssetsModel.D_AttachmentType" Width="1.5" PointX="6" PointY="4.25" />
+        <EntityTypeShape EntityType="AssetsModel.D_Country" Width="1.5" PointX="15.75" PointY="2" />
+        <EntityTypeShape EntityType="AssetsModel.D_EmployeeLocations" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AssetsModel.D_InboundDepositeStatusType" Width="1.5" PointX="6" PointY="14.375" />
+        <EntityTypeShape EntityType="AssetsModel.D_InboundType" Width="1.5" PointX="0.75" PointY="9.375" />
+        <EntityTypeShape EntityType="AssetsModel.D_ItemCard" Width="1.5" PointX="3" PointY="14.375" />
+        <EntityTypeShape EntityType="AssetsModel.D_ItemsCategory" Width="1.5" PointX="0.75" PointY="14.625" />
+        <EntityTypeShape EntityType="AssetsModel.D_ItemUsedStatus" Width="1.5" PointX="3" PointY="4.75" />
+        <EntityTypeShape EntityType="AssetsModel.D_JobTitle" Width="1.5" PointX="10.75" PointY="2" />
+        <EntityTypeShape EntityType="AssetsModel.D_Locations" Width="1.5" PointX="18" PointY="6" />
+        <EntityTypeShape EntityType="AssetsModel.D_LocationType" Width="1.5" PointX="15.75" PointY="6.75" />
+        <EntityTypeShape EntityType="AssetsModel.D_QtyUnit" Width="1.5" PointX="0.75" PointY="18.5" />
+        <EntityTypeShape EntityType="AssetsModel.D_VendorData" Width="1.5" PointX="18" PointY="1" />
+        <EntityTypeShape EntityType="AssetsModel.Inbound" Width="1.5" PointX="3" PointY="7.5" />
+        <EntityTypeShape EntityType="AssetsModel.InboundAttachments" Width="1.5" PointX="8.25" PointY="5" />
+        <EntityTypeShape EntityType="AssetsModel.InboundNotes" Width="1.5" PointX="5.25" PointY="20" />
+        <EntityTypeShape EntityType="AssetsModel.InboundStatusTrack" Width="1.5" PointX="8.25" PointY="9.125" />
+        <EntityTypeShape EntityType="AssetsModel.InboundStoreEmployee" Width="1.5" PointX="5.25" PointY="22.75" />
+        <EntityTypeShape EntityType="AssetsModel.RequestAttachments" Width="1.5" PointX="11.25" PointY="16.375" />
+        <EntityTypeShape EntityType="AssetsModel.Security_pr_admin" Width="1.5" PointX="13" PointY="10" />
+        <EntityTypeShape EntityType="AssetsModel.Security_pr_AdminType" Width="1.5" PointX="10.75" PointY="11.125" />
+        <EntityTypeShape EntityType="AssetsModel.Security_pr_MainSystem" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AssetsModel.Security_pr_ModuleThemes" Width="1.5" PointX="12.75" PointY="5.75" />
+        <EntityTypeShape EntityType="AssetsModel.Security_pr_Permission" Width="1.5" PointX="15.75" PointY="10.75" />
+        <EntityTypeShape EntityType="AssetsModel.Security_pr_SystemPages" Width="1.5" PointX="13.75" PointY="15.75" />
+        <EntityTypeShape EntityType="AssetsModel.sysdiagrams" Width="1.5" PointX="15.75" PointY="14.75" />
+        <EntityTypeShape EntityType="AssetsModel.view_AssetEventLog" Width="1.5" PointX="17.75" PointY="10.75" />
+        <EntityTypeShape EntityType="AssetsModel.view_AssetsEventTrackingHeader" Width="1.5" PointX="15.75" PointY="17.75" />
+        <EntityTypeShape EntityType="AssetsModel.view_AssetsInventory" Width="1.5" PointX="17.75" PointY="16.75" />
+        <EntityTypeShape EntityType="AssetsModel.view_AssetsList" Width="1.5" PointX="19.75" PointY="10.75" />
+        <EntityTypeShape EntityType="AssetsModel.view_CustodyList" Width="1.5" PointX="10.75" PointY="19.75" />
+        <EntityTypeShape EntityType="AssetsModel.view_CustodyListGrouped" Width="1.5" PointX="12.75" PointY="19.75" />
+        <EntityTypeShape EntityType="AssetsModel.view_inboubdItems" Width="1.5" PointX="20.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AssetsModel.View_InboundList" Width="1.5" PointX="0.75" PointY="21.75" />
+        <EntityTypeShape EntityType="AssetsModel.view_Inventory" Width="1.5" PointX="21.75" PointY="8.75" />
+        <EntityTypeShape EntityType="AssetsModel.view_ItemCard" Width="1.5" PointX="21.75" PointY="14.75" />
+        <EntityTypeShape EntityType="AssetsModel.view_ItemCategoryTree" Width="1.5" PointX="7.75" PointY="21.75" />
+        <EntityTypeShape EntityType="AssetsModel.view_LocationTree" Width="1.5" PointX="22.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AssetsModel.viewEmployeeList" Width="1.5" PointX="21.75" PointY="22.75" />
+        <EntityTypeShape EntityType="AssetsModel.viewTemp" Width="1.5" PointX="23.75" PointY="4.75" />
+        <AssociationConnector Association="AssetsModel.FK_AssetsEventTracking_AssetsAvailabilityStatus" />
+        <AssociationConnector Association="AssetsModel.FK_AssetsEventTracking_AssetsEventTrackingHeader" />
+        <AssociationConnector Association="AssetsModel.FK_AssetsEventTracking_AssetsTrackingActions" />
+        <AssociationConnector Association="AssetsModel.FK_AssetsEventTracking_D_ItemCard" />
+        <AssociationConnector Association="AssetsModel.FK_RequestAttachments_AssetsEventTrackingHeader" />
+        <AssociationConnector Association="AssetsModel.FK_D_ItemUnits_D_ItemStatus" />
+        <AssociationConnector Association="AssetsModel.FK_InboundItemUnits_D_ItemCard" />
+        <AssociationConnector Association="AssetsModel.FK_InboundItemUnits_D_QtyUnit" />
+        <AssociationConnector Association="AssetsModel.FK_InboundItemUnits_Inbound" />
+        <AssociationConnector Association="AssetsModel.FK_InboundAttachments_D_AttachmentType" />
+        <AssociationConnector Association="AssetsModel.FK_RequestAttachments_D_AttachmentType" />
+        <AssociationConnector Association="AssetsModel.FK_D_VendorData_D_Country" />
+        <AssociationConnector Association="AssetsModel.FK_InboundStatusTrack_D_InboundDepositeStatusType" />
+        <AssociationConnector Association="AssetsModel.FK_Inbound_D_InboundType" />
+        <AssociationConnector Association="AssetsModel.FK_D_ItemCard_D_ItemsCategory" />
+        <AssociationConnector Association="AssetsModel.FK_D_ItemCard_D_QtyUnit" />
+        <AssociationConnector Association="AssetsModel.FK_D_Locations_D_LocationTypes" />
+        <AssociationConnector Association="AssetsModel.FK_InboundAttachments_Inbound" />
+        <AssociationConnector Association="AssetsModel.FK_InboundNotes_Inbound" />
+        <AssociationConnector Association="AssetsModel.FK_InboundStatusTrack_Inbound" />
+        <AssociationConnector Association="AssetsModel.FK_InboundStoreEmployee_Inbound" />
+        <AssociationConnector Association="AssetsModel.FK_HD_admin_HD_AdminType" />
+        <EntityTypeShape EntityType="AssetsModel.D_EmployeeList" Width="1.5" PointX="13" PointY="1.25" />
+        <AssociationConnector Association="AssetsModel.FK_D_EmployeeList_D_JobTitle" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

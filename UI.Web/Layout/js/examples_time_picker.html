@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>NoGray Time Picker</title>
+
+<script language="javascript" src="mootools.v1.11.js"></script>
+<script language="javascript" src="nogray_time_picker_min.js"></script>
+<script language="javascript">
+	window.addEvent("domready", function (){
+		var tp1 = new TimePicker('time1_picker', 'time1', 'time1_toggler');
+		var tp2 = new TimePicker('time2_picker', 'time2', 'time2_toggler', {format24:true});
+		var tp3 = new TimePicker('time3_picker', null, null, {visible:true, onChange:function(){
+																		if (this.time.hour < 12) var ampm = this.options.lang.am;
+																		else var ampm = this.options.lang.pm;
+																		
+																		var hour = this.time.hour%12;
+																		if (hour < 10) hour = "0"+hour;
+																		var minute = this.time.minute;
+																		if (minute < 10) minute = "0"+minute;
+																		$('time3_value').setHTML(hour+":"+minute+" "+ampm);
+																	}});
+	});
+</script>
+
+<style>
+	* {font-family:Arial, Helvetica, sans-serif;
+		font-size:9pt;}
+		
+	/* table list */
+	.table_list {border-collapse:collapse;
+		border:solid #cccccc 1px;
+		width:100%;}
+	
+	.table_list td {padding:5px;
+		border:solid #efefef 1px;}
+	
+	.table_list th {background:#75b2d1;
+		padding:5px;
+		color:#ffffff;}
+	
+	.table_list tr.odd {background:#e1eff5;}
+	
+	.time_picker_div {padding:5px;
+		border:solid #999999 1px;
+		background:#ffffff;}
+		
+</style>
+</head>
+<body>
+<center>
+<!-- Begin: AdBrite -->
+<script type="text/javascript">
+   var AdBrite_Title_Color = '0000FF';
+   var AdBrite_Text_Color = '000000';
+   var AdBrite_Background_Color = 'FFFFFF';
+   var AdBrite_Border_Color = 'FFFFFF';
+</script>
+<span style="white-space:nowrap;"><script src="http://ads.adbrite.com/mb/text_group.php?sid=473706&zs=3732385f3930" type="text/javascript"></script><!--
+--><a target="_top" href="http://www.adbrite.com/mb/commerce/purchase_form.php?opid=473706&afsid=1"><img src="http://files.adbrite.com/mb/images/adbrite-your-ad-here-leaderboard.gif" style="background-color:#FFFFFF" alt="Your Ad Here" width="14" height="90" border="0" /></a></span>
+<!-- End: AdBrite -->
+</center>
+<br /><br />
+<h1>The NoGray JavaScript Time Picker:</h1>
+This file contains a few examples to help you start using the time picker, for the latest version please visit <a href="http://www.nogray.com">The NoGray.com</a>
+<br /><br />
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=admin%40nogray%2ecom&item_name=NoGray%20Donation&buyer_credit_promo_code=&buyer_credit_product_category=&buyer_credit_shipping_method=&buyer_credit_user_address_change=&no_shipping=1&return=http%3a%2f%2fwww%2enogray%2ecom%2f&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8" target="_blank">we thrive on your donations</a>
+<br /><br />
+<b>Requirements:</b><br />
+The color picker requires an XHTML doctype, which means your &lt;html&gt; tag should look like
+<pre>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;</pre>
+<br />
+<b>Create It:</b>
+<br /><br />
+To create a time picker, you'll need to call the time picker class with three elements and a set of options.
+<ul> 
+	<li><strong>Holding Element:</strong> the element that will hold the time picker parts.</li>
+	<li><strong>Input Field:</strong> the input field that will take the time picker value. Can be null if no input field is required, just use the onChange event to populate any data.</li>
+	<li><strong>Toggler:</strong> the element that will toggle the time picker on and off (if not visible). Can be null if no toggler is required, just use the openTimePicker and closeTimePicker functions to open and close the time picker. </li>
+	<li><a href="#options"><strong>Options</strong></a></li>
+</ul>
+
+Example: 
+HTML:
+<pre>
+&lt;input type=&quot;text&quot; name=&quot;time2&quot; id=&quot;time2&quot; /&gt; &lt;a href=&quot;#&quot; id=&quot;time2_toggler&quot;&gt;Open time picker&lt;/a&gt;
+&lt;div id=&quot;time2_picker&quot; class=&quot;time_picker_div&quot;&gt;&lt;/div&gt;
+later
+...
+Script:
+var tp = new TimePicker('time2_picker', 'time2', 'time2_toggler', {format24:true});
+</pre>
+<br />
+<br />
+
+<b>Try It:</b>
+<br />
+<br />
+Standard time picker (12 hours format):<br />
+<input type="text" name="time1" id="time1" /> <a href="#" id="time1_toggler">Open time picker</a>
+<div id="time1_picker" class="time_picker_div"></div>
+
+<br /><br />
+24 hour format:<br />
+<input type="text" name="time2" id="time2" /> <a href="#" id="time2_toggler">Open time picker</a>
+<div id="time2_picker" class="time_picker_div"></div>
+
+<br /><br />
+Stand alone (no input field and always visible):<br />
+<div id="time_holder" style="margin-left:275px; width:142px;" class="time_picker_div">
+	<div id="time3_picker"></div>
+	<div id="time3_value" style="color:#336699; font-size:12pt; font-weight:bold; text-align:center;">Selected Time</div>
+</div>
+<br /><br />
+
+<b>Configurations:</b><br /><br />
+
+You can customized the look and feel of the color picker by changing the images or creating new images using the PhotoShop files included in the resource directory.  Also, there are some configuration options you can set when initiating the time picker by passing an options object.
+
+<br /><br />
+Options objects are a key: value object with the following syntax
+<pre>{option: value,
+option: {option: value,
+		option: value},
+option: [value1, value2]}</pre>
+<a name="options"></a>
+<table class="table_list">
+	<tr>
+		<th>Option</th>
+		<th>Description</th>
+		<th>Default Value</th>
+	</tr>
+	<tr>
+		<td><strong>visible</strong></td>
+		<td>Indicates either the time picker would be visible or not.</td>
+		<td>false</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+		Example:
+		<pre>var tp = new TimePicker('time2_picker', 'time2', 'time2_toggler', {visible:true});</pre></td>
+	</tr>
+	<tr class="odd">
+		<td><strong>offset</strong></td>
+		<td>The timepicker by default will show at the lower left corner of the input field. offset allows for offsetting the time picker position.</td>
+		<td>{x:0, y:0}</td>
+	</tr>
+	<tr class="odd">
+		<td colspan="3">Example:
+		<pre>var tp = new TimePicker('time2_picker', 'time2', 'time2_toggler', { visible:true, offset:{x:50, y:25} });</pre></td>
+	</tr>
+	<tr>
+		<td><strong>startTime</strong></td>
+		<td>The initial time (as an object) for the time picker (hour between 0 to 23, minute between 0 to 59)</td>
+		<td>current time</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+		Example:
+		<pre>var tp = new TimePicker('time2_picker', 'time2', 'time2_toggler', { startTime:{hour:10, minute:10} });</pre>
+	  </td>
+	</tr>
+	<tr class="odd">
+		<td><strong>selectedTime</strong></td>
+		<td>The initial seelcted time (as an object) for the time picker (hour between 0 to 23, minute between 0 to 59)</td>
+		<td>null</td>
+	</tr>
+	<tr class="odd">
+		<td colspan="3">
+		Example:
+		<pre>var tp = new TimePicker('time2_picker', 'time2', 'time2_toggler', { selectedTime:{hour:5, minute:17} });</pre></td>
+	</tr>
+	<tr>
+		<td><strong>format24</strong></td>
+		<td>Use a 24 hours format if true</td>
+		<td>false</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+		Example:
+		<pre>var tp = new TimePicker('time2_picker', 'time2', 'time2_toggler', {format24:true});</pre></td>
+	</tr>
+	<tr class="odd">
+		<td><strong>imagesPath</strong></td>
+		<td>The path to the images folder that hold the time picker images (without a trailing slash).</td>
+		<td>"time_picker_files/images"</td>
+	</tr>
+	<tr class="odd">
+		<td colspan="3">Example:
+		<pre>var tp = new TimePicker('time2_picker', 'time2', 'time2_toggler', {imagesPath:"my_time_picker_files/images"});</pre></td>
+	</tr>
+	<tr>
+		<td><strong>faceImage</strong></td>
+		<td>The clock face image.</td>
+		<td>"clock_face.gif"</td>
+	</tr>
+	<tr class="odd">
+		<td><strong>hourHandImage</strong></td>
+		<td>The hour hand image (one image for 12 hours using CSS spirits).</td>
+		<td>"clock_hours.gif"</td>
+	</tr>
+	<tr>
+		<td><strong>minuteHandImage</strong></td>
+		<td>The minute hand image (one image for 60 minutes using CSS spirits).</td>
+		<td>"clock_minutes.gif"</td>
+	</tr>
+	<tr class="odd">
+		<td><strong>centerImage</strong></td>
+		<td>The center image for the clock (the hands nob).</td>
+		<td>"clock_center.gif"</td>
+	</tr>
+	<tr>
+		<td><strong>closeImage</strong></td>
+		<td>The close image</td>
+		<td>"close_image.gif"</td>
+	</tr>
+	<tr class="odd">
+		<td><strong>clockSize</strong></td>
+		<td>Because there could be a delay in loading the images, the clockSize is the image faceImage size.</td>
+		<td>{width:142, height:142}</td>
+	</tr>
+	<tr class="odd">
+		<td colspan="3">
+		Example:
+		<pre>var tp = new TimePicker('time2_picker', 'time2', 'time2_toggler', { clockSize:{width:50, height:50} });</pre></td>
+	</tr>
+	<tr>
+		<td><strong>hourHandSize</strong></td>
+		<td>The width and height of the hourHangImage to show one hour (the total width divided by 12). Give or take 1 pixel.</td>
+		<td>{width:67, height:68}</td>
+	</tr>
+	<tr class="odd">
+		<td><strong>minuteHandSize</strong></td>
+		<td>The width and height of the minuteHangImage to show one minute (the total width divided by 60). Give or take 1 pixel.</td>
+		<td>{width:111, height:112}</td>
+	</tr>
+	<tr>
+		<td><strong>centerSize</strong></td>
+		<td>The width and height of the centerImage.</td>
+		<td>{width:7, height:6}</td>
+	</tr>
+	<tr class="odd">
+		<td><strong>ampmStyles</strong></td>
+		<td>The CSS style object for the AM/PM link.</td>
+		<td>{'fontSize':'10pt',<br />
+						'fontWeight':'bold',<br />
+						'color':'#999999',<br />
+						'textDecoration':'none'}</td>
+	</tr>
+	<tr>
+		<td><strong>lang</strong></td>
+		<td>The language variables for AM/PM. Also used for user input.</td>
+		<td>{'am':'AM', 'pm':'PM'}</td>
+	</tr>
+	<tr class="odd">
+		<td><strong>closeOpenTimePickers</strong></td>
+		<td>Close all the open time pickers when the current time picker is open.</td>
+		<td>true</td>
+	</tr>
+	<tr>
+		<td><strong>onOpen</strong></td>
+		<td>Event that will be fired when the time picker is opened.</td>
+		<td>empty</td>
+	</tr>
+	<tr class="odd">
+		<td><strong>onClose</strong></td>
+		<td>Event that will be fired when the time picker is closed.</td>
+		<td>empty</td>
+	</tr>
+	<tr>
+		<td><strong>onChange</strong></td>
+		<td>Event that will be fired when the time is changed.</td>
+		<td>empty</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+		Example:
+		<pre>var tp = new TimePicker('time_picker', null, null, {onChange:function(){
+                                                                      if (this.time.hour < 12) var ampm = this.options.lang.am;
+                                                                      else var ampm = this.options.lang.pm;
+
+                                                                      var hour = this.time.hour%12;
+                                                                      if (hour < 10) hour = "0"+hour;
+                                                                      var minute = this.time.minute;
+                                                                      if (minute < 10) minute = "0"+minute;
+                                                                      $('time3_value').setHTML(hour+":"+minute+" "+ampm);
+                                                                 } });</pre></td>
+	</tr>
+</table>
+<br /><br />
+<center>
+<!-- Begin: AdBrite -->
+<script type="text/javascript">
+   var AdBrite_Title_Color = '0000FF';
+   var AdBrite_Text_Color = '000000';
+   var AdBrite_Background_Color = 'FFFFFF';
+   var AdBrite_Border_Color = 'FFFFFF';
+</script>
+<span style="white-space:nowrap;"><script src="http://ads.adbrite.com/mb/text_group.php?sid=473706&zs=3732385f3930" type="text/javascript"></script><!--
+--><a target="_top" href="http://www.adbrite.com/mb/commerce/purchase_form.php?opid=473706&afsid=1"><img src="http://files.adbrite.com/mb/images/adbrite-your-ad-here-leaderboard.gif" style="background-color:#FFFFFF" alt="Your Ad Here" width="14" height="90" border="0" /></a></span>
+<!-- End: AdBrite -->
+</center>
+</body>
+</html>

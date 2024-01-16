@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{96FFFB5F-0713-47A1-B2D7-9128DBD56107}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Infrastructure.DAL</RootNamespace>
+    <AssemblyName>Infrastructure.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class Extenders\Extenders.cs" />
+    <Compile Include="Entities\Collection\EntityCollection.cs" />
+    <Compile Include="Entities\KeyListItem.cs" />
+    <Compile Include="Model\DB\AssetsAvailabilityStatus.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\AssetsEventTracking.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\AssetsEventTrackingHeader.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\AssetsItemUnits.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\AssetsTrackingActions.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Assets_DB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Assets_DB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Assets_DB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_AttachmentType.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_Country.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_EmployeeList.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_EmployeeLocations.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_InboundDepositeStatusType.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_InboundType.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_ItemCard.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_ItemsCategory.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_ItemUsedStatus.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_JobTitle.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_Locations.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_LocationType.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_QtyUnit.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_VendorData.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Inbound.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\InboundAttachments.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\InboundNotes.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\InboundStatusTrack.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\InboundStoreEmployee.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\RequestAttachments.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_pr_admin.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_pr_AdminType.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_pr_MainSystem.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_pr_ModuleThemes.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_pr_Permission.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_pr_SystemPages.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_SP_PRM_getJobPage_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_SP_PRM_getJobPermissions_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_SP_PRM_getSystemPermission_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_SP_PRM_getUserPage_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_SP_PRM_getuserPermissions_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\sp_CategoryItemList_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\sp_getEntityEmployeeList_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\sp_ItemAutoComp_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\sysdiagrams.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\viewEmployeeList.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\viewTemp.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_AssetEventLog.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_AssetsEventTrackingHeader.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_AssetsInventory.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_AssetsList.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_CustodyList.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_CustodyListGrouped.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_inboubdItems.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\View_InboundList.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_Inventory.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_ItemCard.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_ItemCategoryTree.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_LocationTree.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Assets\AssetsRepository.cs" />
+    <Compile Include="Repository\BaseRepository.cs" />
+    <Compile Include="Repository\Inbound\InboundRepository.cs" />
+    <Compile Include="Repository\Lookups\LooksUpsRepository.cs" />
+    <Compile Include="Repository\MasterData\LocationsRepository.cs" />
+    <Compile Include="Repository\MasterData\GoodsCategoryRepository.cs" />
+    <Compile Include="Repository\MasterData\SharedBusinessrRepository.cs" />
+    <Compile Include="Repository\MasterData\ItemRepository.cs" />
+    <Compile Include="Repository\MasterData\EmployeeRepository.cs" />
+    <Compile Include="Repository\MasterData\VendorRepository.cs" />
+    <Compile Include="Repository\MasterData\LookupMaster.cs" />
+    <Compile Include="Model\ModelExtension\ModelTrackingExtension.cs" />
+    <Compile Include="Model\DB\Assets_DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Assets_DB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\Secuitry\AdminRepository.cs" />
+    <Compile Include="Repository\Secuitry\Security_Users.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssetsManament.ViewModels\AssetsManament.ViewModels.csproj">
+      <Project>{5404CF28-527D-40EC-8BE7-06F7E61F5ABE}</Project>
+      <Name>AssetsManament.ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DomainInterface\DomainInterface.csproj">
+      <Project>{F07A1F32-8F62-4E73-B25B-B5A2413A945B}</Project>
+      <Name>DomainInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{B29BBADE-7EE4-4C9A-8840-EEFB4A798AA2}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+    <EntityDeploy Include="Model\DB\Assets_DB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Assets_DB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\DB\Assets_DB.edmx.diagram">
+      <DependentUpon>Assets_DB.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\DB\Assets_DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Assets_DB.edmx</DependentUpon>
+      <LastGenOutput>Assets_DB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\DB\Assets_DB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Assets_DB.edmx</DependentUpon>
+      <LastGenOutput>Assets_DB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

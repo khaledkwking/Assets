@@ -208,7 +208,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
         }
         private void FillGrid()
         {
-            var objlist = objRepository.GetList(txtFilterSerial.Text, NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text), ZeroIntergerIFNull(lstInboundType.SelectedValue), 0, 0, 0, txtRefNo.Text, "", "", 0, 0);
+            var objlist = objRepository.GetList(txtFilterSerial.Text, NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text), ZeroIntergerIFNull(lstInboundType.SelectedValue), 0, 0, 0, txtRefNo.Text, "", txtDeliveryOrder.Text, 0, 0);
 
             Session["InboundListResult"] = objlist;
 

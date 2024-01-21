@@ -156,6 +156,9 @@
   <data name="LicenseWillexpirewithin" xml:space="preserve">
     <value>رخصة الشركة ستنتهي خلال</value>
   </data>
+  <data name="LoadFailed" xml:space="preserve">
+    <value>حدث خطأ أثناء استرجاع البيانات</value>
+  </data>
   <data name="loadleavefailed" xml:space="preserve">
     <value>عفوا ،إختر الاجازة</value>
   </data>
@@ -218,6 +221,9 @@
   </data>
   <data name="PleaseEnterenglishsecandname" xml:space="preserve">
     <value>فضلا ، ادخل الاسم الثاني بالانجليزية</value>
+  </data>
+  <data name="PleaseEnterItemDescription" xml:space="preserve">
+    <value>فضلا ، ادخل وصف المادة</value>
   </data>
   <data name="PleaseEnterLeaveBalance" xml:space="preserve">
     <value>فضلا ، ادخل رصيد الاجازات</value>

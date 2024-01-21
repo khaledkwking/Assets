@@ -156,6 +156,9 @@
   <data name="LicenseWillexpirewithin" xml:space="preserve">
     <value>License Will expire with in</value>
   </data>
+  <data name="LoadFailed" xml:space="preserve">
+    <value>An error occurred while retrieving data</value>
+  </data>
   <data name="loadleavefailed" xml:space="preserve">
     <value>load leave failed</value>
   </data>
@@ -218,6 +221,9 @@
   </data>
   <data name="PleaseEnterenglishsecandname" xml:space="preserve">
     <value>Please,Enter english secand name</value>
+  </data>
+  <data name="PleaseEnterItemDescription" xml:space="preserve">
+    <value>PleaseEnterItemDescription</value>
   </data>
   <data name="PleaseEnterLeaveBalance" xml:space="preserve">
     <value>Please,Enter Leave Balance</value>

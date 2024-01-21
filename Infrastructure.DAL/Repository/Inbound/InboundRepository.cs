@@ -25,7 +25,7 @@ namespace Infrastructure.DAL
                      where 1 == 1
                    && (inboundSerial != "" ? obj.Serial == inboundSerial : 1 == 1)
                    && (TransactionDatFrom != new DateTime(1990, 01, 01) ? obj.TransDate >= TransactionDatFrom : 1 == 1)
-                   && (TransactionDatTo != new DateTime(1990, 01, 01) ? obj.TransDate <= TransactionDatFrom : 1 == 1)
+                   && (TransactionDatTo != new DateTime(1990, 01, 01) ? obj.TransDate <= TransactionDatTo : 1 == 1)
                    && (InboundType != 0 ? obj.InboundTypeCode == InboundType : 1 == 1)
                    && (DekiveryOrderNo != "" ? obj.DeliveryOrderNo == DekiveryOrderNo : 1 == 1)
                     && (RefNo != "" ? obj.RefNo == RefNo : 1 == 1)

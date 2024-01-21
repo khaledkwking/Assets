@@ -18,13 +18,13 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44330</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -1259,13 +1259,6 @@
     <Content Include="Layout\vendors\jplist\html\css\vendor\images\ui-icons_454545_256x240.png" />
     <Content Include="Layout\vendors\jplist\html\css\vendor\jquery-ui.css" />
     <Content Include="Layout\vendors\jplist\html\css\vendor\normalize.css" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList.sln" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\JPList.csproj" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\JPList.csproj.user" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\obj\Debug\JPList.dll" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\obj\Debug\JPList.pdb" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-mysql-demo\create.sql" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-sqlite-demo\sqlite3.exe" />
     <Content Include="Layout\vendors\jplist\html\demo.html" />
     <Content Include="Layout\vendors\jplist\html\examples\1-layout\div-layout.html" />
     <Content Include="Layout\vendors\jplist\html\examples\1-layout\list-grid.html" />
@@ -2113,14 +2106,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\DAL\DataBase.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\DAL\StatusQueries.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\Domain\Models\Item.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\Domain\Models\StatusDataDTO.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\Domain\Models\StatusDTO.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\Log\Logger.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\Properties\AssemblyInfo.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\WEB\JPListHandler.cs" />
     <Compile Include="Modules\Assets\AssetCheckin.aspx.cs">
       <DependentUpon>AssetCheckin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2584,14 +2569,6 @@
     <Content Include="Layout\vendors\iCheck\demo\css\montserrat-regular.eot" />
     <Content Include="Layout\vendors\iCheck\demo\css\montserrat-regular.ttf" />
     <Content Include="Layout\vendors\iCheck\demo\css\montserrat-regular.woff" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList.suo" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\obj\Debug\ResolveAssemblyReference.cache" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-mysql-demo\config.php" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-mysql-demo\server-html.php" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-mysql-demo\server-json.php" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-mysql-demo\server-xml.php" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-sqlite-demo\jplist.db" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-sqlite-demo\server.php" />
     <Content Include="Layout\vendors\jquery-file-upload\.gitignore" />
     <Content Include="Layout\vendors\jquery-file-upload\.jshintrc" />
     <Content Include="Layout\vendors\jquery-file-upload\blueimp-file-upload.jquery.json" />
@@ -2823,12 +2800,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>17170</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>https://localhost:44330/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

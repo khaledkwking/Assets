@@ -825,7 +825,11 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
         {
             try
             {
+<<<<<<< HEAD
                 InboundAttachment obj = new InboundAttachment();
+=======
+                InboundAttachments obj = new InboundAttachments();
+>>>>>>> faa5d2395a94e9dcd93e977631f3e78280d2ec0f
                 for (int i = 0; i <= grdAttachment.Items.Count - 1; i++)
                 {
                     if ((grdAttachment.Items[i].FindControl("chkItem") != null))

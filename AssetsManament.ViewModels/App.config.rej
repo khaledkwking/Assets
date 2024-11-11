@@ -1,0 +1,9 @@
+diff a/AssetsManament.ViewModels/App.config b/AssetsManament.ViewModels/App.config	(rejected hunks)
+@@ -2,6 +2,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <configuration>
+     <startup> 
+-        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
+         <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.6.1"/>
+     </startup>
+\ No newline at end of file

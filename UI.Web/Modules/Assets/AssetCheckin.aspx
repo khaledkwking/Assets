@@ -251,7 +251,7 @@
 
                                                             <div class="card-inner">
 
-                                                                <asp:DataGrid runat="server" ID="grdItems" AutoGenerateColumns="False" OnItemCommand="grdItems_ItemCommand"
+                                                                <asp:DataGrid runat="server" ID="grdItems" AutoGenerateColumns="False" OnItemCommand="grdItems_ItemCommand" OnItemDataBound="grdItems_ItemDataBound"
                                                                     AllowPaging="false" class="table table-hover table-striped table-bordered table-advanced tablesorter">
                                                                     <PagerStyle Visible="False" />
                                                                     <HeaderStyle BackColor="#efefef" Font-Bold="True" />
@@ -282,20 +282,45 @@
                                                                         <asp:BoundColumn DataField="ItemFinanceCode" HeaderText="<%$ Resources:pages,ItemFinanceCode %>"></asp:BoundColumn>
                                                                         <%--<asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,ItemNameAr %>"></asp:BoundColumn>--%>
                                                                         <asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,PurchaseItems %>  "></asp:BoundColumn>
+                                                                      
+                                                                      <%--  <asp:BoundColumn DataField="ItemsCategoryTitleAr" HeaderText="نوع المخزن"></asp:BoundColumn>
+                                                                        <asp:BoundColumn DataField="ItemCategoryId" Visible="False"></asp:BoundColumn>--%>
+
+
+<%--                                                                        <asp:TemplateColumn HeaderText="نوع المخزن">
+                                                                            <ItemStyle Width="5%" />
+                                                                            <ItemTemplate>
+                                                                                <div>
+                                                                                    <%# showAction(ZeroIntergerIFNull(gets(Eval("ItemCategoryId"))), gets( Eval("ItemsCategoryTitleAr"))) %>
+                                                                                    
+                                                                                </div>
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateColumn>--%>
+                                                                        <asp:TemplateColumn HeaderText="حالة المادة">
+                                                                            <ItemStyle Width="5%" />
+                                                                            <ItemTemplate>
+                                                                                <div><%# showAction(ZeroIntergerIFNull(gets(Eval("UnitStatus"))), gets( Eval("StatusTitleAr"))) %></div>
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateColumn>
+                                                                        
+                                                                         <asp:TemplateColumn HeaderText="توفر المادة"> <%--"<%$ Resources:pages,status %>"--%>
+                                                                            <ItemStyle Width="5%" />
+                                                                            <ItemTemplate>
+                                                                                <div><%# showAvailability(ZeroIntergerIFNull(gets(Eval("StatusId"))), gets( Eval("AvailabilityStatusAr"))) %></div>
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateColumn>
                                                                         <asp:BoundColumn DataField="TransDate" HeaderText="<%$ Resources:pages,purchaseDate %>" DataFormatString="{0:dd/MM/yyyy}"></asp:BoundColumn>
                                                                         <%--                            <asp:BoundColumn DataField="ReceivedQty" HeaderText="<%$ Resources:pages,ReceivedQty %>"></asp:BoundColumn>--%>
                                                                         <asp:BoundColumn DataField="QtyUnitTitleAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
                                                                         <%--<asp:BoundColumn DataField="StatusTitleAr" HeaderText="<%$ Resources:pages,status %>"></asp:BoundColumn>--%>
                                                                         <asp:BoundColumn DataField="EstimatedUnitCost" HeaderText="<%$ Resources:pages,EstimatedCost %>"></asp:BoundColumn>
-                                                                        <asp:TemplateColumn HeaderText="<%$ Resources:pages,status %>">
+                                                                       
+                                                                         <asp:TemplateColumn HeaderText="اخر إجراء"> <%--"<%$ Resources:pages,status %>"--%>
                                                                             <ItemStyle Width="5%" />
                                                                             <ItemTemplate>
                                                                                 <div><%# showAction(ZeroIntergerIFNull(gets(Eval("ActionId"))), gets( Eval("LastActiontitleAr"))) %></div>
-                                                                                <div><%# showAvailability(ZeroIntergerIFNull(gets(Eval("StatusId"))), gets( Eval("AvailabilityStatusAr"))) %></div>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateColumn>
-
-
                                                                         <asp:TemplateColumn>
                                                                             <HeaderStyle HorizontalAlign="Center" />
                                                                             <ItemStyle Width="2%" />

@@ -14,7 +14,7 @@ namespace Infrastructure.DAL
         #region List
         public List<D_EmployeeList> GetList()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_EmployeeList
@@ -29,7 +29,7 @@ namespace Infrastructure.DAL
 
         public List<D_EmployeeList> GetList(int EntityCode,int jobTitle,string _FilterPartOfName,int EmpCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_EmployeeList
@@ -50,7 +50,7 @@ namespace Infrastructure.DAL
 
         public D_EmployeeList GetDetails(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_EmployeeList
@@ -67,7 +67,7 @@ namespace Infrastructure.DAL
 
         public int Add<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 
                 DC.D_EmployeeList.Add(item as D_EmployeeList);
@@ -77,7 +77,7 @@ namespace Infrastructure.DAL
 
         public int Delete<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as D_EmployeeList).State = System.Data.Entity.EntityState.Deleted;
@@ -87,7 +87,7 @@ namespace Infrastructure.DAL
 
         public int Update<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as D_EmployeeList).State = System.Data.Entity.EntityState.Modified;

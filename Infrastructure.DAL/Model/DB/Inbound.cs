@@ -17,11 +17,11 @@ namespace Infrastructure.DAL.Model.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Inbound()
         {
-            this.AssetsItemUnits = new HashSet<AssetsItemUnits>();
-            this.InboundAttachments = new HashSet<InboundAttachments>();
-            this.InboundNotes = new HashSet<InboundNotes>();
-            this.InboundStatusTrack = new HashSet<InboundStatusTrack>();
-            this.InboundStoreEmployee = new HashSet<InboundStoreEmployee>();
+            this.AssetsItemUnits = new HashSet<AssetsItemUnit>();
+            this.InboundAttachments = new HashSet<InboundAttachment>();
+            this.InboundNotes = new HashSet<InboundNote>();
+            this.InboundStatusTracks = new HashSet<InboundStatusTrack>();
+            this.InboundStoreEmployees = new HashSet<InboundStoreEmployee>();
         }
     
         public int Code { get; set; }
@@ -43,15 +43,15 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> OutBoundRefCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssetsItemUnits> AssetsItemUnits { get; set; }
+        public virtual ICollection<AssetsItemUnit> AssetsItemUnits { get; set; }
         public virtual D_InboundType D_InboundType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InboundAttachments> InboundAttachments { get; set; }
+        public virtual ICollection<InboundAttachment> InboundAttachments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InboundNotes> InboundNotes { get; set; }
+        public virtual ICollection<InboundNote> InboundNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InboundStatusTrack> InboundStatusTrack { get; set; }
+        public virtual ICollection<InboundStatusTrack> InboundStatusTracks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InboundStoreEmployee> InboundStoreEmployee { get; set; }
+        public virtual ICollection<InboundStoreEmployee> InboundStoreEmployees { get; set; }
     }
 }

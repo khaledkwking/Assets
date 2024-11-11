@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UI.Web.Modules.MasterData
-{
-
-
-    public partial class AssetsRequestList
-    {
-
+namespace UI.Web.Modules.MasterData {
+    
+    
+    public partial class AssetsRequestList {
+        
         /// <summary>
         /// Updatepanel1 control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace UI.Web.Modules.MasterData
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel Updatepanel1;
-
+        
         /// <summary>
         /// tblshow control.
         /// </summary>
@@ -31,7 +29,7 @@ namespace UI.Web.Modules.MasterData
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tblshow;
-
+        
         /// <summary>
         /// lstFilterAction control.
         /// </summary>
@@ -40,7 +38,7 @@ namespace UI.Web.Modules.MasterData
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstFilterAction;
-
+        
         /// <summary>
         /// txtTransDate control.
         /// </summary>
@@ -49,7 +47,7 @@ namespace UI.Web.Modules.MasterData
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTransDate;
-
+        
         /// <summary>
         /// txtTransactionDateTo control.
         /// </summary>
@@ -58,7 +56,7 @@ namespace UI.Web.Modules.MasterData
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTransactionDateTo;
-
+        
         /// <summary>
         /// btnFilter control.
         /// </summary>
@@ -67,7 +65,7 @@ namespace UI.Web.Modules.MasterData
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnFilter;
-
+        
         /// <summary>
         /// txtPartOfName control.
         /// </summary>
@@ -76,7 +74,7 @@ namespace UI.Web.Modules.MasterData
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPartOfName;
-
+        
         /// <summary>
         /// lnkQuick control.
         /// </summary>
@@ -85,7 +83,7 @@ namespace UI.Web.Modules.MasterData
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkQuick;
-
+        
         /// <summary>
         /// grdData control.
         /// </summary>
@@ -94,7 +92,7 @@ namespace UI.Web.Modules.MasterData
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DataGrid grdData;
-
+        
         /// <summary>
         /// lblcount control.
         /// </summary>
@@ -103,7 +101,7 @@ namespace UI.Web.Modules.MasterData
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblcount;
-
+        
         /// <summary>
         /// pager1 control.
         /// </summary>

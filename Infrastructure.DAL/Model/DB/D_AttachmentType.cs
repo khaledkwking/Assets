@@ -17,8 +17,8 @@ namespace Infrastructure.DAL.Model.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public D_AttachmentType()
         {
-            this.InboundAttachments = new HashSet<InboundAttachments>();
-            this.RequestAttachments = new HashSet<RequestAttachments>();
+            this.InboundAttachments = new HashSet<InboundAttachment>();
+            this.RequestAttachments = new HashSet<RequestAttachment>();
         }
     
         public int Code { get; set; }
@@ -26,8 +26,8 @@ namespace Infrastructure.DAL.Model.DB
         public string TitleEn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InboundAttachments> InboundAttachments { get; set; }
+        public virtual ICollection<InboundAttachment> InboundAttachments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestAttachments> RequestAttachments { get; set; }
+        public virtual ICollection<RequestAttachment> RequestAttachments { get; set; }
     }
 }

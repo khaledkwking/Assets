@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -10,7 +12,9 @@ using Infrastructure;
 using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
 using UI.Web.Admin.Controller;
+using UI.Web.Controllers;
 using UI.Web.Core.Enums;
+using Newtonsoft.Json;
 
 namespace UI.Web.Modules.Assets
 {
@@ -19,8 +23,18 @@ namespace UI.Web.Modules.Assets
         #region "Page Members"
         public AssetsRepository objRepository = IoC.Resolve<AssetsRepository>();
         public LocationsRepository objLocationRepository = IoC.Resolve<LocationsRepository>();
-        public string _PageTitle = Resources.Pages.CustodyAdd;
 
+        public List<D_Locations> Building = new List<D_Locations>();
+        public List<D_Locations> Floor = new List<D_Locations>();
+        public List<D_Locations> Room = new List<D_Locations>();
+        public string _PageTitle = Resources.Pages.CustodyAdd;
+        public class Product
+        {
+            public int entitycode { get; set; }
+            public string entitytype { get; set; }
+            public string entityname { get; set; }
+            public int parentcode { get; set; }
+        }
         #endregion
 
         #region "Page Events"
@@ -38,17 +52,59 @@ namespace UI.Web.Modules.Assets
 
 
         }
+        //private void PopulateGridView()
+        //{
+        //    string apiUrl = "http://localhost:26404/api/CustomerAPI";
+        //    object input = new
+        //    {
+        //        Name = txtName.Text.Trim(),
+        //    };
+        //    string inputJson = (new JavaScriptSerializer()).Serialize(input);
+        //    WebClient client = new WebClient();
+        //    client.Headers["Content-type"] = "application/json";
+        //    client.Encoding = Encoding.UTF8;
+        //    string json = client.UploadString(apiUrl + "/GetCustomers", inputJson);
+
+        //    gvCustomers.DataSource = (new JavaScriptSerializer()).Deserialize<List<Customer>>(json);
+        //    gvCustomers.DataBind();
+        //}
+        public List<ORGANIZATION_CHART> GetAllEntities()
+        {
+            using (var client = new System.Net.Http.HttpClient())
+            {
+                client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                //var response = client.GetAsync(string.Format("orgchart/GetChart").Result();
+                HttpResponseMessage response =  client.GetAsync(string.Format("orgchart/GetChart")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseString = response.Content.ReadAsStringAsync().Result;
+                    //var responseString = Res.Content.ReadAsStringAsync().Result;
+
+                    // Newtonsoft.Json.Linq.JArray json = Newtonsoft.Json.Linq.JArray.Parse(responseString);
+                    return JsonConvert.DeserializeObject<List<ORGANIZATION_CHART>>(responseString);
+                    // product = Newtonsoft.Json.JsonConvert.Deserialize<Product>(responseString);
+                }
+                else
+                    return null;
+            }
+        }
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            Page.Form.Attributes.Add("enctype", "multipart/form-data");
+            if (Session["OraEmpList"] != null)
+            {
+
+            }
+                Page.Form.Attributes.Add("enctype", "multipart/form-data");
             lblerror.Text = "";
-
-
+            
             btnSave.Attributes.Add("onclick", "return chkImage();");
 
             if (!IsPostBack)
             {
-
+               var x = GetAllEntities();
+                fillddls();
                 fillLookups();
                 ClearForm();
 
@@ -61,15 +117,29 @@ namespace UI.Web.Modules.Assets
                 if (Request.QueryString["t"] != null)
                 {
                     hdnType.Value = Request.QueryString["t"].ToString();
+
                     if (Request.QueryString["t"].ToString() == "1")
                     {
                         custodyType.SelectedValue = Request.QueryString["t"].ToString();
                         divEmployee.Visible = true;
+                        divLocationPersonal.Visible = true;
+                        divLocationOrg.Visible = false;
+
+                        _PageTitle = Resources.Pages.CustodyAdd;
                     }
-                    else
+                    else if (Request.QueryString["t"].ToString() == "2")
                     {
                         custodyType.SelectedValue = Request.QueryString["t"].ToString();
                         divEmployee.Visible = false;
+                        divLocationPersonal.Visible = false;
+                        divLocationOrg.Visible = true;
+
+                        _PageTitle = Resources.Pages.CustodyAdd1;
+                    }
+                    else if (Request.QueryString["t"].ToString() == "3")
+                    {
+                        custodyType.SelectedValue = Request.QueryString["t"].ToString();
+                        _PageTitle = Resources.Pages.CustodyAdd1;
                     }
 
                 }
@@ -96,6 +166,8 @@ namespace UI.Web.Modules.Assets
             var objHeader = objRepository.getTrackingRequestHeaderDetails(RequestHeaderCode);
             if (objHeader != null)
             {
+                
+
                 hdnType.Value = objHeader.RequestActionType.ToString();
                 if (hdnType.Value == "1")
                 {
@@ -143,6 +215,7 @@ namespace UI.Web.Modules.Assets
                     divEmployee.Visible = false;
                 }
                 selectedLocation.Value = objHeader.ToLocationId.ToString();
+
                 hdnOrgChartRefCode.Value = objHeader.OrgChartRefCode.ToString();
 
                 if (objHeader.EmpRefCode != null && objHeader.EmpRefCode != 0)
@@ -173,32 +246,64 @@ namespace UI.Web.Modules.Assets
         {
             string script = "";
 
-
+            string s = "sebrahim_if";
 
             try
             {
-
-                //Validated Location Org
-
-                var selectedLocationOrg = objLocationRepository.GetDetails(ZeroIntergerIFNull(selectedLocation.Value));
-                if (selectedLocationOrg != null)
+                int LocationID = 0;
+                int? OrgChartRefCode = null;
+                //Validated Location Personal
+                if (Request.QueryString["t"].ToString() == "1")
                 {
-                    if (selectedLocationOrg.OrgChartRefCode != null && selectedLocationOrg.OrgChartRefCode != 0)
+                    var selectedLocationOrg = objLocationRepository.GetDetails(ZeroIntergerIFNull(selectedLocation.Value));
+                    if (selectedLocationOrg != null)
                     {
-                        hdnOrgChartRefCode.Value = selectedLocationOrg.OrgChartRefCode.ToString();
-                    }
-                    else
-                    {
-                        script = FormatErrorMSGSwal("عفوا ، يرجى تسجيل تبعية موقع العهدة لجهة ", "1");
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
-                    }
+                        if (selectedLocationOrg.OrgChartRefCode != null && selectedLocationOrg.OrgChartRefCode != 0)
+                        {
+                            hdnOrgChartRefCode.Value = selectedLocationOrg.OrgChartRefCode.ToString();
+                        }
+                        else
+                        {
+                            script = FormatErrorMSGSwal("عفوا ، يرجى تسجيل تبعية موقع العهدة لجهة ", "1");
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                            return;
+                        }
 
+                    }
                 }
+                else if (Request.QueryString["t"].ToString() == "2") //Validated Location Org 
+                {
+                    if(ddlDirection.SelectedValue=="0")
+                    {
+                        script = FormatErrorMSGSwal("عفوا ، يرجى اختيار جهة موقع العهدة  ", "1");
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                        return;
+                    }
+                    if(Session["IsBuildingSelected"].ToString() == "False" || ddlBuilding.SelectedValue == "0")
+                    {
+                        script = FormatErrorMSGSwal("عفوا ، يرجى اختيار المبنى الخاص بموقع العهدة  ", "1");
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                        return;
+                    }
+                    else if(Session["FloorRequiredSelect"].ToString() == "True" && ddlFloor.SelectedValue == "0")
+                    {
+                        script = FormatErrorMSGSwal("عفوا ، يرجى اختيار الدور الخاص بموقع العهدة  ", "1");
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                        return;
+                    }
+                    else if(Session["RoomRequiredSelect"].ToString() == "True" && ddlRoom.SelectedValue == "0")
+                    {
+                        script = FormatErrorMSGSwal("عفوا ، يرجى اختيار الغرفة الخاص بموقع العهدة  ", "1");
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                        return;
+                    }
 
+                    LocationID = ZeroIntergerIFNull(Session["LocationCode"].ToString());
+                    OrgChartRefCode = objLocationRepository.GetDetails(LocationID).OrgChartRefCode;
+                }
 
                 if (gets(ViewState["itemID"]).Equals("0"))
                 {//Save
-
 
                     // Add Request Header
                     AssetsEventTrackingHeader objHeader = new AssetsEventTrackingHeader();
@@ -210,8 +315,18 @@ namespace UI.Web.Modules.Assets
                     objHeader.TMonth = NullDateifEmpty(txtFromDate.Text).Month;
                     objHeader.TYear = NullDateifEmpty(txtFromDate.Text).Year;
                     objHeader.Serial = generateRequestSerial();
-                    objHeader.ToLocationId = ZeroIntergerIFNull(selectedLocation.Value);
-                    objHeader.OrgChartRefCode = ZeroIntergerIFNull(hdnOrgChartRefCode.Value);
+
+                    if (Request.QueryString["t"].ToString() == "1")
+                    {
+                        objHeader.ToLocationId = ZeroIntergerIFNull(selectedLocation.Value);
+                        objHeader.OrgChartRefCode = ZeroIntergerIFNull(hdnOrgChartRefCode.Value);
+                    }
+                    else if (Request.QueryString["t"].ToString() == "2")
+                    {
+                        objHeader.ToLocationId = LocationID;
+                        objHeader.OrgChartRefCode = OrgChartRefCode;
+                    }
+
                     objHeader.RequestNotes = txtNotes.Text;
 
                     if (hdnType.Value == "1")
@@ -254,9 +369,6 @@ namespace UI.Web.Modules.Assets
                     hdnMasterID.Value = objHeader.Code.ToString();
                     // Add Items Details
                     SaveRequestItems(objHeader.Code);
-
-
-
 
                 }
                 else
@@ -338,7 +450,7 @@ namespace UI.Web.Modules.Assets
                         obj.Qty = objItemList[i].Qty;
 
                         obj.CreatedAt = DateTime.Now;
-                        obj.CreatedBy = ZeroIntergerIFNull(ReadSession("userId").ToString());
+                        obj.CreatedBy = ZeroIntergerIFNull(ReadSession("userid").ToString());
 
                         objRepository.AddEventTracking(obj);
 
@@ -373,7 +485,13 @@ namespace UI.Web.Modules.Assets
 
         private void fillRequestItems()
         {
-            var objList = objRepository.getCustodyListByMasterData(ZeroIntergerIFNull(hdnMasterID.Value), ZeroIntergerIFNull(selectedLocation.Value), ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
+            int refHCode = ZeroIntergerIFNull(hdnMasterID.Value);
+            if (Request.QueryString["t"].ToString() == "1")
+            {
+                refHCode = 0;
+            }
+
+                var objList = objRepository.getCustodyListByMasterData(refHCode, ZeroIntergerIFNull(selectedLocation.Value), ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
 
             if (objList != null && objList.Count > 0)
             {
@@ -706,8 +824,7 @@ namespace UI.Web.Modules.Assets
 
 
         #endregion
-
-
+        
         #region "Shared Methods"
         #region "Fill Lookups Information"
         private void fillLookups()
@@ -734,8 +851,7 @@ namespace UI.Web.Modules.Assets
 
 
         }
-
-
+      
         public void BindEmployeeLst(object lstData, DropDownList ddl, string txtField, string valueField)
         {
 
@@ -759,7 +875,6 @@ namespace UI.Web.Modules.Assets
 
             }
         }
-
 
 
         #endregion
@@ -978,7 +1093,7 @@ namespace UI.Web.Modules.Assets
             //var selectedEmpInfo = objRepository.getEmployeeDetails(ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
             //if (selectedEmpInfo != null)
             //{
-            //    selectedLocation.Value = gets(selectedEmpInfo.LocationRefCode);
+            //   selectedLocation.Value = gets(selectedEmpInfo.LocationRefCode);
             //    fillRequestItems();
             //}
 
@@ -1009,14 +1124,15 @@ namespace UI.Web.Modules.Assets
                 lblSelectedEmpName.Text = selectedEmpInfo.EMP_NAME;
                 lblSelectedjobTitle.Text = selectedEmpInfo.JOB_NAME;
                 lblSelectedEmpCode.Text = selectedEmpInfo.EMP_ID;
-
-                lblSelectedEmpLocationName.Text = selectedEmpInfo.ENTITYNAME;
+                
+                lblSelectedEmpLocationName.Text = GetEmp_Location(ZeroIntergerIFNull(selectedEmpInfo.EMP_ID)); //selectedEmpInfo.ENTITYNAME;
 
                 var empLocation = objRepository.getEmployeeLocations(ZeroIntergerIFNull(selectedEmpInfo.EMP_ID));
                 if (empLocation != null)
                 {
                     selectedLocation.Value = gets(empLocation.LocationCode);
                 }
+                Session["RequestItemList"] = null;
                 fillRequestItems();
             }
             else
@@ -1082,6 +1198,233 @@ namespace UI.Web.Modules.Assets
             }
 
         }
+
+        private void fillddls()
+        {
+            //ddlDirection.Items.Add(new ListItem("الجهة", "-1"));
+            //ddlAmana.Items.Add(new ListItem("الامانة", "-1"));
+            //ddlDepartment.Items.Add(new ListItem("الادارة", "-1"));
+            //ddlMorakba.Items.Add(new ListItem("المراقبة", "-1"));
+            //ddlSection.Items.Add(new ListItem("القسم", "-1"));
+            //ddlBuilding.Items.Add(new ListItem("المبنى", "-1"));
+            //ddlFloor.Items.Add(new ListItem("الدور", "-1"));
+            //ddlRoom.Items.Add(new ListItem("الغرفة", "-1"));
+
+          //  var query = GetAllEntities().Where(o => o.PARENTCODE == 0 || o.PARENTCODE == null);
+
+           // BindDirections_Location(query, ddlDirection, "--- اختر الجهة ---", "ENTITYNAME", "ENTITYCODE");
+        }
+
+        public void BindDirections_Location(object lstData, DropDownList ddl, string ddlName, string txtField, string valueField)
+        {
+
+            ddl.DataSource = lstData;
+            ddl.DataTextField = txtField;
+            ddl.DataValueField = valueField;
+            ddl.DataBind();
+            //ddl.Items.Add(new ListItem(ddlName, "0"));
+
+            ListItem listItem = new ListItem(ddlName, "0");
+            listItem.Attributes.Add("style", "background-color: Gold !important;");
+            ddl.Items.Add(listItem);
+
+            try
+            {
+                ddl.SelectedValue = "0";
+            }
+            catch (Exception)
+            {
+
+
+            }
+        }
+
+        protected void ddlDirection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(ddlDirection.SelectedValue) && ddlDirection.SelectedValue != "0")
+            {
+                int DirID = int.Parse(ddlDirection.SelectedValue);
+                var query = GetAllEntities().Where(o => o.PARENTCODE == DirID && o.ENTITYTYPE == "amana");
+
+                BindDirections_Location(query, ddlAmana, "--- اختر ---", "ENTITYNAME", "ENTITYCODE");
+                ClearLocation_ddl();
+                fillLocations(DirID);
+            }
+        }
+
+        protected void ddlAmana_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(ddlAmana.SelectedValue) && ddlAmana.SelectedValue != "0")
+            {
+                int AmanaID = int.Parse(ddlAmana.SelectedValue);
+                var query = GetAllEntities().Where(o => o.PARENTCODE == AmanaID && o.ENTITYTYPE== "dept");
+
+                BindDirections_Location(query, ddlDepartment, "--- اختر ---", "ENTITYNAME", "ENTITYCODE");
+                ClearLocation_ddl();
+                fillLocations(AmanaID);
+            }
+        }
+
+        protected void ddlDepartment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(ddlDepartment.SelectedValue) && ddlDepartment.SelectedValue != "0")
+            {
+                int DeptID = int.Parse(ddlDepartment.SelectedValue);
+                var query = GetAllEntities().Where(o => o.PARENTCODE == DeptID && o.ENTITYTYPE == "div");
+
+                BindDirections_Location(query, ddlMorakba, "--- اختر ---", "ENTITYNAME", "ENTITYCODE");
+                ClearLocation_ddl();
+                fillLocations(DeptID);
+            }
+        }
+
+        protected void ddlMorakba_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(ddlMorakba.SelectedValue) && ddlMorakba.SelectedValue != "0")
+            {
+                int MorakbaID = int.Parse(ddlMorakba.SelectedValue);
+                var query = GetAllEntities().Where(o => o.PARENTCODE == MorakbaID && o.ENTITYTYPE == "sec");
+
+                BindDirections_Location(query, ddlSection, "--- اختر ---", "ENTITYNAME", "ENTITYCODE");
+                ClearLocation_ddl();
+                fillLocations(MorakbaID);
+            }
+        }
+
+        protected void ddlSection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int SecID = int.Parse(ddlSection.SelectedValue);
+            ClearLocation_ddl();
+            fillLocations(SecID);
+        }
+
+        protected void ddlBuilding_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Session["IsBuildingSelected"] = "True";
+            var Floorlist = (List<D_Locations>)Session["Floor"];
+            int BuildID = int.Parse(ddlBuilding.SelectedValue);
+            Session["FloorRequiredSelect"] = "False";
+            var queryFloor = Floorlist.Where(o=> o.LocationParentId == BuildID);
+            if (queryFloor.Count() != 0)
+            {
+                BindDirections_Location(queryFloor, ddlFloor, "--- اختر ---", "LocationNameAr", "Code");
+                Session["FloorRequiredSelect"] = "True";
+            }
+            else
+            {
+                var Q = objLocationRepository.GetList(BuildID, "");
+                BindDirections_Location(Q, ddlFloor, "--- اختر ---", "LocationNameAr", "Code");
+
+            }
+            Session["LocationCode"] = BuildID;
+        }
+
+        protected void ddlFloor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var Roomlist = (List<D_Locations>)Session["Room"];
+
+            int FloorID = int.Parse(ddlFloor.SelectedValue);
+
+            Session["RoomRequiredSelect"] = "False";
+            var queryRoom = Roomlist.Where(o => o.LocationParentId == FloorID);
+            if (queryRoom.Count() != 0)
+            {
+                BindDirections_Location(queryRoom, ddlRoom, "--- اختر ---", "LocationNameAr", "Code");
+                Session["RoomRequiredSelect"] = "True";
+            }
+            else
+            {
+                var Q = objLocationRepository.GetList(FloorID, "");
+                BindDirections_Location(Q, ddlRoom, "--- اختر ---", "LocationNameAr", "Code");
+            }
+            Session["LocationCode"] = FloorID;
+        }
+        protected void ddlRoom_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int RoomID = int.Parse(ddlRoom.SelectedValue);
+            Session["LocationCode"] = RoomID;
+        }
+
+        private void fillLocations( int OrgChartRefCode)
+        {
+            Session["LocationCode"] = null;
+
+            Session["IsBuildingSelected"] = "False";
+            Session["FloorRequiredSelect"] = "False";
+            Session["RoomRequiredSelect"] = "False";
+
+            Session["Building"] = null;
+            Session["Floor"] = null;
+            Session["Room"] = null;
+            Building.Clear();
+            Floor.Clear();
+            Room.Clear();
+            var locationObj = objLocationRepository.getEntityLocations(OrgChartRefCode, "").ToList();
+            foreach (var item in locationObj)
+            {
+                if (item.LocationType == 1)
+                {
+                    if (Building.Where(o => o.Code == item.Code).Count() == 0)
+                        Building.Add(new D_Locations() { Code = item.Code, LocationNameAr = item.LocationNameAr, LocationParentId = item.LocationParentId });
+                }
+                else if (item.LocationType == 2)
+                {
+                    if (Floor.Where(o => o.Code == item.Code).Count() == 0)
+                    {
+                        Floor.Add(new D_Locations() { Code = item.Code, LocationNameAr = item.LocationNameAr, LocationParentId = item.LocationParentId });
+
+                        var queryBuild = objLocationRepository.GetDetails(ZeroIntergerIFNull(item.LocationParentId.ToString()));
+                        if (queryBuild != null)
+                        {
+                            if (Building.Where(o => o.Code == queryBuild.Code).Count() == 0)
+                                Building.Add(new D_Locations() { Code = queryBuild.Code, LocationNameAr = queryBuild.LocationNameAr, LocationParentId = queryBuild.LocationParentId });
+                        }
+
+                    }
+                }
+                else if (item.LocationType == 3)
+                {
+                    if (Room.Where(o => o.Code == item.Code).Count() == 0)
+                    {
+                        Room.Add(new D_Locations() { Code = item.Code, LocationNameAr = item.LocationNameAr, LocationParentId = item.LocationParentId });
+
+
+                        var queryFloor = objLocationRepository.GetDetails(ZeroIntergerIFNull(item.LocationParentId.ToString()));
+                        if (queryFloor != null)
+                        {
+                            if (Floor.Where(o => o.Code == queryFloor.Code).Count() == 0)
+                            {
+                                Floor.Add(new D_Locations() { Code = queryFloor.Code, LocationNameAr = queryFloor.LocationNameAr, LocationParentId = queryFloor.LocationParentId });
+                                var queryBuildFloor = objLocationRepository.GetDetails(ZeroIntergerIFNull(queryFloor.LocationParentId.ToString()));
+                                if (queryBuildFloor != null)
+                                {
+                                    if (Building.Where(o => o.Code == queryBuildFloor.Code).Count() == 0)
+                                        Building.Add(new D_Locations() { Code = queryBuildFloor.Code, LocationNameAr = queryBuildFloor.LocationNameAr, LocationParentId = queryBuildFloor.LocationParentId });
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                BindDirections_Location(Building, ddlBuilding, "--- اختر ---", "LocationNameAr", "Code");
+
+                Session["Building"] = Building;
+                Session["Floor"] = Floor;
+                Session["Room"] = Room;
+
+            }
+        }
+
+        private void ClearLocation_ddl()
+        {
+            ddlBuilding.Items.Clear();
+            ddlFloor.Items.Clear();
+            ddlRoom.Items.Clear();
+            
+        }
+
+      
     }
 }
 

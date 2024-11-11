@@ -220,7 +220,7 @@
     <value>تسجيل عهدة تنظيمية</value>
   </data>
   <data name="CustodyCheckIn" xml:space="preserve">
-    <value>تسليم عهدة </value>
+    <value>استلام عهدة </value>
   </data>
   <data name="CustodyDetails" xml:space="preserve">
     <value>تفاصيل العهدة</value>
@@ -1046,5 +1046,8 @@
   </data>
   <data name="WithdrawType" xml:space="preserve">
     <value>نوع الايداع</value>
+  </data>
+  <data name="CustodyAddAll" xml:space="preserve">
+    <value>تسجيل عهدة</value>
   </data>
 </root>

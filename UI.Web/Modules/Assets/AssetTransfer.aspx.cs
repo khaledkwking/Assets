@@ -77,7 +77,7 @@ namespace UI.Web.Modules.Assets
                 for (int i = 0; i <= grdSelectedItems.Items.Count - 1; i++)
                 {
 
-                    var selectedItem = (AssetsItemUnits)objRepository.getItemDetailsForEdit(ZeroIntergerIFNull(grdSelectedItems.Items[i].Cells[0].Text));
+                    var selectedItem = (AssetsItemUnit)objRepository.getItemDetailsForEdit(ZeroIntergerIFNull(grdSelectedItems.Items[i].Cells[0].Text));
                     obj.AssetCode = selectedItem.Code;
                     obj.ActionDate = NullDateifEmpty(txtFromDate.Text);
 

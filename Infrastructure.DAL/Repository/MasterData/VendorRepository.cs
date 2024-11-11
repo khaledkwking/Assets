@@ -14,7 +14,7 @@ namespace Infrastructure.DAL
         #region List
         public List<D_VendorData> GetList()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_VendorData
@@ -29,7 +29,7 @@ namespace Infrastructure.DAL
 
         public List<D_VendorData> GetList(int accuontType,string _FilterPartOfName,int countryId)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_VendorData
@@ -47,7 +47,7 @@ namespace Infrastructure.DAL
 
         public D_VendorData GetDetails(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_VendorData
@@ -64,7 +64,7 @@ namespace Infrastructure.DAL
 
         public int Add<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 
                 DC.D_VendorData.Add(item as D_VendorData);
@@ -74,7 +74,7 @@ namespace Infrastructure.DAL
 
         public int Delete<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as D_VendorData).State = System.Data.Entity.EntityState.Deleted;
@@ -84,7 +84,7 @@ namespace Infrastructure.DAL
 
         public int Update<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as D_VendorData).State = System.Data.Entity.EntityState.Modified;

@@ -11,7 +11,10 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
+using System.Web.Script.Services;
+using System.Web.Services;
 
 namespace UI.Web.Controllers
 {
@@ -19,6 +22,7 @@ namespace UI.Web.Controllers
     {
 
         public SharedBusinessrRepository objRepository = IoC.Resolve<SharedBusinessrRepository>();
+        public static AssetsRepository objRepository2 = IoC.Resolve<AssetsRepository>();
 
 
         [HttpGet]
@@ -189,6 +193,34 @@ namespace UI.Web.Controllers
 
         }
 
+        [HttpGet]
+        [ActionName("GetEmployeeData")]
+        public async Task<List<EmployeeViewModel>> GetEmployeeData(int nodeId)
+        {
+
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await client.GetAsync(string.Format("OrgChart/EmployeeHierarchy/{0}", nodeId));
+
+                if (!Res.IsSuccessStatusCode)
+                    throw new Exception(Res.ToString());
+
+                var result = Res.Content.ReadAsStringAsync().Result;
+
+                // Get Employee Location 
+                //var assignedLocations =   objRepository.GetLocationList();
+
+                return JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
+
+
+            }
+
+        }
+
 
 
         //////Custody 
@@ -242,5 +274,198 @@ namespace UI.Web.Controllers
             return CustodyList;
 
         }
+
+
+        //[HttpGet]
+        //[ActionName("HandleEmployeeSelection")]
+        //public List<EmployeeSelectionResponse>  HandleEmployeeSelection(string selectedValue)
+        //{
+        //    List<EmployeeSelectionResponse> responseList = new List<EmployeeSelectionResponse>();
+
+        //    // Get the list of employees
+        //    int nodeId = ZeroIntergerIFNull(selectedValue);
+        //    List<EmployeeViewModel> employeeList = GetOraEmpList(nodeId);
+
+        //    // Find the selected employee
+        //    var selectedEmployee = employeeList.FirstOrDefault(x => x.EMP_ID == selectedValue);
+
+        //    if (selectedEmployee != null)
+        //    {
+        //        // Assuming you have a way to get the location based on the selected employee
+
+        //        var locationCode = objRepository2.getEmployeeLocations(ZeroIntergerIFNull(selectedEmployee.EMP_ID));
+
+        //        // Call fillRequestItems logic (you might need to adapt this)
+        //        var requestItems = FillRequestItems(locationCode.LocationCode, selectedValue);
+
+        //        // Prepare the response object
+        //        var response = new EmployeeSelectionResponse
+        //        {
+        //            EMP_NAME = selectedEmployee.EMP_NAME,
+        //            JOB_NAME = selectedEmployee.JOB_NAME,
+        //            EMP_ID = selectedEmployee.EMP_ID,
+        //            LOCATION_NAME = GetEmp_Location(ZeroIntergerIFNull(selectedEmployee.EMP_ID)),
+        //            REQUEST_ITEMS = requestItems // Assuming you want to return some request items
+        //        };
+        //        responseList.Add(response);
+        //        //return response;
+
+        //        //return response; // Return the data to the AJAX call
+        //    }
+
+        //    return null; // Or handle the case when no employee is found
+        //}
+        [HttpGet]
+        public IHttpActionResult GetEmployeeCustodyItems(string selectedValue)
+        {
+            //var custodyItems = FillRequestItems(locationCode.LocationCode, employeeId); ; // Replace with your method to get data
+
+            //return Ok(custodyItems);
+
+
+            int nodeId = ZeroIntergerIFNull(selectedValue);
+            List<EmployeeViewModel> employeeList = GetOraEmpList(nodeId);
+
+            // Find the selected employee
+            var selectedEmployee = employeeList.FirstOrDefault(x => x.EMP_ID == selectedValue);
+
+            if (selectedEmployee != null)
+            {
+                // Assuming you have a way to get the location based on the selected employee
+                var locationCode = objRepository2.getEmployeeLocations(ZeroIntergerIFNull(selectedEmployee.EMP_ID));
+
+                // Call fillRequestItems logic (you might need to adapt this)
+                var requestItems = FillRequestItems(locationCode.LocationCode, selectedValue);
+
+                return Ok(requestItems);
+            }
+            return null;
+        }
+
+
+        [HttpGet]
+        [ActionName("HandleEmployeeSelection")]
+        public List<EmployeeSelectionResponse> HandleEmployeeSelection(string selectedValue)
+        {
+            // Initialize the response list
+            List<EmployeeSelectionResponse> responseList = new List<EmployeeSelectionResponse>();
+
+            // Get the list of employees
+            int nodeId = ZeroIntergerIFNull(selectedValue);
+            List<EmployeeViewModel> employeeList = GetOraEmpList(nodeId);
+
+            // Find the selected employee
+            var selectedEmployee = employeeList.FirstOrDefault(x => x.EMP_ID == selectedValue);
+
+            if (selectedEmployee != null)
+            {
+                // Assuming you have a way to get the location based on the selected employee
+                var locationCode = objRepository2.getEmployeeLocations(ZeroIntergerIFNull(selectedEmployee.EMP_ID));
+
+                // Call fillRequestItems logic (you might need to adapt this)
+                var requestItems = FillRequestItems(locationCode.LocationCode, selectedValue);
+
+                // Prepare the response object
+                var response = new EmployeeSelectionResponse
+                {
+                    EMP_NAME = selectedEmployee.EMP_NAME,
+                    JOB_NAME = selectedEmployee.JOB_NAME,
+                    EMP_ID = selectedEmployee.EMP_ID,
+                    LOCATION_NAME = GetEmp_Location(ZeroIntergerIFNull(selectedEmployee.EMP_ID)),
+                    REQUEST_ITEMS = requestItems // Assuming you want to return some request items
+                };
+
+                // Add the response object to the list
+                responseList.Add(response);
+            }
+
+            // Return the list of responses (even if it's empty)
+            return responseList;
+        }
+     
+        public static  Int32 ZeroIntergerIFNull(string obj)
+        {
+            if (obj.Equals(""))
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt32(obj);
+            }
+        }
+        public static string GetEmp_Location(int EmpId)
+        {
+
+            using (AssetsEntitiesNew en = new AssetsEntitiesNew())
+            {
+                string FullLocationPath = "";
+                var EmpList = en.Get_Emp_Location(EmpId).ToList();
+                if (EmpList.Count > 0)
+                    FullLocationPath = EmpList.FirstOrDefault().FullLocationPath;
+
+                return FullLocationPath;
+            }
+        }
+        private static List<view_CustodyList> FillRequestItems(int? locationCode, string employeeId)
+        {
+            // Logic to fill request items similar to your existing fillRequestItems method
+            int refHCode = 0;// ZeroIntergerIFNull(hdnMasterID.Value); // You may need to adjust this
+            var objList = objRepository2.getCustodyListByMasterData(refHCode, ZeroIntergerIFNull(locationCode.ToString()), ZeroIntergerIFNull(employeeId));
+
+            // Process objList to fill in the details as per your original logic
+            if (objList != null && objList.Count > 0)
+            {
+                // Here you can return the processed list or any other data you need
+                return objList;
+            }
+
+            return new List<view_CustodyList>(); // Return an empty list if no items found
+        }
+
+        public static List<EmployeeViewModel> GetOraEmpList(int nodeId)
+        {
+            using (AssetsEntitiesNew en = new AssetsEntitiesNew())
+            {
+                var EmpList = en.Employee_tbl
+                    .Where(o => o.Emp_Active == true)
+                    .Join(
+                        en.D_JobTitle,
+                        emp => emp.Job_Id,
+                        job => job.Code,
+                        (emp, job) => new EmployeeViewModel
+                        {
+                            EMP_ID = emp.Emp_Id.ToString(),
+                            EMP_NAME = emp.Emp_Name,
+                            JOB_NAME = job.TitleAr
+                        })
+                    .ToList();
+
+                return EmpList;
+            }
+        }
+        public static List<view_CustodyList> getCustodyListByMasterData(int RequestHeaderCode, int ToLocationId, int EmpRefCode)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.view_CustodyList
+                     where obj.EmpRefCode == EmpRefCode
+                     && (ToLocationId != 0 ? obj.ToLocationId == ToLocationId : true)
+                     && (RequestHeaderCode != 0 ? obj.RequestHeaderCode == RequestHeaderCode : true)
+                     select obj);
+
+                return result.ToList<view_CustodyList>();
+            }
+        }
+
+    }
+    public class EmployeeSelectionResponse
+    {
+        public string EMP_NAME { get; set; }
+        public string JOB_NAME { get; set; }
+        public string EMP_ID { get; set; }
+        public string LOCATION_NAME { get; set; }
+        public List<view_CustodyList> REQUEST_ITEMS { get; set; }
     }
 }

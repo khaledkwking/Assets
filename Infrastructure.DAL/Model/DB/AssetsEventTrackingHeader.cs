@@ -17,8 +17,8 @@ namespace Infrastructure.DAL.Model.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AssetsEventTrackingHeader()
         {
-            this.AssetsEventTracking = new HashSet<AssetsEventTracking>();
-            this.RequestAttachments = new HashSet<RequestAttachments>();
+            this.AssetsEventTrackings = new HashSet<AssetsEventTracking>();
+            this.RequestAttachments = new HashSet<RequestAttachment>();
         }
     
         public int Code { get; set; }
@@ -41,8 +41,8 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<System.DateTime> LastModifiedAt { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssetsEventTracking> AssetsEventTracking { get; set; }
+        public virtual ICollection<AssetsEventTracking> AssetsEventTrackings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestAttachments> RequestAttachments { get; set; }
+        public virtual ICollection<RequestAttachment> RequestAttachments { get; set; }
     }
 }

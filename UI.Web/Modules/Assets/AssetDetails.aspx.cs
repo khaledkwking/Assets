@@ -162,7 +162,7 @@ namespace UI.Web.Modules.Assets
             try
             {
                 AssetsEventTracking obj = new AssetsEventTracking();
-                var selectedItem = (AssetsItemUnits)assetsRepository.getItemDetailsForEdit(ZeroIntergerIFNull(Request.QueryString["aid"].ToString()));
+                var selectedItem = (AssetsItemUnit)assetsRepository.getItemDetailsForEdit(ZeroIntergerIFNull(Request.QueryString["aid"].ToString()));
 
                 // Set Last EVent Information if data Not Chanaged
                 //if (selectedItem.LastEventTrackingId != 0)
@@ -257,7 +257,7 @@ namespace UI.Web.Modules.Assets
                 AssetsEventTracking obj = new AssetsEventTracking();
 
 
-                var selectedItem = (AssetsItemUnits)assetsRepository.getItemDetailsForEdit(ZeroIntergerIFNull(Request.QueryString["aid"].ToString()));
+                var selectedItem = (AssetsItemUnit)assetsRepository.getItemDetailsForEdit(ZeroIntergerIFNull(Request.QueryString["aid"].ToString()));
                 if (selectedItem!=null)
                 {
                     if (selectedItem.LastEventTrackingId != 0)

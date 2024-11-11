@@ -17,7 +17,7 @@ namespace Infrastructure.DAL.Model.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public D_InboundType()
         {
-            this.Inbound = new HashSet<Inbound>();
+            this.Inbounds = new HashSet<Inbound>();
         }
     
         public int Code { get; set; }
@@ -25,6 +25,6 @@ namespace Infrastructure.DAL.Model.DB
         public string TitleEn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inbound> Inbound { get; set; }
+        public virtual ICollection<Inbound> Inbounds { get; set; }
     }
 }

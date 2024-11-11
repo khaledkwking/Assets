@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option or rebuild the Visual Studio project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Pages {
@@ -363,6 +363,15 @@ namespace Resources {
         internal static string CustodyAdd1 {
             get {
                 return ResourceManager.GetString("CustodyAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تسجيل عهدة.
+        /// </summary>
+        internal static string CustodyAddAll {
+            get {
+                return ResourceManager.GetString("CustodyAddAll", resourceCulture);
             }
         }
         
@@ -1587,6 +1596,15 @@ namespace Resources {
         internal static string MainQunit {
             get {
                 return ResourceManager.GetString("MainQunit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إدارة طلبات التوريد.
+        /// </summary>
+        internal static string ManageStoreRequest {
+            get {
+                return ResourceManager.GetString("ManageStoreRequest", resourceCulture);
             }
         }
         

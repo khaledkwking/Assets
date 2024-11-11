@@ -34,9 +34,9 @@ namespace Infrastructure.DAL.Model.DB
         public string StoreRequestRefCode { get; set; }
         public Nullable<double> RequestItemPrice { get; set; }
     
-        public virtual AssetsAvailabilityStatus AssetsAvailabilityStatus { get; set; }
+        public virtual AssetsAvailabilityStatu AssetsAvailabilityStatu { get; set; }
         public virtual AssetsEventTrackingHeader AssetsEventTrackingHeader { get; set; }
-        public virtual AssetsTrackingActions AssetsTrackingActions { get; set; }
+        public virtual AssetsTrackingAction AssetsTrackingAction { get; set; }
         public virtual D_ItemCard D_ItemCard { get; set; }
     }
 }

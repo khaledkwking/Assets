@@ -14,7 +14,7 @@ namespace Infrastructure.DAL
         #region List
         public List<D_Locations> GetList()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_Locations
@@ -28,7 +28,7 @@ namespace Infrastructure.DAL
 
         public List<D_Locations> GetList(int parentId, string _FilterPartOfName)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_Locations
@@ -44,7 +44,7 @@ namespace Infrastructure.DAL
         }
         public List<D_Locations> getEntityLocations(int OrgChartRefCode, string _FilterPartOfName)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_Locations
@@ -60,7 +60,7 @@ namespace Infrastructure.DAL
         }
         public D_Locations GetDetails(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_Locations
@@ -76,7 +76,7 @@ namespace Infrastructure.DAL
 
         public D_EmployeeLocations GetEmployeeLocation(int EmpCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_EmployeeLocations
@@ -91,7 +91,7 @@ namespace Infrastructure.DAL
 
         public bool CheckChildExistance(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_Locations
@@ -109,7 +109,7 @@ namespace Infrastructure.DAL
 
         public void ResetEntityLocation(int EntityCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 DC.sp_clearEntityLocations(EntityCode);
             }
@@ -117,7 +117,7 @@ namespace Infrastructure.DAL
 
         public void SetEntityLocation(int EntityCode,string TragetLocations)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 DC.sp_setEntityLocations(EntityCode, TragetLocations);
             }
@@ -128,7 +128,7 @@ namespace Infrastructure.DAL
 
         public int Add<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
 
                 DC.D_Locations.Add(item as D_Locations);
@@ -138,7 +138,7 @@ namespace Infrastructure.DAL
 
         public int Delete<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as D_Locations).State = System.Data.Entity.EntityState.Deleted;
@@ -148,7 +148,7 @@ namespace Infrastructure.DAL
 
         public int Update<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as D_Locations).State = System.Data.Entity.EntityState.Modified;
@@ -168,7 +168,7 @@ namespace Infrastructure.DAL
 
         public int AddD_EmployeeLocations<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
 
                 DC.D_EmployeeLocations.Add(item as D_EmployeeLocations);
@@ -178,7 +178,7 @@ namespace Infrastructure.DAL
 
         public int DeleteD_EmployeeLocations<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as D_EmployeeLocations).State = System.Data.Entity.EntityState.Deleted;
@@ -188,7 +188,7 @@ namespace Infrastructure.DAL
 
         public int UpdateD_EmployeeLocations<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as D_EmployeeLocations).State = System.Data.Entity.EntityState.Modified;

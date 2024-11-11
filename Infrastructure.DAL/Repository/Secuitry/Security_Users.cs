@@ -16,7 +16,7 @@ namespace Infrastructure.DAL
 
          public List<Security_pr_AdminType> FillAdminTypes()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.Security_pr_AdminType
@@ -29,7 +29,7 @@ namespace Infrastructure.DAL
         }
         public List<Security_pr_admin> GetItems(int admintype, string partofname, int DeptId)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.Security_pr_admin
@@ -45,7 +45,7 @@ namespace Infrastructure.DAL
         }
         public List<Security_pr_admin> GetUserbyType(int admintype)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.Security_pr_admin
@@ -60,7 +60,7 @@ namespace Infrastructure.DAL
         
         public Security_pr_admin GetDetails(int Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.Security_pr_admin
@@ -74,7 +74,7 @@ namespace Infrastructure.DAL
         }
         public bool CheckUserNameExitance(string UserName)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.Security_pr_admin
@@ -88,7 +88,7 @@ namespace Infrastructure.DAL
         }
         public List<Security_pr_AdminType> GetAdminTypes()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.Security_pr_AdminType
@@ -107,7 +107,7 @@ namespace Infrastructure.DAL
         public List<Security_SP_PRM_getuserPermissions_Result> getUserpermision(int jobId, int userId)
         {
 
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.Security_SP_PRM_getuserPermissions(jobId, userId)
@@ -123,7 +123,7 @@ namespace Infrastructure.DAL
         public void DeleteUserpermssion(int jobId, int userId)
         {
 
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.Security_pr_Permission
@@ -150,7 +150,7 @@ namespace Infrastructure.DAL
 
         public int Add<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 DC.Security_pr_admin.Add(item as Security_pr_admin);
                 return DC.SaveChanges();
@@ -159,7 +159,7 @@ namespace Infrastructure.DAL
 
         public int Delete<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as Security_pr_admin).State = System.Data.Entity.EntityState.Deleted;
@@ -169,7 +169,7 @@ namespace Infrastructure.DAL
 
         public int Update<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as Security_pr_admin).State = System.Data.Entity.EntityState.Modified;
@@ -180,7 +180,7 @@ namespace Infrastructure.DAL
 
         public int AddPermission<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 DC.Security_pr_Permission.Add(item as Security_pr_Permission);
                 return DC.SaveChanges();
@@ -189,7 +189,7 @@ namespace Infrastructure.DAL
 
         public int Deletepermssion<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as Security_pr_Permission).State = System.Data.Entity.EntityState.Deleted;
@@ -199,7 +199,7 @@ namespace Infrastructure.DAL
 
         public int UpdatePermssion<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as Security_pr_Permission).State = System.Data.Entity.EntityState.Modified;

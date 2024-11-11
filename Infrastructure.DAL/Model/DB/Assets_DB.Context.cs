@@ -15,10 +15,10 @@ namespace Infrastructure.DAL.Model.DB
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class AssetsEntities : DbContext
+    public partial class AssetsEntitiesNew : DbContext
     {
-        public AssetsEntities()
-            : base("name=AssetsEntities")
+        public AssetsEntitiesNew()
+            : base("name=AssetsEntitiesNew")
         {
         }
     
@@ -27,13 +27,16 @@ namespace Infrastructure.DAL.Model.DB
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AssetsAvailabilityStatus> AssetsAvailabilityStatus { get; set; }
-        public virtual DbSet<AssetsEventTracking> AssetsEventTracking { get; set; }
-        public virtual DbSet<AssetsEventTrackingHeader> AssetsEventTrackingHeader { get; set; }
-        public virtual DbSet<AssetsItemUnits> AssetsItemUnits { get; set; }
-        public virtual DbSet<AssetsTrackingActions> AssetsTrackingActions { get; set; }
+        public virtual DbSet<AssetsAvailabilityStatu> AssetsAvailabilityStatus { get; set; }
+        public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
+        public virtual DbSet<AssetsEventTrackingHeader> AssetsEventTrackingHeaders { get; set; }
+        public virtual DbSet<AssetsEventTrackingTest> AssetsEventTrackingTests { get; set; }
+        public virtual DbSet<AssetsEventTrackingTestHeader> AssetsEventTrackingTestHeaders { get; set; }
+        public virtual DbSet<AssetsItemUnit> AssetsItemUnits { get; set; }
+        public virtual DbSet<AssetsTrackingAction> AssetsTrackingActions { get; set; }
         public virtual DbSet<D_AttachmentType> D_AttachmentType { get; set; }
         public virtual DbSet<D_Country> D_Country { get; set; }
+        public virtual DbSet<D_EmployeeList> D_EmployeeList { get; set; }
         public virtual DbSet<D_EmployeeLocations> D_EmployeeLocations { get; set; }
         public virtual DbSet<D_InboundDepositeStatusType> D_InboundDepositeStatusType { get; set; }
         public virtual DbSet<D_InboundType> D_InboundType { get; set; }
@@ -45,19 +48,21 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<D_LocationType> D_LocationType { get; set; }
         public virtual DbSet<D_QtyUnit> D_QtyUnit { get; set; }
         public virtual DbSet<D_VendorData> D_VendorData { get; set; }
-        public virtual DbSet<Inbound> Inbound { get; set; }
-        public virtual DbSet<InboundAttachments> InboundAttachments { get; set; }
-        public virtual DbSet<InboundNotes> InboundNotes { get; set; }
-        public virtual DbSet<InboundStatusTrack> InboundStatusTrack { get; set; }
-        public virtual DbSet<InboundStoreEmployee> InboundStoreEmployee { get; set; }
-        public virtual DbSet<RequestAttachments> RequestAttachments { get; set; }
+        public virtual DbSet<Employee_tbl> Employee_tbl { get; set; }
+        public virtual DbSet<Inbound> Inbounds { get; set; }
+        public virtual DbSet<InboundAttachment> InboundAttachments { get; set; }
+        public virtual DbSet<InboundNote> InboundNotes { get; set; }
+        public virtual DbSet<InboundStatusTrack> InboundStatusTracks { get; set; }
+        public virtual DbSet<InboundStoreEmployee> InboundStoreEmployees { get; set; }
+        public virtual DbSet<Item_tbl> Item_tbl { get; set; }
+        public virtual DbSet<RequestAttachment> RequestAttachments { get; set; }
         public virtual DbSet<Security_pr_admin> Security_pr_admin { get; set; }
         public virtual DbSet<Security_pr_AdminType> Security_pr_AdminType { get; set; }
         public virtual DbSet<Security_pr_MainSystem> Security_pr_MainSystem { get; set; }
         public virtual DbSet<Security_pr_ModuleThemes> Security_pr_ModuleThemes { get; set; }
         public virtual DbSet<Security_pr_Permission> Security_pr_Permission { get; set; }
         public virtual DbSet<Security_pr_SystemPages> Security_pr_SystemPages { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<view_AssetEventLog> view_AssetEventLog { get; set; }
         public virtual DbSet<view_AssetsEventTrackingHeader> view_AssetsEventTrackingHeader { get; set; }
         public virtual DbSet<view_AssetsInventory> view_AssetsInventory { get; set; }
@@ -70,28 +75,26 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<view_ItemCard> view_ItemCard { get; set; }
         public virtual DbSet<view_ItemCategoryTree> view_ItemCategoryTree { get; set; }
         public virtual DbSet<view_LocationTree> view_LocationTree { get; set; }
-        public virtual DbSet<viewEmployeeList> viewEmployeeList { get; set; }
-        public virtual DbSet<viewTemp> viewTemp { get; set; }
-        public virtual DbSet<D_EmployeeList> D_EmployeeList { get; set; }
+        public virtual DbSet<viewTemp> viewTemps { get; set; }
     
-        [DbFunction("AssetsEntities", "getChildNodeParentList")]
-        public virtual IQueryable<Nullable<int>> getChildNodeParentList(Nullable<int> childNodeId)
+        [DbFunction("AssetsEntitiesNew", "getChildNodeParentList")]
+        public virtual IQueryable<getChildNodeParentList_Result> getChildNodeParentList(Nullable<int> childNodeId)
         {
             var childNodeIdParameter = childNodeId.HasValue ?
                 new ObjectParameter("ChildNodeId", childNodeId) :
                 new ObjectParameter("ChildNodeId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Nullable<int>>("[AssetsEntities].[getChildNodeParentList](@ChildNodeId)", childNodeIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getChildNodeParentList_Result>("[AssetsEntitiesNew].[getChildNodeParentList](@ChildNodeId)", childNodeIdParameter);
         }
     
-        [DbFunction("AssetsEntities", "getNodeChildList")]
-        public virtual IQueryable<Nullable<int>> getNodeChildList(Nullable<int> parentNodeId)
+        [DbFunction("AssetsEntitiesNew", "getNodeChildList")]
+        public virtual IQueryable<getNodeChildList_Result> getNodeChildList(Nullable<int> parentNodeId)
         {
             var parentNodeIdParameter = parentNodeId.HasValue ?
                 new ObjectParameter("ParentNodeId", parentNodeId) :
                 new ObjectParameter("ParentNodeId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Nullable<int>>("[AssetsEntities].[getNodeChildList](@ParentNodeId)", parentNodeIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getNodeChildList_Result>("[AssetsEntitiesNew].[getNodeChildList](@ParentNodeId)", parentNodeIdParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> Security_SP_getPermissionsCount(Nullable<int> jobid, Nullable<int> userID)
@@ -202,6 +205,15 @@ namespace Infrastructure.DAL.Model.DB
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CategoryItemList_Result>("sp_CategoryItemList", nodeIdParameter);
         }
     
+        public virtual int sp_clearEntityLocations(Nullable<int> entityId)
+        {
+            var entityIdParameter = entityId.HasValue ?
+                new ObjectParameter("EntityId", entityId) :
+                new ObjectParameter("EntityId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_clearEntityLocations", entityIdParameter);
+        }
+    
         public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?
@@ -236,15 +248,6 @@ namespace Infrastructure.DAL.Model.DB
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual ObjectResult<sp_getEntityEmployeeList_Result> sp_getEntityEmployeeList(Nullable<int> nodeId)
-        {
-            var nodeIdParameter = nodeId.HasValue ?
-                new ObjectParameter("NodeId", nodeId) :
-                new ObjectParameter("NodeId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getEntityEmployeeList_Result>("sp_getEntityEmployeeList", nodeIdParameter);
-        }
-    
         public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
@@ -271,6 +274,15 @@ namespace Infrastructure.DAL.Model.DB
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
         }
     
+        public virtual ObjectResult<sp_ItemAutoComp_Result> sp_ItemAutoComp(string pre)
+        {
+            var preParameter = pre != null ?
+                new ObjectParameter("pre", pre) :
+                new ObjectParameter("pre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ItemAutoComp_Result>("sp_ItemAutoComp", preParameter);
+        }
+    
         public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
         {
             var diagramnameParameter = diagramname != null ?
@@ -288,29 +300,6 @@ namespace Infrastructure.DAL.Model.DB
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
         }
     
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
-        }
-    
-        public virtual ObjectResult<sp_ItemAutoComp_Result> sp_ItemAutoComp(string pre)
-        {
-            var preParameter = pre != null ?
-                new ObjectParameter("pre", pre) :
-                new ObjectParameter("pre", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ItemAutoComp_Result>("sp_ItemAutoComp", preParameter);
-        }
-    
-        public virtual int sp_clearEntityLocations(Nullable<int> entityId)
-        {
-            var entityIdParameter = entityId.HasValue ?
-                new ObjectParameter("EntityId", entityId) :
-                new ObjectParameter("EntityId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_clearEntityLocations", entityIdParameter);
-        }
-    
         public virtual int sp_setEntityLocations(Nullable<int> entityId, string locationIds)
         {
             var entityIdParameter = entityId.HasValue ?
@@ -322,6 +311,39 @@ namespace Infrastructure.DAL.Model.DB
                 new ObjectParameter("LocationIds", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_setEntityLocations", entityIdParameter, locationIdsParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual int sp_getEntityEmployeeList(Nullable<int> nodeId)
+        {
+            var nodeIdParameter = nodeId.HasValue ?
+                new ObjectParameter("NodeId", nodeId) :
+                new ObjectParameter("NodeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_getEntityEmployeeList", nodeIdParameter);
+        }
+    
+        public virtual ObjectResult<GetAssetUnitsCostDetails_Result> GetAssetUnitsCostDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAssetUnitsCostDetails_Result>("GetAssetUnitsCostDetails");
+        }
+    
+        public virtual ObjectResult<GetAssetUnitsCostCompare_Result> GetAssetUnitsCostCompare()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAssetUnitsCostCompare_Result>("GetAssetUnitsCostCompare");
+        }
+    
+        public virtual ObjectResult<Get_Emp_Location_Result> Get_Emp_Location(Nullable<int> empId)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Emp_Location_Result>("Get_Emp_Location", empIdParameter);
         }
     }
 }

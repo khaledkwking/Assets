@@ -13,18 +13,18 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UI.Web</RootNamespace>
     <AssemblyName>UI.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44330</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -70,6 +70,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\10.0.0.100\Web\A.ElSheriny\Editor\Bin\CuteEditor.ImageEditor.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ReportViewer.Common, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.140.1000.523\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
@@ -173,6 +174,7 @@
     <Content Include="Layout\Assets\businessScripts\orgChartTree.js" />
     <Content Include="Layout\Assets\businessScripts\orgchart.js" />
     <Content Include="Layout\Assets\businessScripts\ItemCategory.js" />
+    <Content Include="Layout\Assets\businessScripts\OrgEmp.js" />
     <Content Include="Layout\Assets\DX\dx.common.css" />
     <Content Include="Layout\Assets\DX\dx.dark.css" />
     <Content Include="Layout\Assets\DX\dx.light.css" />
@@ -1057,7 +1059,6 @@
     <Content Include="Layout\vendors\flot-chart\examples\series-toggle\index.html" />
     <Content Include="Layout\vendors\flot-chart\examples\series-types\index.html" />
     <Content Include="Layout\vendors\flot-chart\examples\shared\jquery-ui\jquery-ui.min.css" />
-    <Content Include="Layout\vendors\flot-chart\examples\shared\jquery-ui\jquery-ui.min.js" />
     <Content Include="Layout\vendors\flot-chart\examples\stacking\index.html" />
     <Content Include="Layout\vendors\flot-chart\examples\symbols\index.html" />
     <Content Include="Layout\vendors\flot-chart\examples\threshold\index.html" />
@@ -1084,7 +1085,6 @@
     <Content Include="Layout\vendors\flot-chart\jquery.flot.threshold.js" />
     <Content Include="Layout\vendors\flot-chart\jquery.flot.time.js" />
     <Content Include="Layout\vendors\flot-chart\jquery.flot.tooltip.js" />
-    <Content Include="Layout\vendors\flot-chart\jquery.flot.tooltip.min.js" />
     <Content Include="Layout\vendors\flot-chart\jquery.js" />
     <Content Include="Layout\vendors\flot-chart\LICENSE.txt" />
     <Content Include="Layout\vendors\font-awesome\css\font-awesome.css" />
@@ -1259,13 +1259,6 @@
     <Content Include="Layout\vendors\jplist\html\css\vendor\images\ui-icons_454545_256x240.png" />
     <Content Include="Layout\vendors\jplist\html\css\vendor\jquery-ui.css" />
     <Content Include="Layout\vendors\jplist\html\css\vendor\normalize.css" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList.sln" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\JPList.csproj" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\JPList.csproj.user" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\obj\Debug\JPList.dll" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\obj\Debug\JPList.pdb" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-mysql-demo\create.sql" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-sqlite-demo\sqlite3.exe" />
     <Content Include="Layout\vendors\jplist\html\demo.html" />
     <Content Include="Layout\vendors\jplist\html\examples\1-layout\div-layout.html" />
     <Content Include="Layout\vendors\jplist\html\examples\1-layout\list-grid.html" />
@@ -1920,11 +1913,13 @@
     <Content Include="Layout\vendors\summernote\summernote.css" />
     <Content Include="Layout\vendors\summernote\summernote.js" />
     <Content Include="Modules\Assets\AssetCheckin.aspx" />
+    <Content Include="Modules\Assets\AssetRegister.aspx" />
     <Content Include="Modules\Assets\AssetsRequestList.aspx" />
     <Content Include="Modules\Assets\AssetTransfer.aspx" />
     <Content Include="Modules\Assets\AssetDetails.aspx" />
     <Content Include="Modules\Assets\AssetCheckout.aspx" />
     <Content Include="Modules\Assets\assetsListPopup.aspx" />
+    <Content Include="Modules\Assets\MigrateDataaspx.aspx" />
     <Content Include="Modules\AutoComplete\Services\TextAutoComplete.asmx" />
     <Content Include="Modules\MasterData\AssetsList.aspx" />
     <Content Include="Modules\MasterData\EmployeeLocation.aspx" />
@@ -1938,6 +1933,8 @@
     <Content Include="Modules\MasterData\EmployeeList.aspx" />
     <Content Include="Modules\MasterData\VendorList.aspx" />
     <Content Include="Modules\MasterData\lookups.aspx" />
+    <Content Include="Modules\Reports\AssetsCostCompare.aspx" />
+    <Content Include="Modules\Reports\AssetsCostDetails.aspx" />
     <Content Include="Modules\Reports\OrgAssetReceipt.aspx" />
     <Content Include="Modules\Reports\AssetReceipt.aspx" />
     <Content Include="Modules\Reports\OrgChartPrint.aspx" />
@@ -1945,6 +1942,7 @@
     <Content Include="Modules\StoreOperations\Forms\Inboud\InboundItemReceving.aspx" />
     <Content Include="Modules\StoreOperations\Forms\Inboud\InboundList.aspx" />
     <Content Include="Modules\StoreOperations\Forms\Inboud\InboundOperrations.aspx" />
+    <Content Include="Modules\StoreOperations\Forms\Inboud\ManageStoreRequest.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2113,20 +2111,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\DAL\DataBase.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\DAL\StatusQueries.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\Domain\Models\Item.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\Domain\Models\StatusDataDTO.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\Domain\Models\StatusDTO.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\Log\Logger.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\Properties\AssemblyInfo.cs" />
-    <Compile Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\WEB\JPListHandler.cs" />
     <Compile Include="Modules\Assets\AssetCheckin.aspx.cs">
       <DependentUpon>AssetCheckin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Modules\Assets\AssetCheckin.aspx.designer.cs">
       <DependentUpon>AssetCheckin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Assets\AssetRegister.aspx.cs">
+      <DependentUpon>AssetRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Assets\AssetRegister.aspx.designer.cs">
+      <DependentUpon>AssetRegister.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\Assets\AssetsRequestList.aspx.cs">
       <DependentUpon>AssetsRequestList.aspx</DependentUpon>
@@ -2162,6 +2159,13 @@
     </Compile>
     <Compile Include="Modules\Assets\assetsListPopup.aspx.designer.cs">
       <DependentUpon>assetsListPopup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Assets\MigrateDataaspx.aspx.cs">
+      <DependentUpon>MigrateDataaspx.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Assets\MigrateDataaspx.aspx.designer.cs">
+      <DependentUpon>MigrateDataaspx.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\AutoComplete\Services\TextAutoComplete.asmx.cs">
       <DependentUpon>TextAutoComplete.asmx</DependentUpon>
@@ -2251,6 +2255,20 @@
     <Compile Include="Modules\MasterData\lookups.aspx.designer.cs">
       <DependentUpon>lookups.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Reports\AssetsCostCompare.aspx.cs">
+      <DependentUpon>AssetsCostCompare.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Reports\AssetsCostCompare.aspx.designer.cs">
+      <DependentUpon>AssetsCostCompare.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Reports\AssetsCostDetails.aspx.cs">
+      <DependentUpon>AssetsCostDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Reports\AssetsCostDetails.aspx.designer.cs">
+      <DependentUpon>AssetsCostDetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Reports\OrgAssetReceipt.aspx.cs">
       <DependentUpon>OrgAssetReceipt.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2271,6 +2289,11 @@
     </Compile>
     <Compile Include="Modules\Reports\OrgChartPrint.aspx.designer.cs">
       <DependentUpon>OrgChartPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Reports\RDLC\DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="Modules\Reports\StocktakingReport.aspx.cs">
       <DependentUpon>StocktakingReport.aspx</DependentUpon>
@@ -2299,6 +2322,13 @@
     </Compile>
     <Compile Include="Modules\StoreOperations\Forms\Inboud\InboundOperrations.aspx.designer.cs">
       <DependentUpon>InboundOperrations.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\StoreOperations\Forms\Inboud\ManageStoreRequest.aspx.cs">
+      <DependentUpon>ManageStoreRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\StoreOperations\Forms\Inboud\ManageStoreRequest.aspx.designer.cs">
+      <DependentUpon>ManageStoreRequest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\_shared\MainEmpty.Master.cs">
       <DependentUpon>MainEmpty.Master</DependentUpon>
@@ -2584,14 +2614,6 @@
     <Content Include="Layout\vendors\iCheck\demo\css\montserrat-regular.eot" />
     <Content Include="Layout\vendors\iCheck\demo\css\montserrat-regular.ttf" />
     <Content Include="Layout\vendors\iCheck\demo\css\montserrat-regular.woff" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList.suo" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\asp-net-sql-server\asp-net-solution\JPList\obj\Debug\ResolveAssemblyReference.cache" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-mysql-demo\config.php" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-mysql-demo\server-html.php" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-mysql-demo\server-json.php" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-mysql-demo\server-xml.php" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-sqlite-demo\jplist.db" />
-    <Content Include="Layout\vendors\jplist\html\data-sources\php-sqlite-demo\server.php" />
     <Content Include="Layout\vendors\jquery-file-upload\.gitignore" />
     <Content Include="Layout\vendors\jquery-file-upload\.jshintrc" />
     <Content Include="Layout\vendors\jquery-file-upload\blueimp-file-upload.jquery.json" />
@@ -2606,7 +2628,6 @@
     <Content Include="Layout\vendors\jquery-file-upload\server\node\.gitignore" />
     <Content Include="Layout\vendors\jquery-file-upload\server\node\package.json" />
     <Content Include="Layout\vendors\jquery-file-upload\server\node\public\files\.gitignore" />
-    <Content Include="Layout\vendors\jquery-file-upload\server\node\public\files\thumbnail\.gitignore" />
     <Content Include="Layout\vendors\jquery-file-upload\server\node\tmp\.gitignore" />
     <Content Include="Layout\vendors\jquery-file-upload\server\php\files\.gitignore" />
     <Content Include="Layout\vendors\jquery-file-upload\server\php\files\.htaccess" />
@@ -2713,9 +2734,21 @@
     <Content Include="Layout\login\fonts\fontawesome-webfontd41d.eot" />
     <Content Include="Modules\_shared\Main.Master" />
     <Content Include="Modules\_shared\MainEmpty.Master" />
+    <Content Include="Modules\Reports\RDLC\DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
+    <None Include="Modules\Reports\RDLC\DataSet1.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Modules\Reports\RDLC\DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
     <None Include="NWebsecConfig\HttpHeaderSecurityModuleConfig.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\ValidationResources.ar.resx">
@@ -2788,6 +2821,8 @@
       <LastGenOutput>actions.ar-kw.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Modules\Reports\RDLC\orgChart.rdlc" />
+    <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsList_No9_Compare.rdlc" />
+    <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsList_No9.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsListWithServicePeriod.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\Sub_AssetsReceipt.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsReceipt.rdlc" />
@@ -2805,6 +2840,7 @@
     <Folder Include="Layout\uploads\Adminprofile\" />
     <Folder Include="Layout\vendors\bootstrap-datetimepicker\bootstrap\" />
     <Folder Include="Layout\vendors\css3-treeview\" />
+    <Folder Include="Layout\vendors\jquery-file-upload\server\node\public\files\thumbnail\" />
     <Folder Include="Layout\vendors\jquery-ui-1.10.4.custom\jquery-ui-1.10.4.custom\" />
     <Folder Include="Modules\MasterData\images\" />
     <Folder Include="ViewModels\" />
@@ -2823,12 +2859,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>17170</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>https://localhost:44330/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

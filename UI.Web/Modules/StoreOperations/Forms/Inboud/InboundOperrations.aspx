@@ -15,26 +15,26 @@
 
             var txt = document.getElementById("<%=txtSerial.ClientID %>")
             if (txt.value == "") {
-                Swal.fire("Please, Enter inbound document Serial #");
+                Swal.fire("يرجى إدخال رقم المسلسل");
                 return false;
             }
 
             var txt = document.getElementById("<%=txtTransDate.ClientID %>")
             if (txt.value == "") {
-                Swal.fire("Please, Enter inbound Transaction Date");
+                Swal.fire("يرجى إدخال تاريخ الطلب");
                 return false;
             }
 
             var txt = document.getElementById("<%=lstFromVendorCode.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
-                Swal.fire("Please, select Vendor");
+                Swal.fire("يرجى إختيار الـمورد");
                 return false;
             }
 
 
             var txt = document.getElementById("<%=lstTargetLocationCode.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
-                Swal.fire("Please, select Store");
+                Swal.fire("يرجى إختيار الـمخزن");
                 return false;
             }
 
@@ -42,60 +42,53 @@
 
             var txt = document.getElementById("<%=txtRefNo.ClientID %>")
             if (txt.value == "") {
-                Swal.fire("Please, Enter inbound Reference No ");
+                Swal.fire("يرجى إدخال رقم طلب التسليم");
                 return false;
             }
 
             var txt = document.getElementById("<%=txtRefDate.ClientID %>")
             if (txt.value == "") {
-                Swal.fire("Please, Enter inbound Reference Date ");
+                Swal.fire("يرجى إدخال تاريخ الـمرجـع");
                 return false;
             }
 
             return true;
         }
-
         function ValidateInboundITems() {
             var txt = document.getElementById("<%=hdnMasterID.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
-                Swal.fire("Please, Save Inbound Master Data");
+                Swal.fire("يرجى حفظ البيانات الأساسية الخاصة بقائمة المواد");
                 return false;
             }
 
             var txt = document.getElementById("<%=lstPurchaseItems.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
-                Swal.fire("Please,Select Item");
+                Swal.fire("يرجى إختيار وصف المـادة");
                 return false;
             }
             var txt = document.getElementById("<%=txtQty.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
-                Swal.fire("Please,Enter Qty");
+                Swal.fire("يرجى إدخال كمية المـادة");
                 return false;
             }
 
             var txt = document.getElementById("<%=txtUnitCost.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
-                Swal.fire("Please,Enter Unit Cost");
+                Swal.fire("يرجى إدخال سعر الوحدة");
                 return false;
             }
-
-
-
             return true;
         }
-
-
         function ValidateInboundNotes() {
             var txt = document.getElementById("<%=hdnMasterID.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
-                Swal.fire("Please, Save Inbound Master Data");
+                Swal.fire("يرجى حفظ البيانات الأساسية الخاصة بقائمة المواد");
                 return false;
             }
 
 
             return true;
         }
-
         function setActiveTab(tab) {
             var txt = document.getElementById("<%=hdnActiveTab.ClientID %>")
             txt.value = tab;
@@ -334,8 +327,6 @@
                                                                                 <div class="portlet-body">
                                                                                     <div role="form" class="form-body pal">
                                                                                         <div class="row">
-
-
                                                                                             <div class="col-md-4">
                                                                                                 <div class="form-group">
                                                                                                     <label class="control-label" for=""><%=GetGlobalResourceObject("pages","PurchaseItems") %></label>
@@ -352,7 +343,6 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-
                                                                                             <div class="col-md-2"  >
                                                                                                 <div class="form-group">
                                                                                                     <div class="col-md-12">
@@ -369,7 +359,6 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-
                                                                                             <div class="col-md-2">
                                                                                                 <div class="form-group">
                                                                                                     <div class="col-md-12">
@@ -379,7 +368,6 @@
 
                                                                                                 </div>
                                                                                             </div>
-
                                                                                             <div class="col-md-2">
                                                                                                 <div class="form-group">
                                                                                                     <div class="col-md-12">
@@ -389,7 +377,6 @@
 
                                                                                                 </div>
                                                                                             </div>
-
                                                                                             <div class="col-md-2">
                                                                                                 <div class="form-group">
                                                                                                     <label class="control-label" for=""><%=GetGlobalResourceObject("pages","ExpiryDate") %></label>
@@ -404,8 +391,6 @@
 
                                                                                                 </div>
                                                                                             </div>
-
-
                                                                                         </div>
 
                                                                                         <div class="row">

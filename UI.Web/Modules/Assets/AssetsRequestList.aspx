@@ -149,10 +149,10 @@
                 </div>
                 <div class="card-inner p-0">
 
+                    <%--OnItemDataBound="grdData_ItemDataBound"--%>
 
-
-                    <asp:DataGrid runat="server" ID="grdData" AutoGenerateColumns="False"
-                        AllowPaging="false" class="table table-hover table-striped table-bordered table-advanced tablesorter" data-auto-responsive="false" OnItemDataBound="grdData_ItemDataBound">
+                    <asp:DataGrid runat="server" ID="grdData" AutoGenerateColumns="False" OnItemDataBound="grdData_ItemDataBound"
+                        AllowPaging="true" PageSize="10" class="table table-hover table-striped table-bordered table-advanced tablesorter" data-auto-responsive="false" >
 
                         <Columns>
                             <asp:TemplateColumn>
@@ -167,84 +167,13 @@
                                 </ItemTemplate>
                             </asp:TemplateColumn>
 
-                            <asp:TemplateColumn HeaderText="">
-                                <ItemStyle HorizontalAlign="left" />
-                                <ItemTemplate>
-
-                                    <div style="direction: rtl; text-align: right">
-                                        <asp:Label Font-Bold="true" runat="server" ID="Label7" CssClass="black_Lable">
-				                           قائمة العهد
-                                        </asp:Label>
-                                        <asp:DataGrid runat="server" ID="grdItems" AutoGenerateColumns="False"
-                                            AllowPaging="false" class="table table-hover table-striped table-bordered table-advanced tablesorter">
-                                            <PagerStyle Visible="False" />
-                                            <Columns>
-                                                <%--   <asp:BoundColumn DataField="InboubdItemId" Visible="False"></asp:BoundColumn>--%>
-                                                <asp:TemplateColumn>
-                                                    <HeaderStyle Wrap="False" HorizontalAlign="Center" />
-                                                    <ItemStyle Width="2%" />
-                                                    <HeaderTemplate>
-                                                        <input id="chkAllItems" class="checkall" style="border-style: none;" type="checkbox" onclick="CheckAllDataGridCheckBoxes('chkItem', this.checked)" />
-                                                    </HeaderTemplate>
-                                                    <ItemTemplate>
-                                                        <asp:CheckBox runat="server" ID="chkItem" CssClass="check" />
-
-                                                    </ItemTemplate>
-                                                </asp:TemplateColumn>
-
-                                                <asp:TemplateColumn HeaderText="<%$ Resources:pages,image %>">
-                                                    <ItemStyle Width="5%" />
-                                                    <ItemTemplate>
-
-                                                        <%# FillImage(gets(Eval("ItemImage")), Resources.Utilities.resourcespath+"uploads/ItemsData/", 35, 25,"")%>
-                                                    </ItemTemplate>
-                                                </asp:TemplateColumn>
-                                                <asp:BoundColumn DataField="ItemRefCode" HeaderText="<%$ Resources:pages,ItemRefCode %>"></asp:BoundColumn>
-                                                <asp:TemplateColumn HeaderText="<%$ Resources:pages,PurchaseItems %>">
-                                                    <ItemTemplate>
-                                                        <div><%#gets(Eval("ItemNameAr"))%> </div>
-                                                    
-                                                    </ItemTemplate>
-                                                </asp:TemplateColumn>
-
-
-                                                <asp:BoundColumn DataField="ActionDate" HeaderText="<%$ Resources:pages,eventDate %>" DataFormatString="{0:dd/MM/yyyy}"></asp:BoundColumn>
-                                                <asp:BoundColumn DataField="Qty" HeaderText="<%$ Resources:pages,Qty %>"></asp:BoundColumn>
-                                                <asp:BoundColumn DataField="Notes" HeaderText="<%$ Resources:pages,Notes %>"></asp:BoundColumn>
-                                                <asp:TemplateColumn HeaderText="<%$ Resources:pages,Event %>">
-                                                    <ItemTemplate>
-                                                      <%--  <div class="text-info"><%#( ZeroIntergerIFNull(gets(Eval("RequestActionType")))==2?"<em class='icon ni ni-building  text-info'></em>&nbsp; <span class='badge badge-outline-info'>عهدة تنظيمية</span>"    :"<em class='icon ni ni-user-list  text-warning'></em> &nbsp; <span class='badge badge-outline-warning'>عهدة شخصية</span>")  %>   </div>
-                                                        <div class="text-info"><%#  ZeroIntergerIFNull(gets(Eval("EmpRefCode")))==0?""  : gets(Eval("EmpName")) %></div>--%>
-                                                             <div><%# showAvailability(ZeroIntergerIFNull(gets(Eval("StatusId"))), gets( Eval("AvailabilityStatusAr"))) %></div> 
-                                                    </ItemTemplate>
-                                                </asp:TemplateColumn>
-                                                <%--<asp:TemplateColumn>
-                                                    <HeaderStyle HorizontalAlign="Center" />
-                                                    <ItemStyle Width="2%" />
-                                                    <ItemTemplate>
-                                                        <div class="drodown">
-                                                            <a href="#" class="btn btn-sm btn-icon btn-trigger dropdown-toggle" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <ul class="link-list-opt no-bdr">
-                                                                    <li><a href="<%=GetGlobalResourceObject("Utilities","cutureRoute") %>/Modules/Assets/AssetDetails.aspx?aid=<%#Eval("InboubdItemId") %>" class="iframe75"><span class='nk-menu-icon'><em class='icon ni ni-list-thumb-alt-fill'></em></span><span class='nk-menu-text'><%=GetGlobalResourceObject("Pages","custodyHistory") %></span></a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-
-                                                    </ItemTemplate>
-                                                </asp:TemplateColumn>--%>
-                                            </Columns>
-                                        </asp:DataGrid>
-
-                                    </div>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="">
+                            
+                          <%--  <asp:TemplateColumn HeaderText="">
                                 <ItemStyle HorizontalAlign="center" />
                                 <ItemTemplate>
                                     <img style="cursor: pointer;" src="/layout/images/plus.gif" alt="" border="0" runat="server" id="imgControl" />
                                 </ItemTemplate>
-                            </asp:TemplateColumn>
+                            </asp:TemplateColumn>--%>
                             <asp:BoundColumn DataField="code" Visible="False"></asp:BoundColumn>
                             <asp:BoundColumn DataField="Serial" HeaderText="<%$ Resources:pages,Serial %> "></asp:BoundColumn>
                             <asp:BoundColumn DataField="RequestRefCode" HeaderText="<%$ Resources:pages,RefCode %> "></asp:BoundColumn>
@@ -306,7 +235,7 @@
                         <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_3_paginate">
 
                             <cc1:Pager CurrentIndex="1" OnCommand="pager_Command" ShowFirstLast="False" ID="pager1"
-                                runat="server" Width="100%" PageSize="20" AlternativeTextEnabled="False" BackToFirstClause="" BackToPageClause="" EnableSmartShortCuts="True" EnableTheming="True" FirstClause="" FromClause="" GoClause="" GoToLastClause="" LastClause="" NextClause="التالى" OfClause="من" PageClause="صفحة" PreviousClause="السابق" RTL="True" ShowingResultClause="" ShowResultClause=""></cc1:Pager>
+                                runat="server" Width="100%" PageSize="10" AlternativeTextEnabled="False" BackToFirstClause="" BackToPageClause="" EnableSmartShortCuts="True" EnableTheming="True" FirstClause="" FromClause="" GoClause="" GoToLastClause="" LastClause="" NextClause="التالى" OfClause="من" PageClause="صفحة" PreviousClause="السابق" RTL="True" ShowingResultClause="" ShowResultClause=""></cc1:Pager>
 
 
                         </div>

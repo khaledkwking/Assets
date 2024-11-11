@@ -20,7 +20,7 @@ namespace Infrastructure.DAL
     public class LookupMaster : BaseRepository
     {
 
-        public LookupMaster(AssetsEntities _context) : base(_context)
+        public LookupMaster(AssetsEntitiesNew _context) : base(_context)
         {
 
         }

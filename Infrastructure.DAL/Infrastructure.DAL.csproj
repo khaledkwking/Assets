@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Infrastructure.DAL</RootNamespace>
     <AssemblyName>Infrastructure.DAL</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -68,7 +68,7 @@
     <Compile Include="Class Extenders\Extenders.cs" />
     <Compile Include="Entities\Collection\EntityCollection.cs" />
     <Compile Include="Entities\KeyListItem.cs" />
-    <Compile Include="Model\DB\AssetsAvailabilityStatus.cs">
+    <Compile Include="Model\DB\AssetsAvailabilityStatu.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\AssetsEventTracking.cs">
@@ -77,10 +77,16 @@
     <Compile Include="Model\DB\AssetsEventTrackingHeader.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DB\AssetsItemUnits.cs">
+    <Compile Include="Model\DB\AssetsEventTrackingTest.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DB\AssetsTrackingActions.cs">
+    <Compile Include="Model\DB\AssetsEventTrackingTestHeader.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\AssetsItemUnit.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\AssetsTrackingAction.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\Assets_DB.Context.cs">
@@ -92,6 +98,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Assets_DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Assets_DB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\D_AttachmentType.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
@@ -135,13 +146,31 @@
     <Compile Include="Model\DB\D_VendorData.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DB\Employee_tbl.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\GetAssetUnitsCostCompare_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\GetAssetUnitsCostDetails_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\getChildNodeParentList_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\getNodeChildList_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Get_Emp_Location_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DB\Inbound.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DB\InboundAttachments.cs">
+    <Compile Include="Model\DB\InboundAttachment.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DB\InboundNotes.cs">
+    <Compile Include="Model\DB\InboundNote.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\InboundStatusTrack.cs">
@@ -150,7 +179,10 @@
     <Compile Include="Model\DB\InboundStoreEmployee.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DB\RequestAttachments.cs">
+    <Compile Include="Model\DB\Item_tbl.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\RequestAttachment.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\Security_pr_admin.cs">
@@ -189,9 +221,6 @@
     <Compile Include="Model\DB\sp_CategoryItemList_Result.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DB\sp_getEntityEmployeeList_Result.cs">
-      <DependentUpon>Assets_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\DB\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
@@ -201,10 +230,7 @@
     <Compile Include="Model\DB\sp_ItemAutoComp_Result.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DB\sysdiagrams.cs">
-      <DependentUpon>Assets_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DB\viewEmployeeList.cs">
+    <Compile Include="Model\DB\sysdiagram.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\viewTemp.cs">
@@ -259,11 +285,6 @@
     <Compile Include="Repository\MasterData\VendorRepository.cs" />
     <Compile Include="Repository\MasterData\LookupMaster.cs" />
     <Compile Include="Model\ModelExtension\ModelTrackingExtension.cs" />
-    <Compile Include="Model\DB\Assets_DB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Assets_DB.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Repository\Secuitry\AdminRepository.cs" />
     <Compile Include="Repository\Secuitry\Security_Users.cs" />
   </ItemGroup>
@@ -286,7 +307,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="packages.config" />
     <EntityDeploy Include="Model\DB\Assets_DB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Assets_DB.Designer.cs</LastGenOutput>
@@ -294,6 +314,7 @@
     <None Include="Model\DB\Assets_DB.edmx.diagram">
       <DependentUpon>Assets_DB.edmx</DependentUpon>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Model\DB\Assets_DB.Context.tt">
@@ -307,7 +328,6 @@
       <LastGenOutput>Assets_DB.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -523,6 +523,15 @@ namespace UI.Web.Modules._shared
                         strmenu.Append(("</li>"));
                     }
 
+                    if (ShowPage("ManageStoreRequest.aspx"))
+                    {
+                        strmenu.Append(("<li class='nk-menu-item'>"));
+                        strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Inboud/ManageStoreRequest.aspx' class='nk-menu-link'>"));
+                        strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-index-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.ManageStoreRequest + "</span>"));
+                        strmenu.Append(("</a>"));
+                        strmenu.Append(("</li>"));
+                    }
+
                     strmenu.Append("</ul>");
                     strmenu.Append("</li>");
 
@@ -566,6 +575,7 @@ namespace UI.Web.Modules._shared
                     strmenu.Append(("</a>"));
                     strmenu.Append(("</li>"));
                 }
+
 
                 strmenu.Append("</ul>");
                 strmenu.Append("</li>");
@@ -613,6 +623,12 @@ namespace UI.Web.Modules._shared
 
                 if (ShowPage("AssetCheckout.aspx"))
                 {
+                    //strmenu.Append(("<li class='nk-menu-item'>"));
+                    //strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetCheckout.aspx?t=1' class='nk-menu-link'>"));
+                    //strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-user-list-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.CustodyAddAll + "</span>"));
+                    //strmenu.Append(("</a>"));
+                    //strmenu.Append(("</li>"));
+
                     strmenu.Append(("<li class='nk-menu-item'>"));
                     strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetCheckout.aspx?t=1' class='nk-menu-link'>"));
                     strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-user-list-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.CustodyAdd + "</span>"));
@@ -706,6 +722,15 @@ namespace UI.Web.Modules._shared
                         strmenu.Append(("</li>"));
                     }
 
+                    if (ShowPage("ManageStoreRequest.aspx"))
+                    {
+                        strmenu.Append(("<li class='nk-menu-item'>"));
+                        strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Inboud/ManageStoreRequest.aspx' class='nk-menu-link'>"));
+                        strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-index-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.ManageStoreRequest + "</span>"));
+                        strmenu.Append(("</a>"));
+                        strmenu.Append(("</li>"));
+                    }
+
                     strmenu.Append("</ul>");
                     strmenu.Append("</li>");
 
@@ -735,7 +760,22 @@ namespace UI.Web.Modules._shared
                     strmenu.Append(("</a>"));
                     strmenu.Append(("</li>"));
                 }
-
+                if (ShowPage("AssetsCostDetails.aspx"))
+                {
+                    strmenu.Append(("<li class='nk-menu-item'>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Reports/AssetsCostDetails.aspx' class='nk-menu-link'>")); 
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-property-add'></em></span><span class='nk-menu-text'>" + "البيانات التفصيلية للاصول الواردة" + "</span>"));
+                    strmenu.Append(("</a>"));
+                    strmenu.Append(("</li>"));
+                }
+                if (ShowPage("AssetsCostCompare.aspx"))
+                {
+                    strmenu.Append(("<li class='nk-menu-item'>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Reports/AssetsCostCompare.aspx' class='nk-menu-link'>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-property-add'></em></span><span class='nk-menu-text'>" + "مقارنة البيانات التفصيلية للاصول الواردة " + "</span>"));
+                    strmenu.Append(("</a>"));
+                    strmenu.Append(("</li>"));
+                }
 
 
                 strmenu.Append(("</ul>"));
@@ -851,8 +891,6 @@ namespace UI.Web.Modules._shared
 
             return _outList;
         }
-
-
         protected string gets(object obj)
         {
             if ((obj == DBNull.Value))
@@ -865,7 +903,6 @@ namespace UI.Web.Modules._shared
             }
 
         }
-
         public bool ShowPage(string url)
         {
             Hashtable tbl = ((Hashtable)(ViewState["Permission"]));
@@ -882,7 +919,6 @@ namespace UI.Web.Modules._shared
 
             return bool.Parse(tbl[url].ToString());
         }
-
         public bool ShowSystem(string systemid)
         {
             Hashtable tbl = ((Hashtable)(ViewState["System"]));

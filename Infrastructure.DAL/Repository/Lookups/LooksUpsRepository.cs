@@ -15,7 +15,7 @@ namespace Infrastructure.DAL
 
         public List<D_AttachmentType> FillAttachmentTypes()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_AttachmentType
@@ -28,7 +28,7 @@ namespace Infrastructure.DAL
 
         public List<D_ItemsCategory> FillItemCategory()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_ItemsCategory
@@ -41,7 +41,7 @@ namespace Infrastructure.DAL
 
         public List<D_ItemCard> fillCategoryItems(int CategoryId)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_ItemCard
@@ -55,7 +55,7 @@ namespace Infrastructure.DAL
 
         public List<D_Locations> FillLocations()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_Locations
@@ -67,7 +67,7 @@ namespace Infrastructure.DAL
         }
         public List<D_LocationType> FillLocationsTypes()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_LocationType
@@ -80,7 +80,7 @@ namespace Infrastructure.DAL
 
         public List<D_Country> FillCountries()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_Country
@@ -93,7 +93,7 @@ namespace Infrastructure.DAL
 
         //public List<D_OrgChart> FillEntityList()
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        var result =
         //            (from obj in DC.D_OrgChart
@@ -105,7 +105,7 @@ namespace Infrastructure.DAL
         //}
           public List<D_JobTitle> FIllJobTtile()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_JobTitle
@@ -118,7 +118,7 @@ namespace Infrastructure.DAL
 
         public List<D_QtyUnit> FillQUnit()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_QtyUnit
@@ -135,7 +135,7 @@ namespace Infrastructure.DAL
         #region "Inbound lookups"
         public List<D_InboundType> FillInboundTypes()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_InboundType
@@ -148,7 +148,7 @@ namespace Infrastructure.DAL
 
         public List<D_VendorData> Fillvendor()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_VendorData
@@ -160,7 +160,7 @@ namespace Infrastructure.DAL
 
         public List<view_LocationTree> FillStoreLocations()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_LocationTree
@@ -173,7 +173,7 @@ namespace Infrastructure.DAL
 
         public List<D_InboundDepositeStatusType> FillDepositeStatusType()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_InboundDepositeStatusType
@@ -187,7 +187,7 @@ namespace Infrastructure.DAL
 
         public List<D_QtyUnit> FillQuantityCode()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_QtyUnit
@@ -199,7 +199,7 @@ namespace Infrastructure.DAL
         }
         public List<D_ItemUsedStatus> fillUsedStatus()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_ItemUsedStatus
@@ -210,7 +210,7 @@ namespace Infrastructure.DAL
         }
         public List<D_Locations> FillLocation()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_Locations
@@ -222,7 +222,7 @@ namespace Infrastructure.DAL
         }
         public List<D_EmployeeList> FillEmployee()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_EmployeeList
@@ -239,7 +239,7 @@ namespace Infrastructure.DAL
 
             name.Add("@pre");
             value.Add(prefixText.ToLower());
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
 
                 var result =
@@ -254,30 +254,30 @@ namespace Infrastructure.DAL
 
         #region "Tracking"
 
-        public List<AssetsAvailabilityStatus> FillTrackingStatus()
+        public List<AssetsAvailabilityStatu> FillTrackingStatus()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.AssetsAvailabilityStatus
                      orderby obj.TitleEn ascending
                      select obj);
 
-                return result.ToList<AssetsAvailabilityStatus>();
+                return result.ToList<AssetsAvailabilityStatu>();
             }
         }
 
 
-        public List<AssetsTrackingActions> FillAssetsTrackingActions()
+        public List<AssetsTrackingAction> FillAssetsTrackingActions()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.AssetsTrackingActions
                      orderby obj.TitleEn ascending
                      select obj);
 
-                return result.ToList<AssetsTrackingActions>();
+                return result.ToList<AssetsTrackingAction>();
             }
         }
 
@@ -289,7 +289,7 @@ namespace Infrastructure.DAL
 
         //public List<D_OutboundType> FillOutboundTypes()
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        var result =
         //            (from obj in DC.D_OutboundType
@@ -303,7 +303,7 @@ namespace Infrastructure.DAL
 
         //public List<D_OutboundwithdrawStatus> FilllWithdrawOrderStatusCode()
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        var result =
         //            (from obj in DC.D_OutboundwithdrawStatus

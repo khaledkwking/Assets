@@ -17,7 +17,7 @@ namespace Infrastructure.DAL
         public IList<View_InboundList> GetList(string inboundSerial, DateTime TransactionDatFrom, DateTime TransactionDatTo, int InboundType, int DepositeType, int CustomeDepartment
             , int RefType, string RefNo, string ManifestNo, string DekiveryOrderNo, int Decalrationtype, int PurchaseOrderId)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.View_InboundList
@@ -25,7 +25,7 @@ namespace Infrastructure.DAL
                      where 1 == 1
                    && (inboundSerial != "" ? obj.Serial == inboundSerial : 1 == 1)
                    && (TransactionDatFrom != new DateTime(1990, 01, 01) ? obj.TransDate >= TransactionDatFrom : 1 == 1)
-                   && (TransactionDatTo != new DateTime(1990, 01, 01) ? obj.TransDate <= TransactionDatFrom : 1 == 1)
+                   && (TransactionDatTo != new DateTime(1990, 01, 01) ? obj.TransDate <= TransactionDatTo : 1 == 1)
                    && (InboundType != 0 ? obj.InboundTypeCode == InboundType : 1 == 1)
                    && (DekiveryOrderNo != "" ? obj.DeliveryOrderNo == DekiveryOrderNo : 1 == 1)
                     && (RefNo != "" ? obj.RefNo == RefNo : 1 == 1)
@@ -38,7 +38,7 @@ namespace Infrastructure.DAL
         }
         public View_InboundList FillDetails(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.View_InboundList
@@ -50,10 +50,10 @@ namespace Infrastructure.DAL
         }
         public Inbound getInboundRelatedTooutVount(int OutBoundRefCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.Inbound
+                    (from obj in DC.Inbounds
                      where obj.OutBoundRefCode == OutBoundRefCode
                      select obj);
 
@@ -64,7 +64,7 @@ namespace Infrastructure.DAL
 
         public View_InboundList getInboundMasterBySerial(string serial)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.View_InboundList
@@ -77,9 +77,9 @@ namespace Infrastructure.DAL
 
         public int getCurrentYearInboundCount(int TargetYear)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
-                var result = (from obj in DC.Inbound
+                var result = (from obj in DC.Inbounds
                               where obj.TransDate.Value.Year == TargetYear
                               select obj).ToList();
 
@@ -97,10 +97,10 @@ namespace Infrastructure.DAL
 
         public Inbound GetDetails(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.Inbound
+                    (from obj in DC.Inbounds
                      where obj.Code == _Code
                      select obj);
 
@@ -110,7 +110,7 @@ namespace Infrastructure.DAL
 
         public List<View_InboundList> FillInboundMater(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.View_InboundList
@@ -127,16 +127,16 @@ namespace Infrastructure.DAL
 
         public int AddInbound<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
-                DC.Inbound.Add(item as Inbound);
+                DC.Inbounds.Add(item as Inbound);
                 return DC.SaveChanges();
             }
         }
 
         public int DeleteInbound<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as Inbound).State = System.Data.Entity.EntityState.Deleted;
@@ -146,7 +146,7 @@ namespace Infrastructure.DAL
 
         public int UpdateInbound<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as Inbound).State = System.Data.Entity.EntityState.Modified;
@@ -166,7 +166,7 @@ namespace Infrastructure.DAL
         #region "Inbound Items Units"
         public D_ItemCard getItemCardDetails(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_ItemCard
@@ -178,16 +178,16 @@ namespace Infrastructure.DAL
         }
 
 
-        public AssetsItemUnits GetInboundItemDetails(int _Code)
+        public AssetsItemUnit GetInboundItemDetails(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.AssetsItemUnits
                      where obj.Code == _Code
                      select obj);
 
-                return result.FirstOrDefault<AssetsItemUnits>();
+                return result.FirstOrDefault<AssetsItemUnit>();
             }
         }
 
@@ -197,7 +197,7 @@ namespace Infrastructure.DAL
 
         public List<view_ItemCard> fillItems()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_ItemCard
@@ -210,7 +210,7 @@ namespace Infrastructure.DAL
 
         public List<view_inboubdItems> FillInboundItems(int InboundCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_inboubdItems
@@ -224,7 +224,7 @@ namespace Infrastructure.DAL
 
         public List<view_inboubdItems> FilterInboundItems(string serial)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_inboubdItems
@@ -237,16 +237,16 @@ namespace Infrastructure.DAL
 
 
 
-        public AssetsItemUnits getInboundItemDetails(int inboundItemId)
+        public AssetsItemUnit getInboundItemDetails(int inboundItemId)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.AssetsItemUnits
                      where obj.Code == inboundItemId
                      select obj);
 
-                return result.FirstOrDefault<AssetsItemUnits>();
+                return result.FirstOrDefault<AssetsItemUnit>();
             }
         }
 
@@ -255,28 +255,28 @@ namespace Infrastructure.DAL
 
         public int AddItemsUnit<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
-                DC.AssetsItemUnits.Add(item as AssetsItemUnits);
+                DC.AssetsItemUnits.Add(item as AssetsItemUnit);
                 return DC.SaveChanges();
             }
         }
         public int DeleteItemsUnit<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
-                DC.Entry(item as AssetsItemUnits).State = System.Data.Entity.EntityState.Deleted;
+                DC.Entry(item as AssetsItemUnit).State = System.Data.Entity.EntityState.Deleted;
                 return DC.SaveChanges();
             }
         }
 
         public int UpdateItemunit<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
-                DC.Entry(item as AssetsItemUnits).State = System.Data.Entity.EntityState.Modified;
+                DC.Entry(item as AssetsItemUnit).State = System.Data.Entity.EntityState.Modified;
                 return DC.SaveChanges();
             }
         }
@@ -299,9 +299,9 @@ namespace Infrastructure.DAL
         #endregion
 
         #region "Inbound Notes"
-        public List<InboundNotes> FillInboundNotes(int _InboundMasterCode)
+        public List<InboundNote> FillInboundNotes(int _InboundMasterCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.InboundNotes
@@ -309,49 +309,49 @@ namespace Infrastructure.DAL
                      orderby obj.Code descending
                      select obj);
 
-                return result.ToList<InboundNotes>();
+                return result.ToList<InboundNote>();
             }
         }
 
-        public InboundNotes GetNotesDeatils(int _Code)
+        public InboundNote GetNotesDeatils(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.InboundNotes
                      where obj.Code == _Code
                      select obj);
 
-                return result.FirstOrDefault<InboundNotes>();
+                return result.FirstOrDefault<InboundNote>();
             }
         }
         #region "Add ,  Update  ,Delete" Inbound Transportation
 
         public int AddNotes<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
-                DC.InboundNotes.Add(item as InboundNotes);
+                DC.InboundNotes.Add(item as InboundNote);
                 return DC.SaveChanges();
             }
         }
 
         public int DeleteNotes<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
-                DC.Entry(item as InboundNotes).State = System.Data.Entity.EntityState.Deleted;
+                DC.Entry(item as InboundNote).State = System.Data.Entity.EntityState.Deleted;
                 return DC.SaveChanges();
             }
         }
 
         public int UpdateNotes<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
-                DC.Entry(item as InboundNotes).State = System.Data.Entity.EntityState.Modified;
+                DC.Entry(item as InboundNote).State = System.Data.Entity.EntityState.Modified;
                 return DC.SaveChanges();
             }
         }
@@ -362,9 +362,9 @@ namespace Infrastructure.DAL
         #endregion
 
         #region "Inbound Attachment"
-        public List<InboundAttachments> FillInboundAttachment(int _InboundMasterCode)
+        public List<InboundAttachment> FillInboundAttachment(int _InboundMasterCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.InboundAttachments
@@ -372,49 +372,49 @@ namespace Infrastructure.DAL
                      orderby obj.Code descending
                      select obj);
 
-                return result.ToList<InboundAttachments>();
+                return result.ToList<InboundAttachment>();
             }
         }
 
-        public InboundAttachments GetAttachmentDeatils(int _Code)
+        public InboundAttachment GetAttachmentDeatils(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.InboundAttachments
                      where obj.Code == _Code
                      select obj);
 
-                return result.FirstOrDefault<InboundAttachments>();
+                return result.FirstOrDefault<InboundAttachment>();
             }
         }
         #region "Add ,  Update  ,Delete" Inbound Transportation
 
         public int AddAttachments<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
-                DC.InboundAttachments.Add(item as InboundAttachments);
+                DC.InboundAttachments.Add(item as InboundAttachment);
                 return DC.SaveChanges();
             }
         }
 
         public int DeleteAttachment<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
-                DC.Entry(item as InboundAttachments).State = System.Data.Entity.EntityState.Deleted;
+                DC.Entry(item as InboundAttachment).State = System.Data.Entity.EntityState.Deleted;
                 return DC.SaveChanges();
             }
         }
 
         public int UpdateAttachment<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
-                DC.Entry(item as InboundAttachments).State = System.Data.Entity.EntityState.Modified;
+                DC.Entry(item as InboundAttachment).State = System.Data.Entity.EntityState.Modified;
                 return DC.SaveChanges();
             }
         }
@@ -427,10 +427,10 @@ namespace Infrastructure.DAL
         #region "Inbound Customs Employee"
         public List<InboundStoreEmployee> FillInboundStoreEmployee(int _InboundMasterCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.InboundStoreEmployee
+                    (from obj in DC.InboundStoreEmployees
                      .Include("D_CustomsEmployee")
                      where obj.InboundCode == _InboundMasterCode
                      orderby obj.Code descending
@@ -442,10 +442,10 @@ namespace Infrastructure.DAL
 
         public InboundStoreEmployee FillInboundStoreEmployeeDeatils(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.InboundStoreEmployee
+                    (from obj in DC.InboundStoreEmployees
                      where obj.Code == _Code
                      select obj);
 
@@ -457,16 +457,16 @@ namespace Infrastructure.DAL
 
         public int AddCustomsEmployee<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
-                DC.InboundStoreEmployee.Add(item as InboundStoreEmployee);
+                DC.InboundStoreEmployees.Add(item as InboundStoreEmployee);
                 return DC.SaveChanges();
             }
         }
 
         public int DeleteCustomsEmployee<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as InboundStoreEmployee).State = System.Data.Entity.EntityState.Deleted;
@@ -476,7 +476,7 @@ namespace Infrastructure.DAL
 
         public int UpdateCustomsEmployee<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as InboundStoreEmployee).State = System.Data.Entity.EntityState.Modified;
@@ -492,10 +492,10 @@ namespace Infrastructure.DAL
         #region "Inbound Status Tracking"
         public List<InboundStatusTrack> FillInboundStatusTracking(int _InboundMasterCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.InboundStatusTrack
+                    (from obj in DC.InboundStatusTracks
                      .Include("D_InboundDepositeStatusType")
                      where obj.InboundCode == _InboundMasterCode
                      orderby obj.Code descending
@@ -507,11 +507,24 @@ namespace Infrastructure.DAL
 
         public InboundStatusTrack FillInboundStatusDetails(int _Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.InboundStatusTrack
+                    (from obj in DC.InboundStatusTracks
                      where obj.Code == _Code
+                     select obj);
+
+                return result.FirstOrDefault<InboundStatusTrack>();
+            }
+        }
+
+        public InboundStatusTrack GetInboundStatusDetails(int _Code)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.InboundStatusTracks
+                     where obj.InboundCode == _Code
                      select obj);
 
                 return result.FirstOrDefault<InboundStatusTrack>();
@@ -522,16 +535,16 @@ namespace Infrastructure.DAL
 
         public int AddStatusTracking<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
-                DC.InboundStatusTrack.Add(item as InboundStatusTrack);
+                DC.InboundStatusTracks.Add(item as InboundStatusTrack);
                 return DC.SaveChanges();
             }
         }
 
         public int DeleteStatusTracking<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as InboundStatusTrack).State = System.Data.Entity.EntityState.Deleted;
@@ -541,7 +554,7 @@ namespace Infrastructure.DAL
 
         public int UpdateStatusTracking<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as InboundStatusTrack).State = System.Data.Entity.EntityState.Modified;

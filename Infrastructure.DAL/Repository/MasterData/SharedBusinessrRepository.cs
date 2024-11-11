@@ -13,14 +13,14 @@ namespace Infrastructure.DAL
     public class SharedBusinessrRepository : BaseRepository
     {
 
-        public SharedBusinessrRepository(AssetsEntities _context) : base(_context)
+        public SharedBusinessrRepository(AssetsEntitiesNew _context) : base(_context)
         {
 
         }
 
         public List<view_ItemCategoryTree> GetItemCategoryList()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_ItemCategoryTree
@@ -31,7 +31,7 @@ namespace Infrastructure.DAL
         }
         public ItemCategoryViewModel GetCategoryDetails(int Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 return
                     (from obj in DC.D_ItemsCategory
@@ -52,7 +52,7 @@ namespace Infrastructure.DAL
 
         public List<ItemViewModel> GetCategoryItemList(int Parentid)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                    from obj in DC.sp_CategoryItemList(Parentid)
@@ -86,33 +86,34 @@ namespace Infrastructure.DAL
 
         public List<EntityEmployeeViewModel> getEntityEmployeeList(int Parentid)
         {
-            using (var DC = new AssetsEntities())
-            {
-                var result =
-                   from obj in DC.sp_getEntityEmployeeList(Parentid)
-                   select new EntityEmployeeViewModel
-                   {
-                       Code = obj.Code,
-                       EmpCode = obj.EmpCode,
-                       JobTitleId = obj.JobTitleId,
-                       OrgRefId = obj.OrgRefId,
-                       EmpName = obj.EmpName,
-                       CivilId = obj.CivilId,
-                       Phone = obj.Phone,
-                       Mobile = obj.Mobile,
-                       JolbTitleAr = obj.JolbTitleAr,
-                       JolbTitleEn = obj.JolbTitleEn,
-                       EntityNameEn = obj.EntityNameEn,
-                       EntityNameAr = obj.EntityNameAr,
-                   };
+            //using (var DC = new AssetsEntitiesNew())
+            //{
+            //    var result =
+            //       from obj in DC.sp_getEntityEmployeeList(Parentid)
+            //       select new EntityEmployeeViewModel
+            //       {
+            //           Code = obj.Code,
+            //           EmpCode = obj.EmpCode,
+            //           JobTitleId = obj.JobTitleId,
+            //           OrgRefId = obj.OrgRefId,
+            //           EmpName = obj.EmpName,
+            //           CivilId = obj.CivilId,
+            //           Phone = obj.Phone,
+            //           Mobile = obj.Mobile,
+            //           JolbTitleAr = obj.JolbTitleAr,
+            //           JolbTitleEn = obj.JolbTitleEn,
+            //           EntityNameEn = obj.EntityNameEn,
+            //           EntityNameAr = obj.EntityNameAr,
+            //       };
 
-                return result.ToList<EntityEmployeeViewModel>();
-            }
+            //    return result.ToList<EntityEmployeeViewModel>();
+            //}
+            return null;
         }
 
         public List<LocationViewModelEdit> GetLocationList()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_Locations
@@ -147,7 +148,7 @@ namespace Infrastructure.DAL
         {
 
 
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_Locations
@@ -179,7 +180,7 @@ namespace Infrastructure.DAL
 
         public LocationViewModelEdit GetLocationDetails(int Code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 return
                     (from obj in DC.D_Locations
@@ -205,7 +206,7 @@ namespace Infrastructure.DAL
 
         //public EntityViewModelEdit GetEntityChart(int Code)
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        return
         //            (from obj in DC.D_OrgChart
@@ -226,7 +227,7 @@ namespace Infrastructure.DAL
 
         //public List<EntityViewModelEdit> GetEntityList()
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        var result =
         //            (from obj in DC.D_OrgChart
@@ -246,7 +247,7 @@ namespace Infrastructure.DAL
 
         public List<LocationViewModelEdit> getEntityLocationList(int entityNode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 return
                     (from obj in DC.D_Locations
@@ -274,7 +275,7 @@ namespace Infrastructure.DAL
 
         public List<CustodyListViewModel> getCustodyList(List<int> entityNode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 return
                     (from obj in DC.view_CustodyList

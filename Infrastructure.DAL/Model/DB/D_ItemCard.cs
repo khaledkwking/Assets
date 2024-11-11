@@ -17,8 +17,9 @@ namespace Infrastructure.DAL.Model.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public D_ItemCard()
         {
-            this.AssetsEventTracking = new HashSet<AssetsEventTracking>();
-            this.AssetsItemUnits = new HashSet<AssetsItemUnits>();
+            this.AssetsEventTrackings = new HashSet<AssetsEventTracking>();
+            this.AssetsEventTrackingTests = new HashSet<AssetsEventTrackingTest>();
+            this.AssetsItemUnits = new HashSet<AssetsItemUnit>();
         }
     
         public int Code { get; set; }
@@ -45,11 +46,14 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<double> ScrapPeriod { get; set; }
         public Nullable<double> ScrapAmount { get; set; }
         public Nullable<double> ItemMasterPrice { get; set; }
+        public Nullable<int> REFID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssetsEventTracking> AssetsEventTracking { get; set; }
+        public virtual ICollection<AssetsEventTracking> AssetsEventTrackings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssetsItemUnits> AssetsItemUnits { get; set; }
+        public virtual ICollection<AssetsEventTrackingTest> AssetsEventTrackingTests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AssetsItemUnit> AssetsItemUnits { get; set; }
         public virtual D_ItemsCategory D_ItemsCategory { get; set; }
         public virtual D_QtyUnit D_QtyUnit { get; set; }
     }

@@ -14,7 +14,7 @@ namespace Infrastructure.DAL
         #region Administration MemberShip
         //public IList<Permission.DAL.Repository.Security_pr_admin> GetMemberShips()
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        var result =
         //            (from obj in DC.Security_pr_admin
@@ -27,7 +27,7 @@ namespace Infrastructure.DAL
 
         //public IList<DomainInterface.Security_pr_admin> GetMemberShipsForAdmin()
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        var result =
         //            (from obj in DC.MemberShips
@@ -45,7 +45,7 @@ namespace Infrastructure.DAL
 
         //public IList<IKeyListItem> FindMemberShipKeys()
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        var varObjecive = (from item in DC.MemberShips
         //                            .Include("Rule")
@@ -61,7 +61,7 @@ namespace Infrastructure.DAL
 
         //public Security_pr_admin GetMemberShipByID(int ID)
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        var result =
         //            (from obj in DC.MemberShips
@@ -75,7 +75,7 @@ namespace Infrastructure.DAL
 
         //public IList<DomainInterface.Security_pr_admin> GetMemberShipByRuleID(int ID)
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        var result =
         //            (from obj in DC.MemberShips
@@ -89,7 +89,7 @@ namespace Infrastructure.DAL
 
         public Security_pr_admin GetMemberShipByName(string Name)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.Security_pr_admin
@@ -104,7 +104,7 @@ namespace Infrastructure.DAL
         public int? GetMemberShipPermssionCount(int? AdminType, int AdminID)
         {
 
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.Security_SP_getPermissionsCount(AdminType, AdminID)
@@ -116,7 +116,7 @@ namespace Infrastructure.DAL
         public List<Security_SP_PRM_getJobPermissions_Result> GetMemberShipJobPermssion(int? AdminType)
         {
 
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
 
                 var result2 =
@@ -135,7 +135,7 @@ namespace Infrastructure.DAL
         public List<Security_SP_PRM_getSystemPermission_Result> GetMemberShipSystemPermssion(int? AdminType,int adminID)
         {
 
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
 
                 var result2 =
@@ -154,7 +154,7 @@ namespace Infrastructure.DAL
 
         public List<Security_SP_PRM_getJobPage_Result> GetMemberShipPagePermssion(int? AdminType, int AdminID,string pageURL)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.Security_SP_PRM_getJobPage(AdminType, pageURL) 
@@ -168,7 +168,7 @@ namespace Infrastructure.DAL
 
         //public int AddMemberShip<T>(T item)
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        return DC.Add<MemberShip>("MemberShips", item as MemberShip);
         //    }
@@ -176,7 +176,7 @@ namespace Infrastructure.DAL
 
         //public int DeleteMemberShip<T>(T item)
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
 
@@ -186,7 +186,7 @@ namespace Infrastructure.DAL
 
         //public int UpdateMemberShip<T>(T item)
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        return DC.Update<MemberShip>("MemberShips", item as MemberShip);
         //    }

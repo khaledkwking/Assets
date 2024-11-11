@@ -17,7 +17,7 @@ namespace Infrastructure.DAL.Model.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public D_ItemUsedStatus()
         {
-            this.AssetsItemUnits = new HashSet<AssetsItemUnits>();
+            this.AssetsItemUnits = new HashSet<AssetsItemUnit>();
         }
     
         public int Code { get; set; }
@@ -25,6 +25,6 @@ namespace Infrastructure.DAL.Model.DB
         public string TitleEn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssetsItemUnits> AssetsItemUnits { get; set; }
+        public virtual ICollection<AssetsItemUnit> AssetsItemUnits { get; set; }
     }
 }

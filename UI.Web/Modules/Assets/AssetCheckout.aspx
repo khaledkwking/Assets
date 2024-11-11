@@ -421,6 +421,7 @@
 
                     <asp:Label runat="server" ID="lblerror"></asp:Label>
                     <div class="col-lg-12">
+                                       
                         <div class="portlet box portlet-blue">
 
                             <div class="portlet-body">
@@ -433,7 +434,7 @@
 
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group" style="display:none">
 
                                                 <div class="custom-control custom-radio" onclick="setSelectedtype('1')">
                                                     <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
@@ -447,7 +448,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                  
                                     <div class="row">
                                         <div class="col-md-4">
 
@@ -480,14 +481,69 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <div class="form-group" runat="server">
+                                 <asp:UpdatePanel ID="UpdatePanel4" runat="server" ChildrenAsTriggers="true" UpdateMode="conditional">
+                                                                <ContentTemplate>
+                                            <div class="row" id="divLocationOrg" runat="server">
+                                
+                                                <div class="col-md-6">
+                                                    <div class="form-group" runat="server">
+                                                
+                                                <label class="control-label" for="">الجهة  </label>
+                                                <asp:DropDownList ID="ddlDirection" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlDirection_SelectedIndexChanged"></asp:DropDownList>
+                                                
+                                                <br /><br />
+
+                                                <label class="control-label" for="">الامانة  </label>
+                                                <asp:DropDownList ID="ddlAmana" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlAmana_SelectedIndexChanged"></asp:DropDownList>
+                                                
+                                                <br /><br />
+
+                                                <label class="control-label" for="">الادارة  </label>
+                                                <asp:DropDownList ID="ddlDepartment" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlDepartment_SelectedIndexChanged"></asp:DropDownList>
+
+                                                <br /><br />
+
+                                                <label class="control-label" for="">المراقبة </label>
+                                                <asp:DropDownList ID="ddlMorakba" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlMorakba_SelectedIndexChanged"></asp:DropDownList>
+                                                
+                                                <br /><br />
+
+                                                <label class="control-label" for="">القسم  </label>
+                                                <asp:DropDownList ID="ddlSection" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlSection_SelectedIndexChanged"></asp:DropDownList>
+
+                                            </div>
+                                                </div>
+                                                <div class="col-md-6">
+
+                                                    <div class="form-group" runat="server">
+                                                
+                                                <label class="control-label" for="">المبنى  </label>
+                                                <asp:DropDownList ID="ddlBuilding" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlBuilding_SelectedIndexChanged"></asp:DropDownList>
+                                                
+                                                 <br /><br />
+
+                                                <label class="control-label" for="">الدور  </label>
+                                                <asp:DropDownList ID="ddlFloor" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlFloor_SelectedIndexChanged"></asp:DropDownList>
+                                                
+                                                <br /><br />
+
+                                                <label class="control-label" for="">الغرفة  </label>
+                                                <asp:DropDownList ID="ddlRoom" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlRoom_SelectedIndexChanged"></asp:DropDownList>
+
+                                            </div>
+                                                </div>
+                           
+                                            </div>
+                                            
+                                               
+                                            <div class="form-group" runat="server" id="divLocationPersonal">
                                                 <label class="control-label" for=""><%=GetGlobalResourceObject("pages","assignedToLocation") %>  </label>
 
                                                 <input type="text" id="txtOwnerLocationCode" class="form-control" placeholder="Type to filter" autocomplete="off" />
                                                 <input id="selectedLocation" runat="server" value="0" type="hidden" class="selectedLocation" />
 
                                             </div>
-
+                                            <br /><br />
                                             <div class="form-group">
 
                                                 <div class="custom-control custom-checkbox">
@@ -506,7 +562,28 @@
 
 
                                             </div>
+                                                  </ContentTemplate>
 
+                                                                <Triggers>
+                                                                    <asp:AsyncPostBackTrigger ControlID="ddlDirection" EventName="SelectedIndexChanged" />
+
+                                                                    <asp:AsyncPostBackTrigger ControlID="ddlAmana" EventName="SelectedIndexChanged" />
+
+                                                                    <asp:AsyncPostBackTrigger ControlID="ddlDepartment" EventName="SelectedIndexChanged" />
+
+                                                                    <asp:AsyncPostBackTrigger ControlID="ddlMorakba" EventName="SelectedIndexChanged" />
+
+                                                                    <asp:AsyncPostBackTrigger ControlID="ddlSection" EventName="SelectedIndexChanged" />
+
+                                                                    <asp:AsyncPostBackTrigger ControlID="ddlBuilding" EventName="SelectedIndexChanged" />
+
+                                                                    <asp:AsyncPostBackTrigger ControlID="ddlFloor" EventName="SelectedIndexChanged" />
+                                                                    
+                                                                    <asp:AsyncPostBackTrigger ControlID="ddlRoom" EventName="SelectedIndexChanged" />
+
+                                                                </Triggers>
+
+                                                            </asp:UpdatePanel>
                                         </div>
 
                                         <div class="col-md-4 divSelectedEmployeeInfo" id="divSelectedEmployeeInfo" runat="server">
@@ -528,7 +605,7 @@
                                                                     <asp:Label runat="server" ID="lblSelectedEmpCode"></asp:Label></h5>
                                                             </div>
                                                         </div>
-                                                        <div class="project-details">
+                                                        <div class="project-details" style="direction:rtl">
                                                             <span class="sub-text">
                                                                 <asp:Label runat="server" ID="lblSelectedEmpLocationName"></asp:Label></span>
 
@@ -560,6 +637,7 @@
                                         </div>
 
                                     </div>
+                           
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -574,6 +652,7 @@
                                 </div>
                             </div>
                         </div>
+                         
                     </div>
 
                     <div class="card-inner">

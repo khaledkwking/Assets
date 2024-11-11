@@ -14,13 +14,13 @@ namespace Infrastructure.DAL
     public partial class BaseRepository
     {
 
-        public readonly AssetsEntities DC;
+        public readonly AssetsEntitiesNew DC;
         HttpContext context = HttpContext.Current;
         
 
          
 
-        public BaseRepository(AssetsEntities _context)
+        public BaseRepository(AssetsEntitiesNew _context)
         {
 
                 DC = _context;

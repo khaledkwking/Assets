@@ -29,80 +29,86 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
         }
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            Page.Form.Attributes.Add("enctype", "multipart/form-data");
-            lblerror.Text = "";
-            btnCancel.Attributes.Add("onclick", "Page_ValidationActive=false;");
-
-
-            btnSave.Attributes.Add("onclick", "return chkImage();");
-            lnkSaveItems.Attributes.Add("onclick", "return ValidateInboundITems();");
-
-            btnSave2.Attributes.Add("onclick", "return chkImage();");
-            if (!IsPostBack)
+            string script = "";
+            try
             {
-                //if ((Request.UrlReferrer == null))
-                //{
-                //    Response.Redirect("/admin/pages/main.aspx");
-                //}
-                fillLookups(); 
-                ViewState["itemID"] = "0";
-                ViewState["TransitemID"] = "0";
-                ViewState["NotesitemID"] = "0";
-                ViewState["inboundItemID"] = "0";
 
-                ViewState["AttachmentitemID"] = "0";
-                ViewState["CustomsEmployeeitemID"] = "0";
-                ViewState["StatusTrackingitemID"] = "0";
+                    Page.Form.Attributes.Add("enctype", "multipart/form-data");
+                    lblerror.Text = "";
+                    btnCancel.Attributes.Add("onclick", "Page_ValidationActive=false;");
+                    btnSave.Attributes.Add("onclick", "return chkImage();");
+                    lnkSaveItems.Attributes.Add("onclick", "return ValidateInboundITems();");
+                    btnSave2.Attributes.Add("onclick", "return chkImage();");
+                    if (!IsPostBack)
+                    {
+                        //if ((Request.UrlReferrer == null))
+                        //{
+                        //    Response.Redirect("/admin/pages/main.aspx");
+                        //}
+                        fillLookups(); 
+                        ViewState["itemID"] = "0";
+                        ViewState["TransitemID"] = "0";
+                        ViewState["NotesitemID"] = "0";
+                        ViewState["inboundItemID"] = "0";
 
-                if (Request.QueryString["type"] != null)
-                {
-                    lstInboundTypeCode.SelectedValue = Request.QueryString["type"].ToString();
-                    lstInboundTypeCode_SelectedIndexChanged(null, null);
+                        ViewState["AttachmentitemID"] = "0";
+                        ViewState["CustomsEmployeeitemID"] = "0";
+                        ViewState["StatusTrackingitemID"] = "0";
 
-                }
-                else
-                {
-                    lstInboundTypeCode.SelectedValue = "1";
-                    lstInboundTypeCode_SelectedIndexChanged(null, null);
-                }
+                        if (Request.QueryString["type"] != null)
+                        {
+                            lstInboundTypeCode.SelectedValue = Request.QueryString["type"].ToString();
+                            lstInboundTypeCode_SelectedIndexChanged(null, null);
 
-                if (Request.QueryString["id"] != null)
-                {
+                        }
+                        else
+                        {
+                            lstInboundTypeCode.SelectedValue = "1";
+                            lstInboundTypeCode_SelectedIndexChanged(null, null);
+                        }
 
-                    //lblSubTitle.Text = GetTitle(false);
-                    ViewState["itemID"] = gets(Request.QueryString["id"]);
-                    hdnMasterID.Value = gets(Request.QueryString["id"]);
-                    FillInboundMasterInformation();
+                        if (Request.QueryString["id"] != null)
+                        {
 
-                    FillInboundItems();
-                    FillInboundNotes();
-                    FillInboundAttachment();
-                    FillInboundStatusTracking();
+                            //lblSubTitle.Text = GetTitle(false);
+                            ViewState["itemID"] = gets(Request.QueryString["id"]);
+                            hdnMasterID.Value = gets(Request.QueryString["id"]);
+                            FillInboundMasterInformation();
+
+                            FillInboundItems();
+                            FillInboundNotes();
+                            FillInboundAttachment();
+                            FillInboundStatusTracking();
 
                   
-                    btnSave2.Visible = false;
-                }
-                else
-                {
-                    txtSerial.Text = generateRequestSerial();
-                    txtTransDate.Text = DateTime.Now.ToString("MM/dd/yyyy");
-                    //lblSubTitle.Text = GetTitle(true);
-                }
+                            btnSave2.Visible = false;
+                        }
+                        else
+                        {
+                            txtSerial.Text = generateRequestSerial();
+                            txtTransDate.Text = DateTime.Now.ToString("MM/dd/yyyy");
+                            //lblSubTitle.Text = GetTitle(true);
+                        }
 
+                    }
+
+            }
+            catch (Exception ex)
+            {
+
+
+                script = FormatpopupErrorMSG(Resources.Alerts.LoadFailed + ex.Message.ToString(), "1");
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
             }
 
 
-
-
         }
-
         protected void btnSave_Click(object sender, System.EventArgs e)
         {
             SaveInboundMaster();
             FillInboundStatusTracking();
 
         }
-
         protected void btnSave2_Click(object sender, EventArgs e)
         {
 
@@ -110,15 +116,10 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
            
 
         }
-
-
         protected void lnkRefresh_Click(object sender, EventArgs e)
         {
             FillInboundItems();
         }
-
-
-
         #endregion
 
         #region "Inbound master Information"
@@ -198,7 +199,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
             //lblSubTitle.Text = this.GetTitle(false);
 
         }
-
         private void SetInboundType()
         {
             if (lstInboundTypeCode.SelectedValue == "2")
@@ -217,7 +217,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
                 divVendor.Visible = false;
             }
         }
-
         public string getActiveTab(string selectedTab)
         {
             if (hdnActiveTab.Value == "" && selectedTab == "1")
@@ -232,10 +231,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
             }
             return "";
         }
-
-
-
-
         #endregion
 
         #endregion
@@ -264,7 +259,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
             string script = "";
             try
             {
-                AssetsItemUnits obj = new AssetsItemUnits();
+                AssetsItemUnit obj = new AssetsItemUnit();
                 if (gets(ViewState["inboundItemID"]).Equals("0"))
                 {//Save
 
@@ -401,15 +396,25 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
 
         protected void lstPurchaseItems_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Set Item Info
-
-            var objPurchaseItem = objRepository.getItemCardDetails(ZeroIntergerIFNull(lstPurchaseItems.SelectedValue));
-
-            if (objPurchaseItem != null)
+            string script = "";
+            try
             {
+                // Set Item Info
 
-                lstQtyUnitCode.SelectedValue = objPurchaseItem.QUnitCode.ToString();
-                
+                var objPurchaseItem = objRepository.getItemCardDetails(ZeroIntergerIFNull(lstPurchaseItems.SelectedValue));
+
+                if (objPurchaseItem != null)
+                {
+
+                    lstQtyUnitCode.SelectedValue = objPurchaseItem.QUnitCode.ToString();
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                script = FormatpopupErrorMSG(Resources.Alerts.PleaseEnterItemDescription + ex.Message.ToString(), "1");
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
 
             }
 
@@ -512,7 +517,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
             string script = "";
             try
             {
-                InboundNotes obj = new InboundNotes();
+                InboundNote obj = new InboundNote();
                 if (ViewState["NotesitemID"].Equals("0"))
                 {//Save
 
@@ -568,7 +573,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
             try
             {
 
-                InboundNotes obj = new InboundNotes();
+                InboundNote obj = new InboundNote();
                 for (int i = 0; i <= grdInboundNotes.Items.Count - 1; i++)
                 {
 
@@ -578,7 +583,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
 
                         if (check.Checked)
                         {
-                            objRepository.DeleteNotes((InboundNotes)objRepository.GetNotesDeatils(ZeroIntergerIFNull(grdInboundNotes.Items[i].Cells[0].Text)));
+                            objRepository.DeleteNotes((InboundNote)objRepository.GetNotesDeatils(ZeroIntergerIFNull(grdInboundNotes.Items[i].Cells[0].Text)));
                         }
                     }
                 }
@@ -630,16 +635,11 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
         #endregion
 
         #region "Inbound Attachment"
-
-
-
         protected void txtimages_UploadedFileError(object sender, AjaxControlToolkit.AsyncFileUploadEventArgs e)
         {
             string script = FormatpopupErrorMSG(Resources.Alerts.FailToSaveData, "1");
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
-
         }
-
         //protected void txtimages_UploadedComplete(object sender, AjaxControlToolkit.AsyncFileUploadEventArgs e)
         //{
         //    try
@@ -708,61 +708,68 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
 
             return imgname;
         }
-
-
         private void FillAttachmentForm()
         {
-            var objList = objRepository.GetAttachmentDeatils(ZeroIntergerIFNull(ViewState["AttachmentitemID"].ToString()));
-            if ((objList != null))
+            string script = "";
+            try
             {
-                txtAttachmentNotes.Text = gets(objList.Notes);
-
-                lstAttachmentType.SelectedValue = gets(objList.AttachmentTypCode);
-                ViewState["fileName"] = gets(objList.FileName);
-                Session["AttachfileName"] = gets(objList.FileName);
+                   var objList = objRepository.GetAttachmentDeatils(ZeroIntergerIFNull(ViewState["AttachmentitemID"].ToString()));
+                    if ((objList != null))
+                    {
+                        txtAttachmentNotes.Text = gets(objList.Notes);
+                        lstAttachmentType.SelectedValue = gets(objList.AttachmentTypCode);
+                        ViewState["fileName"] = gets(objList.FileName);
+                        Session["AttachfileName"] = gets(objList.FileName);
+                    }
+                    DivAttachementShow.Visible = false;
+                    divAttachmentsAdd.Visible = true;
+                    lblAttachmentTitle.Text = this.GetInbouboundNoteTitle(false);
             }
-
-            DivAttachementShow.Visible = false;
-            divAttachmentsAdd.Visible = true;
-            lblAttachmentTitle.Text = this.GetInbouboundNoteTitle(false);
-
+            catch (Exception ex)
+            {
+                script = FormatpopupErrorMSG(Resources.Alerts.LoadFailed + ex.Message.ToString(), "1");
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+            }
         }
         private void ClearAttachmentForm()
         {
             txtAttachmentNotes.Text = "";
-
-
             ViewState["AttachmentitemID"] = "0";
             divAttachmentsAdd.Visible = false;
             DivAttachementShow.Visible = true;
             Session["AttachfileName"] = null;
 
         }
-
         private void FillInboundAttachment()
         {
-            var objList = objRepository.FillInboundAttachment(ZeroIntergerIFNull(ViewState["itemID"].ToString()));
-            lblAttachmentCount.Text = (" Found total <b>" + (objList.Count.ToString() + "</b> records"));
-            decimal c = System.Math.Ceiling(Convert.ToDecimal(objList.Count / grdAttachment.PageSize));
-            if ((c <= grdAttachment.CurrentPageIndex))
+            string script = "";
+            try
             {
-                grdAttachment.CurrentPageIndex = 0;
+                var objList = objRepository.FillInboundAttachment(ZeroIntergerIFNull(ViewState["itemID"].ToString()));
+                lblAttachmentCount.Text = (" Found total <b>" + (objList.Count.ToString() + "</b> records"));
+                decimal c = System.Math.Ceiling(Convert.ToDecimal(objList.Count / grdAttachment.PageSize));
+                if ((c <= grdAttachment.CurrentPageIndex))
+                {
+                    grdAttachment.CurrentPageIndex = 0;
+                }
+                grdAttachment.DataSource = objList;
+                grdAttachment.DataBind();
+                AttachmentPager.ItemCount = objList.Count;
             }
-
-            grdAttachment.DataSource = objList;
-            grdAttachment.DataBind();
-
-            AttachmentPager.ItemCount = objList.Count;
+            catch (Exception ex)
+            {
+                script = FormatpopupErrorMSG(Resources.Alerts.LoadFailed + ex.Message.ToString(), "1");
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+            }
 
         }
         protected void lnkSaveAttachment_Click(object sender, EventArgs e)
         {
-
             string script = "";
             string fileName = getImage(txtFile);
             try
             {
-                InboundAttachments obj = new InboundAttachments();
+                InboundAttachment obj = new InboundAttachment();
                 if (ViewState["AttachmentitemID"].Equals("0"))
                 {//Save
 
@@ -795,58 +802,46 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
 
                 ClearAttachmentForm();
                 FillInboundAttachment();
-
                 script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
 
             }
             catch (Exception ex)
             {
-
-
                 script = FormatpopupErrorMSG(Resources.Alerts.FailToSaveData + ex.Message.ToString(), "1");
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
             }
-
         }
-
         protected void lnkCancelAttachement_Click(object sender, EventArgs e)
         {
             ClearAttachmentForm();
         }
-
         protected void lnkAttachmentAdd_Click(object sender, EventArgs e)
         {
             divAttachmentsAdd.Visible = true;
             DivAttachementShow.Visible = false;
         }
-
         protected void lnkDeleteAttachment_Click(object sender, EventArgs e)
         {
             try
             {
-
-                InboundAttachments obj = new InboundAttachments();
+                InboundAttachment obj = new InboundAttachment();
                 for (int i = 0; i <= grdAttachment.Items.Count - 1; i++)
                 {
-
                     if ((grdAttachment.Items[i].FindControl("chkItem") != null))
                     {
                         CheckBox check = (CheckBox)grdAttachment.Items[i].FindControl("chkItem");
 
                         if (check.Checked)
                         {
-                            objRepository.DeleteAttachment((InboundAttachments)objRepository.GetAttachmentDeatils(ZeroIntergerIFNull(grdAttachment.Items[i].Cells[0].Text)));
+                            objRepository.DeleteAttachment((InboundAttachment)objRepository.GetAttachmentDeatils(ZeroIntergerIFNull(grdAttachment.Items[i].Cells[0].Text)));
                         }
                     }
                 }
                 FillInboundAttachment();
-
             }
             catch (Exception ex)
             {
-
-
                 string script = FormatpopupErrorMSG(Resources.Alerts.SorryDeleteDataFailed + ex.Message.ToString(), "1");
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
             }
@@ -855,22 +850,14 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
             divAttachmentsAdd.Visible = false;
             DivAttachementShow.Visible = true;
         }
-
         protected void grdAttachment_EditCommand(object source, DataGridCommandEventArgs e)
         {
-
             string id = e.Item.Cells[0].Text;
-
             ViewState["AttachmentitemID"] = id;
             FillAttachmentForm();
-
             divAttachmentsAdd.Visible = true;
             DivAttachementShow.Visible = false;
-
-
-
         }
-
         protected void AttachmentPager_Command(object sender, CommandEventArgs e)
         {
             Int32 currnetPageIndx = ((Int32)(e.CommandArgument));
@@ -905,17 +892,13 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
                 lstDepositStatusTypeCode.SelectedValue = gets(objList.DepositeStatusTypeCode);
 
             }
-
             DivStatusTrackinghow.Visible = false;
             DivStatusTrackingAdd.Visible = true;
-
 
         }
         private void ClearStatusTracking()
         {
             txtStatsuNote.Text = "";
-
-
             ViewState["StatusTrackingitemID"] = "0";
             DivStatusTrackinghow.Visible = true;
             DivStatusTrackingAdd.Visible = false;
@@ -933,7 +916,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
 
             grdStatusTracking.DataSource = objList;
             grdStatusTracking.DataBind();
-
             StatusTrackingPager.ItemCount = objList.Count;
 
         }
@@ -1109,107 +1091,73 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
                 Inbound obj = new Inbound();
                 if (ViewState["itemID"].Equals("0"))
                 {//Save
-
-
-                    obj.Serial = generateRequestSerial();
-                    obj.TMonth = NullDateifEmpty(txtTransDate.Text).Month;
-                    obj.TYear = NullDateifEmpty(txtTransDate.Text).Year;
-
-                    obj.TransDate = NullDateifEmpty(txtTransDate.Text);
-
-                    obj.InboundTypeCode = ZeroIntergerIFNull(lstInboundTypeCode.SelectedValue);
-                    if (lstFromVendorCode.SelectedValue != "0")
-                    {
-                        obj.FromVendorCode = ZeroIntergerIFNull(lstFromVendorCode.SelectedValue);
-                    }
-
-                     
-                    obj.TargetLocationCode = ZeroIntergerIFNull(lstTargetLocationCode.SelectedValue);
-                    obj.OwnerLocationCode = ZeroIntergerIFNull(lstOwnerLocationCode.SelectedValue);
-
-                    obj.RefNo = txtRefNo.Text;
-                    obj.RefDate = NullDateifEmpty(txtRefDate.Text);
-
-                    obj.Notes = txtNotes.Text;
-                    obj.DeliveryOrderNo = txtDeliveryOrderNo.Text;
-                    obj.DeliveryDate = NullDateifEmpty(txtDeliveryDate.Text);
-
-
-
-
-                    obj.DepositeNotes = gets(txtDepositeNotes.Text);
-                    obj.Notes = gets(txtNotes.Text);
-
-
-                    objRepository.AddInbound(obj);
-                    hdnMasterID.Value = gets(obj.Code);
-                    ViewState["itemID"] = gets(obj.Code);
-
-                    // Save Documenting Status
-
-                    InboundStatusTrack objStatus = new InboundStatusTrack();
-                    if (ViewState["StatusTrackingitemID"].Equals("0"))
-                    {//Save
-
-
-                        objStatus.InboundCode = obj.Code;
-                        objStatus.TransDate = DateTime.Now;
-                        objStatus.Notes = "New Request Documenting Status";
-                        objStatus.DepositeStatusTypeCode = 1;
-                        objRepository.AddStatusTracking(objStatus);
-                    }
+                        obj.Serial = generateRequestSerial();
+                        obj.TMonth = NullDateifEmpty(txtTransDate.Text).Month;
+                        obj.TYear = NullDateifEmpty(txtTransDate.Text).Year;
+                        obj.TransDate = NullDateifEmpty(txtTransDate.Text);
+                        obj.InboundTypeCode = ZeroIntergerIFNull(lstInboundTypeCode.SelectedValue);
+                        if (lstFromVendorCode.SelectedValue != "0")
+                        {
+                            obj.FromVendorCode = ZeroIntergerIFNull(lstFromVendorCode.SelectedValue);
+                        }
+                        obj.TargetLocationCode = ZeroIntergerIFNull(lstTargetLocationCode.SelectedValue);
+                        obj.OwnerLocationCode = ZeroIntergerIFNull(lstOwnerLocationCode.SelectedValue);
+                        obj.RefNo = txtRefNo.Text;
+                        obj.RefDate = NullDateifEmpty(txtRefDate.Text);
+                        obj.Notes = txtNotes.Text;
+                        obj.DeliveryOrderNo = txtDeliveryOrderNo.Text;
+                        obj.DeliveryDate = NullDateifEmpty(txtDeliveryDate.Text);
+                        obj.DepositeNotes = gets(txtDepositeNotes.Text);
+                        obj.Notes = gets(txtNotes.Text);
+                        objRepository.AddInbound(obj);
+                        hdnMasterID.Value = gets(obj.Code);
+                        ViewState["itemID"] = gets(obj.Code);
+                            // Save Documenting Status
+                            InboundStatusTrack objStatus = new InboundStatusTrack();
+                            if (ViewState["StatusTrackingitemID"].Equals("0"))
+                            {//Save
+                                objStatus.InboundCode = obj.Code;
+                                objStatus.TransDate = DateTime.Now;
+                                objStatus.Notes = "New Request Documenting Status";
+                                objStatus.DepositeStatusTypeCode = 1;
+                                objRepository.AddStatusTracking(objStatus);
+                            }
 
                 }
                 else
                 { //Update 
 
-                    hdnMasterID.Value = ViewState["itemID"].ToString();
-                    obj = objRepository.GetDetails(ZeroIntergerIFNull(ViewState["itemID"].ToString()));
-
-                    obj.Serial = txtSerial.Text;
-                    obj.TMonth = NullDateifEmpty(txtTransDate.Text).Month;
-                    obj.TYear = NullDateifEmpty(txtTransDate.Text).Year;
-
-                    obj.TransDate = NullDateifEmpty(txtTransDate.Text);
-
-                    obj.InboundTypeCode = ZeroIntergerIFNull(lstInboundTypeCode.SelectedValue);
-                    if (lstFromVendorCode.SelectedValue!="0")
-                    {
-                        obj.FromVendorCode = ZeroIntergerIFNull(lstFromVendorCode.SelectedValue);
-                    }
-                    
-                    obj.TargetLocationCode = ZeroIntergerIFNull(lstTargetLocationCode.SelectedValue);
-                    obj.OwnerLocationCode = ZeroIntergerIFNull(lstOwnerLocationCode.SelectedValue);
-
-                    obj.RefNo = txtRefNo.Text;
-                    obj.RefDate = NullDateifEmpty(txtRefDate.Text);
-
-                    obj.Notes = txtNotes.Text;
-                    obj.DeliveryOrderNo = txtDeliveryOrderNo.Text;
-                    obj.DeliveryDate = NullDateifEmpty(txtDeliveryDate.Text);
-
-
-
-
-                    obj.DepositeNotes = gets(txtDepositeNotes.Text);
-                    obj.Notes = gets(txtNotes.Text);
-                    objRepository.UpdateInbound(obj);
-
+                        hdnMasterID.Value = ViewState["itemID"].ToString();
+                        obj = objRepository.GetDetails(ZeroIntergerIFNull(ViewState["itemID"].ToString()));
+                        obj.Serial = txtSerial.Text;
+                        obj.TMonth = NullDateifEmpty(txtTransDate.Text).Month;
+                        obj.TYear = NullDateifEmpty(txtTransDate.Text).Year;
+                        obj.TransDate = NullDateifEmpty(txtTransDate.Text);
+                        obj.InboundTypeCode = ZeroIntergerIFNull(lstInboundTypeCode.SelectedValue);
+                        if (lstFromVendorCode.SelectedValue!="0")
+                        {
+                            obj.FromVendorCode = ZeroIntergerIFNull(lstFromVendorCode.SelectedValue);
+                        }                   
+                        obj.TargetLocationCode = ZeroIntergerIFNull(lstTargetLocationCode.SelectedValue);
+                        obj.OwnerLocationCode = ZeroIntergerIFNull(lstOwnerLocationCode.SelectedValue);
+                        obj.RefNo = txtRefNo.Text;
+                        obj.RefDate = NullDateifEmpty(txtRefDate.Text);
+                        obj.Notes = txtNotes.Text;
+                        obj.DeliveryOrderNo = txtDeliveryOrderNo.Text;
+                        obj.DeliveryDate = NullDateifEmpty(txtDeliveryDate.Text);
+                        obj.DepositeNotes = gets(txtDepositeNotes.Text);
+                        obj.Notes = gets(txtNotes.Text);
+                        objRepository.UpdateInbound(obj);
                 }
-
-                ViewState["itemID"] = obj.Code;
-
-                ClearForm();
-                FillInboundMasterInformation();
-
-                script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                    ViewState["itemID"] = obj.Code;
+                    ClearForm();
+                    FillInboundMasterInformation();
+                    script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
 
             }
             catch (Exception ex)
             {
-
-
                 script = FormatpopupErrorMSG(Resources.Alerts.FailToSaveData + ex.Message.ToString(), "1");
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
             }

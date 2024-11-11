@@ -17,7 +17,8 @@ namespace UI.Web.Modules.Assets
     {
         #region "Page Members"
         public AssetsRepository objRepository = IoC.Resolve<AssetsRepository>();
-        public InboundRepository objInboundRepository = IoC.Resolve<InboundRepository>();
+        public InboundRepository objInboundRepository = IoC.Resolve<InboundRepository>(); 
+        public ItemRepository objItemRepository = IoC.Resolve<ItemRepository>(); 
         public string _PageTitle = Resources.Pages.CustodyCheckIn;
 
         #endregion
@@ -61,7 +62,7 @@ namespace UI.Web.Modules.Assets
                 for (int i = 0; i <= grdItems.Items.Count - 1; i++)
                 {
 
-                    var selectedItem = (AssetsItemUnits)objRepository.getItemDetailsForEdit(ZeroIntergerIFNull(grdItems.Items[i].Cells[0].Text));
+                    var selectedItem = (AssetsItemUnit)objRepository.getItemDetailsForEdit(ZeroIntergerIFNull(grdItems.Items[i].Cells[0].Text));
                     obj.AssetCode = selectedItem.Code;
                     obj.ActionDate = NullDateifEmpty(txtFromDate.Text);
                     
@@ -170,7 +171,21 @@ namespace UI.Web.Modules.Assets
             }
 
         }
+        protected void grdItems_ItemDataBound(object sender, DataGridItemEventArgs e)
+        {
+            //if (e.Item.ItemType == ListItemType.AlternatingItem | e.Item.ItemType == ListItemType.Item)
+            //{
+            //    string EventCode = e.Item.Cells[2].Text.Replace("&nbsp;", " ").Trim();
+            //    int catID = ZeroIntergerIFNull(e.Item.Cells[8].Text);
 
+            //        e.Item.Cells[7].Text = "";
+
+            //    var q = objItemRepository.GetDetailsCategory(catID);
+            //    if(q.)
+
+
+            //}
+        }
         protected void btnReload_Click(object sender, EventArgs e)
         {
             fillRequestItems();
@@ -203,11 +218,11 @@ namespace UI.Web.Modules.Assets
         {
 
             //var objList = objRepository.FillDetails(ZeroIntergerIFNull(ViewState["itemID"].ToString()));
-            //if ((objList != null))
+            //if ((objList != null))txtSerial
             //{
 
 
-            //    txtSerial.Text = gets(objList.Serial);
+               // txtSerial.Text = gets(objList.Serial);
 
             //    lstInboundTypeCode.SelectedValue = gets(objList.InboundTypeCode);
             //    SetInboundType();
@@ -312,9 +327,10 @@ namespace UI.Web.Modules.Assets
             return "display:block";
         }
 
+
         #endregion
 
-
+      
     }
 }
 

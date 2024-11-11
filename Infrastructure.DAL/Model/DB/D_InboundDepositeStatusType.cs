@@ -17,7 +17,7 @@ namespace Infrastructure.DAL.Model.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public D_InboundDepositeStatusType()
         {
-            this.InboundStatusTrack = new HashSet<InboundStatusTrack>();
+            this.InboundStatusTracks = new HashSet<InboundStatusTrack>();
         }
     
         public int Code { get; set; }
@@ -25,6 +25,6 @@ namespace Infrastructure.DAL.Model.DB
         public string TitleEn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InboundStatusTrack> InboundStatusTrack { get; set; }
+        public virtual ICollection<InboundStatusTrack> InboundStatusTracks { get; set; }
     }
 }

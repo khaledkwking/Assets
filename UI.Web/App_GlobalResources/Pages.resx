@@ -627,6 +627,9 @@
   <data name="MainQunit" xml:space="preserve">
     <value>MainQunit</value>
   </data>
+  <data name="ManageStoreRequest" xml:space="preserve">
+    <value>إدارة طلبات التوريد</value>
+  </data>
   <data name="MasterPrice" xml:space="preserve">
     <value>MasterPrice</value>
   </data>
@@ -1034,5 +1037,8 @@
   </data>
   <data name="WithdrawType" xml:space="preserve">
     <value>نوع الايداع</value>
+  </data>
+  <data name="CustodyAddAll" xml:space="preserve">
+    <value>تسجيل عهدة</value>
   </data>
 </root>

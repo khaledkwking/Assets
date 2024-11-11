@@ -19,7 +19,7 @@ namespace Infrastructure.DAL
         public IList<view_AssetsList> getAssetsList(string inboundSerial, DateTime TransactionDatFrom, DateTime TransactionDatTo,
             int vendorCode, int LastStatusId, int LastActionId, int ItemCategoryId, int ItemCode, int EmprefCode, int targetLocation)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_AssetsList
@@ -43,7 +43,7 @@ namespace Infrastructure.DAL
 
         public List<view_CustodyList> getAssetReceiptbyRequestCode(int headerCode, int EmprefCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_CustodyList
@@ -57,7 +57,7 @@ namespace Infrastructure.DAL
         }
         public List<view_AssetsList> getAssetReceipt(int EmprefCode, int targetLocation)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_AssetsList
@@ -74,7 +74,7 @@ namespace Infrastructure.DAL
 
         public IList<view_AssetsList> getAssetsWithLastAction(int LastActionId, int locationId, int EmpRef)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_AssetsList
@@ -91,7 +91,7 @@ namespace Infrastructure.DAL
         public view_ItemCard getItemMaster(string itemCode, string Desc)
         {
 
-            //using (var DC = new AssetsEntities())
+            //using (var DC = new AssetsEntitiesNew())
             //{
             //    var result =
             //        (from obj in DC.D_ItemCard
@@ -102,7 +102,7 @@ namespace Infrastructure.DAL
             //}
             if (itemCode != "")
             {
-                using (var DC = new AssetsEntities())
+                using (var DC = new AssetsEntitiesNew())
                 {
                     var result =
                         (from obj in DC.view_ItemCard
@@ -114,7 +114,7 @@ namespace Infrastructure.DAL
             }
             else
             {
-                using (var DC = new AssetsEntities())
+                using (var DC = new AssetsEntitiesNew())
                 {
                     var result =
                         (from obj in DC.view_ItemCard
@@ -129,7 +129,7 @@ namespace Infrastructure.DAL
 
         public view_AssetsList getItemDetails(int itemId)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_AssetsList
@@ -143,9 +143,9 @@ namespace Infrastructure.DAL
 
         }
 
-        public AssetsItemUnits getItemDetailsForEdit(int itemId)
+        public AssetsItemUnit getItemDetailsForEdit(int itemId)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.AssetsItemUnits
@@ -160,7 +160,7 @@ namespace Infrastructure.DAL
 
         public IList<view_AssetEventLog> getAssetEventLog(int inboundItemCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_AssetEventLog
@@ -175,7 +175,7 @@ namespace Infrastructure.DAL
         }
         public D_EmployeeList getEmployeeDetails(int _code)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_EmployeeList
@@ -188,7 +188,7 @@ namespace Infrastructure.DAL
 
         public D_EmployeeLocations getEmployeeLocations(int EmpCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.D_EmployeeLocations
@@ -207,10 +207,10 @@ namespace Infrastructure.DAL
 
         public AssetsEventTracking getTrackingDetails(int TrackingId)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.AssetsEventTracking
+                    (from obj in DC.AssetsEventTrackings
                      where obj.Code == TrackingId
                      select obj);
 
@@ -221,10 +221,10 @@ namespace Infrastructure.DAL
 
         public AssetsEventTrackingHeader getTrackingRequestHeaderDetails(int headerCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.AssetsEventTrackingHeader
+                    (from obj in DC.AssetsEventTrackingHeaders
                      where obj.Code == headerCode
                      select obj);
 
@@ -235,10 +235,10 @@ namespace Infrastructure.DAL
 
         public AssetsEventTrackingHeader getTrackingRequestHeaderByEmpCode(int empCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.AssetsEventTrackingHeader
+                    (from obj in DC.AssetsEventTrackingHeaders
                      where obj.EmpRefCode == empCode
                      select obj);
 
@@ -250,10 +250,10 @@ namespace Infrastructure.DAL
 
         public AssetsEventTrackingHeader getTrackingRequestHeaderByCode(string headerCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.AssetsEventTrackingHeader
+                    (from obj in DC.AssetsEventTrackingHeaders
                      where obj.Serial == headerCode
                      select obj);
 
@@ -273,15 +273,23 @@ namespace Infrastructure.DAL
 
         public int AddEventTracking<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
-                DC.AssetsEventTracking.Add(item as AssetsEventTracking);
+                DC.AssetsEventTrackings.Add(item as AssetsEventTracking);
+                return DC.SaveChanges();
+            }
+        }
+        public int AddEventTrackingTest<T>(T item)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                DC.AssetsEventTrackingTests.Add(item as AssetsEventTrackingTest);
                 return DC.SaveChanges();
             }
         }
         public int DeleteEventTracking<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as AssetsEventTracking).State = System.Data.Entity.EntityState.Deleted;
@@ -291,7 +299,7 @@ namespace Infrastructure.DAL
 
         public int UpdateEventTracking<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as AssetsEventTracking).State = System.Data.Entity.EntityState.Modified;
@@ -312,9 +320,9 @@ namespace Infrastructure.DAL
 
         public int getCurrentYearRequestHeaderCount(int TargetYear)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
-                var result = (from obj in DC.AssetsEventTrackingHeader
+                var result = (from obj in DC.AssetsEventTrackingHeaders
                               where obj.RequestDate.Value.Year == TargetYear
                               select obj).ToList();
 
@@ -325,8 +333,7 @@ namespace Infrastructure.DAL
                     return result.Count;
                 }
                 else { return 0; }
-
-
+                
             }
         }
 
@@ -334,7 +341,7 @@ namespace Infrastructure.DAL
         public IList<view_AssetsEventTrackingHeader> getAssetsRequestList(string requestSerial, int requestType, DateTime TransactionDatFrom, DateTime TransactionDatTo,
             int targetLocation, int empRef, int OrgRefCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_AssetsEventTrackingHeader
@@ -356,7 +363,7 @@ namespace Infrastructure.DAL
         public IList<view_CustodyList> getFilteredCustodyList(string requestSerial, int requestType, DateTime TransactionDatFrom, DateTime TransactionDatTo,
             int targetLocation, int empRef, int [] OrgChartRefCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_CustodyList
@@ -378,7 +385,7 @@ namespace Infrastructure.DAL
 
         public IList<view_CustodyList> getRequestAssets(int requestCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_CustodyList
@@ -396,15 +403,23 @@ namespace Infrastructure.DAL
 
         public int AddAssetsEventTrackingHeader<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
-                DC.AssetsEventTrackingHeader.Add(item as AssetsEventTrackingHeader);
+                DC.AssetsEventTrackingHeaders.Add(item as AssetsEventTrackingHeader);
+                return DC.SaveChanges();
+            }
+        }
+        public int AddAssetsEventTrackingTestHeader<T>(T item)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                DC.AssetsEventTrackingTestHeaders.Add(item as AssetsEventTrackingTestHeader);
                 return DC.SaveChanges();
             }
         }
         public int DeleteAssetsEventTrackingHeader<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as AssetsEventTrackingHeader).State = System.Data.Entity.EntityState.Deleted;
@@ -414,7 +429,7 @@ namespace Infrastructure.DAL
 
         public int UpdateAssetsEventTrackingHeader<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as AssetsEventTrackingHeader).State = System.Data.Entity.EntityState.Modified;
@@ -430,7 +445,7 @@ namespace Infrastructure.DAL
 
         public int AddEmployeeLoation<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 DC.D_EmployeeLocations.Add(item as D_EmployeeLocations);
                 return DC.SaveChanges();
@@ -439,7 +454,7 @@ namespace Infrastructure.DAL
 
         public int UpdateEmployeeLoation<T>(T item)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 // Mark entity as modified
                 DC.Entry(item as D_EmployeeLocations).State = System.Data.Entity.EntityState.Modified;
@@ -454,7 +469,7 @@ namespace Infrastructure.DAL
 
         //public List<viewTemp> getAssetsInventory()
         //{
-        //    using (var DC = new AssetsEntities())
+        //    using (var DC = new AssetsEntitiesNew())
         //    {
         //        var result =
         //            (from obj in DC.viewTemp
@@ -474,7 +489,7 @@ namespace Infrastructure.DAL
 
         //        return result.ToList<viewTemp>();
         //    }
-        //    //using (var DC = new AssetsEntities())
+        //    //using (var DC = new AssetsEntitiesNew())
         //    //{
         //    //    var result = DC.view_AssetsInventory
         //    //             .SqlQuery("Select * from view_AssetsInventory")
@@ -488,7 +503,7 @@ namespace Infrastructure.DAL
 
         public IList<view_AssetsInventory> getAssetsInventory()
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_AssetsInventory
@@ -500,7 +515,7 @@ namespace Infrastructure.DAL
 
         public List<view_CustodyList> getCustodyList(int RequestHeaderCode, int ToLocationId, int EmpRefCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_CustodyList
@@ -517,7 +532,7 @@ namespace Infrastructure.DAL
 
         public List<view_CustodyList> getCustodyListByMasterData(int RequestHeaderCode, int ToLocationId, int EmpRefCode)
         {
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_CustodyList
@@ -535,7 +550,7 @@ namespace Infrastructure.DAL
         public List<view_CustodyListGrouped> getCustodyListGrouped(int [] OrgChartRefCode)
         {
 
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_CustodyListGrouped
@@ -549,7 +564,7 @@ namespace Infrastructure.DAL
         public List<view_CustodyList> getCustodyListHera(int[] OrgChartRefCode)
         {
 
-            using (var DC = new AssetsEntities())
+            using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_CustodyList 

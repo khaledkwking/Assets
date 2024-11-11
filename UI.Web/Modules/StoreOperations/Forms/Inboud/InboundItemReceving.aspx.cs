@@ -23,10 +23,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
         public string _PageTitle = Resources.Pages.InboundItemsReceving;
 
         #endregion
-
         #region "Page Events"
-
-
         protected void Page_PreInit(object sender, EventArgs e)
         {
             PageUrl = "InboundItemReceving.aspx";
@@ -68,7 +65,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
 
         }
         #endregion
-
         #region "Fill Information"
         private void FillInboundItems()
         {
@@ -109,8 +105,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
             pager1.ItemCount = objList.Count;
 
         }
-
-
         private void FillInboundMasterInformation()
         {
 
@@ -137,7 +131,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
             //lblSubTitle.Text = this.GetTitle(false);
 
         }
-
         protected void pager_Command(object sender, CommandEventArgs e)
         {
             Int32 currnetPageIndx = ((Int32)(e.CommandArgument));
@@ -156,14 +149,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
             FillInboundItems();
         }
 
-
-
-
-
-
-
         #endregion
-
         #region "Helper Methods"
 
         #endregion
@@ -188,7 +174,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
             {
 
 
-                List<AssetsItemUnits> objList = new List<AssetsItemUnits>();
+                List<AssetsItemUnit> objList = new List<AssetsItemUnit>();
                 ArrayList UnitsList = new ArrayList();
                 string InboundMasterID = gets(grdInboundItems.Items[0].Cells[1].Text);
                 int StoreId = ZeroIntergerIFNull(grdInboundItems.Items[0].Cells[2].Text);
@@ -198,7 +184,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
                     {
 
                         // Update Item Actual Quanonty
-                        AssetsItemUnits obj = new AssetsItemUnits();
+                        AssetsItemUnit obj = new AssetsItemUnit();
                         obj = objRepository.GetInboundItemDetails(ZeroIntergerIFNull(grdInboundItems.Items[i].Cells[0].Text));
                         obj.ReceivedQty = ZeroIFNull(((TextBox)grdInboundItems.Items[i].FindControl("txtQty")).Text);
 
@@ -221,6 +207,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
 
                         obj.LastModifiedAt = DateTime.Now;
                         obj.LastModifiedBy = ZeroIntergerIFNull(gets(ReadSession("userid")));
+                        //obj.= 2;
 
                         objRepository.UpdateItemunit(obj);
 
@@ -236,8 +223,20 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
                             ItemRepository.Update(itemMasterObj);
 
                         }
+                        //TODO
+                        //Update DepositeStatusTypeCode
+                        //var _InboundMasterIDObj = objRepository.FillInboundItems(Convert.ToInt32(InboundMasterID));
+                        var _DepositeStatusTypeCodeObj = objRepository.GetInboundStatusDetails(Convert.ToInt32(InboundMasterID));
+                        if (_DepositeStatusTypeCodeObj != null)
+                        {
+                            _DepositeStatusTypeCodeObj.DepositeStatusTypeCode = 2 ; // Goods Arrival
 
-                     
+                            objRepository.UpdateStatusTracking(_DepositeStatusTypeCodeObj);
+
+                        }
+
+
+
                     }
                 }
 

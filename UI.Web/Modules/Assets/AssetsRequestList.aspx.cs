@@ -39,7 +39,8 @@ namespace UI.Web.Modules.MasterData
                 //{
                 //    Response.Redirect("/admin/pages/main.aspx");
                 //}
-
+                txtTransDate.Text = DateTime.Now.AddYears(-1).ToString();
+                txtTransactionDateTo.Text = DateTime.Now.ToString();
                 ViewState["itemID"] = "0";
                 fillLookups();
                 FillGrid();
@@ -59,54 +60,54 @@ namespace UI.Web.Modules.MasterData
                 e.Item.Attributes.Add("onmouseout", "this.style.backgroundColor=\'#FFFFFF\';");
             }
 
-            //if ((e.Item.ItemType == ListItemType.AlternatingItem))
+            if ((e.Item.ItemType == ListItemType.AlternatingItem))
+            {
+                e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#f2d575\';");
+                e.Item.Attributes.Add("onmouseout", "this.style.backgroundColor=\'#FFFFFF\';");
+            }
+
+
+            //if ((e.Item.ItemType == ListItemType.Item))
             //{
-            //    e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#f2d575\';");
-            //    e.Item.Attributes.Add("onmouseout", "this.style.backgroundColor=\'#FFFFFF\';");
+            //    //
+            //    HtmlImage im = ((HtmlImage)(e.Item.Cells[2].FindControl("imgControl")));
+            //    string imname = im.ClientID;
+            //    string rowindex = (e.Item.ItemIndex + 1).ToString();
+            //    string rowID = e.Item.ClientID;
+            //    im.Attributes.Add("onclick", ("ControlGrid(\'" + (imname + ("\'," + (rowindex + (",\'" + (rowID + "\')")))))));
+            //    //LinkButton lnk = ((LinkButton)(e.Item.Cells[0].Controls[0]));
+            //    //lnk.Attributes.Add("onclick", "return confirm(\'Are you sure you want to delete this Invoice?\');");
+
+
+
+
             //}
+            //else if ((e.Item.ItemType == ListItemType.AlternatingItem))
+            //{
+            //    string rowID = e.Item.ClientID;
+            //    string Filecode = e.Item.Cells[3].Text;
+
+            //    var objUnitList = objRepository.getRequestAssets(ZeroIntergerIFNull(Filecode));
+            //    if (objUnitList != null)
+            //    {
+            //        DataGrid grd = ((DataGrid)(e.Item.Cells[1].FindControl("grdItems")));
+            //        grd.DataSource = objUnitList;
+            //        grd.DataBind();
 
 
-            if ((e.Item.ItemType == ListItemType.Item))
-            {
-                //
-                HtmlImage im = ((HtmlImage)(e.Item.Cells[2].FindControl("imgControl")));
-                string imname = im.ClientID;
-                string rowindex = (e.Item.ItemIndex + 1).ToString();
-                string rowID = e.Item.ClientID;
-                im.Attributes.Add("onclick", ("ControlGrid(\'" + (imname + ("\'," + (rowindex + (",\'" + (rowID + "\')")))))));
-                //LinkButton lnk = ((LinkButton)(e.Item.Cells[0].Controls[0]));
-                //lnk.Attributes.Add("onclick", "return confirm(\'Are you sure you want to delete this Invoice?\');");
+            //    }
 
 
+            //    for (int i = 2; i <= (e.Item.Cells.Count - 1); i++)
+            //    {
+            //        e.Item.Cells[i].Visible = false;
+            //    }
 
-
-            }
-            else if ((e.Item.ItemType == ListItemType.AlternatingItem))
-            {
-                string rowID = e.Item.ClientID;
-                string Filecode = e.Item.Cells[3].Text;
-
-                var objUnitList = objRepository.getRequestAssets(ZeroIntergerIFNull(Filecode));
-                if (objUnitList != null)
-                {
-                    DataGrid grd = ((DataGrid)(e.Item.Cells[1].FindControl("grdItems")));
-                    grd.DataSource = objUnitList;
-                    grd.DataBind();
-
-
-                }
-
-
-                for (int i = 2; i <= (e.Item.Cells.Count - 1); i++)
-                {
-                    e.Item.Cells[i].Visible = false;
-                }
-
-                e.Item.Cells[0].Controls[0].Visible = false;
-                e.Item.Cells[1].Attributes.Add("colspan", ((e.Item.Cells.Count - 2)).ToString());
-                e.Item.Attributes.Add("style", "display:none");
-                e.Item.Cells[0].Visible = false;
-            }
+            //    e.Item.Cells[0].Controls[0].Visible = false;
+            //    e.Item.Cells[1].Attributes.Add("colspan", ((e.Item.Cells.Count - 2)).ToString());
+            //    e.Item.Attributes.Add("style", "display:none");
+            //    e.Item.Cells[0].Visible = false;
+            //}
 
             if (!(e.Item.ItemType == ListItemType.AlternatingItem))
             {
@@ -132,8 +133,8 @@ namespace UI.Web.Modules.MasterData
         {
             var objlist = objRepository.getAssetsRequestList(txtPartOfName.Text,ZeroIntergerIFNull(lstFilterAction.SelectedValue), 
                 NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text),0,0,0);
-            var duplicatedList = objlist.SelectMany(t =>
-                 Enumerable.Repeat(t, 2)).ToList();
+            //var duplicatedList = objlist.SelectMany(t =>
+            //     Enumerable.Repeat(t, 2)).ToList();
 
             lblcount.Text = (Resources.Utilities.foundTotal + " (" + (objlist.Count.ToString()).ToString() + ") " + Resources.Utilities.records);
             decimal c = System.Math.Ceiling(Convert.ToDecimal(objlist.Count / grdData.PageSize));
@@ -142,10 +143,10 @@ namespace UI.Web.Modules.MasterData
                 grdData.CurrentPageIndex = 0;
             }
 
-            grdData.DataSource = duplicatedList;
+            grdData.DataSource = objlist; //;
             grdData.DataBind();
 
-            int _totalCount = objlist.Count;
+            //int _totalCount = objlist.Count;
             pager1.ItemCount = objlist.Count;
 
 

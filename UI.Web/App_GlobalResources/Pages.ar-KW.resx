@@ -1050,4 +1050,10 @@
   <data name="CustodyAddAll" xml:space="preserve">
     <value>تسجيل عهدة</value>
   </data>
+  <data name="LocationNameArabic" xml:space="preserve">
+    <value>المكان</value>
+  </data>
+  <data name="StoreList" xml:space="preserve">
+    <value>قائمة الاماكن</value>
+  </data>
 </root>

@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Active" xml:space="preserve">
+  <data name="LocationNameAr" xml:space="preserve">
     <value>Active</value>
   </data>
   <data name="AddItem" xml:space="preserve">
@@ -1040,5 +1040,11 @@
   </data>
   <data name="CustodyAddAll" xml:space="preserve">
     <value>تسجيل عهدة</value>
+  </data>
+  <data name="LocationNameArabic" xml:space="preserve">
+    <value>المكان</value>
+  </data>
+  <data name="StoreList" xml:space="preserve">
+    <value>قائمة الاماكن</value>
   </data>
 </root>

@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UI.Web</RootNamespace>
     <AssemblyName>UI.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -1931,6 +1931,7 @@
     <Content Include="Modules\MasterData\ItemsCard.aspx" />
     <Content Include="Modules\MasterData\OrgChart.aspx" />
     <Content Include="Modules\MasterData\EmployeeList.aspx" />
+    <Content Include="Modules\MasterData\StoreList.aspx" />
     <Content Include="Modules\MasterData\VendorList.aspx" />
     <Content Include="Modules\MasterData\lookups.aspx" />
     <Content Include="Modules\Reports\AssetsCostCompare.aspx" />
@@ -2240,6 +2241,13 @@
     </Compile>
     <Compile Include="Modules\MasterData\EmployeeList.aspx.designer.cs">
       <DependentUpon>EmployeeList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MasterData\StoreList.aspx.cs">
+      <DependentUpon>StoreList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\MasterData\StoreList.aspx.designer.cs">
+      <DependentUpon>StoreList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\MasterData\VendorList.aspx.cs">
       <DependentUpon>VendorList.aspx</DependentUpon>

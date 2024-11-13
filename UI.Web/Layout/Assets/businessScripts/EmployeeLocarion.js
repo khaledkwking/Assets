@@ -91,7 +91,7 @@ function fillLocationChart(entityId) {
             }).bind('ready.jstree', function (e, data) {
                 $('#EmployeelocationTree').jstree('close_all')
                 data.instance._open_to($("#hdnSelectedNode").val());
-                $("#" + $("#hdnSelectedNode").val() + " >a").css("background", "#7adbc0");
+                $("#" + $("#hdnSelectedNode").val() + " >a").css("background", "#D5C08E");
 
             }).bind('search.jstree', function (e, data) {
                 if ($("#treeSearch").val() !== "") {

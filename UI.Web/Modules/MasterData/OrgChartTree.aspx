@@ -61,16 +61,16 @@
                         <div class="portlet box">
                             <div class="portlet-body">
                                 <div class="row">
-                                    <div class="col-md-4" style="background: #f2f2f2; padding: 10px; border-radius: 5px;">
+                                    <div class="col-md-3" style="background:#0C476B;padding:10px;border-radius:5px;color:#fff;">
 
                                         <div class="panel panel-yellow" style="min-height: 70vh">
                                             <div class="panel-heading clearfix">
                                                 <span class="mts"><%=GetGlobalResourceObject("pages","OrgChartTitle") %>  </span>
                                                 <div style="float: left"><a href="../Reports/OrgChartPrint.aspx" class="btn btn-dim btn-primary  btn-xs iframe75 "><i class="icon ni ni-printer"></i></a></div>
                                             </div>
-                                            <div class="panel-body" style="padding: 0px; padding-top: 25px;">
+                                            <div class="panel-body" style="padding: 0px; padding-top: 25px;margin-bottom:10px;">
 
-                                                <div class="form-control-wrap">
+                                                <div class="form-control-wrap" style="margin-bottom:20px;">
                                                     <div class="form-icon form-icon-right">
                                                         <em class="icon ni ni-search"></em>
                                                     </div>
@@ -86,7 +86,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
 
                                         <ul class="nav nav-tabs">
                                             <li class="nav-item">

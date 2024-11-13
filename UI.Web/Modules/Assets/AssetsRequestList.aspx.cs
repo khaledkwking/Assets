@@ -56,13 +56,13 @@ namespace UI.Web.Modules.MasterData
 
             if ((e.Item.ItemType == ListItemType.Item))
             {
-                e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#bdffed\';");
+                e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#d5c08e6e\';");
                 e.Item.Attributes.Add("onmouseout", "this.style.backgroundColor=\'#FFFFFF\';");
             }
 
             if ((e.Item.ItemType == ListItemType.AlternatingItem))
             {
-                e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#f2d575\';");
+                e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#d5c08e6e\';");
                 e.Item.Attributes.Add("onmouseout", "this.style.backgroundColor=\'#FFFFFF\';");
             }
 

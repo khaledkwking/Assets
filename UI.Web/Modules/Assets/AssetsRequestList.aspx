@@ -152,7 +152,7 @@
                     <%--OnItemDataBound="grdData_ItemDataBound"--%>
 
                     <asp:DataGrid runat="server" ID="grdData" AutoGenerateColumns="False" OnItemDataBound="grdData_ItemDataBound"
-                        AllowPaging="true" PageSize="10" class="table table-hover table-striped table-bordered table-advanced tablesorter" data-auto-responsive="false" >
+                        AllowPaging="true" PageSize="10" class="table table-hover table-striped table-bordered table-advanced tablesorter dataTable no-footer dtr-inline" data-auto-responsive="false" >
 
                         <Columns>
                             <asp:TemplateColumn>

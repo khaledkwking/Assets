@@ -106,7 +106,7 @@
                                     </div>
                                     <div class="nk-block-head">
                                         <div class="nk-block-head-content">
-                                            <h5 class="nk-block-title" style="color:#fff;">نظام إدارة وجرد العهد الشخصية والتنظيمية - AMS</h5>
+                                            <h3 class="nk-block-title" style="color:#fff;">نظام إدارة   العهد والمخازن    </h3>
                                             <%--<div class="nk-block-des">
                                             <p>Access the DashLite panel using your email and passcode.</p>
                                         </div>--%>

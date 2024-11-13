@@ -24,7 +24,7 @@ namespace UI.Web.Modules.MasterData
 
         private void FillGrid()
         {
-            var masterList = ins.FillLocation().Where(o=> o.LocationType==1).ToList();
+            var masterList = ins.FillLocation().Where(o=> o.LocationType==4).ToList();
             lblcount.Text = (Resources.Utilities.foundTotal + (masterList.Count.ToString() + Resources.Utilities.records));
             //decimal c = System.Math.Floor(Convert.ToDecimal(masterList.Count / grdData.PageSize));
             

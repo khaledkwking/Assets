@@ -60,7 +60,7 @@
             <div class="nk-block-head-content">
                 <h3 class="nk-block-title page-title"><%=_PageTitle %></h3>
                 <ul class="breadcrumb breadcrumb-arrow">
-                    <li><i class="fa fa-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                    <li><i class="icon ni ni-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="icon ni ni-chevrons-left"></i>&nbsp;&nbsp;</li>
                     <li class="active"><%=_PageTitle %></li>
                 </ul>
             </div>
@@ -83,7 +83,7 @@
                                 </li>
                                 <li class="btn-toolbar-sep"></li>
 
-                                <li data-select2-id="18" style="display:none">
+                                <li data-select2-id="18" style="display: none">
                                     <div class="dropdown" data-select2-id="17">
                                         <a href="#" class="btn btn-trigger btn-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                             <em class="icon ni ni-filter"></em>
@@ -188,69 +188,72 @@
                 </div>
                 <div class="card-inner p-0" id="divShow" runat="server">
                     <div class="row">
-                        <div class="col-6 bg-gray-100 border border-warning" style="padding:10px;margin:0 14px;">
-                            <div class="gy-3">
-                                <div class="row align-center">
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","Serial") %></label>
-                                            <asp:Label runat="server" ID="lblSerial" CssClass="form-note"></asp:Label>
+                        <div class="col-6" >
+                            <div class="card card-bordered mb-10" style="margin:20px">
+                                <div class="card-inner">
+                                    <div class="gy-3">
+                                        <div class="row align-center">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","Serial") %></label>
+                                                    <asp:Label runat="server" ID="lblSerial" CssClass="form-note"></asp:Label>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","InboundTypeCode") %></label>
+                                                    <asp:Label runat="server" ID="lblInboundType" CssClass="form-note"></asp:Label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","TransDate") %></label>
+                                                    <asp:Label runat="server" ID="lblTransDate" CssClass="form-note"></asp:Label>
+                                                </div>
+                                            </div>
 
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","InboundTypeCode") %></label>
-                                            <asp:Label runat="server" ID="lblInboundType" CssClass="form-note"></asp:Label>
-                                        </div>
-                                    </div>
+                                        <div class="row align-center">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","FromVendorCode") %></label>
+                                                    <asp:Label runat="server" ID="lblVendorNameEn" CssClass="form-note"></asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","RefNo") %></label>
+                                                    <asp:Label runat="server" ID="lblRefNo" CssClass="form-note"></asp:Label>
+                                                </div>
+                                            </div>
 
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","TransDate") %></label>
-                                            <asp:Label runat="server" ID="lblTransDate" CssClass="form-note"></asp:Label>
-                                        </div>
-                                    </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","RefDate") %></label>
+                                                    <asp:Label runat="server" ID="txtRefDate" CssClass="form-note"></asp:Label>
+                                                </div>
+                                            </div>
 
+
+                                        </div>
+
+                                        <div class="row align-center">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","TargetLocationCode") %></label>
+                                                    <asp:Label runat="server" ID="lblLocationNameAr" CssClass="form-note text-danger"></asp:Label>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class="row align-center">
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","FromVendorCode") %></label>
-                                            <asp:Label runat="server" ID="lblVendorNameEn" CssClass="form-note"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","RefNo") %></label>
-                                            <asp:Label runat="server" ID="lblRefNo" CssClass="form-note"></asp:Label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","RefDate") %></label>
-                                            <asp:Label runat="server" ID="txtRefDate" CssClass="form-note"></asp:Label>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="row align-center">
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="site-name"><%=GetGlobalResourceObject("pages","TargetLocationCode") %></label>
-                                            <asp:Label runat="server" ID="lblLocationNameAr" CssClass="form-note text-danger"></asp:Label>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
                             </div>
                         </div>
-
                     </div>
 
 
@@ -267,7 +270,7 @@
                             <asp:BoundColumn DataField="InboubdItemId" Visible="False"></asp:BoundColumn>
                             <asp:BoundColumn DataField="InboundCode" Visible="False"></asp:BoundColumn>
                             <asp:BoundColumn DataField="TargetLocationCode" Visible="False"></asp:BoundColumn>
-                            
+
 
 
 
@@ -283,24 +286,25 @@
                                 </ItemTemplate>
                             </asp:TemplateColumn>
 
-                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,image %>">
+                            <%-- <asp:TemplateColumn HeaderText="<%$ Resources:pages,image %>">
                                 <ItemStyle Width="5%" />
                                 <ItemTemplate>
 
                                     <%# FillImage(gets(Eval("ItemImage")), Resources.Utilities.resourcespath+"uploads/ItemsData/", 35, 25,"")%>
                                 </ItemTemplate>
-                            </asp:TemplateColumn>
+                            </asp:TemplateColumn>--%>
 
                             <asp:BoundColumn DataField="ItemRefCode" HeaderText="<%$ Resources:pages,ItemRefCode %>"></asp:BoundColumn>
                             <%--<asp:BoundColumn DataField="ItemTag" HeaderText="<%$ Resources:pages,tagId %>"></asp:BoundColumn>--%>
                             <%--<asp:BoundColumn DataField="ItemFinanceCode" HeaderText="<%$ Resources:pages,ItemFinanceCode %>"></asp:BoundColumn>--%>
                             <%--<asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,ItemNameAr %>"></asp:BoundColumn>--%>
                             <asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,PurchaseItems %>  "></asp:BoundColumn>
+                            <asp:BoundColumn DataField="UnitNameAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
                             <asp:BoundColumn DataField="Qty" HeaderText="<%$ Resources:pages,Qty %>"></asp:BoundColumn>
-                            <asp:BoundColumn DataField="EstimatedUnitCost" HeaderText="<%$ Resources:pages,EstimatedCost %>" ></asp:BoundColumn>
-                            <asp:BoundColumn DataField="TitleAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
+                            <asp:BoundColumn DataField="EstimatedUnitCost" HeaderText="<%$ Resources:pages,EstimatedCost %>"></asp:BoundColumn>
+                            <asp:BoundColumn DataField="TitleAr" HeaderText="<%$ Resources:pages,Category %>"></asp:BoundColumn>
                             <asp:BoundColumn DataField="StatusTitleAr" HeaderText="<%$ Resources:pages,status %>"></asp:BoundColumn>
-                            
+
 
                             <asp:TemplateColumn HeaderText="<%$ Resources:pages,ReceviedQty %> ">
                                 <ItemStyle HorizontalAlign="left" />

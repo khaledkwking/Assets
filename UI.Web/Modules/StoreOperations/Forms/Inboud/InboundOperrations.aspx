@@ -104,7 +104,7 @@
             <div class="nk-block-head-content">
                 <h3 class="nk-block-title page-title"><%=_PageTitle %></h3>
                 <ul class="breadcrumb breadcrumb-arrow">
-                    <li><i class="fa fa-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                    <li><i class="icon ni ni-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="icon ni ni-chevrons-left"></i>&nbsp;&nbsp;</li>
                     <li class="active"><%=_PageTitle %></li>
                 </ul>
             </div>
@@ -445,23 +445,24 @@
                                                                                                 </ItemTemplate>
                                                                                             </asp:TemplateColumn>
 
-                                                                                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,image %>">
+                                                                                          <%--  <asp:TemplateColumn HeaderText="<%$ Resources:pages,image %>">
                                                                                                 <ItemStyle Width="5%" />
                                                                                                 <ItemTemplate>
 
                                                                                                     <%# FillImage(gets(Eval("ItemImage")), Resources.Utilities.resourcespath+"uploads/ItemsData/", 35, 25,"")%>
                                                                                                 </ItemTemplate>
-                                                                                            </asp:TemplateColumn>
+                                                                                            </asp:TemplateColumn>--%>
+                                                                                            <asp:BoundColumn DataField="TitleAr" HeaderText="<%$ Resources:pages,Category %>"></asp:BoundColumn>
 
                                                                                             <asp:BoundColumn DataField="ItemRefCode" HeaderText="<%$ Resources:pages,ItemRefCode %>"></asp:BoundColumn>
                                                                                             <%--<asp:BoundColumn DataField="ItemTag" HeaderText="<%$ Resources:pages,Tagid %>"></asp:BoundColumn>--%>
-                                                                                            <%--<asp:BoundColumn DataField="ItemFinanceCode" HeaderText="<%$ Resources:pages,ItemFinanceCode %>"></asp:BoundColumn>--%>
+                                                                                            <asp:BoundColumn DataField="ItemFinanceCode" HeaderText="<%$ Resources:pages,ItemFinanceCode %>"></asp:BoundColumn>
                                                                                             <%--<asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,ItemNameAr %>"></asp:BoundColumn>--%>
                                                                                             <asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,PurchaseItems %>  "></asp:BoundColumn>
                                                                                             <asp:BoundColumn DataField="Qty" HeaderText="<%$ Resources:pages,Qty %>"></asp:BoundColumn>
                                                                                             <asp:BoundColumn DataField="EstimatedUnitCost" HeaderText="<%$ Resources:pages,EstimatedCost %>"></asp:BoundColumn>
                                                                                             <asp:BoundColumn DataField="ReceivedQty" HeaderText="<%$ Resources:pages,ReceivedQty %>"></asp:BoundColumn>
-                                                                                            <asp:BoundColumn DataField="TitleAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
+                                                                                            <asp:BoundColumn DataField="UnitNameAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
                                                                                             <asp:BoundColumn DataField="StatusTitleAr" HeaderText="<%$ Resources:pages,status %>"></asp:BoundColumn>
 
                                                                                             <asp:TemplateColumn>

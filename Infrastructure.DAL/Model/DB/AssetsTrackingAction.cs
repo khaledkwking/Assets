@@ -18,7 +18,6 @@ namespace Infrastructure.DAL.Model.DB
         public AssetsTrackingAction()
         {
             this.AssetsEventTrackings = new HashSet<AssetsEventTracking>();
-            this.AssetsEventTrackingTests = new HashSet<AssetsEventTrackingTest>();
         }
     
         public int Code { get; set; }
@@ -27,7 +26,5 @@ namespace Infrastructure.DAL.Model.DB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssetsEventTracking> AssetsEventTrackings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssetsEventTrackingTest> AssetsEventTrackingTests { get; set; }
     }
 }

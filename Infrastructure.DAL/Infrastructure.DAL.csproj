@@ -77,12 +77,6 @@
     <Compile Include="Model\DB\AssetsEventTrackingHeader.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DB\AssetsEventTrackingTest.cs">
-      <DependentUpon>Assets_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DB\AssetsEventTrackingTestHeader.cs">
-      <DependentUpon>Assets_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\DB\AssetsItemUnit.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
@@ -186,6 +180,9 @@
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\Security_pr_admin.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_pr_adminPermittedLocations.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\Security_pr_AdminType.cs">

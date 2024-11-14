@@ -4,6 +4,7 @@ using Infrastructure;
 using Infrastructure.DAL;
 using Microsoft.Reporting.WebForms;
 using UI.Web.Admin.Controller;
+using UI.Web.Modules.StoreOperations.Forms.Inboud;
 
 
 
@@ -12,7 +13,7 @@ namespace UI.Web.Modules.WHM.Forms
     public partial class PurchaseReceiptReport : BaseFormAdmin
     {
         #region "Page Members"
-        public PurchaseRepository objRepository = IoC.Resolve<PurchaseRepository>();
+        public InboundItemReceving objRepository = IoC.Resolve<InboundItemReceving>();
         public string _PageTitle = "Purchase";
 
         #endregion

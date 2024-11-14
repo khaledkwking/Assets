@@ -33,7 +33,7 @@ namespace UI.Web.Modules.Assets
                     int? Emp_Id = item.Emp_Id;
                     DateTime? AssetDate = item.Item_AssDate;
 
-                    AssetsEventTrackingTestHeader objHeader = new AssetsEventTrackingTestHeader();
+                    AssetsEventTrackingHeader objHeader = new AssetsEventTrackingHeader();
                     objHeader.RequestDate = AssetDate;
                     objHeader.DueDate = null;
                     objHeader.RequestRefCode = Guid.NewGuid().ToString();
@@ -81,13 +81,13 @@ namespace UI.Web.Modules.Assets
 
                     objHeader.CreatedAt = AssetDate;
                     objHeader.CreatedBy = ZeroIntergerIFNull(ReadSession("userid").ToString());
-                    objRepository.AddAssetsEventTrackingTestHeader(objHeader);
+                    objRepository.AddAssetsEventTrackingHeader(objHeader);
                     int HeaderID = objHeader.Code;
                     
                     var QDetails = en.Item_tbl.Where(o => o.Emp_Id == Emp_Id && o.Item_AssDate == AssetDate).ToList();
                     foreach (var itemD in QDetails)
                     {
-                        AssetsEventTrackingTest obj = new AssetsEventTrackingTest();
+                        AssetsEventTracking obj = new AssetsEventTracking();
 
                         int? Code = null;
                         var QCard= en.D_ItemCard.Where(o => o.REFID == itemD.CatSub_Id).ToList();
@@ -114,7 +114,7 @@ namespace UI.Web.Modules.Assets
                         obj.CreatedAt = AssetDate;
                         obj.CreatedBy = null;
 
-                        objRepository.AddEventTrackingTest(obj);
+                        objRepository.AddEventTracking(obj);
 
                     }
                 }
@@ -132,7 +132,7 @@ namespace UI.Web.Modules.Assets
                     long? Room_ID = item.Room_Id;
                     DateTime? AssetDate = item.Item_AssDate;
 
-                    AssetsEventTrackingTestHeader objHeader = new AssetsEventTrackingTestHeader();
+                    AssetsEventTrackingHeader objHeader = new AssetsEventTrackingHeader();
                     objHeader.RequestDate = AssetDate;
                     objHeader.DueDate = null;
                     objHeader.RequestRefCode = Guid.NewGuid().ToString();
@@ -159,13 +159,13 @@ namespace UI.Web.Modules.Assets
 
                     objHeader.CreatedAt = AssetDate;
                     objHeader.CreatedBy = ZeroIntergerIFNull(ReadSession("userid").ToString());
-                    objRepository.AddAssetsEventTrackingTestHeader(objHeader);
+                    objRepository.AddAssetsEventTrackingHeader(objHeader);
                     int HeaderID = objHeader.Code;
 
                     var QDetails = en.Item_tbl.Where(o => o.Room_Id == Room_ID && o.Item_AssDate == AssetDate).ToList();
                     foreach (var itemD in QDetails)
                     {
-                        AssetsEventTrackingTest obj = new AssetsEventTrackingTest();
+                        AssetsEventTracking obj = new AssetsEventTracking();
 
                         int? Code = null;
                         var QCard = en.D_ItemCard.Where(o => o.REFID == itemD.CatSub_Id).ToList();
@@ -189,7 +189,7 @@ namespace UI.Web.Modules.Assets
                         obj.CreatedAt = AssetDate;
                         obj.CreatedBy = null;
 
-                        objRepository.AddEventTrackingTest(obj);
+                        objRepository.AddEventTracking(obj);
                     }
                 }
             }

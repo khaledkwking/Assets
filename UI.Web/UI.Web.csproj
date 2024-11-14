@@ -1936,6 +1936,7 @@
     <Content Include="Modules\MasterData\lookups.aspx" />
     <Content Include="Modules\Reports\AssetsCostCompare.aspx" />
     <Content Include="Modules\Reports\AssetsCostDetails.aspx" />
+    <Content Include="Modules\Reports\InboundReceiptReport.aspx" />
     <Content Include="Modules\Reports\OrgAssetReceipt.aspx" />
     <Content Include="Modules\Reports\AssetReceipt.aspx" />
     <Content Include="Modules\Reports\OrgChartPrint.aspx" />
@@ -2276,6 +2277,13 @@
     </Compile>
     <Compile Include="Modules\Reports\AssetsCostDetails.aspx.designer.cs">
       <DependentUpon>AssetsCostDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Reports\InboundReceiptReport.aspx.cs">
+      <DependentUpon>InboundReceiptReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Reports\InboundReceiptReport.aspx.designer.cs">
+      <DependentUpon>InboundReceiptReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\Reports\OrgAssetReceipt.aspx.cs">
       <DependentUpon>OrgAssetReceipt.aspx</DependentUpon>
@@ -2828,6 +2836,8 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>actions.ar-kw.designer.cs</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="Modules\Reports\RDLC\InboundItems.rdlc" />
+    <EmbeddedResource Include="Modules\Reports\RDLC\InboundReceipt.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\orgChart.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsList_No9_Compare.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsList_No9.rdlc" />

@@ -256,7 +256,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
                     }
                 case 2:
                     {
-                        _out = "<span class='badge badge-dot badge-primary'>" + StatusText + "</span>";
+                        _out = "<span class='badge badge-dot badge-success'>" + StatusText + "</span>";
                         break;
                     }
                 default:
@@ -275,7 +275,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
             {
                 case 1:
                     {
-                        _out = "<span class='badge badge-dim badge-success'><em class='icon ni ni-arrow-up-left'></em><span>" + TypeText + "</span></span>";
+                        _out = "<span class='badge badge-dim badge-light'><em class='icon ni ni-file-docs'></em><span>" + TypeText + "</span></span>";
                         break;
                     }
                 case 2:

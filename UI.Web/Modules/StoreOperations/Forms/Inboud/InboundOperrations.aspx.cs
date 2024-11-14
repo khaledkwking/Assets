@@ -1066,9 +1066,9 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
             lstInboundTypeCode.SelectedValue = "1";
             FillDllwithoptional(LooksUpsRepository.ins.Fillvendor(), lstFromVendorCode, "VendorNameAr", "Code");
 
-            var LocationsList = LooksUpsRepository.ins.FillStoreLocations();
-            FillDllwithoptional(LocationsList, lstTargetLocationCode, "path", "Code");
-            FillDllwithoptional(LocationsList, lstOwnerLocationCode, "path", "Code");
+            var LocationsList = LooksUpsRepository.ins.FillInboundStoreLocations();
+            FillDllwithoptional(LocationsList, lstTargetLocationCode, "LocationNameAr", "Code");
+            FillDllwithoptional(LocationsList, lstOwnerLocationCode, "LocationNameAr", "Code");
 
             FillDllwithoptional(LooksUpsRepository.ins.FillAttachmentTypes(), lstAttachmentType, "TitleAr", "Code");
 

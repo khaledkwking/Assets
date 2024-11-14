@@ -60,53 +60,6 @@
           <Property Name="LastModifiedBy" Type="int" />
           <Property Name="LastModifiedAt" Type="datetime" />
         </EntityType>
-        <EntityType Name="AssetsEventTrackingTest">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RequestHeaderCode" Type="int" />
-          <Property Name="AssetCode" Type="int" />
-          <Property Name="ActionDate" Type="datetime" />
-          <Property Name="DueDate" Type="datetime" />
-          <Property Name="actionId" Type="int" />
-          <Property Name="statusId" Type="int" />
-          <Property Name="ToLocationId" Type="int" />
-          <Property Name="EmpRefCode" Type="int" />
-          <Property Name="EmpName" Type="nvarchar" MaxLength="250" />
-          <Property Name="Notes" Type="nvarchar(max)" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="LastModifiedBy" Type="int" />
-          <Property Name="LastModifiedAt" Type="datetime" />
-          <Property Name="Qty" Type="float" />
-          <Property Name="MissedQty" Type="float" />
-          <Property Name="StoreRequestRefCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="RequestItemPrice" Type="float" />
-        </EntityType>
-        <EntityType Name="AssetsEventTrackingTestHeader">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RequestDate" Type="datetime" />
-          <Property Name="DueDate" Type="datetime" />
-          <Property Name="RequestRefCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="RequestActionType" Type="int" />
-          <Property Name="ProcessType" Type="int" />
-          <Property Name="TMonth" Type="int" />
-          <Property Name="TYear" Type="int" />
-          <Property Name="Serial" Type="nvarchar" MaxLength="50" />
-          <Property Name="OrgChartRefCode" Type="int" />
-          <Property Name="ToLocationId" Type="int" />
-          <Property Name="EmpRefCode" Type="int" />
-          <Property Name="EmpName" Type="nvarchar" MaxLength="250" />
-          <Property Name="RequestNotes" Type="nvarchar(max)" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="LastModifiedBy" Type="int" />
-          <Property Name="LastModifiedAt" Type="datetime" />
-        </EntityType>
         <EntityType Name="AssetsItemUnits">
           <Key>
             <PropertyRef Name="Code" />
@@ -269,6 +222,7 @@
           <Property Name="LocationRefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="MigrationRef" Type="int" />
           <Property Name="MigrationRef1" Type="int" />
+          <Property Name="AllowInbound" Type="bit" />
         </EntityType>
         <EntityType Name="D_LocationType">
           <Key>
@@ -330,6 +284,14 @@
           <Property Name="buildingID" Type="int" />
           <Property Name="FloorId" Type="int" />
           <Property Name="RoomId" Type="bigint" />
+          <Property Name="Ora_EmpRefCode" Type="int" />
+          <Property Name="Ora_EmpName" Type="nvarchar(max)" />
+          <Property Name="Ora_EmpCivilId" Type="nvarchar(max)" />
+          <Property Name="OraActionDate" Type="datetime" />
+          <Property Name="OraEntityRefCode" Type="int" />
+          <Property Name="OraImported" Type="bit" />
+          <Property Name="AutoLink" Type="bit" />
+          <Property Name="isDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="Inbound">
           <Key>
@@ -461,6 +423,18 @@
           <Property Name="AdminPhoto" Type="nvarchar" MaxLength="50" />
           <Property Name="isOperation" Type="bit" />
           <Property Name="AccessCompnayGroup" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Security_pr_adminPermittedLocations">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="LocationId" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="LastModifiedAt" Type="datetime" />
         </EntityType>
         <EntityType Name="Security_pr_AdminType">
           <Key>
@@ -895,6 +869,8 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.view_inboubdItems' does not ha
           <Property Name="ItemCategoryId" Type="int" />
           <Property Name="LastEventTrackingId" Type="int" />
           <Property Name="TargetLocationCode" Type="int" />
+          <Property Name="UnitNameAr" Type="nvarchar" MaxLength="50" />
+          <Property Name="UnitNameEn" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.View_InboundList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1099,7 +1075,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AssetsEventTracking_AssetsEventTrackingHeader">
+        <Association Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1">
           <End Role="AssetsEventTrackingHeader" Type="Self.AssetsEventTrackingHeader" Multiplicity="0..1" />
           <End Role="AssetsEventTracking" Type="Self.AssetsEventTracking" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1131,54 +1107,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
               <PropertyRef Name="Code" />
             </Principal>
             <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="AssetCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTrackingTest_AssetsAvailabilityStatus">
-          <End Role="AssetsAvailabilityStatus" Type="Self.AssetsAvailabilityStatus" Multiplicity="0..1" />
-          <End Role="AssetsEventTrackingTest" Type="Self.AssetsEventTrackingTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsAvailabilityStatus">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTrackingTest">
-              <PropertyRef Name="statusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTrackingTest_AssetsEventTrackingTestHeader">
-          <End Role="AssetsEventTrackingTestHeader" Type="Self.AssetsEventTrackingTestHeader" Multiplicity="0..1" />
-          <End Role="AssetsEventTrackingTest" Type="Self.AssetsEventTrackingTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsEventTrackingTestHeader">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTrackingTest">
-              <PropertyRef Name="RequestHeaderCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTrackingTest_AssetsTrackingActions">
-          <End Role="AssetsTrackingActions" Type="Self.AssetsTrackingActions" Multiplicity="0..1" />
-          <End Role="AssetsEventTrackingTest" Type="Self.AssetsEventTrackingTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsTrackingActions">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTrackingTest">
-              <PropertyRef Name="actionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTrackingTest_D_ItemCard">
-          <End Role="D_ItemCard" Type="Self.D_ItemCard" Multiplicity="0..1" />
-          <End Role="AssetsEventTrackingTest" Type="Self.AssetsEventTrackingTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_ItemCard">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTrackingTest">
               <PropertyRef Name="AssetCode" />
             </Dependent>
           </ReferentialConstraint>
@@ -1518,8 +1446,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySet Name="AssetsAvailabilityStatus" EntityType="Self.AssetsAvailabilityStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AssetsEventTracking" EntityType="Self.AssetsEventTracking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AssetsEventTrackingHeader" EntityType="Self.AssetsEventTrackingHeader" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AssetsEventTrackingTest" EntityType="Self.AssetsEventTrackingTest" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AssetsEventTrackingTestHeader" EntityType="Self.AssetsEventTrackingTestHeader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AssetsItemUnits" EntityType="Self.AssetsItemUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AssetsTrackingActions" EntityType="Self.AssetsTrackingActions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="D_AttachmentType" EntityType="Self.D_AttachmentType" Schema="dbo" store:Type="Tables" />
@@ -1545,6 +1471,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySet Name="Item_tbl" EntityType="Self.Item_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestAttachments" EntityType="Self.RequestAttachments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Security_pr_admin" EntityType="Self.Security_pr_admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Security_pr_adminPermittedLocations" EntityType="Self.Security_pr_adminPermittedLocations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Security_pr_AdminType" EntityType="Self.Security_pr_AdminType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Security_pr_MainSystem" EntityType="Self.Security_pr_MainSystem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Security_pr_ModuleThemes" EntityType="Self.Security_pr_ModuleThemes" Schema="dbo" store:Type="Tables" />
@@ -1835,7 +1762,9 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
     [view_inboubdItems].[FromVendorCode] AS [FromVendorCode], 
     [view_inboubdItems].[ItemCategoryId] AS [ItemCategoryId], 
     [view_inboubdItems].[LastEventTrackingId] AS [LastEventTrackingId], 
-    [view_inboubdItems].[TargetLocationCode] AS [TargetLocationCode]
+    [view_inboubdItems].[TargetLocationCode] AS [TargetLocationCode], 
+    [view_inboubdItems].[UnitNameAr] AS [UnitNameAr], 
+    [view_inboubdItems].[UnitNameEn] AS [UnitNameEn]
     FROM [dbo].[view_inboubdItems] AS [view_inboubdItems]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="View_InboundList" EntityType="Self.View_InboundList" store:Type="Views" store:Schema="dbo">
@@ -2001,7 +1930,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
             <End Role="AssetsAvailabilityStatus" EntitySet="AssetsAvailabilityStatus" />
             <End Role="AssetsEventTracking" EntitySet="AssetsEventTracking" />
           </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTracking_AssetsEventTrackingHeader" Association="Self.FK_AssetsEventTracking_AssetsEventTrackingHeader">
+          <AssociationSet Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1" Association="Self.FK_AssetsEventTracking_AssetsEventTrackingHeader1">
             <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeader" />
             <End Role="AssetsEventTracking" EntitySet="AssetsEventTracking" />
           </AssociationSet>
@@ -2012,22 +1941,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <AssociationSet Name="FK_AssetsEventTracking_D_ItemCard" Association="Self.FK_AssetsEventTracking_D_ItemCard">
             <End Role="D_ItemCard" EntitySet="D_ItemCard" />
             <End Role="AssetsEventTracking" EntitySet="AssetsEventTracking" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTrackingTest_AssetsAvailabilityStatus" Association="Self.FK_AssetsEventTrackingTest_AssetsAvailabilityStatus">
-            <End Role="AssetsAvailabilityStatus" EntitySet="AssetsAvailabilityStatus" />
-            <End Role="AssetsEventTrackingTest" EntitySet="AssetsEventTrackingTest" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTrackingTest_AssetsEventTrackingTestHeader" Association="Self.FK_AssetsEventTrackingTest_AssetsEventTrackingTestHeader">
-            <End Role="AssetsEventTrackingTestHeader" EntitySet="AssetsEventTrackingTestHeader" />
-            <End Role="AssetsEventTrackingTest" EntitySet="AssetsEventTrackingTest" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTrackingTest_AssetsTrackingActions" Association="Self.FK_AssetsEventTrackingTest_AssetsTrackingActions">
-            <End Role="AssetsTrackingActions" EntitySet="AssetsTrackingActions" />
-            <End Role="AssetsEventTrackingTest" EntitySet="AssetsEventTrackingTest" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTrackingTest_D_ItemCard" Association="Self.FK_AssetsEventTrackingTest_D_ItemCard">
-            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
-            <End Role="AssetsEventTrackingTest" EntitySet="AssetsEventTrackingTest" />
           </AssociationSet>
           <AssociationSet Name="FK_D_EmployeeList_D_JobTitle" Association="Self.FK_D_EmployeeList_D_JobTitle">
             <End Role="D_JobTitle" EntitySet="D_JobTitle" />
@@ -2123,36 +2036,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AssetsEventTrackings" Relationship="Self.FK_AssetsEventTracking_AssetsAvailabilityStatus" FromRole="AssetsAvailabilityStatus" ToRole="AssetsEventTracking" />
-          <NavigationProperty Name="AssetsEventTrackingTests" Relationship="Self.FK_AssetsEventTrackingTest_AssetsAvailabilityStatus" FromRole="AssetsAvailabilityStatus" ToRole="AssetsEventTrackingTest" />
-        </EntityType>
-        <EntityType Name="AssetsEventTracking">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RequestHeaderCode" Type="Int32" />
-          <Property Name="AssetCode" Type="Int32" />
-          <Property Name="ActionDate" Type="DateTime" Precision="3" />
-          <Property Name="DueDate" Type="DateTime" Precision="3" />
-          <Property Name="actionId" Type="Int32" />
-          <Property Name="statusId" Type="Int32" />
-          <Property Name="ToLocationId" Type="Int32" />
-          <Property Name="EmpRefCode" Type="Int32" />
-          <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="Int32" />
-          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="Qty" Type="Double" />
-          <Property Name="MissedQty" Type="Double" />
-          <Property Name="StoreRequestRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RequestItemPrice" Type="Double" />
-          <NavigationProperty Name="AssetsAvailabilityStatu" Relationship="Self.FK_AssetsEventTracking_AssetsAvailabilityStatus" FromRole="AssetsEventTracking" ToRole="AssetsAvailabilityStatus" />
-          <NavigationProperty Name="AssetsEventTrackingHeader" Relationship="Self.FK_AssetsEventTracking_AssetsEventTrackingHeader" FromRole="AssetsEventTracking" ToRole="AssetsEventTrackingHeader" />
-          <NavigationProperty Name="AssetsTrackingAction" Relationship="Self.FK_AssetsEventTracking_AssetsTrackingActions" FromRole="AssetsEventTracking" ToRole="AssetsTrackingActions" />
-          <NavigationProperty Name="D_ItemCard" Relationship="Self.FK_AssetsEventTracking_D_ItemCard" FromRole="AssetsEventTracking" ToRole="D_ItemCard" />
+          <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus" FromRole="AssetsAvailabilityStatu" ToRole="AssetsEventTracking" />
         </EntityType>
         <EntityType Name="AssetsEventTrackingHeader">
           <Key>
@@ -2176,60 +2060,8 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedBy" Type="Int32" />
           <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AssetsEventTrackings" Relationship="Self.FK_AssetsEventTracking_AssetsEventTrackingHeader" FromRole="AssetsEventTrackingHeader" ToRole="AssetsEventTracking" />
           <NavigationProperty Name="RequestAttachments" Relationship="Self.FK_RequestAttachments_AssetsEventTrackingHeader" FromRole="AssetsEventTrackingHeader" ToRole="RequestAttachments" />
-        </EntityType>
-        <EntityType Name="AssetsEventTrackingTest">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RequestHeaderCode" Type="Int32" />
-          <Property Name="AssetCode" Type="Int32" />
-          <Property Name="ActionDate" Type="DateTime" Precision="3" />
-          <Property Name="DueDate" Type="DateTime" Precision="3" />
-          <Property Name="actionId" Type="Int32" />
-          <Property Name="statusId" Type="Int32" />
-          <Property Name="ToLocationId" Type="Int32" />
-          <Property Name="EmpRefCode" Type="Int32" />
-          <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="Int32" />
-          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="Qty" Type="Double" />
-          <Property Name="MissedQty" Type="Double" />
-          <Property Name="StoreRequestRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RequestItemPrice" Type="Double" />
-          <NavigationProperty Name="AssetsAvailabilityStatu" Relationship="Self.FK_AssetsEventTrackingTest_AssetsAvailabilityStatus" FromRole="AssetsEventTrackingTest" ToRole="AssetsAvailabilityStatus" />
-          <NavigationProperty Name="AssetsEventTrackingTestHeader" Relationship="Self.FK_AssetsEventTrackingTest_AssetsEventTrackingTestHeader" FromRole="AssetsEventTrackingTest" ToRole="AssetsEventTrackingTestHeader" />
-          <NavigationProperty Name="AssetsTrackingAction" Relationship="Self.FK_AssetsEventTrackingTest_AssetsTrackingActions" FromRole="AssetsEventTrackingTest" ToRole="AssetsTrackingActions" />
-          <NavigationProperty Name="D_ItemCard" Relationship="Self.FK_AssetsEventTrackingTest_D_ItemCard" FromRole="AssetsEventTrackingTest" ToRole="D_ItemCard" />
-        </EntityType>
-        <EntityType Name="AssetsEventTrackingTestHeader">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RequestDate" Type="DateTime" Precision="3" />
-          <Property Name="DueDate" Type="DateTime" Precision="3" />
-          <Property Name="RequestRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RequestActionType" Type="Int32" />
-          <Property Name="ProcessType" Type="Int32" />
-          <Property Name="TMonth" Type="Int32" />
-          <Property Name="TYear" Type="Int32" />
-          <Property Name="Serial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OrgChartRefCode" Type="Int32" />
-          <Property Name="ToLocationId" Type="Int32" />
-          <Property Name="EmpRefCode" Type="Int32" />
-          <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="RequestNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="Int32" />
-          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AssetsEventTrackingTests" Relationship="Self.FK_AssetsEventTrackingTest_AssetsEventTrackingTestHeader" FromRole="AssetsEventTrackingTestHeader" ToRole="AssetsEventTrackingTest" />
+          <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" FromRole="AssetsEventTrackingHeader" ToRole="AssetsEventTracking" />
         </EntityType>
         <EntityType Name="AssetsItemUnit">
           <Key>
@@ -2264,8 +2096,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AssetsEventTrackings" Relationship="Self.FK_AssetsEventTracking_AssetsTrackingActions" FromRole="AssetsTrackingActions" ToRole="AssetsEventTracking" />
-          <NavigationProperty Name="AssetsEventTrackingTests" Relationship="Self.FK_AssetsEventTrackingTest_AssetsTrackingActions" FromRole="AssetsTrackingActions" ToRole="AssetsEventTrackingTest" />
+          <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions" FromRole="AssetsTrackingAction" ToRole="AssetsEventTracking" />
         </EntityType>
         <EntityType Name="D_AttachmentType">
           <Key>
@@ -2358,11 +2189,10 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="ScrapAmount" Type="Double" />
           <Property Name="ItemMasterPrice" Type="Double" />
           <Property Name="REFID" Type="Int32" />
-          <NavigationProperty Name="AssetsEventTrackings" Relationship="Self.FK_AssetsEventTracking_D_ItemCard" FromRole="D_ItemCard" ToRole="AssetsEventTracking" />
-          <NavigationProperty Name="AssetsEventTrackingTests" Relationship="Self.FK_AssetsEventTrackingTest_D_ItemCard" FromRole="D_ItemCard" ToRole="AssetsEventTrackingTest" />
           <NavigationProperty Name="AssetsItemUnits" Relationship="Self.FK_InboundItemUnits_D_ItemCard" FromRole="D_ItemCard" ToRole="AssetsItemUnits" />
           <NavigationProperty Name="D_ItemsCategory" Relationship="Self.FK_D_ItemCard_D_ItemsCategory" FromRole="D_ItemCard" ToRole="D_ItemsCategory" />
           <NavigationProperty Name="D_QtyUnit" Relationship="Self.FK_D_ItemCard_D_QtyUnit" FromRole="D_ItemCard" ToRole="D_QtyUnit" />
+          <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard" FromRole="D_ItemCard" ToRole="AssetsEventTracking" />
         </EntityType>
         <EntityType Name="D_ItemsCategory">
           <Key>
@@ -2414,6 +2244,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="MigrationRef" Type="Int32" />
           <Property Name="MigrationRef1" Type="Int32" />
           <NavigationProperty Name="D_LocationType" Relationship="Self.FK_D_Locations_D_LocationTypes" FromRole="D_Locations" ToRole="D_LocationType" />
+          <Property Name="AllowInbound" Type="Boolean" />
         </EntityType>
         <EntityType Name="D_LocationType">
           <Key>
@@ -2479,6 +2310,14 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="buildingID" Type="Int32" />
           <Property Name="FloorId" Type="Int32" />
           <Property Name="RoomId" Type="Int64" />
+          <Property Name="Ora_EmpRefCode" Type="Int32" />
+          <Property Name="Ora_EmpName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ora_EmpCivilId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OraActionDate" Type="DateTime" Precision="3" />
+          <Property Name="OraEntityRefCode" Type="Int32" />
+          <Property Name="OraImported" Type="Boolean" />
+          <Property Name="AutoLink" Type="Boolean" />
+          <Property Name="isDeleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="Inbound">
           <Key>
@@ -3046,6 +2885,8 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="ItemCategoryId" Type="Int32" />
           <Property Name="LastEventTrackingId" Type="Int32" />
           <Property Name="TargetLocationCode" Type="Int32" />
+          <Property Name="UnitNameAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UnitNameEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="View_InboundList">
           <Key>
@@ -3226,66 +3067,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="SUB_SEC_NAME" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="JOB_NAME" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <Association Name="FK_AssetsEventTracking_AssetsAvailabilityStatus">
-          <End Role="AssetsAvailabilityStatus" Type="Self.AssetsAvailabilityStatu" Multiplicity="0..1" />
-          <End Role="AssetsEventTracking" Type="Self.AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsAvailabilityStatus">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="statusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTrackingTest_AssetsAvailabilityStatus">
-          <End Role="AssetsAvailabilityStatus" Type="Self.AssetsAvailabilityStatu" Multiplicity="0..1" />
-          <End Role="AssetsEventTrackingTest" Type="Self.AssetsEventTrackingTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsAvailabilityStatus">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTrackingTest">
-              <PropertyRef Name="statusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTracking_AssetsEventTrackingHeader">
-          <End Role="AssetsEventTrackingHeader" Type="Self.AssetsEventTrackingHeader" Multiplicity="0..1" />
-          <End Role="AssetsEventTracking" Type="Self.AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsEventTrackingHeader">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="RequestHeaderCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTracking_AssetsTrackingActions">
-          <End Role="AssetsTrackingActions" Type="Self.AssetsTrackingAction" Multiplicity="0..1" />
-          <End Role="AssetsEventTracking" Type="Self.AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsTrackingActions">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="actionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTracking_D_ItemCard">
-          <End Role="D_ItemCard" Type="Self.D_ItemCard" Multiplicity="0..1" />
-          <End Role="AssetsEventTracking" Type="Self.AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_ItemCard">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="AssetCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RequestAttachments_AssetsEventTrackingHeader">
           <End Role="AssetsEventTrackingHeader" Type="Self.AssetsEventTrackingHeader" Multiplicity="0..1" />
           <End Role="RequestAttachments" Type="Self.RequestAttachment" Multiplicity="*" />
@@ -3295,42 +3076,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
             </Principal>
             <Dependent Role="RequestAttachments">
               <PropertyRef Name="RequestCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTrackingTest_AssetsEventTrackingTestHeader">
-          <End Role="AssetsEventTrackingTestHeader" Type="Self.AssetsEventTrackingTestHeader" Multiplicity="0..1" />
-          <End Role="AssetsEventTrackingTest" Type="Self.AssetsEventTrackingTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsEventTrackingTestHeader">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTrackingTest">
-              <PropertyRef Name="RequestHeaderCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTrackingTest_AssetsTrackingActions">
-          <End Role="AssetsTrackingActions" Type="Self.AssetsTrackingAction" Multiplicity="0..1" />
-          <End Role="AssetsEventTrackingTest" Type="Self.AssetsEventTrackingTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsTrackingActions">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTrackingTest">
-              <PropertyRef Name="actionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTrackingTest_D_ItemCard">
-          <End Role="D_ItemCard" Type="Self.D_ItemCard" Multiplicity="0..1" />
-          <End Role="AssetsEventTrackingTest" Type="Self.AssetsEventTrackingTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_ItemCard">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTrackingTest">
-              <PropertyRef Name="AssetCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3556,10 +3301,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
         </Association>
         <EntityContainer Name="AssetsEntitiesNew" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AssetsAvailabilityStatus" EntityType="Self.AssetsAvailabilityStatu" />
-          <EntitySet Name="AssetsEventTrackings" EntityType="Self.AssetsEventTracking" />
           <EntitySet Name="AssetsEventTrackingHeaders" EntityType="Self.AssetsEventTrackingHeader" />
-          <EntitySet Name="AssetsEventTrackingTests" EntityType="Self.AssetsEventTrackingTest" />
-          <EntitySet Name="AssetsEventTrackingTestHeaders" EntityType="Self.AssetsEventTrackingTestHeader" />
           <EntitySet Name="AssetsItemUnits" EntityType="Self.AssetsItemUnit" />
           <EntitySet Name="AssetsTrackingActions" EntityType="Self.AssetsTrackingAction" />
           <EntitySet Name="D_AttachmentType" EntityType="Self.D_AttachmentType" />
@@ -3604,41 +3346,9 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySet Name="view_ItemCategoryTree" EntityType="Self.view_ItemCategoryTree" />
           <EntitySet Name="view_LocationTree" EntityType="Self.view_LocationTree" />
           <EntitySet Name="viewTemps" EntityType="Self.viewTemp" />
-          <AssociationSet Name="FK_AssetsEventTracking_AssetsAvailabilityStatus" Association="Self.FK_AssetsEventTracking_AssetsAvailabilityStatus">
-            <End Role="AssetsAvailabilityStatus" EntitySet="AssetsAvailabilityStatus" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTrackingTest_AssetsAvailabilityStatus" Association="Self.FK_AssetsEventTrackingTest_AssetsAvailabilityStatus">
-            <End Role="AssetsAvailabilityStatus" EntitySet="AssetsAvailabilityStatus" />
-            <End Role="AssetsEventTrackingTest" EntitySet="AssetsEventTrackingTests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTracking_AssetsEventTrackingHeader" Association="Self.FK_AssetsEventTracking_AssetsEventTrackingHeader">
-            <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeaders" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTracking_AssetsTrackingActions" Association="Self.FK_AssetsEventTracking_AssetsTrackingActions">
-            <End Role="AssetsTrackingActions" EntitySet="AssetsTrackingActions" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTracking_D_ItemCard" Association="Self.FK_AssetsEventTracking_D_ItemCard">
-            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-          </AssociationSet>
           <AssociationSet Name="FK_RequestAttachments_AssetsEventTrackingHeader" Association="Self.FK_RequestAttachments_AssetsEventTrackingHeader">
             <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeaders" />
             <End Role="RequestAttachments" EntitySet="RequestAttachments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTrackingTest_AssetsEventTrackingTestHeader" Association="Self.FK_AssetsEventTrackingTest_AssetsEventTrackingTestHeader">
-            <End Role="AssetsEventTrackingTestHeader" EntitySet="AssetsEventTrackingTestHeaders" />
-            <End Role="AssetsEventTrackingTest" EntitySet="AssetsEventTrackingTests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTrackingTest_AssetsTrackingActions" Association="Self.FK_AssetsEventTrackingTest_AssetsTrackingActions">
-            <End Role="AssetsTrackingActions" EntitySet="AssetsTrackingActions" />
-            <End Role="AssetsEventTrackingTest" EntitySet="AssetsEventTrackingTests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTrackingTest_D_ItemCard" Association="Self.FK_AssetsEventTrackingTest_D_ItemCard">
-            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
-            <End Role="AssetsEventTrackingTest" EntitySet="AssetsEventTrackingTests" />
           </AssociationSet>
           <AssociationSet Name="FK_D_ItemUnits_D_ItemStatus" Association="Self.FK_D_ItemUnits_D_ItemStatus">
             <End Role="D_ItemUsedStatus" EntitySet="D_ItemUsedStatus" />
@@ -3791,8 +3501,26 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <FunctionImport Name="GetAssetUnitsCostDetails" ReturnType="Collection(CMGS_AssetsMgmtModel.GetAssetUnitsCostDetails_Result)" />
           <FunctionImport Name="GetAssetUnitsCostCompare" ReturnType="Collection(CMGS_AssetsMgmtModel.GetAssetUnitsCostCompare_Result)" />
           <FunctionImport Name="Get_Emp_Location" ReturnType="Collection(CMGS_AssetsMgmtModel.Get_Emp_Location_Result)">
-            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Security_pr_adminPermittedLocations" EntityType="CMGS_AssetsMgmtModel.Security_pr_adminPermittedLocations" />
+          <EntitySet Name="AssetsEventTrackings" EntityType="CMGS_AssetsMgmtModel.AssetsEventTracking" />
+          <AssociationSet Name="FK_AssetsEventTracking_AssetsAvailabilityStatus" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus">
+            <End Role="AssetsAvailabilityStatu" EntitySet="AssetsAvailabilityStatus" />
+            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1">
+            <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeaders" />
+            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetsEventTracking_AssetsTrackingActions" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions">
+            <End Role="AssetsTrackingAction" EntitySet="AssetsTrackingActions" />
+            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetsEventTracking_D_ItemCard" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard">
+            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
+            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="Security_SP_PRM_getJobPage_Result">
           <Property Type="Int32" Name="SystemID" Nullable="false" />
@@ -3926,6 +3654,94 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Type="Int32" Name="EmpCode" Nullable="true" />
           <Property Type="String" Name="FullLocationPath" Nullable="true" />
         </ComplexType>
+        <EntityType Name="Security_pr_adminPermittedLocations">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="LocationId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="AssetsEventTracking">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestHeaderCode" Type="Int32" />
+          <Property Name="AssetCode" Type="Int32" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="actionId" Type="Int32" />
+          <Property Name="statusId" Type="Int32" />
+          <Property Name="ToLocationId" Type="Int32" />
+          <Property Name="EmpRefCode" Type="Int32" />
+          <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="Qty" Type="Double" />
+          <Property Name="MissedQty" Type="Double" />
+          <Property Name="StoreRequestRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RequestItemPrice" Type="Double" />
+          <NavigationProperty Name="AssetsAvailabilityStatu" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus" FromRole="AssetsEventTracking" ToRole="AssetsAvailabilityStatu" />
+          <NavigationProperty Name="AssetsEventTrackingHeader" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" FromRole="AssetsEventTracking" ToRole="AssetsEventTrackingHeader" />
+          <NavigationProperty Name="AssetsTrackingAction" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions" FromRole="AssetsEventTracking" ToRole="AssetsTrackingAction" />
+          <NavigationProperty Name="D_ItemCard" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard" FromRole="AssetsEventTracking" ToRole="D_ItemCard" />
+        </EntityType>
+        <Association Name="FK_AssetsEventTracking_AssetsAvailabilityStatus">
+          <End Type="CMGS_AssetsMgmtModel.AssetsAvailabilityStatu" Role="AssetsAvailabilityStatu" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetsAvailabilityStatu">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsEventTracking">
+              <PropertyRef Name="statusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1">
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Role="AssetsEventTrackingHeader" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetsEventTrackingHeader">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsEventTracking">
+              <PropertyRef Name="RequestHeaderCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetsEventTracking_AssetsTrackingActions">
+          <End Type="CMGS_AssetsMgmtModel.AssetsTrackingAction" Role="AssetsTrackingAction" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetsTrackingAction">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsEventTracking">
+              <PropertyRef Name="actionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetsEventTracking_D_ItemCard">
+          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_ItemCard">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsEventTracking">
+              <PropertyRef Name="AssetCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3941,83 +3757,9 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AssetsEventTrackings">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsEventTracking">
-              <MappingFragment StoreEntitySet="AssetsEventTracking">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="RequestHeaderCode" ColumnName="RequestHeaderCode" />
-                <ScalarProperty Name="AssetCode" ColumnName="AssetCode" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-                <ScalarProperty Name="actionId" ColumnName="actionId" />
-                <ScalarProperty Name="statusId" ColumnName="statusId" />
-                <ScalarProperty Name="ToLocationId" ColumnName="ToLocationId" />
-                <ScalarProperty Name="EmpRefCode" ColumnName="EmpRefCode" />
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="MissedQty" ColumnName="MissedQty" />
-                <ScalarProperty Name="StoreRequestRefCode" ColumnName="StoreRequestRefCode" />
-                <ScalarProperty Name="RequestItemPrice" ColumnName="RequestItemPrice" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AssetsEventTrackingHeaders">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader">
               <MappingFragment StoreEntitySet="AssetsEventTrackingHeader">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
-                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-                <ScalarProperty Name="RequestRefCode" ColumnName="RequestRefCode" />
-                <ScalarProperty Name="RequestActionType" ColumnName="RequestActionType" />
-                <ScalarProperty Name="ProcessType" ColumnName="ProcessType" />
-                <ScalarProperty Name="TMonth" ColumnName="TMonth" />
-                <ScalarProperty Name="TYear" ColumnName="TYear" />
-                <ScalarProperty Name="Serial" ColumnName="Serial" />
-                <ScalarProperty Name="OrgChartRefCode" ColumnName="OrgChartRefCode" />
-                <ScalarProperty Name="ToLocationId" ColumnName="ToLocationId" />
-                <ScalarProperty Name="EmpRefCode" ColumnName="EmpRefCode" />
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-                <ScalarProperty Name="RequestNotes" ColumnName="RequestNotes" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AssetsEventTrackingTests">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsEventTrackingTest">
-              <MappingFragment StoreEntitySet="AssetsEventTrackingTest">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="RequestHeaderCode" ColumnName="RequestHeaderCode" />
-                <ScalarProperty Name="AssetCode" ColumnName="AssetCode" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-                <ScalarProperty Name="actionId" ColumnName="actionId" />
-                <ScalarProperty Name="statusId" ColumnName="statusId" />
-                <ScalarProperty Name="ToLocationId" ColumnName="ToLocationId" />
-                <ScalarProperty Name="EmpRefCode" ColumnName="EmpRefCode" />
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="MissedQty" ColumnName="MissedQty" />
-                <ScalarProperty Name="StoreRequestRefCode" ColumnName="StoreRequestRefCode" />
-                <ScalarProperty Name="RequestItemPrice" ColumnName="RequestItemPrice" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AssetsEventTrackingTestHeaders">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsEventTrackingTestHeader">
-              <MappingFragment StoreEntitySet="AssetsEventTrackingTestHeader">
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
                 <ScalarProperty Name="DueDate" ColumnName="DueDate" />
@@ -4201,6 +3943,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySetMapping Name="D_Locations">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.D_Locations">
               <MappingFragment StoreEntitySet="D_Locations">
+                <ScalarProperty Name="AllowInbound" ColumnName="AllowInbound" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="LocationType" ColumnName="LocationType" />
                 <ScalarProperty Name="LocationNameEn" ColumnName="LocationNameEn" />
@@ -4255,6 +3998,14 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySetMapping Name="Employee_tbl">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.Employee_tbl">
               <MappingFragment StoreEntitySet="Employee_tbl">
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="AutoLink" ColumnName="AutoLink" />
+                <ScalarProperty Name="OraImported" ColumnName="OraImported" />
+                <ScalarProperty Name="OraEntityRefCode" ColumnName="OraEntityRefCode" />
+                <ScalarProperty Name="OraActionDate" ColumnName="OraActionDate" />
+                <ScalarProperty Name="Ora_EmpCivilId" ColumnName="Ora_EmpCivilId" />
+                <ScalarProperty Name="Ora_EmpName" ColumnName="Ora_EmpName" />
+                <ScalarProperty Name="Ora_EmpRefCode" ColumnName="Ora_EmpRefCode" />
                 <ScalarProperty Name="DestSub_Id" ColumnName="DestSub_Id" />
                 <ScalarProperty Name="Control_Id" ColumnName="Control_Id" />
                 <ScalarProperty Name="Depart_Id" ColumnName="Depart_Id" />
@@ -4758,6 +4509,8 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySetMapping Name="view_inboubdItems">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_inboubdItems">
               <MappingFragment StoreEntitySet="view_inboubdItems">
+                <ScalarProperty Name="UnitNameEn" ColumnName="UnitNameEn" />
+                <ScalarProperty Name="UnitNameAr" ColumnName="UnitNameAr" />
                 <ScalarProperty Name="Serial" ColumnName="Serial" />
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="VendorNameEn" ColumnName="VendorNameEn" />
@@ -5166,6 +4919,44 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Security_pr_adminPermittedLocations">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.Security_pr_adminPermittedLocations">
+              <MappingFragment StoreEntitySet="Security_pr_adminPermittedLocations">
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetsEventTrackings">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsEventTracking">
+              <MappingFragment StoreEntitySet="AssetsEventTracking">
+                <ScalarProperty Name="RequestItemPrice" ColumnName="RequestItemPrice" />
+                <ScalarProperty Name="StoreRequestRefCode" ColumnName="StoreRequestRefCode" />
+                <ScalarProperty Name="MissedQty" ColumnName="MissedQty" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpRefCode" ColumnName="EmpRefCode" />
+                <ScalarProperty Name="ToLocationId" ColumnName="ToLocationId" />
+                <ScalarProperty Name="statusId" ColumnName="statusId" />
+                <ScalarProperty Name="actionId" ColumnName="actionId" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="AssetCode" ColumnName="AssetCode" />
+                <ScalarProperty Name="RequestHeaderCode" ColumnName="RequestHeaderCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

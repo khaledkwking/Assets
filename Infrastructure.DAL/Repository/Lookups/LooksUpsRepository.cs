@@ -164,12 +164,28 @@ namespace Infrastructure.DAL
             {
                 var result =
                     (from obj in DC.view_LocationTree
-                     where obj.LocationType == 1 // Stores
+                     where obj.LocationType == 4 // Stores
                      select obj);
 
                 return result.ToList<view_LocationTree>();
             }
         }
+
+
+        public List<D_Locations> FillInboundStoreLocations()
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.D_Locations
+                     where obj.LocationType == 4 && obj.AllowInbound==true // Stores
+                     select obj);
+
+                return result.ToList<D_Locations>();
+            }
+        }
+
+
 
         public List<D_InboundDepositeStatusType> FillDepositeStatusType()
         {

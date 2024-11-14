@@ -1047,4 +1047,7 @@
   <data name="StoreList" xml:space="preserve">
     <value>قائمة الاماكن</value>
   </data>
+  <data name="Active" xml:space="preserve">
+    <value>فعال</value>
+  </data>
 </root>

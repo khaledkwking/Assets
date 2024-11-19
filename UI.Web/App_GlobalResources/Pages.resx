@@ -1050,4 +1050,10 @@
   <data name="Active" xml:space="preserve">
     <value>فعال</value>
   </data>
+  <data name="StoreOperation" xml:space="preserve">
+    <value>إدارة المخاذن</value>
+  </data>
+  <data name="OutboundOperations" xml:space="preserve">
+    <value>تسجيل إذن صرف</value>
+  </data>
 </root>

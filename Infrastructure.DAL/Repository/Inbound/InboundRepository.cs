@@ -121,6 +121,10 @@ namespace Infrastructure.DAL
             }
         }
 
+
+       
+
+
         #endregion
 
         #region "Add ,  Update  ,Delete" Inbound Operation

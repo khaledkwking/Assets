@@ -135,8 +135,8 @@
             <div class="nk-sidebar-bar">
                 <div class="nk-apps-brand">
                     <a href="<%= GetGlobalResourceObject("Utilities", "cutureRoute")%>/admin/pages/home.aspx" class="logo-link">
-                        <img class="logo-light logo-img" src="/wwwroot/images/logo-small.png" srcset="/wwwroot/images/logo-small2x.png 2x" alt="logo">
-                        <img class="logo-dark logo-img" src="/wwwroot/images/logo-dark-small.png" srcset="/wwwroot/images/logo-dark-small2x.png 2x" alt="logo-dark">
+                        <img class="logo-light logo-img" src="/wwwroot/images/logo/KuwaitLogo.png" srcset="/wwwroot/images/logo/KuwaitLogo.png 2x" alt="logo">
+                        <img class="logo-dark logo-img" src="/wwwroot/images/logo/KuwaitLogo.png" srcset="/wwwroot/images/logo/KuwaitLogo.png 2x" alt="logo-dark">
                     </a>
                 </div>
                 <div class="nk-sidebar-element">
@@ -245,9 +245,9 @@
                                 <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
                             </div>
                             <div class="nk-header-brand d-xl-none">
-                                <a href="html/index.html" class="logo-link">
-                                    <img class="logo-light logo-img" src="/wwwroot/images/logo.png" srcset="/wwwroot/images/logo2x.png 2x" alt="logo">
-                                    <img class="logo-dark logo-img" src="/wwwroot/images/logo-dark.png" srcset="/wwwroot/images/logo-dark2x.png 2x" alt="logo-dark">
+                                <a href="#" class="logo-link">
+                                    <img class="logo-light logo-img" src="/wwwroot/images/logo/CMGS_H_w.png" srcset="/wwwroot/images/logo/CMGS_H_w.png 2x" alt="logo">
+                                    <img class="logo-dark logo-img" src="/wwwroot/images/logo/CMGS_H_w.png" srcset="/wwwroot/images/logo/CMGS_H_w.png 2x" alt="logo-dark">
                                 </a>
                             </div>
                             <!-- .nk-header-brand -->

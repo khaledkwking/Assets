@@ -107,15 +107,15 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
 
             if ((e.Item.ItemType == ListItemType.Item))
             {
-                e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#f2d575\';");
+                e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#d5c08e6e\';");
                 e.Item.Attributes.Add("onmouseout", "this.style.backgroundColor=\'#FFFFFF\';");
             }
 
-            //if ((e.Item.ItemType == ListItemType.AlternatingItem))
-            //{
-            //    e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#f2d575\';");
-            //    e.Item.Attributes.Add("onmouseout", "this.style.backgroundColor=\'#FFFFFF\';");
-            //}
+            if ((e.Item.ItemType == ListItemType.AlternatingItem))
+            {
+                e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#d5c08e6e\';");
+                e.Item.Attributes.Add("onmouseout", "this.style.backgroundColor=\'#FFFFFF\';");
+            }
 
 
             if ((e.Item.ItemType == ListItemType.Item))
@@ -204,23 +204,15 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
         }
         private void fillLookups()
         {
-            if (Session["OraEmpList"] != null)
-            {
-                FillDllwithoptional((List<EmployeeViewModel>)Session["OraEmpList"], lstFilterRefEmployee, "EMP_NAME", "EMP_ID");
-            }
-            else
-            {
-                // Request Data From Ora.
-                var Emplist = GetOraEmpList(1);
-                Session["OraEmpList"] = Emplist;
-                FillDllwithoptional_ALL(Emplist, lstFilterRefEmployee, "EMP_NAME", "EMP_ID", Resources.Pages.all);
-            }
+            FillDllwithoptional(LooksUpsRepository.ins.FillOutboundTypes(), lstOutboundTypeCode, "TitleAr", "Code");
 
 
         }
         private void FillGrid()
         {
-            var objlist = objRepository.GetCustodyList(txtFilterSerial.Text, NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text), ZeroIntergerIFNull(lstFilterOutType.SelectedValue), ZeroIntergerIFNull(lstFilterRefEmployee.SelectedValue), 0, 0, txtRefNo.Text);
+            var objlist = objRepository.GetList(txtFilterSerial.Text, NullDateifEmpty(txtTransDate.Text), 
+                NullDateifEmpty(txtTransactionDateTo.Text),
+                ZeroIntergerIFNull(lstOutboundTypeCode.SelectedValue), 0, 0, txtRefNo.Text);
 
             Session["OutboundListResult"] = objlist;
 

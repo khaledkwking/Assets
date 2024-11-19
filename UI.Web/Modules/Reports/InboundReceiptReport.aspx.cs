@@ -42,6 +42,8 @@ namespace UI.Web.Modules.WHM.Forms
                     ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/InboundReceipt.rdlc");
 
                     var objList = objRepository.FillInboundMater(ZeroIntergerIFNull(Request.QueryString["id"].ToString()));
+                    ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+
                     ReportDataSource datasource = new ReportDataSource("Ds_Inbound", objList);
                     ReportViewer1.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SubreportProcessingEventHandler);
 

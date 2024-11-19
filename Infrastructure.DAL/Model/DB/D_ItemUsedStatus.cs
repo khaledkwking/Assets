@@ -18,6 +18,7 @@ namespace Infrastructure.DAL.Model.DB
         public D_ItemUsedStatus()
         {
             this.AssetsItemUnits = new HashSet<AssetsItemUnit>();
+            this.Outbound_Items = new HashSet<Outbound_Items>();
         }
     
         public int Code { get; set; }
@@ -26,5 +27,7 @@ namespace Infrastructure.DAL.Model.DB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssetsItemUnit> AssetsItemUnits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Outbound_Items> Outbound_Items { get; set; }
     }
 }

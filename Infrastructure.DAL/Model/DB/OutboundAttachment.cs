@@ -12,15 +12,16 @@ namespace Infrastructure.DAL.Model.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Security_pr_adminPermittedLocations
+    public partial class OutboundAttachment
     {
-        public int Code { get; set; }
-        public Nullable<int> UserId { get; set; }
-        public Nullable<int> LocationId { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
-        public Nullable<int> LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedAt { get; set; }
-        public Nullable<bool> status { get; set; }
+        public long Code { get; set; }
+        public Nullable<System.DateTime> TransDate { get; set; }
+        public Nullable<long> OutboundCode { get; set; }
+        public string FileName { get; set; }
+        public string Notes { get; set; }
+        public Nullable<int> AttachmentTypCode { get; set; }
+    
+        public virtual D_AttachmentType D_AttachmentType { get; set; }
+        public virtual Outbound Outbound { get; set; }
     }
 }

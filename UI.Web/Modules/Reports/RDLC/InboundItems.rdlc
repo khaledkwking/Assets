@@ -167,16 +167,13 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.05027cm</Width>
+                  <Width>3.57944cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>6.45111cm</Width>
+                  <Width>8.81cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.94097cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>4.405cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.36771cm</Width>
@@ -193,7 +190,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.6cm</Height>
+                  <Height>0.69647cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -221,10 +218,10 @@
                           <rd:DefaultName>Textbox2</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>#7292cc</Color>
+                              <Color>#0c476b</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>#4c68a2</BackgroundColor>
+                            <BackgroundColor>#0c476b</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -259,10 +256,10 @@
                           <rd:DefaultName>Textbox5</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>#7292cc</Color>
+                              <Color>#0c476b</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>#4c68a2</BackgroundColor>
+                            <BackgroundColor>#0c476b</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -297,48 +294,10 @@
                           <rd:DefaultName>Textbox7</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>#7292cc</Color>
+                              <Color>#0c476b</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>#4c68a2</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox9">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>التصنيف</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                    <Color>White</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox9</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>#7292cc</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>#4c68a2</BackgroundColor>
+                            <BackgroundColor>#0c476b</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -366,17 +325,17 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox13</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>#7292cc</Color>
+                              <Color>#0c476b</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>#4c68a2</BackgroundColor>
+                            <BackgroundColor>#0c476b</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -404,17 +363,17 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox15</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>#7292cc</Color>
+                              <Color>#0c476b</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>#4c68a2</BackgroundColor>
+                            <BackgroundColor>#0c476b</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -449,10 +408,10 @@
                           <rd:DefaultName>Textbox17</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>#7292cc</Color>
+                              <Color>#0c476b</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>#4c68a2</BackgroundColor>
+                            <BackgroundColor>#0c476b</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -487,10 +446,10 @@
                           <rd:DefaultName>Textbox19</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>#7292cc</Color>
+                              <Color>#0c476b</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>#4c68a2</BackgroundColor>
+                            <BackgroundColor>#0c476b</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -611,41 +570,6 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ItemCategoryNameEn">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!ItemCategoryNameEn.Value</Value>
-                                  <Style>
-                                    <FontFamily>Tahoma</FontFamily>
-                                    <Color>#4d4d4d</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>ItemCategoryNameEn</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>#e5e5e5</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
                         <Textbox Name="Qty1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -661,7 +585,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -696,7 +620,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -797,7 +721,6 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
-                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -812,8 +735,8 @@
             </TablixRowHierarchy>
             <LayoutDirection>RTL</LayoutDirection>
             <DataSetName>Ds_InboundItems</DataSetName>
-            <Height>1.2cm</Height>
-            <Width>29.1404cm</Width>
+            <Height>1.29647cm</Height>
+            <Width>27.62346cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -824,7 +747,7 @@
         <Height>0.51042in</Height>
         <Style />
       </Body>
-      <Width>11.4726in</Width>
+      <Width>10.91704in</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>

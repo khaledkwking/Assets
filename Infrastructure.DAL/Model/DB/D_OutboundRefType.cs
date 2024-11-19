@@ -12,15 +12,19 @@ namespace Infrastructure.DAL.Model.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Security_pr_adminPermittedLocations
+    public partial class D_OutboundRefType
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public D_OutboundRefType()
+        {
+            this.Outbounds = new HashSet<Outbound>();
+        }
+    
         public int Code { get; set; }
-        public Nullable<int> UserId { get; set; }
-        public Nullable<int> LocationId { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
-        public Nullable<int> LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedAt { get; set; }
-        public Nullable<bool> status { get; set; }
+        public string TitleAr { get; set; }
+        public string TitleEn { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Outbound> Outbounds { get; set; }
     }
 }

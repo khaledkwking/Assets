@@ -1771,6 +1771,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تسجيل إذن صرف.
+        /// </summary>
+        internal static string OutboundOperations {
+            get {
+                return ResourceManager.GetString("OutboundOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to عمليات الاستلام.
         /// </summary>
         internal static string OutboundOperatioOutboundOperations {
@@ -2532,6 +2541,15 @@ namespace Resources {
         internal static string StoreLocationsRacks {
             get {
                 return ResourceManager.GetString("StoreLocationsRacks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إدارة المخاذن.
+        /// </summary>
+        internal static string StoreOperation {
+            get {
+                return ResourceManager.GetString("StoreOperation", resourceCulture);
             }
         }
         

@@ -194,7 +194,7 @@
                                                                                         <asp:DropDownList ID="lstFromVendorCode" runat="server" class="form-control form-select" data-search="on"></asp:DropDownList>
 
                                                                                     </div>
-                                                                                    <div class="form-group" style="display: none">
+                                                                                    <div class="form-group" >
                                                                                         <label class="control-label" for=""><%=GetGlobalResourceObject("pages","InboundTypeCode") %>  </label>
 
                                                                                         <asp:DropDownList ID="lstInboundTypeCode" runat="server" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="lstInboundTypeCode_SelectedIndexChanged">

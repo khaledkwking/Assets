@@ -146,6 +146,20 @@ namespace Infrastructure.DAL
             }
         }
 
+        public List<D_OutboundType> FillOutboundTypes()
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.D_OutboundType
+                     orderby obj.TitleEn ascending
+                     select obj);
+
+                return result.ToList<D_OutboundType>();
+            }
+        }
+
+
         public List<D_VendorData> Fillvendor()
         {
             using (var DC = new AssetsEntitiesNew())

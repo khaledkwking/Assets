@@ -53,18 +53,18 @@
                     <!-- content @s -->
                     <div class="nk-content ">
                         <div class="nk-block nk-block-middle nk-auth-body  wide-xs">
-                            <div class="brand-logo pb-4 text-center">
-                                <a href="html/index.html" class="logo-link">
+                            <div class="brand-logo pb-4 text-center" style="margin-bottom: 30px;">
+                                <a href="#" class="logo-link">
 
-                                    <img class="logo-dark" src="/wwwroot/images/logo/cmgs_logo.png" srcset="/wwwroot/images/logo/cmgs_logo.png 2x" alt="logo-dark">
+                                    <img class="logo-dark" src="/wwwroot/images/logo/cmgs2@2x.png" srcset="/wwwroot/images/logo/cmgs2@2x.png" alt="logo-dark">
                                 </a>
                             </div>
                             <div class="card card-bordered">
                                 <div class="card-inner card-inner-lg" style="direction:rtl;text-align:center">
                                     <div class="nk-block-head">
                                         <div class="nk-block-head-content text-center">
-                                            <h4 class="nk-block-title"> نظام إدارة العهد والمخازن</h4>
-                                            <div class="nk-block-des">
+                                            <h4 class="nk-block-title" style="color:#cba052"> نظام إدارة العهد والمخازن</h4>
+                                            <div class="nk-block-des" style="color:#cba052">
                                                 تسجيل الدخول
                                             </div>
                                         </div>
@@ -100,7 +100,7 @@
                                     </div>
                                     <div class="form-group">
 
-                                        <asp:LinkButton ID="imbtnlogin" runat="server" CssClass="btn btn-lg btn-primary btn-block" OnClick="LoginButton_Click" Width="300px">تسجيل الدخول   </asp:LinkButton>
+                                        <asp:LinkButton ID="imbtnlogin" runat="server" CssClass="btn btn-lg btn-primary btn-block bg-black" OnClick="LoginButton_Click" Width="300px">تسجيل الدخول   </asp:LinkButton>
                                         <asp:Label ID="lblError" runat="server"></asp:Label>
                                     </div>
 

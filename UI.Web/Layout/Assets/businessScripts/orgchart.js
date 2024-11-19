@@ -57,7 +57,7 @@ function handelSelectedNode(nodeId) {
                     {
                         data: "EMP_STATUS", title: "الحالة",
                         render: function (data, type, row) {
-                            return (data == 'active' ? '<span class="badge badge-pill badge-outline-primary font-size-12">' + data + '</span>'
+                            return (data == 'active' ? '<span class="badge badge-pill badge-outline-success font-size-12">' + data + '</span>'
                                 : data == 'not-active' ? '<span class="badge badge-pill badge-outline-danger font-size-12">' + data + '</span>'
                                     : data
                             );

@@ -60,22 +60,13 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
         protected global::System.Web.UI.WebControls.TextBox txtTransactionDateTo;
 
         /// <summary>
-        /// lstFilterOutType control.
+        /// lstOutboundTypeCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList lstFilterOutType;
-
-        /// <summary>
-        /// lstFilterRefEmployee control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList lstFilterRefEmployee;
+        protected global::System.Web.UI.WebControls.DropDownList lstOutboundTypeCode;
 
         /// <summary>
         /// txtRefNo control.

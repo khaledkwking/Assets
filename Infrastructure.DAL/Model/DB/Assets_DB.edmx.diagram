@@ -47,7 +47,6 @@
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_inboubdItems" Width="1.5" PointX="12.75" PointY="27.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.View_InboundList" Width="1.5" PointX="21.75" PointY="7.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_Inventory" Width="1.5" PointX="21.75" PointY="14.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_ItemCard" Width="1.5" PointX="21.75" PointY="20.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_ItemCategoryTree" Width="1.5" PointX="5.75" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_LocationTree" Width="1.5" PointX="21.75" PointY="28.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.viewTemp" Width="1.5" PointX="23.75" PointY="7.25" IsExpanded="true" />
@@ -76,6 +75,23 @@
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_OutboundRefType" Width="1.5" PointX="24.375" PointY="23.25" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_OutboundType" Width="1.5" PointX="24.375" PointY="20.25" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Outbound_Items" Width="1.5" PointX="28.875" PointY="14.75" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.OutboundAttachment" Width="1.5" PointX="31.875" PointY="16.125" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.OutboundNote" Width="1.5" PointX="28.875" PointY="31" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_OutboundAttachments_D_AttachmentType" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemCard" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.View_OutboundItems" Width="1.5" PointX="26.375" PointY="0.75" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemUsedStatus" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Outbound" Width="1.5" PointX="26.625" PointY="19.75" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.View_OutboundList" Width="1.5" PointX="8.375" PointY="0.75" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_D_OutboundRefType" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_D_OutboundType" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_Outbound" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_OutboundAttachments_Outbound" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_OutboundNotes_Outbound" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_ItemCard" Width="1.5" PointX="24.375" PointY="26.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

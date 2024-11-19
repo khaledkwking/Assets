@@ -69,12 +69,20 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<view_inboubdItems> view_inboubdItems { get; set; }
         public virtual DbSet<View_InboundList> View_InboundList { get; set; }
         public virtual DbSet<view_Inventory> view_Inventory { get; set; }
-        public virtual DbSet<view_ItemCard> view_ItemCard { get; set; }
         public virtual DbSet<view_ItemCategoryTree> view_ItemCategoryTree { get; set; }
         public virtual DbSet<view_LocationTree> view_LocationTree { get; set; }
         public virtual DbSet<viewTemp> viewTemps { get; set; }
         public virtual DbSet<Security_pr_adminPermittedLocations> Security_pr_adminPermittedLocations { get; set; }
         public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
+        public virtual DbSet<D_OutboundRefType> D_OutboundRefType { get; set; }
+        public virtual DbSet<D_OutboundType> D_OutboundType { get; set; }
+        public virtual DbSet<Outbound_Items> Outbound_Items { get; set; }
+        public virtual DbSet<OutboundAttachment> OutboundAttachments { get; set; }
+        public virtual DbSet<OutboundNote> OutboundNotes { get; set; }
+        public virtual DbSet<View_OutboundItems> View_OutboundItems { get; set; }
+        public virtual DbSet<Outbound> Outbounds { get; set; }
+        public virtual DbSet<View_OutboundList> View_OutboundList { get; set; }
+        public virtual DbSet<view_ItemCard> view_ItemCard { get; set; }
     
         [DbFunction("AssetsEntitiesNew", "getChildNodeParentList")]
         public virtual IQueryable<getChildNodeParentList_Result> getChildNodeParentList(Nullable<int> childNodeId)

@@ -232,6 +232,22 @@
           <Property Name="TitleAr" Type="nvarchar" MaxLength="50" />
           <Property Name="TitleEn" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="D_OutboundRefType">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TitleAr" Type="nvarchar" MaxLength="50" />
+          <Property Name="TitleEn" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="D_OutboundType">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TitleAr" Type="nvarchar" MaxLength="50" />
+          <Property Name="TitleEn" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="D_QtyUnit">
           <Key>
             <PropertyRef Name="Code" />
@@ -393,6 +409,69 @@
           <Property Name="PurchasingPower" Type="nvarchar(max)" />
           <Property Name="Category" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Outbound">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Serial" Type="nvarchar" MaxLength="50" />
+          <Property Name="TMonth" Type="int" />
+          <Property Name="TYear" Type="int" />
+          <Property Name="TransDate" Type="datetime" />
+          <Property Name="TypeCode" Type="int" />
+          <Property Name="WithdrawTypeCode" Type="int" />
+          <Property Name="RefTypeCode" Type="int" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="RefDate" Type="datetime" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="ServiceCost" Type="float" />
+          <Property Name="ReceiteNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceiteDate" Type="datetime" />
+          <Property Name="FromLocationCode" Type="int" />
+          <Property Name="ToLocationCode" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="LastModifiedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Outbound_Items">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OutboundCode" Type="bigint" />
+          <Property Name="QtyUnitCode" Type="int" />
+          <Property Name="Qty" Type="float" />
+          <Property Name="EstimatedAmount" Type="float" />
+          <Property Name="OutTransDate" Type="datetime" />
+          <Property Name="ItemCode" Type="int" />
+          <Property Name="UnitStatus" Type="int" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="LastModifiedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OutboundAttachments">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransDate" Type="datetime" />
+          <Property Name="OutboundCode" Type="bigint" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="AttachmentTypCode" Type="int" />
+        </EntityType>
+        <EntityType Name="OutboundNotes">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OutboundCode" Type="bigint" />
+          <Property Name="TransDate" Type="datetime" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="RequestAttachments">
           <Key>
             <PropertyRef Name="Code" />
@@ -431,6 +510,7 @@
           <Property Name="Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" />
           <Property Name="LocationId" Type="int" />
+          <Property Name="status" Type="bit" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
@@ -966,6 +1046,8 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.view_ItemCard' does not have a
           <Property Name="ScrapPeriod" Type="float" />
           <Property Name="ScrapAmount" Type="float" />
           <Property Name="ItemMasterPrice" Type="float" />
+          <Property Name="TotalReceived" Type="float" />
+          <Property Name="TotalDelivered" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.view_ItemCategoryTree' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -993,6 +1075,78 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.view_LocationTree' does not ha
           <Property Name="LocationNameAr" Type="nvarchar" MaxLength="250" />
           <Property Name="LocationType" Type="int" />
           <Property Name="path" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.View_OutboundItems' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_OutboundItems">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="bigint" Nullable="false" />
+          <Property Name="OutboundCode" Type="bigint" />
+          <Property Name="QtyUnitCode" Type="int" />
+          <Property Name="Qty" Type="float" />
+          <Property Name="EstimatedAmount" Type="float" />
+          <Property Name="OutTransDate" Type="datetime" />
+          <Property Name="ItemCode" Type="int" />
+          <Property Name="UnitStatus" Type="int" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="LastModifiedAt" Type="datetime" />
+          <Property Name="unitCodeTitleAr" Type="nvarchar" MaxLength="50" />
+          <Property Name="unitCodeTitleEn" Type="nvarchar" MaxLength="50" />
+          <Property Name="ItemRefCode" Type="nvarchar" MaxLength="250" />
+          <Property Name="ItemBarCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ItemRFIDCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ItemFinanceCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ItemQrCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ItemNameEn" Type="nvarchar" MaxLength="500" />
+          <Property Name="ItemNameAr" Type="nvarchar" MaxLength="500" />
+          <Property Name="ItemDescEn" Type="nvarchar(max)" />
+          <Property Name="ItemDescAr" Type="nvarchar(max)" />
+          <Property Name="ItemCategoryTitleAr" Type="nvarchar" MaxLength="250" />
+          <Property Name="ItemCategoryTitleEn" Type="nvarchar" MaxLength="250" />
+          <Property Name="ItemBasePrice" Type="float" />
+          <Property Name="StatusNameAr" Type="nvarchar" MaxLength="50" />
+          <Property Name="StatusNameEn" Type="nvarchar" MaxLength="50" />
+          <Property Name="OutboundItemNotes" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.View_OutboundList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_OutboundList">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="bigint" Nullable="false" />
+          <Property Name="Serial" Type="nvarchar" MaxLength="50" />
+          <Property Name="TMonth" Type="int" />
+          <Property Name="TYear" Type="int" />
+          <Property Name="TransDate" Type="datetime" />
+          <Property Name="TypeCode" Type="int" />
+          <Property Name="WithdrawTypeCode" Type="int" />
+          <Property Name="RefTypeCode" Type="int" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="RefDate" Type="datetime" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="ServiceCost" Type="float" />
+          <Property Name="ReceiteNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceiteDate" Type="datetime" />
+          <Property Name="FromLocationCode" Type="int" />
+          <Property Name="ToLocationCode" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="LastModifiedAt" Type="datetime" />
+          <Property Name="FromLocationNameEn" Type="nvarchar" MaxLength="250" />
+          <Property Name="FromLocationNameAr" Type="nvarchar" MaxLength="250" />
+          <Property Name="ToLocationNameEn" Type="nvarchar" MaxLength="250" />
+          <Property Name="ToLocationNameAr" Type="nvarchar" MaxLength="250" />
+          <Property Name="RefTypeTitleAr" Type="nvarchar" MaxLength="50" />
+          <Property Name="RefTypeTitleEn" Type="nvarchar" MaxLength="50" />
+          <Property Name="OutboundTypeTitleAr" Type="nvarchar" MaxLength="50" />
+          <Property Name="OutboundTypeTitleEn" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1317,6 +1471,102 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Outbound_D_OutboundRefType">
+          <End Role="D_OutboundRefType" Type="Self.D_OutboundRefType" Multiplicity="0..1" />
+          <End Role="Outbound" Type="Self.Outbound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_OutboundRefType">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Outbound">
+              <PropertyRef Name="RefTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outbound_D_OutboundType">
+          <End Role="D_OutboundType" Type="Self.D_OutboundType" Multiplicity="0..1" />
+          <End Role="Outbound" Type="Self.Outbound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_OutboundType">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Outbound">
+              <PropertyRef Name="TypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outbound_Items_D_ItemCard">
+          <End Role="D_ItemCard" Type="Self.D_ItemCard" Multiplicity="0..1" />
+          <End Role="Outbound_Items" Type="Self.Outbound_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_ItemCard">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Outbound_Items">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outbound_Items_D_ItemUsedStatus">
+          <End Role="D_ItemUsedStatus" Type="Self.D_ItemUsedStatus" Multiplicity="0..1" />
+          <End Role="Outbound_Items" Type="Self.Outbound_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_ItemUsedStatus">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Outbound_Items">
+              <PropertyRef Name="UnitStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outbound_Items_Outbound">
+          <End Role="Outbound" Type="Self.Outbound" Multiplicity="0..1" />
+          <End Role="Outbound_Items" Type="Self.Outbound_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outbound">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Outbound_Items">
+              <PropertyRef Name="OutboundCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OutboundAttachments_D_AttachmentType">
+          <End Role="D_AttachmentType" Type="Self.D_AttachmentType" Multiplicity="0..1" />
+          <End Role="OutboundAttachments" Type="Self.OutboundAttachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_AttachmentType">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="OutboundAttachments">
+              <PropertyRef Name="AttachmentTypCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OutboundAttachments_Outbound">
+          <End Role="Outbound" Type="Self.Outbound" Multiplicity="0..1" />
+          <End Role="OutboundAttachments" Type="Self.OutboundAttachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outbound">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="OutboundAttachments">
+              <PropertyRef Name="OutboundCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OutboundNotes_Outbound">
+          <End Role="Outbound" Type="Self.Outbound" Multiplicity="0..1" />
+          <End Role="OutboundNotes" Type="Self.OutboundNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outbound">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="OutboundNotes">
+              <PropertyRef Name="OutboundCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RequestAttachments_AssetsEventTrackingHeader">
           <End Role="AssetsEventTrackingHeader" Type="Self.AssetsEventTrackingHeader" Multiplicity="0..1" />
           <End Role="RequestAttachments" Type="Self.RequestAttachments" Multiplicity="*" />
@@ -1460,6 +1710,8 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySet Name="D_JobTitle" EntityType="Self.D_JobTitle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="D_Locations" EntityType="Self.D_Locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="D_LocationType" EntityType="Self.D_LocationType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="D_OutboundRefType" EntityType="Self.D_OutboundRefType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="D_OutboundType" EntityType="Self.D_OutboundType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="D_QtyUnit" EntityType="Self.D_QtyUnit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="D_VendorData" EntityType="Self.D_VendorData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_tbl" EntityType="Self.Employee_tbl" Schema="dbo" store:Type="Tables" />
@@ -1469,6 +1721,10 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySet Name="InboundStatusTrack" EntityType="Self.InboundStatusTrack" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InboundStoreEmployee" EntityType="Self.InboundStoreEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item_tbl" EntityType="Self.Item_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Outbound" EntityType="Self.Outbound" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Outbound_Items" EntityType="Self.Outbound_Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OutboundAttachments" EntityType="Self.OutboundAttachments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OutboundNotes" EntityType="Self.OutboundNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestAttachments" EntityType="Self.RequestAttachments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Security_pr_admin" EntityType="Self.Security_pr_admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Security_pr_adminPermittedLocations" EntityType="Self.Security_pr_adminPermittedLocations" Schema="dbo" store:Type="Tables" />
@@ -1849,7 +2105,9 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
     [view_ItemCard].[ItemNameArWithCode] AS [ItemNameArWithCode], 
     [view_ItemCard].[ScrapPeriod] AS [ScrapPeriod], 
     [view_ItemCard].[ScrapAmount] AS [ScrapAmount], 
-    [view_ItemCard].[ItemMasterPrice] AS [ItemMasterPrice]
+    [view_ItemCard].[ItemMasterPrice] AS [ItemMasterPrice], 
+    [view_ItemCard].[TotalReceived] AS [TotalReceived], 
+    [view_ItemCard].[TotalDelivered] AS [TotalDelivered]
     FROM [dbo].[view_ItemCard] AS [view_ItemCard]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="view_ItemCategoryTree" EntityType="Self.view_ItemCategoryTree" store:Type="Views" store:Schema="dbo">
@@ -1872,6 +2130,72 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
     [view_LocationTree].[LocationType] AS [LocationType], 
     [view_LocationTree].[path] AS [path]
     FROM [dbo].[view_LocationTree] AS [view_LocationTree]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_OutboundItems" EntityType="Self.View_OutboundItems" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_OutboundItems].[Code] AS [Code], 
+    [View_OutboundItems].[OutboundCode] AS [OutboundCode], 
+    [View_OutboundItems].[QtyUnitCode] AS [QtyUnitCode], 
+    [View_OutboundItems].[Qty] AS [Qty], 
+    [View_OutboundItems].[EstimatedAmount] AS [EstimatedAmount], 
+    [View_OutboundItems].[OutTransDate] AS [OutTransDate], 
+    [View_OutboundItems].[ItemCode] AS [ItemCode], 
+    [View_OutboundItems].[UnitStatus] AS [UnitStatus], 
+    [View_OutboundItems].[Notes] AS [Notes], 
+    [View_OutboundItems].[CreatedBy] AS [CreatedBy], 
+    [View_OutboundItems].[CreatedAt] AS [CreatedAt], 
+    [View_OutboundItems].[LastModifiedBy] AS [LastModifiedBy], 
+    [View_OutboundItems].[LastModifiedAt] AS [LastModifiedAt], 
+    [View_OutboundItems].[unitCodeTitleAr] AS [unitCodeTitleAr], 
+    [View_OutboundItems].[unitCodeTitleEn] AS [unitCodeTitleEn], 
+    [View_OutboundItems].[ItemRefCode] AS [ItemRefCode], 
+    [View_OutboundItems].[ItemBarCode] AS [ItemBarCode], 
+    [View_OutboundItems].[ItemRFIDCode] AS [ItemRFIDCode], 
+    [View_OutboundItems].[ItemFinanceCode] AS [ItemFinanceCode], 
+    [View_OutboundItems].[ItemQrCode] AS [ItemQrCode], 
+    [View_OutboundItems].[ItemNameEn] AS [ItemNameEn], 
+    [View_OutboundItems].[ItemNameAr] AS [ItemNameAr], 
+    [View_OutboundItems].[ItemDescEn] AS [ItemDescEn], 
+    [View_OutboundItems].[ItemDescAr] AS [ItemDescAr], 
+    [View_OutboundItems].[ItemCategoryTitleAr] AS [ItemCategoryTitleAr], 
+    [View_OutboundItems].[ItemCategoryTitleEn] AS [ItemCategoryTitleEn], 
+    [View_OutboundItems].[ItemBasePrice] AS [ItemBasePrice], 
+    [View_OutboundItems].[StatusNameAr] AS [StatusNameAr], 
+    [View_OutboundItems].[StatusNameEn] AS [StatusNameEn], 
+    [View_OutboundItems].[OutboundItemNotes] AS [OutboundItemNotes]
+    FROM [dbo].[View_OutboundItems] AS [View_OutboundItems]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_OutboundList" EntityType="Self.View_OutboundList" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_OutboundList].[Code] AS [Code], 
+    [View_OutboundList].[Serial] AS [Serial], 
+    [View_OutboundList].[TMonth] AS [TMonth], 
+    [View_OutboundList].[TYear] AS [TYear], 
+    [View_OutboundList].[TransDate] AS [TransDate], 
+    [View_OutboundList].[TypeCode] AS [TypeCode], 
+    [View_OutboundList].[WithdrawTypeCode] AS [WithdrawTypeCode], 
+    [View_OutboundList].[RefTypeCode] AS [RefTypeCode], 
+    [View_OutboundList].[RefNo] AS [RefNo], 
+    [View_OutboundList].[RefDate] AS [RefDate], 
+    [View_OutboundList].[Notes] AS [Notes], 
+    [View_OutboundList].[ServiceCost] AS [ServiceCost], 
+    [View_OutboundList].[ReceiteNo] AS [ReceiteNo], 
+    [View_OutboundList].[ReceiteDate] AS [ReceiteDate], 
+    [View_OutboundList].[FromLocationCode] AS [FromLocationCode], 
+    [View_OutboundList].[ToLocationCode] AS [ToLocationCode], 
+    [View_OutboundList].[CreatedBy] AS [CreatedBy], 
+    [View_OutboundList].[CreatedAt] AS [CreatedAt], 
+    [View_OutboundList].[LastModifiedBy] AS [LastModifiedBy], 
+    [View_OutboundList].[LastModifiedAt] AS [LastModifiedAt], 
+    [View_OutboundList].[FromLocationNameEn] AS [FromLocationNameEn], 
+    [View_OutboundList].[FromLocationNameAr] AS [FromLocationNameAr], 
+    [View_OutboundList].[ToLocationNameEn] AS [ToLocationNameEn], 
+    [View_OutboundList].[ToLocationNameAr] AS [ToLocationNameAr], 
+    [View_OutboundList].[RefTypeTitleAr] AS [RefTypeTitleAr], 
+    [View_OutboundList].[RefTypeTitleEn] AS [RefTypeTitleEn], 
+    [View_OutboundList].[OutboundTypeTitleAr] AS [OutboundTypeTitleAr], 
+    [View_OutboundList].[OutboundTypeTitleEn] AS [OutboundTypeTitleEn]
+    FROM [dbo].[View_OutboundList] AS [View_OutboundList]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="viewTemp" EntityType="Self.viewTemp" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2010,6 +2334,38 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
             <End Role="Inbound" EntitySet="Inbound" />
             <End Role="InboundStoreEmployee" EntitySet="InboundStoreEmployee" />
           </AssociationSet>
+          <AssociationSet Name="FK_Outbound_D_OutboundRefType" Association="Self.FK_Outbound_D_OutboundRefType">
+            <End Role="D_OutboundRefType" EntitySet="D_OutboundRefType" />
+            <End Role="Outbound" EntitySet="Outbound" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outbound_D_OutboundType" Association="Self.FK_Outbound_D_OutboundType">
+            <End Role="D_OutboundType" EntitySet="D_OutboundType" />
+            <End Role="Outbound" EntitySet="Outbound" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outbound_Items_D_ItemCard" Association="Self.FK_Outbound_Items_D_ItemCard">
+            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
+            <End Role="Outbound_Items" EntitySet="Outbound_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outbound_Items_D_ItemUsedStatus" Association="Self.FK_Outbound_Items_D_ItemUsedStatus">
+            <End Role="D_ItemUsedStatus" EntitySet="D_ItemUsedStatus" />
+            <End Role="Outbound_Items" EntitySet="Outbound_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outbound_Items_Outbound" Association="Self.FK_Outbound_Items_Outbound">
+            <End Role="Outbound" EntitySet="Outbound" />
+            <End Role="Outbound_Items" EntitySet="Outbound_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OutboundAttachments_D_AttachmentType" Association="Self.FK_OutboundAttachments_D_AttachmentType">
+            <End Role="D_AttachmentType" EntitySet="D_AttachmentType" />
+            <End Role="OutboundAttachments" EntitySet="OutboundAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OutboundAttachments_Outbound" Association="Self.FK_OutboundAttachments_Outbound">
+            <End Role="Outbound" EntitySet="Outbound" />
+            <End Role="OutboundAttachments" EntitySet="OutboundAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OutboundNotes_Outbound" Association="Self.FK_OutboundNotes_Outbound">
+            <End Role="Outbound" EntitySet="Outbound" />
+            <End Role="OutboundNotes" EntitySet="OutboundNotes" />
+          </AssociationSet>
           <AssociationSet Name="FK_RequestAttachments_AssetsEventTrackingHeader" Association="Self.FK_RequestAttachments_AssetsEventTrackingHeader">
             <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeader" />
             <End Role="RequestAttachments" EntitySet="RequestAttachments" />
@@ -2107,6 +2463,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="InboundAttachments" Relationship="Self.FK_InboundAttachments_D_AttachmentType" FromRole="D_AttachmentType" ToRole="InboundAttachments" />
           <NavigationProperty Name="RequestAttachments" Relationship="Self.FK_RequestAttachments_D_AttachmentType" FromRole="D_AttachmentType" ToRole="RequestAttachments" />
+          <NavigationProperty Name="OutboundAttachments" Relationship="CMGS_AssetsMgmtModel.FK_OutboundAttachments_D_AttachmentType" FromRole="D_AttachmentType" ToRole="OutboundAttachment" />
         </EntityType>
         <EntityType Name="D_Country">
           <Key>
@@ -2193,6 +2550,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <NavigationProperty Name="D_ItemsCategory" Relationship="Self.FK_D_ItemCard_D_ItemsCategory" FromRole="D_ItemCard" ToRole="D_ItemsCategory" />
           <NavigationProperty Name="D_QtyUnit" Relationship="Self.FK_D_ItemCard_D_QtyUnit" FromRole="D_ItemCard" ToRole="D_QtyUnit" />
           <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard" FromRole="D_ItemCard" ToRole="AssetsEventTracking" />
+          <NavigationProperty Name="Outbound_Items" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemCard" FromRole="D_ItemCard" ToRole="Outbound_Items" />
         </EntityType>
         <EntityType Name="D_ItemsCategory">
           <Key>
@@ -2218,6 +2576,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="TitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AssetsItemUnits" Relationship="Self.FK_D_ItemUnits_D_ItemStatus" FromRole="D_ItemUsedStatus" ToRole="AssetsItemUnits" />
+          <NavigationProperty Name="Outbound_Items" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemUsedStatus" FromRole="D_ItemUsedStatus" ToRole="Outbound_Items" />
         </EntityType>
         <EntityType Name="D_JobTitle">
           <Key>
@@ -2942,41 +3301,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="OrgChartRefCode" Type="Int32" />
           <Property Name="TransDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="view_ItemCard">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="Int32" Nullable="false" />
-          <Property Name="ItemRefCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ItemBarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemRFIDCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemFinanceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemQrCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ItemDescEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ItemDescAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ItemCategoryId" Type="Int32" />
-          <Property Name="ItemBasePrice" Type="Double" />
-          <Property Name="QUnitCode" Type="Int32" />
-          <Property Name="MinQty" Type="Int32" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="Int32" />
-          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="ItemImage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="D_ItemsCategoryTitleAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="D_ItemsCategoryTitleEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="D_QtyUnitTitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="D_QtyUnitTitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="EstimatedUnitCost" Type="Double" />
-          <Property Name="ItemNameArWithCode" Type="String" MaxLength="531" FixedLength="false" Unicode="true" />
-          <Property Name="ScrapPeriod" Type="Double" />
-          <Property Name="ScrapAmount" Type="Double" />
-          <Property Name="ItemMasterPrice" Type="Double" />
-        </EntityType>
         <EntityType Name="view_ItemCategoryTree">
           <Key>
             <PropertyRef Name="PKey" />
@@ -3342,7 +3666,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySet Name="view_inboubdItems" EntityType="Self.view_inboubdItems" />
           <EntitySet Name="View_InboundList" EntityType="Self.View_InboundList" />
           <EntitySet Name="view_Inventory" EntityType="Self.view_Inventory" />
-          <EntitySet Name="view_ItemCard" EntityType="Self.view_ItemCard" />
           <EntitySet Name="view_ItemCategoryTree" EntityType="Self.view_ItemCategoryTree" />
           <EntitySet Name="view_LocationTree" EntityType="Self.view_LocationTree" />
           <EntitySet Name="viewTemps" EntityType="Self.viewTemp" />
@@ -3521,6 +3844,47 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
             <End Role="D_ItemCard" EntitySet="D_ItemCard" />
             <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
           </AssociationSet>
+          <EntitySet Name="D_OutboundRefType" EntityType="CMGS_AssetsMgmtModel.D_OutboundRefType" />
+          <EntitySet Name="D_OutboundType" EntityType="CMGS_AssetsMgmtModel.D_OutboundType" />
+          <EntitySet Name="Outbound_Items" EntityType="CMGS_AssetsMgmtModel.Outbound_Items" />
+          <EntitySet Name="OutboundAttachments" EntityType="CMGS_AssetsMgmtModel.OutboundAttachment" />
+          <EntitySet Name="OutboundNotes" EntityType="CMGS_AssetsMgmtModel.OutboundNote" />
+          <AssociationSet Name="FK_OutboundAttachments_D_AttachmentType" Association="CMGS_AssetsMgmtModel.FK_OutboundAttachments_D_AttachmentType">
+            <End Role="D_AttachmentType" EntitySet="D_AttachmentType" />
+            <End Role="OutboundAttachment" EntitySet="OutboundAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outbound_Items_D_ItemCard" Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemCard">
+            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
+            <End Role="Outbound_Items" EntitySet="Outbound_Items" />
+          </AssociationSet>
+          <EntitySet Name="View_OutboundItems" EntityType="CMGS_AssetsMgmtModel.View_OutboundItems" />
+          <AssociationSet Name="FK_Outbound_Items_D_ItemUsedStatus" Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemUsedStatus">
+            <End Role="D_ItemUsedStatus" EntitySet="D_ItemUsedStatus" />
+            <End Role="Outbound_Items" EntitySet="Outbound_Items" />
+          </AssociationSet>
+          <EntitySet Name="Outbounds" EntityType="CMGS_AssetsMgmtModel.Outbound" />
+          <EntitySet Name="View_OutboundList" EntityType="CMGS_AssetsMgmtModel.View_OutboundList" />
+          <AssociationSet Name="FK_Outbound_D_OutboundRefType" Association="CMGS_AssetsMgmtModel.FK_Outbound_D_OutboundRefType">
+            <End Role="D_OutboundRefType" EntitySet="D_OutboundRefType" />
+            <End Role="Outbound" EntitySet="Outbounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outbound_D_OutboundType" Association="CMGS_AssetsMgmtModel.FK_Outbound_D_OutboundType">
+            <End Role="D_OutboundType" EntitySet="D_OutboundType" />
+            <End Role="Outbound" EntitySet="Outbounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outbound_Items_Outbound" Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_Outbound">
+            <End Role="Outbound" EntitySet="Outbounds" />
+            <End Role="Outbound_Items" EntitySet="Outbound_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OutboundAttachments_Outbound" Association="CMGS_AssetsMgmtModel.FK_OutboundAttachments_Outbound">
+            <End Role="Outbound" EntitySet="Outbounds" />
+            <End Role="OutboundAttachment" EntitySet="OutboundAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OutboundNotes_Outbound" Association="CMGS_AssetsMgmtModel.FK_OutboundNotes_Outbound">
+            <End Role="Outbound" EntitySet="Outbounds" />
+            <End Role="OutboundNote" EntitySet="OutboundNotes" />
+          </AssociationSet>
+          <EntitySet Name="view_ItemCard" EntityType="CMGS_AssetsMgmtModel.view_ItemCard" />
         </EntityContainer>
         <ComplexType Name="Security_SP_PRM_getJobPage_Result">
           <Property Type="Int32" Name="SystemID" Nullable="false" />
@@ -3665,6 +4029,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedBy" Type="Int32" />
           <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Boolean" />
         </EntityType>
         <EntityType Name="AssetsEventTracking">
           <Key>
@@ -3742,6 +4107,299 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="D_OutboundRefType">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Outbounds" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_D_OutboundRefType" FromRole="D_OutboundRefType" ToRole="Outbound" />
+        </EntityType>
+        <EntityType Name="D_OutboundType">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Outbounds" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_D_OutboundType" FromRole="D_OutboundType" ToRole="Outbound" />
+        </EntityType>
+        <EntityType Name="Outbound_Items">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OutboundCode" Type="Int64" />
+          <Property Name="QtyUnitCode" Type="Int32" />
+          <Property Name="Qty" Type="Double" />
+          <Property Name="EstimatedAmount" Type="Double" />
+          <Property Name="OutTransDate" Type="DateTime" Precision="3" />
+          <Property Name="ItemCode" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="D_ItemCard" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemCard" FromRole="Outbound_Items" ToRole="D_ItemCard" />
+          <Property Name="UnitStatus" Type="Int32" />
+          <NavigationProperty Name="D_ItemUsedStatus" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemUsedStatus" FromRole="Outbound_Items" ToRole="D_ItemUsedStatus" />
+          <NavigationProperty Name="Outbound" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_Items_Outbound" FromRole="Outbound_Items" ToRole="Outbound" />
+        </EntityType>
+        <EntityType Name="OutboundAttachment">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransDate" Type="DateTime" Precision="3" />
+          <Property Name="OutboundCode" Type="Int64" />
+          <Property Name="FileName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AttachmentTypCode" Type="Int32" />
+          <NavigationProperty Name="D_AttachmentType" Relationship="CMGS_AssetsMgmtModel.FK_OutboundAttachments_D_AttachmentType" FromRole="OutboundAttachment" ToRole="D_AttachmentType" />
+          <NavigationProperty Name="Outbound" Relationship="CMGS_AssetsMgmtModel.FK_OutboundAttachments_Outbound" FromRole="OutboundAttachment" ToRole="Outbound" />
+        </EntityType>
+        <EntityType Name="OutboundNote">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OutboundCode" Type="Int64" />
+          <Property Name="TransDate" Type="DateTime" Precision="3" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Outbound" Relationship="CMGS_AssetsMgmtModel.FK_OutboundNotes_Outbound" FromRole="OutboundNote" ToRole="Outbound" />
+        </EntityType>
+        <Association Name="FK_OutboundAttachments_D_AttachmentType">
+          <End Type="CMGS_AssetsMgmtModel.D_AttachmentType" Role="D_AttachmentType" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.OutboundAttachment" Role="OutboundAttachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_AttachmentType">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="OutboundAttachment">
+              <PropertyRef Name="AttachmentTypCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outbound_Items_D_ItemCard">
+          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.Outbound_Items" Role="Outbound_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_ItemCard">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Outbound_Items">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="View_OutboundItems">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int64" Nullable="false" />
+          <Property Name="OutboundCode" Type="Int64" />
+          <Property Name="QtyUnitCode" Type="Int32" />
+          <Property Name="Qty" Type="Double" />
+          <Property Name="EstimatedAmount" Type="Double" />
+          <Property Name="OutTransDate" Type="DateTime" Precision="3" />
+          <Property Name="ItemCode" Type="Int32" />
+          <Property Name="UnitStatus" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="unitCodeTitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="unitCodeTitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemRefCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ItemBarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemRFIDCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemFinanceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemQrCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCategoryTitleAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCategoryTitleEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ItemBasePrice" Type="Double" />
+          <Property Name="StatusNameAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusNameEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OutboundItemNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Outbound_Items_D_ItemUsedStatus">
+          <End Type="CMGS_AssetsMgmtModel.D_ItemUsedStatus" Role="D_ItemUsedStatus" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.Outbound_Items" Role="Outbound_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_ItemUsedStatus">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Outbound_Items">
+              <PropertyRef Name="UnitStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Outbound">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Serial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TMonth" Type="Int32" />
+          <Property Name="TYear" Type="Int32" />
+          <Property Name="TransDate" Type="DateTime" Precision="3" />
+          <Property Name="TypeCode" Type="Int32" />
+          <Property Name="WithdrawTypeCode" Type="Int32" />
+          <Property Name="RefTypeCode" Type="Int32" />
+          <Property Name="RefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefDate" Type="DateTime" Precision="3" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceCost" Type="Double" />
+          <Property Name="ReceiteNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiteDate" Type="DateTime" Precision="3" />
+          <Property Name="FromLocationCode" Type="Int32" />
+          <Property Name="ToLocationCode" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="D_OutboundRefType" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_D_OutboundRefType" FromRole="Outbound" ToRole="D_OutboundRefType" />
+          <NavigationProperty Name="D_OutboundType" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_D_OutboundType" FromRole="Outbound" ToRole="D_OutboundType" />
+          <NavigationProperty Name="Outbound_Items" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_Items_Outbound" FromRole="Outbound" ToRole="Outbound_Items" />
+          <NavigationProperty Name="OutboundAttachments" Relationship="CMGS_AssetsMgmtModel.FK_OutboundAttachments_Outbound" FromRole="Outbound" ToRole="OutboundAttachment" />
+          <NavigationProperty Name="OutboundNotes" Relationship="CMGS_AssetsMgmtModel.FK_OutboundNotes_Outbound" FromRole="Outbound" ToRole="OutboundNote" />
+        </EntityType>
+        <EntityType Name="View_OutboundList">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int64" Nullable="false" />
+          <Property Name="Serial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TMonth" Type="Int32" />
+          <Property Name="TYear" Type="Int32" />
+          <Property Name="TransDate" Type="DateTime" Precision="3" />
+          <Property Name="TypeCode" Type="Int32" />
+          <Property Name="WithdrawTypeCode" Type="Int32" />
+          <Property Name="RefTypeCode" Type="Int32" />
+          <Property Name="RefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefDate" Type="DateTime" Precision="3" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceCost" Type="Double" />
+          <Property Name="ReceiteNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiteDate" Type="DateTime" Precision="3" />
+          <Property Name="FromLocationCode" Type="Int32" />
+          <Property Name="ToLocationCode" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="FromLocationNameEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FromLocationNameAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ToLocationNameEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ToLocationNameAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RefTypeTitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefTypeTitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OutboundTypeTitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OutboundTypeTitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Outbound_D_OutboundRefType">
+          <End Type="CMGS_AssetsMgmtModel.D_OutboundRefType" Role="D_OutboundRefType" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.Outbound" Role="Outbound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_OutboundRefType">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Outbound">
+              <PropertyRef Name="RefTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outbound_D_OutboundType">
+          <End Type="CMGS_AssetsMgmtModel.D_OutboundType" Role="D_OutboundType" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.Outbound" Role="Outbound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_OutboundType">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Outbound">
+              <PropertyRef Name="TypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outbound_Items_Outbound">
+          <End Type="CMGS_AssetsMgmtModel.Outbound" Role="Outbound" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.Outbound_Items" Role="Outbound_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outbound">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Outbound_Items">
+              <PropertyRef Name="OutboundCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OutboundAttachments_Outbound">
+          <End Type="CMGS_AssetsMgmtModel.Outbound" Role="Outbound" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.OutboundAttachment" Role="OutboundAttachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outbound">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="OutboundAttachment">
+              <PropertyRef Name="OutboundCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OutboundNotes_Outbound">
+          <End Type="CMGS_AssetsMgmtModel.Outbound" Role="Outbound" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.OutboundNote" Role="OutboundNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outbound">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="OutboundNote">
+              <PropertyRef Name="OutboundCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="view_ItemCard">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="ItemRefCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ItemBarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemRFIDCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemFinanceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemQrCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCategoryId" Type="Int32" />
+          <Property Name="ItemBasePrice" Type="Double" />
+          <Property Name="QUnitCode" Type="Int32" />
+          <Property Name="MinQty" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="ItemImage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="D_ItemsCategoryTitleAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="D_ItemsCategoryTitleEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="D_QtyUnitTitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="D_QtyUnitTitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="EstimatedUnitCost" Type="Double" />
+          <Property Name="ItemNameArWithCode" Type="String" MaxLength="531" FixedLength="false" Unicode="true" />
+          <Property Name="ScrapPeriod" Type="Double" />
+          <Property Name="ScrapAmount" Type="Double" />
+          <Property Name="ItemMasterPrice" Type="Double" />
+          <Property Name="TotalReceived" Type="Double" />
+          <Property Name="TotalDelivered" Type="Double" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4600,42 +5258,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="view_ItemCard">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_ItemCard">
-              <MappingFragment StoreEntitySet="view_ItemCard">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ItemRefCode" ColumnName="ItemRefCode" />
-                <ScalarProperty Name="ItemBarCode" ColumnName="ItemBarCode" />
-                <ScalarProperty Name="ItemRFIDCode" ColumnName="ItemRFIDCode" />
-                <ScalarProperty Name="ItemFinanceCode" ColumnName="ItemFinanceCode" />
-                <ScalarProperty Name="ItemQrCode" ColumnName="ItemQrCode" />
-                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
-                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
-                <ScalarProperty Name="ItemDescEn" ColumnName="ItemDescEn" />
-                <ScalarProperty Name="ItemDescAr" ColumnName="ItemDescAr" />
-                <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
-                <ScalarProperty Name="ItemBasePrice" ColumnName="ItemBasePrice" />
-                <ScalarProperty Name="QUnitCode" ColumnName="QUnitCode" />
-                <ScalarProperty Name="MinQty" ColumnName="MinQty" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="ItemImage" ColumnName="ItemImage" />
-                <ScalarProperty Name="D_ItemsCategoryTitleAr" ColumnName="D_ItemsCategoryTitleAr" />
-                <ScalarProperty Name="D_ItemsCategoryTitleEn" ColumnName="D_ItemsCategoryTitleEn" />
-                <ScalarProperty Name="D_QtyUnitTitleAr" ColumnName="D_QtyUnitTitleAr" />
-                <ScalarProperty Name="D_QtyUnitTitleEn" ColumnName="D_QtyUnitTitleEn" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="EstimatedUnitCost" ColumnName="EstimatedUnitCost" />
-                <ScalarProperty Name="ItemNameArWithCode" ColumnName="ItemNameArWithCode" />
-                <ScalarProperty Name="ScrapPeriod" ColumnName="ScrapPeriod" />
-                <ScalarProperty Name="ScrapAmount" ColumnName="ScrapAmount" />
-                <ScalarProperty Name="ItemMasterPrice" ColumnName="ItemMasterPrice" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="view_ItemCategoryTree">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_ItemCategoryTree">
               <MappingFragment StoreEntitySet="view_ItemCategoryTree">
@@ -4922,6 +5544,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySetMapping Name="Security_pr_adminPermittedLocations">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.Security_pr_adminPermittedLocations">
               <MappingFragment StoreEntitySet="Security_pr_adminPermittedLocations">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
@@ -4953,6 +5576,199 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
                 <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
                 <ScalarProperty Name="AssetCode" ColumnName="AssetCode" />
                 <ScalarProperty Name="RequestHeaderCode" ColumnName="RequestHeaderCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="D_OutboundRefType">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.D_OutboundRefType">
+              <MappingFragment StoreEntitySet="D_OutboundRefType">
+                <ScalarProperty Name="TitleEn" ColumnName="TitleEn" />
+                <ScalarProperty Name="TitleAr" ColumnName="TitleAr" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="D_OutboundType">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.D_OutboundType">
+              <MappingFragment StoreEntitySet="D_OutboundType">
+                <ScalarProperty Name="TitleEn" ColumnName="TitleEn" />
+                <ScalarProperty Name="TitleAr" ColumnName="TitleAr" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Outbound_Items">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.Outbound_Items">
+              <MappingFragment StoreEntitySet="Outbound_Items">
+                <ScalarProperty Name="UnitStatus" ColumnName="UnitStatus" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="OutTransDate" ColumnName="OutTransDate" />
+                <ScalarProperty Name="EstimatedAmount" ColumnName="EstimatedAmount" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="QtyUnitCode" ColumnName="QtyUnitCode" />
+                <ScalarProperty Name="OutboundCode" ColumnName="OutboundCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OutboundAttachments">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.OutboundAttachment">
+              <MappingFragment StoreEntitySet="OutboundAttachments">
+                <ScalarProperty Name="AttachmentTypCode" ColumnName="AttachmentTypCode" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="OutboundCode" ColumnName="OutboundCode" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OutboundNotes">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.OutboundNote">
+              <MappingFragment StoreEntitySet="OutboundNotes">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="OutboundCode" ColumnName="OutboundCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_OutboundItems">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.View_OutboundItems">
+              <MappingFragment StoreEntitySet="View_OutboundItems">
+                <ScalarProperty Name="OutboundItemNotes" ColumnName="OutboundItemNotes" />
+                <ScalarProperty Name="StatusNameEn" ColumnName="StatusNameEn" />
+                <ScalarProperty Name="StatusNameAr" ColumnName="StatusNameAr" />
+                <ScalarProperty Name="ItemBasePrice" ColumnName="ItemBasePrice" />
+                <ScalarProperty Name="ItemCategoryTitleEn" ColumnName="ItemCategoryTitleEn" />
+                <ScalarProperty Name="ItemCategoryTitleAr" ColumnName="ItemCategoryTitleAr" />
+                <ScalarProperty Name="ItemDescAr" ColumnName="ItemDescAr" />
+                <ScalarProperty Name="ItemDescEn" ColumnName="ItemDescEn" />
+                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
+                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
+                <ScalarProperty Name="ItemQrCode" ColumnName="ItemQrCode" />
+                <ScalarProperty Name="ItemFinanceCode" ColumnName="ItemFinanceCode" />
+                <ScalarProperty Name="ItemRFIDCode" ColumnName="ItemRFIDCode" />
+                <ScalarProperty Name="ItemBarCode" ColumnName="ItemBarCode" />
+                <ScalarProperty Name="ItemRefCode" ColumnName="ItemRefCode" />
+                <ScalarProperty Name="unitCodeTitleEn" ColumnName="unitCodeTitleEn" />
+                <ScalarProperty Name="unitCodeTitleAr" ColumnName="unitCodeTitleAr" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="UnitStatus" ColumnName="UnitStatus" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="OutTransDate" ColumnName="OutTransDate" />
+                <ScalarProperty Name="EstimatedAmount" ColumnName="EstimatedAmount" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="QtyUnitCode" ColumnName="QtyUnitCode" />
+                <ScalarProperty Name="OutboundCode" ColumnName="OutboundCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Outbounds">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.Outbound">
+              <MappingFragment StoreEntitySet="Outbound">
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ToLocationCode" ColumnName="ToLocationCode" />
+                <ScalarProperty Name="FromLocationCode" ColumnName="FromLocationCode" />
+                <ScalarProperty Name="ReceiteDate" ColumnName="ReceiteDate" />
+                <ScalarProperty Name="ReceiteNo" ColumnName="ReceiteNo" />
+                <ScalarProperty Name="ServiceCost" ColumnName="ServiceCost" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="RefDate" ColumnName="RefDate" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="RefTypeCode" ColumnName="RefTypeCode" />
+                <ScalarProperty Name="WithdrawTypeCode" ColumnName="WithdrawTypeCode" />
+                <ScalarProperty Name="TypeCode" ColumnName="TypeCode" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="TYear" ColumnName="TYear" />
+                <ScalarProperty Name="TMonth" ColumnName="TMonth" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_OutboundList">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.View_OutboundList">
+              <MappingFragment StoreEntitySet="View_OutboundList">
+                <ScalarProperty Name="OutboundTypeTitleEn" ColumnName="OutboundTypeTitleEn" />
+                <ScalarProperty Name="OutboundTypeTitleAr" ColumnName="OutboundTypeTitleAr" />
+                <ScalarProperty Name="RefTypeTitleEn" ColumnName="RefTypeTitleEn" />
+                <ScalarProperty Name="RefTypeTitleAr" ColumnName="RefTypeTitleAr" />
+                <ScalarProperty Name="ToLocationNameAr" ColumnName="ToLocationNameAr" />
+                <ScalarProperty Name="ToLocationNameEn" ColumnName="ToLocationNameEn" />
+                <ScalarProperty Name="FromLocationNameAr" ColumnName="FromLocationNameAr" />
+                <ScalarProperty Name="FromLocationNameEn" ColumnName="FromLocationNameEn" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ToLocationCode" ColumnName="ToLocationCode" />
+                <ScalarProperty Name="FromLocationCode" ColumnName="FromLocationCode" />
+                <ScalarProperty Name="ReceiteDate" ColumnName="ReceiteDate" />
+                <ScalarProperty Name="ReceiteNo" ColumnName="ReceiteNo" />
+                <ScalarProperty Name="ServiceCost" ColumnName="ServiceCost" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="RefDate" ColumnName="RefDate" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="RefTypeCode" ColumnName="RefTypeCode" />
+                <ScalarProperty Name="WithdrawTypeCode" ColumnName="WithdrawTypeCode" />
+                <ScalarProperty Name="TypeCode" ColumnName="TypeCode" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="TYear" ColumnName="TYear" />
+                <ScalarProperty Name="TMonth" ColumnName="TMonth" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_ItemCard">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_ItemCard">
+              <MappingFragment StoreEntitySet="view_ItemCard">
+                <ScalarProperty Name="TotalDelivered" ColumnName="TotalDelivered" />
+                <ScalarProperty Name="TotalReceived" ColumnName="TotalReceived" />
+                <ScalarProperty Name="ItemMasterPrice" ColumnName="ItemMasterPrice" />
+                <ScalarProperty Name="ScrapAmount" ColumnName="ScrapAmount" />
+                <ScalarProperty Name="ScrapPeriod" ColumnName="ScrapPeriod" />
+                <ScalarProperty Name="ItemNameArWithCode" ColumnName="ItemNameArWithCode" />
+                <ScalarProperty Name="EstimatedUnitCost" ColumnName="EstimatedUnitCost" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="D_QtyUnitTitleEn" ColumnName="D_QtyUnitTitleEn" />
+                <ScalarProperty Name="D_QtyUnitTitleAr" ColumnName="D_QtyUnitTitleAr" />
+                <ScalarProperty Name="D_ItemsCategoryTitleEn" ColumnName="D_ItemsCategoryTitleEn" />
+                <ScalarProperty Name="D_ItemsCategoryTitleAr" ColumnName="D_ItemsCategoryTitleAr" />
+                <ScalarProperty Name="ItemImage" ColumnName="ItemImage" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="MinQty" ColumnName="MinQty" />
+                <ScalarProperty Name="QUnitCode" ColumnName="QUnitCode" />
+                <ScalarProperty Name="ItemBasePrice" ColumnName="ItemBasePrice" />
+                <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
+                <ScalarProperty Name="ItemDescAr" ColumnName="ItemDescAr" />
+                <ScalarProperty Name="ItemDescEn" ColumnName="ItemDescEn" />
+                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
+                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
+                <ScalarProperty Name="ItemQrCode" ColumnName="ItemQrCode" />
+                <ScalarProperty Name="ItemFinanceCode" ColumnName="ItemFinanceCode" />
+                <ScalarProperty Name="ItemRFIDCode" ColumnName="ItemRFIDCode" />
+                <ScalarProperty Name="ItemBarCode" ColumnName="ItemBarCode" />
+                <ScalarProperty Name="ItemRefCode" ColumnName="ItemRefCode" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
               </MappingFragment>
             </EntityTypeMapping>

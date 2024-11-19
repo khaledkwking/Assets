@@ -11,7 +11,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
 {
 
 
-    public partial class OutboundOperrations
+    public partial class OutboundOperations
     {
 
         /// <summary>
@@ -22,24 +22,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel Updatepanel1;
-
-        /// <summary>
-        /// divLocation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLocation;
-
-        /// <summary>
-        /// Updatepanel2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel Updatepanel2;
 
         /// <summary>
         /// hdnMasterID control.
@@ -123,6 +105,15 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
         protected global::System.Web.UI.WebControls.TextBox txtTransDate;
 
         /// <summary>
+        /// lstOutboundTypeCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lstOutboundTypeCode;
+
+        /// <summary>
         /// txtRefNo control.
         /// </summary>
         /// <remarks>
@@ -166,24 +157,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstToStore;
-
-        /// <summary>
-        /// divEmployee control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEmployee;
-
-        /// <summary>
-        /// lstRefEmployee control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList lstRefEmployee;
 
         /// <summary>
         /// txtNotes control.

@@ -675,9 +675,6 @@
   <data name="OutBoundOperationMenu" xml:space="preserve">
     <value>إدارة عمليات الصرف</value>
   </data>
-  <data name="OutboundOperations" xml:space="preserve">
-    <value>عمليات الاستلام</value>
-  </data>
   <data name="OutboundReferenceDate" xml:space="preserve">
     <value>تاريخ مرجع التسليم</value>
   </data>
@@ -1055,5 +1052,11 @@
   </data>
   <data name="StoreList" xml:space="preserve">
     <value>قائمة الاماكن</value>
+  </data>
+  <data name="StoreOperation" xml:space="preserve">
+    <value>إدارة المخاذن</value>
+  </data>
+  <data name="OutboundOperations1" xml:space="preserve">
+    <value>تسجيل إذن صرف</value>
   </data>
 </root>

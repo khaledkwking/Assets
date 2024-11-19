@@ -44,5 +44,7 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<double> ScrapPeriod { get; set; }
         public Nullable<double> ScrapAmount { get; set; }
         public Nullable<double> ItemMasterPrice { get; set; }
+        public Nullable<double> TotalReceived { get; set; }
+        public Nullable<double> TotalDelivered { get; set; }
     }
 }

@@ -36,5 +36,13 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> buildingID { get; set; }
         public Nullable<int> FloorId { get; set; }
         public Nullable<long> RoomId { get; set; }
+        public Nullable<int> Ora_EmpRefCode { get; set; }
+        public string Ora_EmpName { get; set; }
+        public string Ora_EmpCivilId { get; set; }
+        public Nullable<System.DateTime> OraActionDate { get; set; }
+        public Nullable<int> OraEntityRefCode { get; set; }
+        public Nullable<bool> OraImported { get; set; }
+        public Nullable<bool> AutoLink { get; set; }
+        public Nullable<bool> isDeleted { get; set; }
     }
 }

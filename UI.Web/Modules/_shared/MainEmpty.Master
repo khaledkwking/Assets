@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="CMGS Assets Management">
     <!-- Fav Icon  -->
-    <link rel="shortcut icon" href="/wwwroot/images/favicon.png">
+    <link rel="shortcut icon" href="/wwwroot/assets/images/favicon.png">
     <!-- Page Title  -->
     <title>CMGS | Assets Management</title>
     <!-- StyleSheets  -->
@@ -21,13 +21,13 @@
     <script src="/wwwroot/assets/js/bundle.js?ver=2.4.0"></script>
     <script src="/wwwroot/assets/js/scripts.js?ver=2.4.0"></script>
     <script src="/wwwroot/assets/js/FormValidation.js?ver=2.4.0"></script>
-    <script src="/wwwroot/assets/js/libs/jstree.js?ver=2.4.0"></script>
+    <script src="/wwwroot/assets/js/libs/jstree/jstree.js?ver=2.4.0"></script>
 
     <!---OrgChart-->
-    <link rel="stylesheet" href="/wwwroot/js/libs/orgChart/css/stiff-chart.css" />
-     <link rel="stylesheet" href="/wwwroot/js/libs/orgChart/css/custom.css" />
+    <link rel="stylesheet" href="/wwwroot/assets/js/libs/orgChart/css/stiff-chart.css" />
+     <link rel="stylesheet" href="/wwwroot/assets/js/libs/orgChart/css/custom.css" />
     <!-- OrgChart  -->
-    <script type="text/javascript" src="/wwwroot/js/libs/orgChart/js/stiffChart.js"></script>
+    <script type="text/javascript" src="/wwwroot/assets/js/libs/orgChart/js/stiffChart.js"></script>
 
     <script>
 
@@ -104,8 +104,8 @@
     </script>
 
 
-     <script src="/wwwroot/js/libs/ComboTree/comboTreePlugin.js"></script>
-    <link href="/wwwroot/js/libs/ComboTree/style.css" rel="stylesheet">
+     <script src="/wwwroot/assets/js/libs/ComboTree/comboTreePlugin.js"></script>
+    <link href="/wwwroot/assets/js/libs/ComboTree/style.css" rel="stylesheet">
  
 
 

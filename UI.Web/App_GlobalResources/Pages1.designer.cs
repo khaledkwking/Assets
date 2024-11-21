@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to فعال.
+        /// </summary>
+        internal static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AddItem.
         /// </summary>
         internal static string AddItem {
@@ -898,6 +907,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to حالة الموظف.
+        /// </summary>
+        internal static string EmpStatus {
+            get {
+                return ResourceManager.GetString("EmpStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to الجهة.
         /// </summary>
         internal static string EntityCode {
@@ -1474,6 +1492,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تم الربط.
+        /// </summary>
+        internal static string Linked {
+            get {
+                return ResourceManager.GetString("Linked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to linkLocation.
         /// </summary>
         internal static string linkLocation {
@@ -1758,6 +1785,15 @@ namespace Resources {
         internal static string OutBoundOperationMenu {
             get {
                 return ResourceManager.GetString("OutBoundOperationMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تسجيل إذن صرف.
+        /// </summary>
+        internal static string OutboundOperations {
+            get {
+                return ResourceManager.GetString("OutboundOperations", resourceCulture);
             }
         }
         
@@ -2356,11 +2392,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مكان العهدة.
+        /// </summary>
+        internal static string RequestLocation {
+            get {
+                return ResourceManager.GetString("RequestLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ملاحظات.
+        /// </summary>
+        internal static string RequestNotes {
+            get {
+                return ResourceManager.GetString("RequestNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to إستلام البضائغ.
         /// </summary>
         internal static string RequestsReceiving {
             get {
                 return ResourceManager.GetString("RequestsReceiving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نوع العهدة .
+        /// </summary>
+        internal static string RequestType {
+            get {
+                return ResourceManager.GetString("RequestType", resourceCulture);
             }
         }
         
@@ -2523,6 +2586,15 @@ namespace Resources {
         internal static string StoreLocationsRacks {
             get {
                 return ResourceManager.GetString("StoreLocationsRacks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إدارة المخاذن.
+        /// </summary>
+        internal static string StoreOperation {
+            get {
+                return ResourceManager.GetString("StoreOperation", resourceCulture);
             }
         }
         

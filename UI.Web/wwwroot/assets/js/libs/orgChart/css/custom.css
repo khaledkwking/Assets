@@ -1,0 +1,19 @@
+.chart-active .the-chart {
+    background-color: rgb(211, 249, 249);
+    /* color: #fff;*/
+    border: 1px solid #1ee0ac;
+    -webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+
+.the-chart {
+  padding: 7px;
+  border: 1px solid #3498db;
+  border-radius: 5px;
+  height: 100%; }
+
+.text-center {
+  text-align: center;
+  margin: 20px 0; }
+
+/*# sourceMappingURL=maps/custom.css.map */

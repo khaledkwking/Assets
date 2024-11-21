@@ -45,5 +45,7 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> ItemCategoryId { get; set; }
         public Nullable<int> LastEventTrackingId { get; set; }
         public Nullable<int> TargetLocationCode { get; set; }
+        public string UnitNameAr { get; set; }
+        public string UnitNameEn { get; set; }
     }
 }

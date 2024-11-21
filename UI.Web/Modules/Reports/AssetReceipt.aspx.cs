@@ -109,7 +109,7 @@ namespace UI.Web.Modules.WHM.Forms
             if (ForceFilter)
             {
                 var objlist = objRepository.getAssetsRequestList(txtPartOfName.Text, ZeroIntergerIFNull(lstFilterAction.SelectedValue),
-                                                                     NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text), 0, 0, 0);
+                                                                     NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text), 0, 0, 0,-1);
 
                 if (objlist != null && objlist.Count > 0)
                 {

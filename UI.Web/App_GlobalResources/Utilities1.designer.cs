@@ -88,7 +88,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /Layout/.
+        ///   Looks up a localized string similar to /wwwroot/assets/.
         /// </summary>
         internal static string Assetspath {
             get {
@@ -214,7 +214,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /Layout/.
+        ///   Looks up a localized string similar to /wwwroot/assets/.
         /// </summary>
         internal static string resourcespath {
             get {

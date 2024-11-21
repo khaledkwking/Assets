@@ -25,7 +25,7 @@
             <div class="nk-block-head-content">
                 <h3 class="nk-block-title page-title"><%=_PageTitle %></h3>
                 <ul class="breadcrumb breadcrumb-arrow">
-                    <li><i class="fa fa-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                    <li><i class="icon ni ni-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="icon ni ni-chevrons-left"></i>&nbsp;&nbsp;</li>
                     <li class="active"><%=_PageTitle %></li>
                 </ul>
             </div>
@@ -164,11 +164,13 @@
                     
 
                     <asp:DataGrid runat="server" ID="grdData" AutoGenerateColumns="False"
-                        AllowPaging="false" class="table table-hover table-striped table-bordered table-advanced tablesorter" data-auto-responsive="false" OnItemDataBound="grdData_ItemDataBound" OnEditCommand="grdData_EditCommand">
+                        AllowPaging="false" class="table table-hover table-striped table-bordered table-advanced tablesorter" 
+                        data-auto-responsive="false" 
+                        OnItemDataBound="grdData_ItemDataBound" OnEditCommand="grdData_EditCommand">
 
                         <Columns>
                             <asp:TemplateColumn>
-                                <HeaderStyle Wrap="False" HorizontalAlign="Center" />
+                                <HeaderStyle Wrap="False" HorizontalAlign="Center"  />
                                 <ItemStyle Width="2%" />
                                 <HeaderTemplate>
                                     <input id="chkAllItems" class="checkall" style="border-style: none;" type="checkbox" onclick="CheckAllDataGridCheckBoxes('chkItem', this.checked)" />
@@ -195,23 +197,25 @@
                                                 <asp:BoundColumn DataField="InboubdItemId" Visible="False"></asp:BoundColumn>
 
 
-                                                <asp:TemplateColumn HeaderText="<%$ Resources:pages,image %>">
+<%--                                                <asp:TemplateColumn HeaderText="<%$ Resources:pages,image %>">
                                                     <ItemStyle Width="5%" />
                                                     <ItemTemplate>
 
                                                         <%# FillImage(gets(Eval("ItemImage")), Resources.Utilities.resourcespath+"uploads/ItemsData/", 35, 25,"")%>
                                                     </ItemTemplate>
-                                                </asp:TemplateColumn>
+                                                </asp:TemplateColumn>--%>
 
                                                 <asp:BoundColumn DataField="ItemRefCode" HeaderText="<%$ Resources:pages,ItemRefCode %>"></asp:BoundColumn>
                                                 <%--<asp:BoundColumn DataField="ItemTag" HeaderText="<%$ Resources:pages,TagId %>"></asp:BoundColumn>--%>
                                                 <%--<asp:BoundColumn DataField="ItemFinanceCode" HeaderText="<%$ Resources:pages,ItemFinanceCode %>"></asp:BoundColumn>--%>
                                                 <%--<asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,ItemNameAr %>"></asp:BoundColumn>--%>
                                                 <asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,PurchaseItems %>  "></asp:BoundColumn>
+                                                <asp:BoundColumn DataField="UnitNameAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
                                                 <asp:BoundColumn DataField="Qty" HeaderText="<%$ Resources:pages,Qty %>"></asp:BoundColumn>
+
                                                 <asp:BoundColumn DataField="ReceivedQty" HeaderText="<%$ Resources:pages,ReceivedQty %>"></asp:BoundColumn>
                                                 <asp:BoundColumn DataField="EstimatedUnitCost" HeaderText="<%$ Resources:pages,EstimatedCost %>"></asp:BoundColumn>
-                                                <asp:BoundColumn DataField="TitleAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
+                                                <asp:BoundColumn DataField="TitleAr" HeaderText="<%$ Resources:pages,Category %>"></asp:BoundColumn>
                                                 <asp:BoundColumn DataField="StatusTitleAr" HeaderText="<%$ Resources:pages,status %>"></asp:BoundColumn>
 
 
@@ -224,7 +228,7 @@
                             <asp:TemplateColumn HeaderText="">
                                 <ItemStyle HorizontalAlign="center" />
                                 <ItemTemplate>
-                                    <img style="cursor: pointer;" src="/layout/images/plus.gif" alt="" border="0" runat="server" id="imgControl" />
+                                    <img style="cursor: pointer;" src="/wwwroot/assets/images/plus.gif" alt="" border="0" runat="server" id="imgControl" />
                                 </ItemTemplate>
                             </asp:TemplateColumn>
                             <asp:BoundColumn DataField="code" Visible="False"></asp:BoundColumn>
@@ -269,7 +273,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="/Modules/StoreOperations/Reports/InboundReceiptReport.aspx?id=<%#Eval("code") %>" class="iframe btn btn-default btn-xs"><i class="icon ni ni-printer"></i>&nbsp;  <%=GetGlobalResourceObject("pages","print") %></a>
+                                                    <a href="/Modules/Reports/InboundReceiptReport.aspx?id=<%#Eval("code") %>" class="iframe btn btn-default btn-xs"><i class="icon ni ni-printer"></i>&nbsp;  <%=GetGlobalResourceObject("pages","print") %></a>
                                                 </li>
                                             </ul>
                                         </div>

@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" ClientIDMode="AutoID" MasterPageFile="~/Modules/_shared/Main.Master" AutoEventWireup="true" CodeBehind="PermissionsNew.aspx.cs" Inherits="UI.Web.Admin.Pages.PermissionsNew" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script src="<%= GetGlobalResourceObject("Utilities", "Assetspath")%>Assets/Basic/Basic.js"></script>
+    <script src="/wwwroot/Assets/Basic/Basic.js"></script>
     <script language="javascript" type="text/javascript">
         <%=ViewState["Def"].ToString() %>
     </script>
@@ -61,7 +61,7 @@
             <div class="nk-block-head-content">
                 <h3 class="nk-block-title page-title"><%=_PageTitle %></h3>
                 <ul class="breadcrumb breadcrumb-arrow">
-                    <li><i class="fa fa-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                    <li><i class="icon ni ni-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="icon ni ni-chevrons-left"></i>&nbsp;&nbsp;</li>
                     <li class="active"><%=_PageTitle %></li>
                 </ul>
             </div>
@@ -146,7 +146,7 @@
                                             <table border="0">
                                                 <tr>
                                                     <td style="border-style: none;">
-                                                        <img alt="" runat="server" id="imgSystem" src='/Layout/images/plus.gif' style="cursor: pointer;" />
+                                                        <img alt="" runat="server" id="imgSystem" src='/wwwroot/assets/images/plus.gif' style="cursor: pointer;" />
                                                     </td>
                                                     <td style="border-style: none;" class="gg1">
                                                         <a href="javascript:void(0);" style="color: #999; text-decoration: none;" runat="server" id="lnkSystem"><%#Eval("SystemTitle")%></a>

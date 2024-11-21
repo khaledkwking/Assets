@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -12,9 +10,7 @@ using Infrastructure;
 using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
 using UI.Web.Admin.Controller;
-using UI.Web.Controllers;
 using UI.Web.Core.Enums;
-using Newtonsoft.Json;
 
 namespace UI.Web.Modules.Assets
 {
@@ -23,18 +19,9 @@ namespace UI.Web.Modules.Assets
         #region "Page Members"
         public AssetsRepository objRepository = IoC.Resolve<AssetsRepository>();
         public LocationsRepository objLocationRepository = IoC.Resolve<LocationsRepository>();
+        public string _PageTitle = "إدارة العهد";
+        public string _PageSubTitle = "إدارة العهد";
 
-        public List<D_Locations> Building = new List<D_Locations>();
-        public List<D_Locations> Floor = new List<D_Locations>();
-        public List<D_Locations> Room = new List<D_Locations>();
-        public string _PageTitle = Resources.Pages.CustodyAdd;
-        public class Product
-        {
-            public int entitycode { get; set; }
-            public string entitytype { get; set; }
-            public string entityname { get; set; }
-            public int parentcode { get; set; }
-        }
         #endregion
 
         #region "Page Events"
@@ -52,59 +39,17 @@ namespace UI.Web.Modules.Assets
 
 
         }
-        //private void PopulateGridView()
-        //{
-        //    string apiUrl = "http://localhost:26404/api/CustomerAPI";
-        //    object input = new
-        //    {
-        //        Name = txtName.Text.Trim(),
-        //    };
-        //    string inputJson = (new JavaScriptSerializer()).Serialize(input);
-        //    WebClient client = new WebClient();
-        //    client.Headers["Content-type"] = "application/json";
-        //    client.Encoding = Encoding.UTF8;
-        //    string json = client.UploadString(apiUrl + "/GetCustomers", inputJson);
-
-        //    gvCustomers.DataSource = (new JavaScriptSerializer()).Deserialize<List<Customer>>(json);
-        //    gvCustomers.DataBind();
-        //}
-        public List<ORGANIZATION_CHART> GetAllEntities()
-        {
-            using (var client = new System.Net.Http.HttpClient())
-            {
-                client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                //var response = client.GetAsync(string.Format("orgchart/GetChart").Result();
-                HttpResponseMessage response =  client.GetAsync(string.Format("orgchart/GetChart")).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseString = response.Content.ReadAsStringAsync().Result;
-                    //var responseString = Res.Content.ReadAsStringAsync().Result;
-
-                    // Newtonsoft.Json.Linq.JArray json = Newtonsoft.Json.Linq.JArray.Parse(responseString);
-                    return JsonConvert.DeserializeObject<List<ORGANIZATION_CHART>>(responseString);
-                    // product = Newtonsoft.Json.JsonConvert.Deserialize<Product>(responseString);
-                }
-                else
-                    return null;
-            }
-        }
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            if (Session["OraEmpList"] != null)
-            {
-
-            }
-                Page.Form.Attributes.Add("enctype", "multipart/form-data");
+            Page.Form.Attributes.Add("enctype", "multipart/form-data");
             lblerror.Text = "";
-            
+
+
             btnSave.Attributes.Add("onclick", "return chkImage();");
 
             if (!IsPostBack)
             {
-               var x = GetAllEntities();
-                fillddls();
+
                 fillLookups();
                 ClearForm();
 
@@ -117,29 +62,17 @@ namespace UI.Web.Modules.Assets
                 if (Request.QueryString["t"] != null)
                 {
                     hdnType.Value = Request.QueryString["t"].ToString();
-
                     if (Request.QueryString["t"].ToString() == "1")
                     {
                         custodyType.SelectedValue = Request.QueryString["t"].ToString();
                         divEmployee.Visible = true;
-                        divLocationPersonal.Visible = true;
-                        divLocationOrg.Visible = false;
-
-                        _PageTitle = Resources.Pages.CustodyAdd;
+                        _PageSubTitle = "تسجيل عهدة فردية";
                     }
-                    else if (Request.QueryString["t"].ToString() == "2")
+                    else
                     {
                         custodyType.SelectedValue = Request.QueryString["t"].ToString();
                         divEmployee.Visible = false;
-                        divLocationPersonal.Visible = false;
-                        divLocationOrg.Visible = true;
-
-                        _PageTitle = Resources.Pages.CustodyAdd1;
-                    }
-                    else if (Request.QueryString["t"].ToString() == "3")
-                    {
-                        custodyType.SelectedValue = Request.QueryString["t"].ToString();
-                        _PageTitle = Resources.Pages.CustodyAdd1;
+                        _PageSubTitle = "تسجيل عهدة تنظيمية";
                     }
 
                 }
@@ -148,13 +81,14 @@ namespace UI.Web.Modules.Assets
                 {// Load Request Header Information
                     hdnMasterID.Value = gets(Request.QueryString["requestCode"]);
                     ViewState["itemID"] = gets(Request.QueryString["requestCode"]);
+                 
                     loadRequest(ZeroIntergerIFNull(Request.QueryString["requestCode"]));
                 }
                 else if (Request.QueryString["empid"] != null)
                 {
                     loadEmpRequest(ZeroIntergerIFNull(Request.QueryString["empid"]));
                 }
-                fillRequestItems();
+               // fillRequestItems();
             }
 
 
@@ -166,28 +100,36 @@ namespace UI.Web.Modules.Assets
             var objHeader = objRepository.getTrackingRequestHeaderDetails(RequestHeaderCode);
             if (objHeader != null)
             {
-                
-
-                hdnType.Value = objHeader.RequestActionType.ToString();
+               
+                hdnType.Value = objHeader.ProcessType.ToString();
                 if (hdnType.Value == "1")
                 {
                     custodyType.SelectedValue = hdnType.Value;
                     divEmployee.Visible = true;
+                    hdnEmployeeId.Value = gets(objHeader.Ora_EmpRefCode);
                 }
                 else
                 {
                     custodyType.SelectedValue = hdnType.Value;
                     divEmployee.Visible = false;
+                    hdnEmployeeId.Value = "0";
                 }
-                selectedLocation.Value = objHeader.ToLocationId.ToString();
-                hdnOrgChartRefCode.Value = objHeader.OrgChartRefCode.ToString();
+                txtRequestDate.Text = NullDateifEmptyText(objHeader.RequestDate);
 
-                if (objHeader.EmpRefCode != null && objHeader.EmpRefCode != 0)
+                lstToLocation.SelectedValue = gets(objHeader.ToLocationId);
+
+                if (objHeader.OraEntityRefCode != null && objHeader.OraEntityRefCode != 0)
                 {
-                    lstRefEmployee.SelectedValue = gets(objHeader.EmpRefCode);
-
+                    hdnSelectedNode.Value = gets(objHeader.OraEntityRefCode);
                 }
+                else
+                {
+                    fillRequestItems();
+                    string script = FormatErrorMSGSwal("عفوا ، يرجي مطابقة بيانات  الموظف مع بيانات الإدارية  ", "1");
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
 
+                    //  return;
+                }
 
 
                 lnkPrintRequest.HRef = Resources.Utilities.cutureRoute + "/Modules/Reports/AssetReceipt.aspx?docId=" + hdnMasterID.Value;
@@ -203,29 +145,47 @@ namespace UI.Web.Modules.Assets
             var objHeader = objRepository.getTrackingRequestHeaderByEmpCode(EmpId);
             if (objHeader != null)
             {
-                hdnType.Value = objHeader.RequestActionType.ToString();
+                if (objHeader.OraEntityRefCode != null && objHeader.OraEntityRefCode != 0)
+                {
+                    hdnSelectedNode.Value = gets(objHeader.OraEntityRefCode);
+                }
+                else
+                {
+                    string script = FormatErrorMSGSwal("عفوا ، يرجي مطابقة بيانات  الموظف مع بيانات الإدارية  ", "1");
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+
+                    return;
+
+
+                }
+
+                hdnType.Value = objHeader.ProcessType.ToString();
                 if (hdnType.Value == "1")
                 {
                     custodyType.SelectedValue = hdnType.Value;
                     divEmployee.Visible = true;
+                    hdnEmployeeId.Value = gets(objHeader.Ora_EmpRefCode);
                 }
                 else
                 {
                     custodyType.SelectedValue = hdnType.Value;
                     divEmployee.Visible = false;
+                    hdnEmployeeId.Value = "0";
                 }
-                selectedLocation.Value = objHeader.ToLocationId.ToString();
-
-                hdnOrgChartRefCode.Value = objHeader.OrgChartRefCode.ToString();
-
-                if (objHeader.EmpRefCode != null && objHeader.EmpRefCode != 0)
+                try
                 {
-                    lstRefEmployee.SelectedValue = gets(objHeader.EmpRefCode);
+                    lstToLocation.SelectedValue = objHeader.ToLocationId.ToString();
+
+                }
+                catch (Exception)
+                {
+
 
                 }
 
-                hdnMasterID.Value = gets(objHeader.Code);
-                ViewState["itemID"] = gets(objHeader.Code);
+
+
+
 
                 lnkPrintRequest.HRef = Resources.Utilities.cutureRoute + "/Modules/Reports/AssetReceipt.aspx?docId=" + hdnMasterID.Value;
                 viewPrint.Visible = true;
@@ -234,7 +194,7 @@ namespace UI.Web.Modules.Assets
                 // set Selected Employee 
                 viewPrint.Visible = false;
                 lstRefEmployee.SelectedValue = gets(EmpId);
-                lstRefEmployee_SelectedIndexChanged(null, null);
+                
             }
 
 
@@ -246,115 +206,78 @@ namespace UI.Web.Modules.Assets
         {
             string script = "";
 
-            string s = "sebrahim_if";
+
 
             try
             {
-                int LocationID = 0;
-                int? OrgChartRefCode = null;
-                //Validated Location Personal
-                if (Request.QueryString["t"].ToString() == "1")
-                {
-                    var selectedLocationOrg = objLocationRepository.GetDetails(ZeroIntergerIFNull(selectedLocation.Value));
-                    if (selectedLocationOrg != null)
-                    {
-                        if (selectedLocationOrg.OrgChartRefCode != null && selectedLocationOrg.OrgChartRefCode != 0)
-                        {
-                            hdnOrgChartRefCode.Value = selectedLocationOrg.OrgChartRefCode.ToString();
-                        }
-                        else
-                        {
-                            script = FormatErrorMSGSwal("عفوا ، يرجى تسجيل تبعية موقع العهدة لجهة ", "1");
-                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
-                            return;
-                        }
 
-                    }
-                }
-                else if (Request.QueryString["t"].ToString() == "2") //Validated Location Org 
-                {
-                    if(ddlDirection.SelectedValue=="0")
-                    {
-                        script = FormatErrorMSGSwal("عفوا ، يرجى اختيار جهة موقع العهدة  ", "1");
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
-                        return;
-                    }
-                    if(Session["IsBuildingSelected"].ToString() == "False" || ddlBuilding.SelectedValue == "0")
-                    {
-                        script = FormatErrorMSGSwal("عفوا ، يرجى اختيار المبنى الخاص بموقع العهدة  ", "1");
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
-                        return;
-                    }
-                    else if(Session["FloorRequiredSelect"].ToString() == "True" && ddlFloor.SelectedValue == "0")
-                    {
-                        script = FormatErrorMSGSwal("عفوا ، يرجى اختيار الدور الخاص بموقع العهدة  ", "1");
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
-                        return;
-                    }
-                    else if(Session["RoomRequiredSelect"].ToString() == "True" && ddlRoom.SelectedValue == "0")
-                    {
-                        script = FormatErrorMSGSwal("عفوا ، يرجى اختيار الغرفة الخاص بموقع العهدة  ", "1");
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
-                        return;
-                    }
-
-                    LocationID = ZeroIntergerIFNull(Session["LocationCode"].ToString());
-                    OrgChartRefCode = objLocationRepository.GetDetails(LocationID).OrgChartRefCode;
-                }
+               
 
                 if (gets(ViewState["itemID"]).Equals("0"))
                 {//Save
 
+
                     // Add Request Header
                     AssetsEventTrackingHeader objHeader = new AssetsEventTrackingHeader();
-                    objHeader.RequestDate = NullDateifEmpty(txtFromDate.Text);
+                    objHeader.RequestDate = NullDateifEmpty(txtRequestDate.Text);
                     objHeader.DueDate = NullDateifEmpty(txtReturnDate.Text);
                     objHeader.RequestRefCode = Guid.NewGuid().ToString();
-                    objHeader.RequestActionType = ZeroIntergerIFNull(hdnType.Value);  //(int) CustodyRequestType.CheckOut;
-                    objHeader.ProcessType = (int)CustodyProcessTypes.CheckOut;
-                    objHeader.TMonth = NullDateifEmpty(txtFromDate.Text).Month;
-                    objHeader.TYear = NullDateifEmpty(txtFromDate.Text).Year;
+                    objHeader.RequestActionType = (int)CustodyProcessTypes.CheckOut;
+                    objHeader.ProcessType = ZeroIntergerIFNull(hdnType.Value);
+                    objHeader.TMonth = NullDateifEmpty(txtRequestDate.Text).Month;
+                    objHeader.TYear = NullDateifEmpty(txtRequestDate.Text).Year;
                     objHeader.Serial = generateRequestSerial();
-
-                    if (Request.QueryString["t"].ToString() == "1")
-                    {
-                        objHeader.ToLocationId = ZeroIntergerIFNull(selectedLocation.Value);
-                        objHeader.OrgChartRefCode = ZeroIntergerIFNull(hdnOrgChartRefCode.Value);
-                    }
-                    else if (Request.QueryString["t"].ToString() == "2")
-                    {
-                        objHeader.ToLocationId = LocationID;
-                        objHeader.OrgChartRefCode = OrgChartRefCode;
-                    }
-
+                    objHeader.ToLocationId = ZeroIntergerIFNull(lstToLocation.SelectedValue);
+                    objHeader.OrgChartRefCode = ZeroIntergerIFNull(hdnSelectedNode.Value); // Ora Org Chart
                     objHeader.RequestNotes = txtNotes.Text;
 
                     if (hdnType.Value == "1")
                     {
-                        objHeader.EmpName = lstRefEmployee.SelectedItem.Text;
-                        objHeader.EmpRefCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
+                        //Check Employee Esxiatance 
+                        var OraEmpMapping = objRepository.checkOraEmployeeExitance(ZeroIntergerIFNull( hdnEmployeeId.Value));
+                        if (OraEmpMapping != null)
+                        {
+                            objHeader.EmpName = OraEmpMapping.Ora_EmpName;
+                            objHeader.EmpRefCode = OraEmpMapping.Emp_Id;
+                        }
+                        else { 
+                            //Map Employee Informations\
+                            Employee_tbl oraEmp=new Employee_tbl();
+                            oraEmp.Emp_Name = lstRefEmployee.SelectedItem.Text;
+                            oraEmp.Ora_EmpName = lstRefEmployee.SelectedItem.Text;
+                            oraEmp.OraImported = true;
+                            oraEmp.OraActionDate = DateTime.Now;
+                            oraEmp.Ora_EmpRefCode = ZeroIntergerIFNull(hdnEmployeeId.Value);
+                            oraEmp.OraEntityRefCode = ZeroIntergerIFNull(hdnSelectedNode.Value);
+
+                            objRepository.AddEmployee(oraEmp);
+
+                            objHeader.EmpName = oraEmp.Ora_EmpName;
+                            objHeader.EmpRefCode = oraEmp.Emp_Id;
+
+                        }
+
+                     
 
                         // Check if Emplyee Location Saved 
                         if (lstRefEmployee.SelectedValue != "-1")
                         {
                             var emplocation = objRepository.getEmployeeLocations(ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
-                            if (emplocation == null && selectedLocation.Value != "")
+                            if (emplocation != null )
+                            {// Update Employee Location
+                                emplocation.EmpCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
+                                emplocation.LocationCode = ZeroIntergerIFNull(lstToLocation.SelectedValue);
+                                objRepository.UpdateEmployeeLoation(emplocation);
+
+ 
+                            }
+                            else 
                             {
+
                                 D_EmployeeLocations locationObj = new D_EmployeeLocations();
                                 locationObj.EmpCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
-                                locationObj.LocationCode = ZeroIntergerIFNull(selectedLocation.Value);
+                                locationObj.LocationCode = ZeroIntergerIFNull(lstToLocation.SelectedValue);
                                 objRepository.AddEmployeeLoation(locationObj);
-
-                                //script = FormatpopupErrorMSG("Employee Location added successfully", "3");
-                                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
-
-                            }
-                            else if (emplocation.LocationCode != ZeroIntergerIFNull(selectedLocation.Value))
-                            {// Update Employee Location
-                                D_EmployeeLocations locationObj = objRepository.getEmployeeLocations(ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
-                                locationObj.EmpCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
-                                locationObj.LocationCode = ZeroIntergerIFNull(selectedLocation.Value);
-                                objRepository.UpdateEmployeeLoation(locationObj);
 
                             }
 
@@ -370,6 +293,11 @@ namespace UI.Web.Modules.Assets
                     // Add Items Details
                     SaveRequestItems(objHeader.Code);
 
+
+
+
+
+
                 }
                 else
                 {
@@ -377,22 +305,75 @@ namespace UI.Web.Modules.Assets
 
                     // Add Request Header
                     var objHeader = objRepository.getTrackingRequestHeaderDetails(ZeroIntergerIFNull(gets(ViewState["itemID"])));
-                    objHeader.RequestActionType = ZeroIntergerIFNull(hdnType.Value);  //(int) CustodyRequestType.CheckOut;
-                    objHeader.ProcessType = (int)CustodyProcessTypes.CheckOut;
+                    objHeader.RequestActionType = (int)CustodyProcessTypes.CheckOut;
+                    objHeader.ProcessType = ZeroIntergerIFNull(hdnType.Value);
 
-                    objHeader.RequestDate = NullDateifEmpty(txtFromDate.Text);
+                    objHeader.RequestDate = NullDateifEmpty(txtRequestDate.Text);
                     objHeader.DueDate = NullDateifEmpty(txtReturnDate.Text);
-                    objHeader.TMonth = NullDateifEmpty(txtFromDate.Text).Month;
-                    objHeader.TYear = NullDateifEmpty(txtFromDate.Text).Year;
-                    objHeader.ToLocationId = ZeroIntergerIFNull(selectedLocation.Value);
-                    objHeader.OrgChartRefCode = ZeroIntergerIFNull(hdnOrgChartRefCode.Value);
+                    objHeader.TMonth = NullDateifEmpty(txtRequestDate.Text).Month;
+                    objHeader.TYear = NullDateifEmpty(txtRequestDate.Text).Year;
+                    objHeader.ToLocationId = ZeroIntergerIFNull(lstToLocation.SelectedValue);
+                    objHeader.OrgChartRefCode = ZeroIntergerIFNull(hdnSelectedNode.Value);
                     objHeader.RequestNotes = txtNotes.Text;
 
                     if (hdnType.Value == "1")
                     {
-                        objHeader.EmpName = lstRefEmployee.SelectedItem.Text;
-                        objHeader.EmpRefCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
+                        //Check Employee Esxiatance 
+                        var OraEmpMapping = objRepository.checkOraEmployeeExitance(ZeroIntergerIFNull(hdnEmployeeId.Value));
+                        if (OraEmpMapping != null)
+                        {
+                            objHeader.EmpName = OraEmpMapping.Ora_EmpName;
+                            objHeader.EmpRefCode = OraEmpMapping.Emp_Id;
+                        }
+                        else
+                        {
+                            //Map Employee Informations\
+                            Employee_tbl oraEmp = new Employee_tbl();
+                            oraEmp.Emp_Name = lstRefEmployee.SelectedItem.Text;
+                            oraEmp.Ora_EmpName = lstRefEmployee.SelectedItem.Text;
+                            oraEmp.OraImported = true;
+                            oraEmp.OraActionDate = DateTime.Now;
+                            oraEmp.Ora_EmpRefCode = ZeroIntergerIFNull(hdnEmployeeId.Value);
+                            oraEmp.OraEntityRefCode = ZeroIntergerIFNull(hdnSelectedNode.Value);
+
+                            objRepository.AddEmployee(oraEmp);
+
+                            objHeader.EmpName = oraEmp.Ora_EmpName;
+                            objHeader.EmpRefCode = oraEmp.Emp_Id;
+
+                        }
+
+
+                        if (lstRefEmployee.SelectedValue != "-1")
+                        {
+                            var emplocation = objRepository.getEmployeeLocations(ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
+                            if (emplocation != null)
+                            {// Update Employee Location
+                                emplocation.EmpCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
+                                emplocation.LocationCode = ZeroIntergerIFNull(lstToLocation.SelectedValue);
+                                objRepository.UpdateEmployeeLoation(emplocation);
+
+
+                            }
+                            else
+                            {
+
+                                D_EmployeeLocations locationObj = new D_EmployeeLocations();
+                                locationObj.EmpCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
+                                locationObj.LocationCode = ZeroIntergerIFNull(lstToLocation.SelectedValue);
+                                objRepository.AddEmployeeLoation(locationObj);
+
+                            }
+
+                        }
+
                     }
+
+
+                    // Check if Emplyee Location Saved 
+                
+
+
 
                     objHeader.LastModifiedAt = DateTime.Now;
                     objHeader.LastModifiedBy = ZeroIntergerIFNull(ReadSession("userid").ToString());
@@ -403,7 +384,7 @@ namespace UI.Web.Modules.Assets
                     SaveRequestItems(objHeader.Code);
                 }
 
-                script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");
+                script = FormatErrorMSGSwal(Resources.Alerts.DataSavedSuccessfully, "3");
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
                 //Session["RequestItemList"] = null;
                 //ClearForm();
@@ -439,18 +420,22 @@ namespace UI.Web.Modules.Assets
                         obj.ActionDate = objItemList[i].ActionDate;
                         obj.actionId = 2;// checkout;
                         obj.statusId = 2;// CHecked OUt ;
-                        obj.ToLocationId = ZeroIntergerIFNull(selectedLocation.Value);
+                        obj.ToLocationId = ZeroIntergerIFNull(lstToLocation.SelectedValue);
                         if (hdnType.Value == "1")
                         {
-                            obj.EmpName = lstRefEmployee.SelectedItem.Text;
-                            obj.EmpRefCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
+                            var OraEmpMapping = objRepository.checkOraEmployeeExitance(ZeroIntergerIFNull(hdnEmployeeId.Value));
+                            if (OraEmpMapping != null)
+                            {
+                                obj.EmpName = OraEmpMapping.Ora_EmpName;
+                                obj.EmpRefCode = OraEmpMapping.Emp_Id;
+                            }
                         }
                         obj.Notes = objItemList[i].Notes;
                         obj.StoreRequestRefCode = objItemList[i].StoreRequestRefCode;
                         obj.Qty = objItemList[i].Qty;
 
                         obj.CreatedAt = DateTime.Now;
-                        obj.CreatedBy = ZeroIntergerIFNull(ReadSession("userid").ToString());
+                        obj.CreatedBy = ZeroIntergerIFNull(ReadSession("userId").ToString());
 
                         objRepository.AddEventTracking(obj);
 
@@ -461,11 +446,15 @@ namespace UI.Web.Modules.Assets
 
                         obj.RequestHeaderCode = headerCode;
                         obj.AssetCode = objItemList[i].ItemCode;
-                        obj.ToLocationId = ZeroIntergerIFNull(selectedLocation.Value);
+                        obj.ToLocationId = ZeroIntergerIFNull(lstToLocation.SelectedValue);
                         if (hdnType.Value == "1")
                         {
-                            obj.EmpName = lstRefEmployee.SelectedItem.Text;
-                            obj.EmpRefCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
+                            var OraEmpMapping = objRepository.checkOraEmployeeExitance(ZeroIntergerIFNull(hdnEmployeeId.Value));
+                            if (OraEmpMapping != null)
+                            {
+                                obj.EmpName = OraEmpMapping.Ora_EmpName;
+                                obj.EmpRefCode = OraEmpMapping.Emp_Id;
+                            }
                         }
                         obj.Notes = objItemList[i].Notes;
                         obj.StoreRequestRefCode = objItemList[i].StoreRequestRefCode;
@@ -485,31 +474,11 @@ namespace UI.Web.Modules.Assets
 
         private void fillRequestItems()
         {
-            int refHCode = ZeroIntergerIFNull(hdnMasterID.Value);
-            if (Request.QueryString["t"].ToString() == "1")
-            {
-                refHCode = 0;
-            }
+            var objList = objRepository.getCustodyListByMasterData(ZeroIntergerIFNull(hdnMasterID.Value), ZeroIntergerIFNull(lstToLocation.SelectedValue), ZeroIntergerIFNull(hdnEmployeeId.Value));
 
-                var objList = objRepository.getCustodyListByMasterData(refHCode, ZeroIntergerIFNull(selectedLocation.Value), ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
+            
+           
 
-            if (objList != null && objList.Count > 0)
-            {
-                // Fill Request Master Information
-                hdnMasterID.Value = gets(objList[0].RequestHeaderCode);
-                ViewState["itemID"] = gets(objList[0].RequestHeaderCode);
-                txtFromDate.Text = NullDateifEmptyText(objList[0].RequestDate);
-                txtReturnDate.Text = NullDateifEmptyText(objList[0].DueDate);
-                txtNotes.Text = gets(objList[0].RequestNotes);
-
-                //if (txtReturnDate.Text != "")
-                //{
-                //    chkReturnDate.Checked = true;
-                //}
-                //else { chkReturnDate.Checked = false; }
-
-
-            }
             if (Session["RequestItemList"] != null && ((List<view_CustodyList>)Session["RequestItemList"]).Count > 0)
             {
                 objList = (List<view_CustodyList>)Session["RequestItemList"];
@@ -706,6 +675,10 @@ namespace UI.Web.Modules.Assets
 
         protected void btnReload_Click(object sender, EventArgs e)
         {
+            //clear user session 
+            Session["RequestItemList"] = null;
+            Session.Remove("RequestItemList");
+            
             fillRequestItems();
         }
 
@@ -727,64 +700,16 @@ namespace UI.Web.Modules.Assets
         }
         private void ClearForm()
         {
-            txtFromDate.Text = "";
+            txtRequestDate.Text = "";
             txtReturnDate.Text = "";
             txtNotes.Text = "";
             ViewState["itemID"] = "0";
-            selectedLocation.Value = "0";
+            
             lstRefEmployee.SelectedValue = "0";
             Session.Remove("RequestItemList");
             Session["RequestItemList"] = null;
-            divSelectedEmployeeInfo.Visible = false;
-        }
-        private void FillInboundMasterInformation()
-        {
-
-            //var objList = objRepository.FillDetails(ZeroIntergerIFNull(ViewState["itemID"].ToString()));
-            //if ((objList != null))
-            //{
-
-
-            //    txtSerial.Text = gets(objList.Serial);
-
-            //    lstInboundTypeCode.SelectedValue = gets(objList.InboundTypeCode);
-            //    SetInboundType();
-
-
-            //    try
-            //    {
-            //        if (objList.FromVendorCode != null)
-            //        {
-            //            lstFromVendorCode.SelectedValue = gets(objList.FromVendorCode);
-            //        }
-            //        lstTargetLocationCode.SelectedValue = gets(objList.TargetLocationCode);
-            //        lstOwnerLocationCode.SelectedValue = gets(objList.OwnerLocationCode);
-
-            //    }
-            //    catch (Exception)
-            //    {
-
-
-            //    }
-
-
-            //    txtTransDate.Text = objList.TransDate.Value.ToString("MM/dd/yyyy");
-
-            //    txtRefNo.Text = gets(objList.RefNo);
-            //    txtRefDate.Text = objList.RefDate.Value.ToString("MM/dd/yyyy");
-
-
-            //    txtDeliveryOrderNo.Text = gets(objList.DeliveryOrderNo);
-            //    txtDeliveryDate.Text = NullDateifEmptyText (objList.DeliveryDate);
-
-            //    txtDepositeNotes.Text = gets(objList.DepositeNotes);
-            //    txtNotes.Text = gets(objList.Notes);
-            //}
-
-            ////tblAdd.Visible = true;
-            ////lblSubTitle.Text = this.GetTitle(false);
-
-        }
+         }
+       
 
         private void SetInboundType()
         {
@@ -824,34 +749,24 @@ namespace UI.Web.Modules.Assets
 
 
         #endregion
-        
+
+
         #region "Shared Methods"
         #region "Fill Lookups Information"
         private void fillLookups()
         {
 
-            //var LocationsList = LooksUpsRepository.ins.FillStoreLocations();
-            //FillDllwithoptional(LooksUpsRepository.ins.FillLocation(), lstOwnerLocationCode, "LocationNameAr", "Code");
+            var LocationsList = LooksUpsRepository.ins.FillLocationTree(0);
+            FillDllwithoptional(LocationsList, lstToLocation, "path", "Code");
 
-            if (Session["OraEmpList"] != null)
-            {
-                BindEmployeeLst((List<EmployeeViewModel>)Session["OraEmpList"], lstRefEmployee, "EMP_NAME", "EMP_ID");
-            }
-            else
-            {
-                // Request Data From Ora.
-                var Emplist = GetOraEmpList(0); // Get All Active Employee
-                Session["OraEmpList"] = Emplist;
-                BindEmployeeLst(Emplist, lstRefEmployee, "EMP_NAME", "EMP_ID");
-            }
+            // lstToLocation.SelectedValue = "2381";
 
 
-
-            /// FillDllwithoptional(LooksUpsRepository.ins.FillEmployee(), lstRefEmployee, "EmpName", "Code");
 
 
         }
-      
+
+
         public void BindEmployeeLst(object lstData, DropDownList ddl, string txtField, string valueField)
         {
 
@@ -875,6 +790,7 @@ namespace UI.Web.Modules.Assets
 
             }
         }
+
 
 
         #endregion
@@ -1087,63 +1003,7 @@ namespace UI.Web.Modules.Assets
             return true;
         }
 
-        protected void lstRefEmployee_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // set Employee Location
-            //var selectedEmpInfo = objRepository.getEmployeeDetails(ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
-            //if (selectedEmpInfo != null)
-            //{
-            //   selectedLocation.Value = gets(selectedEmpInfo.LocationRefCode);
-            //    fillRequestItems();
-            //}
-
-            List<EmployeeViewModel> Emplist = new List<EmployeeViewModel>();
-
-
-            if (Session["OraEmpList"] != null)
-            {
-                Emplist = (List<EmployeeViewModel>)Session["OraEmpList"];
-            }
-            else
-            {
-                // Request Data From Ora.
-                Emplist = GetOraEmpList(0);
-                Session["OraEmpList"] = Emplist;
-            }
-            var selectedEmpInfo = Emplist.Where(x => x.EMP_ID == lstRefEmployee.SelectedValue).FirstOrDefault();
-
-            if (selectedEmpInfo != null)
-            {
-                // Get Emploation
-
-                // set Selected Employee Data
-
-                divSelectedEmployeeInfo.Visible = true;
-
-
-                lblSelectedEmpName.Text = selectedEmpInfo.EMP_NAME;
-                lblSelectedjobTitle.Text = selectedEmpInfo.JOB_NAME;
-                lblSelectedEmpCode.Text = selectedEmpInfo.EMP_ID;
-                
-                lblSelectedEmpLocationName.Text = GetEmp_Location(ZeroIntergerIFNull(selectedEmpInfo.EMP_ID)); //selectedEmpInfo.ENTITYNAME;
-
-                var empLocation = objRepository.getEmployeeLocations(ZeroIntergerIFNull(selectedEmpInfo.EMP_ID));
-                if (empLocation != null)
-                {
-                    selectedLocation.Value = gets(empLocation.LocationCode);
-                }
-                Session["RequestItemList"] = null;
-                fillRequestItems();
-            }
-            else
-            { divSelectedEmployeeInfo.Visible = false; }
-
-
-
-
-
-
-        }
+       
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
@@ -1160,271 +1020,44 @@ namespace UI.Web.Modules.Assets
 
         protected void lnkQuick_Click(object sender, EventArgs e)
         {
-            var objHeader = objRepository.getTrackingRequestHeaderByCode((txtFilterCode.Text));
-            if (objHeader != null)
-            {
-                hdnMasterID.Value = gets(objHeader.Code);
-                ViewState["itemID"] = gets(objHeader.Code);
+            //var objHeader = objRepository.getTrackingRequestHeaderByCode((txtFilterCode.Text));
+            //if (objHeader != null)
+            //{
+            //    hdnMasterID.Value = gets(objHeader.Code);
+            //    ViewState["itemID"] = gets(objHeader.Code);
 
-                hdnType.Value = objHeader.RequestActionType.ToString();
-                if (hdnType.Value == "1")
-                {
-                    custodyType.SelectedValue = hdnType.Value;
-                    divEmployee.Visible = true;
-                }
-                else
-                {
-                    custodyType.SelectedValue = hdnType.Value;
-                    divEmployee.Visible = false;
-                }
-                selectedLocation.Value = objHeader.ToLocationId.ToString();
-                if (objHeader.EmpRefCode != null && objHeader.EmpRefCode != 0)
-                {
-                    lstRefEmployee.SelectedValue = gets(objHeader.EmpRefCode);
-                }
+            //    hdnType.Value = objHeader.ProcessType.ToString();
+            //    if (hdnType.Value == "1")
+            //    {
+            //        custodyType.SelectedValue = hdnType.Value;
+            //        divEmployee.Visible = true;
+            //    }
+            //    else
+            //    {
+            //        custodyType.SelectedValue = hdnType.Value;
+            //        divEmployee.Visible = false;
+            //    }
+            //    selectedLocation.Value = objHeader.ToLocationId.ToString();
+            //    if (objHeader.EmpRefCode != null && objHeader.EmpRefCode != 0)
+            //    {
+            //        lstRefEmployee.SelectedValue = gets(objHeader.EmpRefCode);
+            //    }
 
-                fillRequestItems();
+            //    fillRequestItems();
 
-                lnkPrintRequest.HRef = Resources.Utilities.cutureRoute + "/Modules/Reports/AssetReceipt.aspx?docId=" + hdnMasterID.Value;
-                viewPrint.Visible = true;
+            //    lnkPrintRequest.HRef = Resources.Utilities.cutureRoute + "/Modules/Reports/AssetReceipt.aspx?docId=" + hdnMasterID.Value;
+            //    viewPrint.Visible = true;
 
-            }
-            else
-            {
-                viewPrint.Visible = false;
-                string script = FormatErrorMSGSwal("عفوا ، كود الإستمارة غير مسجل   ", "1");
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
-                return;
-            }
+            //}
+            //else
+            //{
+            //    viewPrint.Visible = false;
+            //    string script = FormatErrorMSGSwal("عفوا ، كود الإستمارة غير مسجل   ", "1");
+            //    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+            //    return;
+            //}
 
         }
-
-        private void fillddls()
-        {
-            //ddlDirection.Items.Add(new ListItem("الجهة", "-1"));
-            //ddlAmana.Items.Add(new ListItem("الامانة", "-1"));
-            //ddlDepartment.Items.Add(new ListItem("الادارة", "-1"));
-            //ddlMorakba.Items.Add(new ListItem("المراقبة", "-1"));
-            //ddlSection.Items.Add(new ListItem("القسم", "-1"));
-            //ddlBuilding.Items.Add(new ListItem("المبنى", "-1"));
-            //ddlFloor.Items.Add(new ListItem("الدور", "-1"));
-            //ddlRoom.Items.Add(new ListItem("الغرفة", "-1"));
-
-          //  var query = GetAllEntities().Where(o => o.PARENTCODE == 0 || o.PARENTCODE == null);
-
-           // BindDirections_Location(query, ddlDirection, "--- اختر الجهة ---", "ENTITYNAME", "ENTITYCODE");
-        }
-
-        public void BindDirections_Location(object lstData, DropDownList ddl, string ddlName, string txtField, string valueField)
-        {
-
-            ddl.DataSource = lstData;
-            ddl.DataTextField = txtField;
-            ddl.DataValueField = valueField;
-            ddl.DataBind();
-            //ddl.Items.Add(new ListItem(ddlName, "0"));
-
-            ListItem listItem = new ListItem(ddlName, "0");
-            listItem.Attributes.Add("style", "background-color: Gold !important;");
-            ddl.Items.Add(listItem);
-
-            try
-            {
-                ddl.SelectedValue = "0";
-            }
-            catch (Exception)
-            {
-
-
-            }
-        }
-
-        protected void ddlDirection_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(ddlDirection.SelectedValue) && ddlDirection.SelectedValue != "0")
-            {
-                int DirID = int.Parse(ddlDirection.SelectedValue);
-                var query = GetAllEntities().Where(o => o.PARENTCODE == DirID && o.ENTITYTYPE == "amana");
-
-                BindDirections_Location(query, ddlAmana, "--- اختر ---", "ENTITYNAME", "ENTITYCODE");
-                ClearLocation_ddl();
-                fillLocations(DirID);
-            }
-        }
-
-        protected void ddlAmana_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(ddlAmana.SelectedValue) && ddlAmana.SelectedValue != "0")
-            {
-                int AmanaID = int.Parse(ddlAmana.SelectedValue);
-                var query = GetAllEntities().Where(o => o.PARENTCODE == AmanaID && o.ENTITYTYPE== "dept");
-
-                BindDirections_Location(query, ddlDepartment, "--- اختر ---", "ENTITYNAME", "ENTITYCODE");
-                ClearLocation_ddl();
-                fillLocations(AmanaID);
-            }
-        }
-
-        protected void ddlDepartment_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(ddlDepartment.SelectedValue) && ddlDepartment.SelectedValue != "0")
-            {
-                int DeptID = int.Parse(ddlDepartment.SelectedValue);
-                var query = GetAllEntities().Where(o => o.PARENTCODE == DeptID && o.ENTITYTYPE == "div");
-
-                BindDirections_Location(query, ddlMorakba, "--- اختر ---", "ENTITYNAME", "ENTITYCODE");
-                ClearLocation_ddl();
-                fillLocations(DeptID);
-            }
-        }
-
-        protected void ddlMorakba_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(ddlMorakba.SelectedValue) && ddlMorakba.SelectedValue != "0")
-            {
-                int MorakbaID = int.Parse(ddlMorakba.SelectedValue);
-                var query = GetAllEntities().Where(o => o.PARENTCODE == MorakbaID && o.ENTITYTYPE == "sec");
-
-                BindDirections_Location(query, ddlSection, "--- اختر ---", "ENTITYNAME", "ENTITYCODE");
-                ClearLocation_ddl();
-                fillLocations(MorakbaID);
-            }
-        }
-
-        protected void ddlSection_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int SecID = int.Parse(ddlSection.SelectedValue);
-            ClearLocation_ddl();
-            fillLocations(SecID);
-        }
-
-        protected void ddlBuilding_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Session["IsBuildingSelected"] = "True";
-            var Floorlist = (List<D_Locations>)Session["Floor"];
-            int BuildID = int.Parse(ddlBuilding.SelectedValue);
-            Session["FloorRequiredSelect"] = "False";
-            var queryFloor = Floorlist.Where(o=> o.LocationParentId == BuildID);
-            if (queryFloor.Count() != 0)
-            {
-                BindDirections_Location(queryFloor, ddlFloor, "--- اختر ---", "LocationNameAr", "Code");
-                Session["FloorRequiredSelect"] = "True";
-            }
-            else
-            {
-                var Q = objLocationRepository.GetList(BuildID, "");
-                BindDirections_Location(Q, ddlFloor, "--- اختر ---", "LocationNameAr", "Code");
-
-            }
-            Session["LocationCode"] = BuildID;
-        }
-
-        protected void ddlFloor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var Roomlist = (List<D_Locations>)Session["Room"];
-
-            int FloorID = int.Parse(ddlFloor.SelectedValue);
-
-            Session["RoomRequiredSelect"] = "False";
-            var queryRoom = Roomlist.Where(o => o.LocationParentId == FloorID);
-            if (queryRoom.Count() != 0)
-            {
-                BindDirections_Location(queryRoom, ddlRoom, "--- اختر ---", "LocationNameAr", "Code");
-                Session["RoomRequiredSelect"] = "True";
-            }
-            else
-            {
-                var Q = objLocationRepository.GetList(FloorID, "");
-                BindDirections_Location(Q, ddlRoom, "--- اختر ---", "LocationNameAr", "Code");
-            }
-            Session["LocationCode"] = FloorID;
-        }
-        protected void ddlRoom_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int RoomID = int.Parse(ddlRoom.SelectedValue);
-            Session["LocationCode"] = RoomID;
-        }
-
-        private void fillLocations( int OrgChartRefCode)
-        {
-            Session["LocationCode"] = null;
-
-            Session["IsBuildingSelected"] = "False";
-            Session["FloorRequiredSelect"] = "False";
-            Session["RoomRequiredSelect"] = "False";
-
-            Session["Building"] = null;
-            Session["Floor"] = null;
-            Session["Room"] = null;
-            Building.Clear();
-            Floor.Clear();
-            Room.Clear();
-            var locationObj = objLocationRepository.getEntityLocations(OrgChartRefCode, "").ToList();
-            foreach (var item in locationObj)
-            {
-                if (item.LocationType == 1)
-                {
-                    if (Building.Where(o => o.Code == item.Code).Count() == 0)
-                        Building.Add(new D_Locations() { Code = item.Code, LocationNameAr = item.LocationNameAr, LocationParentId = item.LocationParentId });
-                }
-                else if (item.LocationType == 2)
-                {
-                    if (Floor.Where(o => o.Code == item.Code).Count() == 0)
-                    {
-                        Floor.Add(new D_Locations() { Code = item.Code, LocationNameAr = item.LocationNameAr, LocationParentId = item.LocationParentId });
-
-                        var queryBuild = objLocationRepository.GetDetails(ZeroIntergerIFNull(item.LocationParentId.ToString()));
-                        if (queryBuild != null)
-                        {
-                            if (Building.Where(o => o.Code == queryBuild.Code).Count() == 0)
-                                Building.Add(new D_Locations() { Code = queryBuild.Code, LocationNameAr = queryBuild.LocationNameAr, LocationParentId = queryBuild.LocationParentId });
-                        }
-
-                    }
-                }
-                else if (item.LocationType == 3)
-                {
-                    if (Room.Where(o => o.Code == item.Code).Count() == 0)
-                    {
-                        Room.Add(new D_Locations() { Code = item.Code, LocationNameAr = item.LocationNameAr, LocationParentId = item.LocationParentId });
-
-
-                        var queryFloor = objLocationRepository.GetDetails(ZeroIntergerIFNull(item.LocationParentId.ToString()));
-                        if (queryFloor != null)
-                        {
-                            if (Floor.Where(o => o.Code == queryFloor.Code).Count() == 0)
-                            {
-                                Floor.Add(new D_Locations() { Code = queryFloor.Code, LocationNameAr = queryFloor.LocationNameAr, LocationParentId = queryFloor.LocationParentId });
-                                var queryBuildFloor = objLocationRepository.GetDetails(ZeroIntergerIFNull(queryFloor.LocationParentId.ToString()));
-                                if (queryBuildFloor != null)
-                                {
-                                    if (Building.Where(o => o.Code == queryBuildFloor.Code).Count() == 0)
-                                        Building.Add(new D_Locations() { Code = queryBuildFloor.Code, LocationNameAr = queryBuildFloor.LocationNameAr, LocationParentId = queryBuildFloor.LocationParentId });
-                                }
-
-                            }
-                        }
-                    }
-                }
-
-                BindDirections_Location(Building, ddlBuilding, "--- اختر ---", "LocationNameAr", "Code");
-
-                Session["Building"] = Building;
-                Session["Floor"] = Floor;
-                Session["Room"] = Room;
-
-            }
-        }
-
-        private void ClearLocation_ddl()
-        {
-            ddlBuilding.Items.Clear();
-            ddlFloor.Items.Clear();
-            ddlRoom.Items.Clear();
-            
-        }
-
-      
     }
 }
 

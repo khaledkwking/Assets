@@ -77,12 +77,6 @@
     <Compile Include="Model\DB\AssetsEventTrackingHeader.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DB\AssetsEventTrackingTest.cs">
-      <DependentUpon>Assets_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DB\AssetsEventTrackingTestHeader.cs">
-      <DependentUpon>Assets_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\DB\AssetsItemUnit.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
@@ -140,6 +134,12 @@
     <Compile Include="Model\DB\D_LocationType.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DB\D_OutboundRefType.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_OutboundType.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DB\D_QtyUnit.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
@@ -182,10 +182,25 @@
     <Compile Include="Model\DB\Item_tbl.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DB\Outbound.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\OutboundAttachment.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\OutboundNote.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Outbound_Items.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DB\RequestAttachment.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\Security_pr_admin.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\Security_pr_adminPermittedLocations.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\Security_pr_AdminType.cs">
@@ -230,6 +245,9 @@
     <Compile Include="Model\DB\sp_ItemAutoComp_Result.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DB\sp_LocationTree_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DB\sysdiagram.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
@@ -269,7 +287,10 @@
     <Compile Include="Model\DB\view_ItemCategoryTree.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DB\view_LocationTree.cs">
+    <Compile Include="Model\DB\View_OutboundItems.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\View_OutboundList.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -285,6 +306,7 @@
     <Compile Include="Repository\MasterData\VendorRepository.cs" />
     <Compile Include="Repository\MasterData\LookupMaster.cs" />
     <Compile Include="Model\ModelExtension\ModelTrackingExtension.cs" />
+    <Compile Include="Repository\Outbound\OutboundRepository.cs" />
     <Compile Include="Repository\Secuitry\AdminRepository.cs" />
     <Compile Include="Repository\Secuitry\Security_Users.cs" />
   </ItemGroup>
@@ -328,6 +350,7 @@
       <LastGenOutput>Assets_DB.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UI.Web.Modules.Assets {
-    
-    
-    public partial class AssetCheckout {
-        
+namespace UI.Web.Modules.Assets
+{
+
+
+    public partial class AssetCheckout
+    {
+
         /// <summary>
         /// hdnMasterID control.
         /// </summary>
@@ -20,16 +22,16 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnMasterID;
-        
+
         /// <summary>
-        /// hdnOrgChartRefCode control.
+        /// hdnSelectedNode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnOrgChartRefCode;
-        
+        protected global::System.Web.UI.WebControls.HiddenField hdnSelectedNode;
+
         /// <summary>
         /// hdnActiveTab control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnActiveTab;
-        
+
         /// <summary>
         /// hdnType control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnType;
-        
+
         /// <summary>
         /// Updatepanel1 control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel Updatepanel1;
-        
+
         /// <summary>
         /// viewPrint control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl viewPrint;
-        
+
         /// <summary>
         /// lnkPrintRequest control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkPrintRequest;
-        
+
         /// <summary>
         /// txtFilterCode control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFilterCode;
-        
+
         /// <summary>
         /// lnkQuick control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkQuick;
-        
+
         /// <summary>
         /// lblerror control.
         /// </summary>
@@ -101,16 +103,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblerror;
-        
-        /// <summary>
-        /// btnReload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnReload;
-        
+
         /// <summary>
         /// custodyType control.
         /// </summary>
@@ -119,7 +112,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList custodyType;
-        
+
         /// <summary>
         /// divEmployee control.
         /// </summary>
@@ -128,7 +121,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEmployee;
-        
+
         /// <summary>
         /// lstRefEmployee control.
         /// </summary>
@@ -137,124 +130,25 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstRefEmployee;
-        
+
         /// <summary>
-        /// txtFromDate control.
+        /// txtRequestDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFromDate;
-        
+        protected global::System.Web.UI.WebControls.TextBox txtRequestDate;
+
         /// <summary>
-        /// UpdatePanel4 control.
+        /// lstToLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel4;
-        
-        /// <summary>
-        /// divLocationOrg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLocationOrg;
-        
-        /// <summary>
-        /// ddlDirection control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDirection;
-        
-        /// <summary>
-        /// ddlAmana control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlAmana;
-        
-        /// <summary>
-        /// ddlDepartment control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDepartment;
-        
-        /// <summary>
-        /// ddlMorakba control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlMorakba;
-        
-        /// <summary>
-        /// ddlSection control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSection;
-        
-        /// <summary>
-        /// ddlBuilding control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlBuilding;
-        
-        /// <summary>
-        /// ddlFloor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlFloor;
-        
-        /// <summary>
-        /// ddlRoom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlRoom;
-        
-        /// <summary>
-        /// divLocationPersonal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLocationPersonal;
-        
-        /// <summary>
-        /// selectedLocation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden selectedLocation;
-        
+        protected global::System.Web.UI.WebControls.DropDownList lstToLocation;
+
         /// <summary>
         /// txtReturnDate control.
         /// </summary>
@@ -263,52 +157,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtReturnDate;
-        
-        /// <summary>
-        /// divSelectedEmployeeInfo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSelectedEmployeeInfo;
-        
-        /// <summary>
-        /// lblSelectedEmpName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSelectedEmpName;
-        
-        /// <summary>
-        /// lblSelectedjobTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSelectedjobTitle;
-        
-        /// <summary>
-        /// lblSelectedEmpCode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSelectedEmpCode;
-        
-        /// <summary>
-        /// lblSelectedEmpLocationName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSelectedEmpLocationName;
-        
+
         /// <summary>
         /// txtNotes control.
         /// </summary>
@@ -317,7 +166,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNotes;
-        
+
         /// <summary>
         /// Updatepanel2 control.
         /// </summary>
@@ -326,7 +175,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel Updatepanel2;
-        
+
         /// <summary>
         /// hdnItemCount control.
         /// </summary>
@@ -335,7 +184,16 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnItemCount;
-        
+
+        /// <summary>
+        /// hdnEmployeeId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnEmployeeId;
+
         /// <summary>
         /// txtDefault control.
         /// </summary>
@@ -344,7 +202,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden txtDefault;
-        
+
         /// <summary>
         /// hidItemID control.
         /// </summary>
@@ -353,7 +211,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidItemID;
-        
+
         /// <summary>
         /// hidContentID control.
         /// </summary>
@@ -362,7 +220,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidContentID;
-        
+
         /// <summary>
         /// hidQty control.
         /// </summary>
@@ -371,7 +229,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidQty;
-        
+
         /// <summary>
         /// hidPrice control.
         /// </summary>
@@ -380,7 +238,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidPrice;
-        
+
         /// <summary>
         /// hidCurrency control.
         /// </summary>
@@ -389,7 +247,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidCurrency;
-        
+
         /// <summary>
         /// hidIsbn control.
         /// </summary>
@@ -398,7 +256,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidIsbn;
-        
+
         /// <summary>
         /// hidBar control.
         /// </summary>
@@ -407,7 +265,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidBar;
-        
+
         /// <summary>
         /// hidDesc control.
         /// </summary>
@@ -416,7 +274,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidDesc;
-        
+
         /// <summary>
         /// hidOldQuantity control.
         /// </summary>
@@ -425,7 +283,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidOldQuantity;
-        
+
         /// <summary>
         /// hidOldCost control.
         /// </summary>
@@ -434,7 +292,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidOldCost;
-        
+
         /// <summary>
         /// btnCheckItem control.
         /// </summary>
@@ -443,7 +301,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCheckItem;
-        
+
         /// <summary>
         /// btnAddNewItem control.
         /// </summary>
@@ -452,7 +310,16 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddNewItem;
-        
+
+        /// <summary>
+        /// btnReload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnReload;
+
         /// <summary>
         /// txtFocus control.
         /// </summary>
@@ -461,7 +328,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden txtFocus;
-        
+
         /// <summary>
         /// btnHide control.
         /// </summary>
@@ -470,7 +337,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnHide;
-        
+
         /// <summary>
         /// grdCustodyItems control.
         /// </summary>
@@ -479,7 +346,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DataGrid grdCustodyItems;
-        
+
         /// <summary>
         /// btnCancel control.
         /// </summary>
@@ -488,7 +355,7 @@ namespace UI.Web.Modules.Assets {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnCancel;
-        
+
         /// <summary>
         /// btnSave control.
         /// </summary>

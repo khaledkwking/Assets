@@ -146,6 +146,20 @@ namespace Infrastructure.DAL
             }
         }
 
+        public List<D_OutboundType> FillOutboundTypes()
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.D_OutboundType
+                     orderby obj.TitleEn ascending
+                     select obj);
+
+                return result.ToList<D_OutboundType>();
+            }
+        }
+
+
         public List<D_VendorData> Fillvendor()
         {
             using (var DC = new AssetsEntitiesNew())
@@ -158,18 +172,34 @@ namespace Infrastructure.DAL
             }
         }
 
-        public List<view_LocationTree> FillStoreLocations()
+        public List<sp_LocationTree_Result> FillLocationTree(int startingNode)
         {
             using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.view_LocationTree
-                     where obj.LocationType == 1 // Stores
+                    (from obj in DC.sp_LocationTree(startingNode)
+                    
                      select obj);
 
-                return result.ToList<view_LocationTree>();
+                return result.ToList<sp_LocationTree_Result>();
             }
         }
+
+
+        public List<D_Locations> FillInboundStoreLocations()
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.D_Locations
+                     where obj.LocationType == 4 && obj.AllowInbound==true // Stores
+                     select obj);
+
+                return result.ToList<D_Locations>();
+            }
+        }
+
+
 
         public List<D_InboundDepositeStatusType> FillDepositeStatusType()
         {

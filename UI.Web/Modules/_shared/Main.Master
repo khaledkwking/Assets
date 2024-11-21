@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="CMGS Assets Management">
     <!-- Fav Icon  -->
-    <link rel="shortcut icon" href="/wwwroot/images/favicon.png">
+    <link rel="shortcut icon" href="/wwwroot/assets/images/favicon.png">
     <!-- Page Title  -->
     <title>CMGS | Assets Management</title>
     <!-- StyleSheets  -->
@@ -21,12 +21,12 @@
     <script src="/wwwroot/assets/js/bundle.js?ver=2.4.0"></script>
     <script src="/wwwroot/assets/js/scripts.js?ver=2.4.0"></script>
     <script src="/wwwroot/assets/js/FormValidation.js?ver=2.4.0"></script>
-    <script src="/wwwroot/assets/js/libs/jstree.js?ver=2.4.0"></script>
+    <script src="/wwwroot/assets/js/libs/jstree/jstree.js?ver=2.4.0"></script>
 
     <!-- ColorBox  -->
 
-    <link rel="stylesheet" href="/wwwroot/js/libs/colorbox/example4/colorbox.css" />
-    <script src="/wwwroot/js/libs/colorbox/colorbox/jquery.colorbox.js"></script>
+    <link rel="stylesheet" href="/wwwroot/assets/js/libs/colorbox/example4/colorbox.css" />
+    <script src="/wwwroot/assets/js/libs/colorbox/colorbox/jquery.colorbox.js"></script>
     <script>
 
         $(document).ready(function () {
@@ -123,20 +123,26 @@
     </script>
 
 
-     <script src="/wwwroot/js/libs/ComboTree/comboTreePlugin.js"></script>
-    <link href="/wwwroot/js/libs/ComboTree/style.css" rel="stylesheet">
+     <script src="/wwwroot/assets/js/libs/ComboTree/comboTreePlugin.js"></script>
+    <link href="/wwwroot/assets/js/libs/ComboTree/style.css" rel="stylesheet">
  
 
 </head>
 <body dir="rtl" class="nk-body ui-rounder npc-default has-sidebar has-rtl">
+      <div class="loader">
+            <div class="spnner">
+                <img src="/wwwroot/assets/images/pre-loader-1.gif" alt="Loading" />
+                
+            </div>
+        </div>
 
     <div class="nk-app-root">
         <div class="nk-sidebar" data-content="sidebarMenu">
             <div class="nk-sidebar-bar">
                 <div class="nk-apps-brand">
                     <a href="<%= GetGlobalResourceObject("Utilities", "cutureRoute")%>/admin/pages/home.aspx" class="logo-link">
-                        <img class="logo-light logo-img" src="/wwwroot/images/logo-small.png" srcset="/wwwroot/images/logo-small2x.png 2x" alt="logo">
-                        <img class="logo-dark logo-img" src="/wwwroot/images/logo-dark-small.png" srcset="/wwwroot/images/logo-dark-small2x.png 2x" alt="logo-dark">
+                        <img class="logo-light logo-img" src="/wwwroot/assets/images/logo/KuwaitLogo.png" srcset="/wwwroot/assets/images/logo/KuwaitLogo.png 2x" alt="logo">
+                        <img class="logo-dark logo-img" src="/wwwroot/assets/images/logo/KuwaitLogo.png" srcset="/wwwroot/assets/images/logo/KuwaitLogo.png 2x" alt="logo-dark">
                     </a>
                 </div>
                 <div class="nk-sidebar-element">
@@ -245,9 +251,9 @@
                                 <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
                             </div>
                             <div class="nk-header-brand d-xl-none">
-                                <a href="html/index.html" class="logo-link">
-                                    <img class="logo-light logo-img" src="/wwwroot/images/logo.png" srcset="/wwwroot/images/logo2x.png 2x" alt="logo">
-                                    <img class="logo-dark logo-img" src="/wwwroot/images/logo-dark.png" srcset="/wwwroot/images/logo-dark2x.png 2x" alt="logo-dark">
+                                <a href="#" class="logo-link">
+                                    <img class="logo-light logo-img" src="/wwwroot/assets/images/logo/CMGS_H_w.png" srcset="/wwwroot/assets/images/logo/CMGS_H_w.png 2x" alt="logo">
+                                    <img class="logo-dark logo-img" src="/wwwroot/assets/images/logo/CMGS_H_w.png" srcset="/wwwroot/assets/images/logo/CMGS_H_w.png 2x" alt="logo-dark">
                                 </a>
                             </div>
                             <!-- .nk-header-brand -->
@@ -311,7 +317,7 @@
                                                     <li class="chat-item">
                                                         <a class="chat-link" href="html/apps-chats.html">
                                                             <div class="chat-media user-avatar">
-                                                                <img src="/wwwroot/images/avatar/b-sm.jpg" alt="">
+                                                                <img src="/wwwroot/assets/images/avatar/b-sm.jpg" alt="">
                                                             </div>
                                                             <div class="chat-info">
                                                                 <div class="chat-from">
@@ -329,7 +335,7 @@
                                                         <a class="chat-link" href="html/apps-chats.html">
                                                             <div class="chat-media user-avatar user-avatar-multiple">
                                                                 <div class="user-avatar">
-                                                                    <img src="/wwwroot/images/avatar/c-sm.jpg" alt="">
+                                                                    <img src="/wwwroot/assets/images/avatar/c-sm.jpg" alt="">
                                                                 </div>
                                                                 <div class="user-avatar">
                                                                     <span>AB</span>
@@ -353,7 +359,7 @@
                                                     <li class="chat-item">
                                                         <a class="chat-link" href="html/apps-chats.html">
                                                             <div class="chat-media user-avatar">
-                                                                <img src="/wwwroot/images/avatar/a-sm.jpg" alt="">
+                                                                <img src="/wwwroot/assets/images/avatar/a-sm.jpg" alt="">
                                                                 <span class="status dot dot-lg dot-success"></span>
                                                             </div>
                                                             <div class="chat-info">

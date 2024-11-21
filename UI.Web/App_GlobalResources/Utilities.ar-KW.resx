@@ -154,7 +154,7 @@
     <value>Namear</value>
   </data>
   <data name="resourcespath" xml:space="preserve">
-    <value>/Layout/</value>
+    <value>/wwwroot/assets/</value>
   </data>
   <data name="selectLang" xml:space="preserve">
     <value>Arabic</value>

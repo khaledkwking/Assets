@@ -139,19 +139,19 @@ namespace UI.Web.Modules._shared
 
 
 
-            //if (ShowSystem("3"))
-            //{//Inbound
-            //    _out += " <li class='nk-menu-item'>";
-            //    _out += " <a href = '#' class='nk-menu-link nk-menu-switch' data-target='navInbound'>";
-            //    _out += "<span class='nk-menu-icon'><em class='icon ni ni-exchange'></em></span>";
-            //    _out += "</a>";
-            //    _out += "</li>";
-
-            //}
-            if (ShowSystem("4"))
-            {//OutBound
+            if (ShowSystem("3"))
+            {//Inbound
                 _out += " <li class='nk-menu-item'>";
-                _out += " <a href = '#' class='nk-menu-link nk-menu-switch' data-target='navOutbound'>";
+                _out += " <a href = '#' class='nk-menu-link nk-menu-switch' data-target='navStoreOperations'>";
+                _out += "<span class='nk-menu-icon'><em class='icon ni ni-file-docs'></em></span>";
+                _out += "</a>";
+                _out += "</li>";
+
+            }
+            if (ShowSystem("4"))
+            {//Assets
+                _out += " <li class='nk-menu-item'>";
+                _out += " <a href = '#' class='nk-menu-link nk-menu-switch' data-target='navAssetsOperation'>";
                 _out += "<span class='nk-menu-icon'><em class='icon ni ni-wallet-saving'></em></span>";
                 _out += "</a>";
                 _out += "</li>";
@@ -229,34 +229,7 @@ namespace UI.Web.Modules._shared
 
 
 
-
-                    //strmenu.Append(("<li class='nk-menu-item'>"));
-                    //strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/EntityChart.aspx' class='nk-menu-link'>"));
-                    //strmenu.Append((" <span class='nk-menu-text'>" + Resources.Pages.orgChart + "</span>"));
-                    //strmenu.Append(("</a>"));
-                    //strmenu.Append(("</li>"));
-
-
-
-                    //if (ShowPage("EmployeeList.aspx"))
-                    //{
-                    //    strmenu.Append(("<li class='nk-menu-item'>"));
-                    //    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/EmployeeList.aspx' class='nk-menu-link'>"));
-                    //    strmenu.Append(("<span class='nk-menu-text'>" + Resources.Pages.EmployeeList + "</span>"));
-                    //    strmenu.Append(("</a>"));
-                    //    strmenu.Append(("</li>"));
-
-                    //}
-
-                    //if (ShowPage("lookups.aspx?tableName=D_JobTitle"))
-                    //{
-                    //    strmenu.Append(("<li class='nk-menu-item'>"));
-                    //    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/lookups.aspx?tableName=D_JobTitle' class='nk-menu-link'>"));
-                    //    strmenu.Append(("<span class='nk-menu-text'>" + Resources.Pages.D_JobTitle + "</span>"));
-                    //    strmenu.Append(("</a>"));
-                    //    strmenu.Append(("</li>"));
-
-                    //}
+ 
 
                     strmenu.Append("</ul> ");
                     strmenu.Append("</li>");
@@ -335,15 +308,7 @@ namespace UI.Web.Modules._shared
                         strmenu.Append(("</li>"));
                     }
 
-                    //if (ShowPage("lookups.aspx?tableName=D_ItemStatus"))
-                    //{
-
-                    //    strmenu.Append(("<li class='nk-menu-item'>"));
-                    //    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/lookups.aspx?tableName=D_ItemStatus' class='nk-menu-link'>"));
-                    //    strmenu.Append(("<span class='nk-menu-text'>" + Resources.Pages.D_ItemStatus + "</span>"));
-                    //    strmenu.Append(("</a>"));
-                    //    strmenu.Append(("</li>"));
-                    //}
+                 
 
                     if (ShowPage("lookups.aspx?tableName=D_QtyUnit"))
                     {
@@ -410,52 +375,7 @@ namespace UI.Web.Modules._shared
                     strmenu.Append(("</li>"));
                 }
 
-                //strmenu.Append("<li class='nk-menu-hr'></li>");
-
-
-                //if (ShowPage("lookups.aspx?tableName=D_InboundType"))
-                //{
-
-                //    strmenu.Append(("<li class='nk-menu-item'>"));
-                //    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/lookups.aspx?tableName=D_InboundType' class='nk-menu-link'>"));
-                //    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-property-add'></em></span><span class='nk-menu-text'>" + Resources.Pages.D_InboundType + "</span>"));
-                //    strmenu.Append(("</a>"));
-                //    strmenu.Append(("</li>"));
-
-                //}
-                //if (ShowPage("lookups.aspx?tableName=D_InboundDepositeStatusType"))
-                //{
-
-                //    strmenu.Append(("<li class='nk-menu-item'>"));
-                //    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/lookups.aspx?tableName=D_InboundDepositeStatusType' class='nk-menu-link'>"));
-                //    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-property-add'></em></span><span class='nk-menu-text'>" + Resources.Pages.D_InboundDepositeStatusType + "</span>"));
-                //    strmenu.Append(("</a>"));
-                //    strmenu.Append(("</li>"));
-
-                //}
-
-
-                //if (ShowPage("lookups.aspx?tableName=D_OutboundType"))
-                //{
-
-                //    strmenu.Append(("<li class='nk-menu-item'>"));
-                //    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/lookups.aspx?tableName=D_OutboundType' class='nk-menu-link'>"));
-                //    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-property-add'></em></span><span class='nk-menu-text'>" + Resources.Pages.D_OutboundType + "</span>"));
-                //    strmenu.Append(("</a>"));
-                //    strmenu.Append(("</li>"));
-
-                //}
-                //if (ShowPage("lookups.aspx?tableName=D_OutboundwithdrawStatus"))
-                //{
-
-                //    strmenu.Append(("<li class='nk-menu-item'>"));
-                //    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/lookups.aspx?tableName=D_OutboundwithdrawStatus' class='nk-menu-link'>"));
-                //    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-property-add'></em></span><span class='nk-menu-text'>" + Resources.Pages.D_OutboundwithdrawStatus + "</span>"));
-                //    strmenu.Append(("</a>"));
-                //    strmenu.Append(("</li>"));
-
-                //}
-
+               
 
 
 
@@ -466,12 +386,12 @@ namespace UI.Web.Modules._shared
             }
 
             // End of module
-            if (ShowSystem("3")) // Inbound Opertaon
+            if (ShowSystem("3")) // Store Opertaon
             {
 
 
-                strmenu.Append(("<div class='nk-menu-content' data-content='navInbound'>"));
-                strmenu.Append(("<h5 class='title'>" + Resources.Pages.ReceivingOperations + "</h5>"));
+                strmenu.Append(("<div class='nk-menu-content' data-content='navStoreOperations'>"));
+                strmenu.Append(("<h5 class='title'>" + Resources.Pages.StoreOperation + "</h5>"));
                 strmenu.Append(("<ul class='nk-menu'>"));
 
 
@@ -502,23 +422,9 @@ namespace UI.Web.Modules._shared
                         strmenu.Append(("</a>"));
                         strmenu.Append(("</li>"));
                     }
-                    if (ShowPage("OutboundItemReceiving.aspx"))
-                    {
-                        strmenu.Append(("<li class='nk-menu-item'>"));
-                        strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Inboud/OutboundItemReceiving.aspx' class='nk-menu-link'>"));
-                        strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-calc'></em></span><span class='nk-menu-text'>" + Resources.Pages.OutboundItemReceiving + "</span>"));
-                        strmenu.Append(("</a>"));
-                        strmenu.Append(("</li>"));
-                    }
+                   
 
-                    if (ShowPage("InboundOperrations.aspx"))
-                    {
-                        strmenu.Append(("<li class='nk-menu-item'>"));
-                        strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Inboud/InboundOperrations.aspx?type=3' class='nk-menu-link'>"));
-                        strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-wallet-in'></em></span><span class='nk-menu-text'>" + Resources.Pages.CustodyReceive + "</span>"));
-                        strmenu.Append(("</a>"));
-                        strmenu.Append(("</li>"));
-                    }
+                    
 
                     if (ShowPage("InboundList.aspx"))
                     {
@@ -529,14 +435,14 @@ namespace UI.Web.Modules._shared
                         strmenu.Append(("</li>"));
                     }
 
-                    if (ShowPage("ManageStoreRequest.aspx"))
-                    {
-                        strmenu.Append(("<li class='nk-menu-item'>"));
-                        strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Inboud/ManageStoreRequest.aspx' class='nk-menu-link'>"));
-                        strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-index-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.ManageStoreRequest + "</span>"));
-                        strmenu.Append(("</a>"));
-                        strmenu.Append(("</li>"));
-                    }
+                    //if (ShowPage("ManageStoreRequest.aspx"))
+                    //{
+                    //    strmenu.Append(("<li class='nk-menu-item'>"));
+                    //    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Inboud/ManageStoreRequest.aspx' class='nk-menu-link'>"));
+                    //    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-index-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.ManageStoreRequest + "</span>"));
+                    //    strmenu.Append(("</a>"));
+                    //    strmenu.Append(("</li>"));
+                    //}
 
                     strmenu.Append("</ul>");
                     strmenu.Append("</li>");
@@ -544,50 +450,52 @@ namespace UI.Web.Modules._shared
                 }
 
 
-                strmenu.Append("<li class='nk-menu-item has-sub'>");
-                strmenu.Append("<a href = '#' class='nk-menu-link nk-menu-toggle' data-original-title='' title=''>");
-                strmenu.Append("<span class='nk-menu-icon'><em class='icon ni ni-maximize-alt'></em></span>");
-                strmenu.Append("<span class='nk-menu-text'>" + Resources.Pages.OutBoundOperationMenu + "</span>");
-                strmenu.Append("</a>");
-                strmenu.Append("<ul class='nk-menu-sub'>");
-
-                if (ShowPage("InboundOperrations.aspx"))
+                if (ShowPage("OutboundOperations.aspx"))
                 {
-                    strmenu.Append(("<li class='nk-menu-item'>"));
-                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Outbound/OutboundOperrations.aspx?t=3' class='nk-menu-link'>"));
-                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-tranx-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.StoreTransfer + "</span>"));
-                    strmenu.Append(("</a>"));
-                    strmenu.Append(("</li>"));
+
+
+                    strmenu.Append("<li class='nk-menu-item has-sub'>");
+                    strmenu.Append("<a href = '#' class='nk-menu-link nk-menu-toggle' data-original-title='' title=''>");
+                    strmenu.Append("<span class='nk-menu-icon'><em class='icon ni ni-maximize-alt'></em></span>");
+                    strmenu.Append("<span class='nk-menu-text'>" + Resources.Pages.OutBoundOperationMenu + "</span>");
+                    strmenu.Append("</a>");
+                    strmenu.Append("<ul class='nk-menu-sub'>");
+
+                    if (ShowPage("OutboundOperations.aspx"))
+                    {
+                        strmenu.Append(("<li class='nk-menu-item'>"));
+                        strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Outbound/OutboundOperations.aspx' class='nk-menu-link'>"));
+                        strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-tranx-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.OutboundOperations + "</span>"));
+                        strmenu.Append(("</a>"));
+                        strmenu.Append(("</li>"));
+                    }
+
+                    if (ShowPage("OutboundList.aspx"))
+                    {
+                        strmenu.Append(("<li class='nk-menu-item'>"));
+                        strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/outbound/OutboundList.aspx' class='nk-menu-link'>"));
+                        strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-index-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.OutboundList + "</span>"));
+                        strmenu.Append(("</a>"));
+                        strmenu.Append(("</li>"));
+                    }
+
+
+
+                    //if (ShowPage("ManageStoreRequest.aspx"))
+                    //{
+                    //    strmenu.Append(("<li class='nk-menu-item'>"));
+                    //    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Inboud/ManageStoreRequest.aspx' class='nk-menu-link'>"));
+                    //    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-index-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.ManageStoreRequest + "</span>"));
+                    //    strmenu.Append(("</a>"));
+                    //    strmenu.Append(("</li>"));
+                    //}
+
+
+                    strmenu.Append("</ul>");
+                    strmenu.Append("</li>");
+
+
                 }
-
-
-
-
-                if (ShowPage("OutboundItemDelivery.aspx"))
-                {
-                    strmenu.Append(("<li class='nk-menu-item'>"));
-                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/outbound/OutboundItemDelivery.aspx' class='nk-menu-link'>"));
-                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-wallet-out'></em></span><span class='nk-menu-text'>" + Resources.Pages.OutboundItemDelivery + "</span>"));
-                    strmenu.Append(("</a>"));
-                    strmenu.Append(("</li>"));
-                }
-
-
-                if (ShowPage("OutboundList.aspx"))
-                {
-                    strmenu.Append(("<li class='nk-menu-item'>"));
-                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Outbound/OutboundListAll.aspx?all=1' class='nk-menu-link'>"));
-                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-index-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.OutboundList + "</span>"));
-                    strmenu.Append(("</a>"));
-                    strmenu.Append(("</li>"));
-                }
-
-
-                strmenu.Append("</ul>");
-                strmenu.Append("</li>");
-
-
-
 
 
 
@@ -597,10 +505,10 @@ namespace UI.Web.Modules._shared
                 strmenu.Append(("</div>"));
             }
 
-            if (ShowSystem("4")) // outbound Opertaon
+            if (ShowSystem("4")) 
             {
 
-                strmenu.Append(("<div class='nk-menu-content' data-content='navOutbound'>"));
+                strmenu.Append(("<div class='nk-menu-content' data-content='navAssetsOperation'>"));
                 strmenu.Append(("<h5 class='title'>" + Resources.Pages.DeliverOperations + "</h5>"));
                 strmenu.Append(("<ul class='nk-menu'>"));
 
@@ -670,14 +578,7 @@ namespace UI.Web.Modules._shared
                 }
 
 
-                if (ShowPage("AssetsRequestList.aspx"))
-                {
-                    strmenu.Append(("<li class='nk-menu-item'>"));
-                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetsRequestList.aspx' class='nk-menu-link'>"));
-                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-thumb-alt'></em></span><span class='nk-menu-text'>" + Resources.Pages.AssetsRequestList + "</span>"));
-                    strmenu.Append(("</a>"));
-                    strmenu.Append(("</li>"));
-                }
+                
                 //if (ShowPage("AssetsList.aspx"))
                 //{
                 //    strmenu.Append(("<li class='nk-menu-item'>"));
@@ -689,62 +590,23 @@ namespace UI.Web.Modules._shared
                 strmenu.Append("</ul>");
                 strmenu.Append("</li>");
 
-
-
-                if (ShowPage("InboundOperrations.aspx"))
+                if (ShowPage("AssetsRequestList.aspx"))
                 {
-
-                    strmenu.Append("<li class='nk-menu-item has-sub'>");
-                    strmenu.Append("<a href = '#' class='nk-menu-link nk-menu-toggle' data-original-title='' title=''>");
-                    strmenu.Append("<span class='nk-menu-icon'><em class='icon ni ni-minimize-alt'></em></span>");
-                    strmenu.Append("<span class='nk-menu-text'>" + Resources.Pages.InboundOperationsMenu + "</span>");
-                    strmenu.Append("</a>");
-                    strmenu.Append("<ul class='nk-menu-sub'>");
-
                     strmenu.Append(("<li class='nk-menu-item'>"));
-                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Inboud/InboundOperrations.aspx' class='nk-menu-link'>"));
-                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-property-add'></em></span><span class='nk-menu-text'>" + Resources.Pages.InboundOperations + "</span>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetsRequestList.aspx' class='nk-menu-link'>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-thumb-alt'></em></span><span class='nk-menu-text'>" + Resources.Pages.AssetsRequestList + "</span>"));
                     strmenu.Append(("</a>"));
                     strmenu.Append(("</li>"));
-
-
-
-                    if (ShowPage("InboundItemReceving.aspx"))
-                    {
-                        strmenu.Append(("<li class='nk-menu-item'>"));
-                        strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Inboud/InboundItemReceving.aspx' class='nk-menu-link'>"));
-                        strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-calc'></em></span><span class='nk-menu-text'>" + Resources.Pages.InboundItemReceving + "</span>"));
-                        strmenu.Append(("</a>"));
-                        strmenu.Append(("</li>"));
-                    }
-
-
-                    if (ShowPage("InboundList.aspx"))
-                    {
-                        strmenu.Append(("<li class='nk-menu-item'>"));
-                        strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Inboud/InboundList.aspx' class='nk-menu-link'>"));
-                        strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-index-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.InboundList + "</span>"));
-                        strmenu.Append(("</a>"));
-                        strmenu.Append(("</li>"));
-                    }
-
-                    if (ShowPage("ManageStoreRequest.aspx"))
-                    {
-                        strmenu.Append(("<li class='nk-menu-item'>"));
-                        strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/StoreOperations/Forms/Inboud/ManageStoreRequest.aspx' class='nk-menu-link'>"));
-                        strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-index-fill'></em></span><span class='nk-menu-text'>" + Resources.Pages.ManageStoreRequest + "</span>"));
-                        strmenu.Append(("</a>"));
-                        strmenu.Append(("</li>"));
-                    }
-
-                    strmenu.Append("</ul>");
-                    strmenu.Append("</li>");
-
                 }
 
-
-
-
+                if (ShowPage("AssetsRequestList.aspx"))
+                {
+                    strmenu.Append(("<li class='nk-menu-item'>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/OrgChartTree.aspx' class='nk-menu-link'>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-thumb-alt'></em></span><span class='nk-menu-text'>حصر العهد طبقا للهيكل التنظيمي</span>"));
+                    strmenu.Append(("</a>"));
+                    strmenu.Append(("</li>"));
+                }
 
                 strmenu.Append(("</ul>"));
                 strmenu.Append(("</div>"));

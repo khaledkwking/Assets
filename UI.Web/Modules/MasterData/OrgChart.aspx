@@ -17,7 +17,7 @@
     </div>
 
 
-    <script src="/Layout/Assets/businessScripts/orgChartTree.js"></script>
+    <script src="/wwwroot/assets/js/businessScripts/orgChartTree.js"></script>
 
 
 </asp:Content>

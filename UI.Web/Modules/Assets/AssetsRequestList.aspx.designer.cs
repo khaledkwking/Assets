@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UI.Web.Modules.MasterData {
-    
-    
-    public partial class AssetsRequestList {
-        
+namespace UI.Web.Modules.MasterData
+{
+
+
+    public partial class AssetsRequestList
+    {
+
         /// <summary>
         /// Updatepanel1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace UI.Web.Modules.MasterData {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel Updatepanel1;
-        
+
         /// <summary>
         /// tblshow control.
         /// </summary>
@@ -29,7 +31,16 @@ namespace UI.Web.Modules.MasterData {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tblshow;
-        
+
+        /// <summary>
+        /// lblCountTop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCountTop;
+
         /// <summary>
         /// lstFilterAction control.
         /// </summary>
@@ -38,7 +49,16 @@ namespace UI.Web.Modules.MasterData {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstFilterAction;
-        
+
+        /// <summary>
+        /// lstFilterEmpStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lstFilterEmpStatus;
+
         /// <summary>
         /// txtTransDate control.
         /// </summary>
@@ -47,7 +67,7 @@ namespace UI.Web.Modules.MasterData {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTransDate;
-        
+
         /// <summary>
         /// txtTransactionDateTo control.
         /// </summary>
@@ -56,7 +76,7 @@ namespace UI.Web.Modules.MasterData {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTransactionDateTo;
-        
+
         /// <summary>
         /// btnFilter control.
         /// </summary>
@@ -65,7 +85,7 @@ namespace UI.Web.Modules.MasterData {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnFilter;
-        
+
         /// <summary>
         /// txtPartOfName control.
         /// </summary>
@@ -74,7 +94,7 @@ namespace UI.Web.Modules.MasterData {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPartOfName;
-        
+
         /// <summary>
         /// lnkQuick control.
         /// </summary>
@@ -83,16 +103,16 @@ namespace UI.Web.Modules.MasterData {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkQuick;
-        
+
         /// <summary>
-        /// grdData control.
+        /// grdAssets control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid grdData;
-        
+        protected global::System.Web.UI.WebControls.DataGrid grdAssets;
+
         /// <summary>
         /// lblcount control.
         /// </summary>
@@ -101,7 +121,7 @@ namespace UI.Web.Modules.MasterData {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblcount;
-        
+
         /// <summary>
         /// pager1 control.
         /// </summary>

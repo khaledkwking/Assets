@@ -19,6 +19,7 @@ namespace Infrastructure.DAL.Model.DB
         {
             this.InboundAttachments = new HashSet<InboundAttachment>();
             this.RequestAttachments = new HashSet<RequestAttachment>();
+            this.OutboundAttachments = new HashSet<OutboundAttachment>();
         }
     
         public int Code { get; set; }
@@ -29,5 +30,7 @@ namespace Infrastructure.DAL.Model.DB
         public virtual ICollection<InboundAttachment> InboundAttachments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestAttachment> RequestAttachments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OutboundAttachment> OutboundAttachments { get; set; }
     }
 }

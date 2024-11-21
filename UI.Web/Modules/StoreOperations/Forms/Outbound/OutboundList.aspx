@@ -97,22 +97,18 @@
                                                     </div>
 
                                                     <div class="col-12">
-                                                        <div class="form-group">
-                                                            <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","CustodyType") %></label>
 
-                                                            <asp:RadioButtonList ID="lstFilterOutType" runat="server" class="form-control" RepeatLayout="Table" RepeatDirection="Horizontal">
-                                                                <asp:ListItem Text="عهدة فردية" Value="1"></asp:ListItem>
-                                                                <asp:ListItem Text="عهدة تنظيمية" Value="2"></asp:ListItem>
+                                                          <div class="form-group">
+                                                                <label class="control-label" for=""><%=GetGlobalResourceObject("pages","outboundTypeCode") %>  </label>
 
-                                                            </asp:RadioButtonList>
-                                                        </div>
+                                                                <asp:DropDownList ID="lstOutboundTypeCode" runat="server" class="form-control">
+                                                                </asp:DropDownList>
+
+                                                            </div>
+
+ 
                                                     </div>
-                                                    <div class="col-12">
-                                                        <div class="form-group">
-                                                            <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages", "RefEmployee") %></label>
-                                                            <asp:DropDownList ID="lstFilterRefEmployee" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"></asp:DropDownList>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","Refcode") %></label>
@@ -189,7 +185,7 @@
                             </asp:TemplateColumn>
 
                             <asp:TemplateColumn HeaderText="">
-                                <ItemStyle HorizontalAlign="left" />
+                                <ItemStyle HorizontalAlign="left"  />
                                 <ItemTemplate>
 
                                     <div style="direction: rtl; text-align: right">
@@ -203,23 +199,15 @@
                                             <Columns>
 
 
-                                                <asp:TemplateColumn HeaderText="<%$ Resources:pages,image %>">
-                                                    <ItemStyle Width="5%" />
-                                                    <ItemTemplate>
-
-                                                        <%# FillImage(gets(Eval("ItemImage")), Resources.Utilities.resourcespath+"uploads/ItemsData/", 35, 25,"")%>
-                                                    </ItemTemplate>
-                                                </asp:TemplateColumn>
+                                               
 
                                                 <asp:BoundColumn DataField="ItemRefCode" HeaderText="<%$ Resources:pages,ItemRefCode %>"></asp:BoundColumn>
                                                 <asp:BoundColumn DataField="ItemRFIDCode" HeaderText="<%$ Resources:pages,ItemRFIDCode %>"></asp:BoundColumn>
                                                 <asp:BoundColumn DataField="ItemFinanceCode" HeaderText="<%$ Resources:pages,ItemFinanceCode %>"></asp:BoundColumn>
-                                                <%--<asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,ItemNameAr %>"></asp:BoundColumn>--%>
-                                                <asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,PurchaseItems %>  "></asp:BoundColumn>
+                                                 <asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,PurchaseItems %>  "></asp:BoundColumn>
                                                 <asp:BoundColumn DataField="Qty" HeaderText="<%$ Resources:pages,Qty %>"></asp:BoundColumn>
-                                                <asp:BoundColumn DataField="DeliveredQry" HeaderText="<%$ Resources:pages,ReceivedQty %>"></asp:BoundColumn>
-                                                <asp:BoundColumn DataField="TitleAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
-                                                <asp:BoundColumn DataField="StatusTitleAr" HeaderText="<%$ Resources:pages,Status %>"></asp:BoundColumn>
+                                                 <asp:BoundColumn DataField="unitCodeTitleAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
+                                                <asp:BoundColumn DataField="StatusNameAr" HeaderText="<%$ Resources:pages,Status %>"></asp:BoundColumn>
                                                 <asp:BoundColumn DataField="EstimatedAmount" HeaderText="<%$ Resources:pages,EstimatedCost %>"></asp:BoundColumn>
                                             </Columns>
                                         </asp:DataGrid>
@@ -229,40 +217,22 @@
                             <asp:TemplateColumn HeaderText="">
                                 <ItemStyle HorizontalAlign="center" />
                                 <ItemTemplate>
-                                    <img style="cursor: pointer;" src="/layout/images/plus.gif" alt="" border="0" runat="server" id="imgControl" />
+                                    <img style="cursor: pointer;" src="/wwwroot/assets/images/plus.gif" alt="" border="0" runat="server" id="imgControl" />
                                 </ItemTemplate>
                             </asp:TemplateColumn>
                             <asp:BoundColumn DataField="code" Visible="False"></asp:BoundColumn>
 
-
+  <asp:BoundColumn DataField="OutboundTypeTitleAr" HeaderText="<%$ Resources:pages,outboundTypeCode %> "></asp:BoundColumn>
 
                             <asp:BoundColumn DataField="Serial" HeaderText="<%$ Resources:pages,Serial %> "></asp:BoundColumn>
                             <asp:BoundColumn DataField="TransDate" HeaderText=" <%$ Resources:pages,TransDate %>  " DataFormatString="{0:dd/MM/yyyy}"></asp:BoundColumn>
 
-                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,CustodyType %>">
-                                <ItemTemplate>
-                                    <%# gets(Eval("TypeCode"))=="1"? "<span class='badge badge-dim badge-success'><em class='icon ni ni-user-fill'></em><span>"+gets(Eval("TypeTitlear") )+"</span></span>" :"<span class='badge badge-dim badge-light text-warning'><em class='icon ni ni-building'></em><span>"+gets(Eval("TypeTitlear") )+"</span></span>"   %>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-
-                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,RefEmployee %>">
-                                <ItemTemplate>
-                                    <%--<div><%#gets(Eval("LocationNameAr")) %></div>--%>
-                                    <%#gets(Eval("EmpName")) %>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
+                          
                             <asp:BoundColumn DataField="RefNo" HeaderText="<%$ Resources:pages,RefNo %> "></asp:BoundColumn>
                             <asp:BoundColumn DataField="RefDate" HeaderText="<%$ Resources:pages,RefDate %> " DataFormatString="{0:dd/MM/yyyy}"></asp:BoundColumn>
-                            <asp:BoundColumn DataField="OwnerLocationNameEn" HeaderText="<%$ Resources:pages,OutOwnerLocation %>  "></asp:BoundColumn>
+                            <asp:BoundColumn DataField="FromLocationNameEn" HeaderText="<%$ Resources:pages,OutOwnerLocation %>  "></asp:BoundColumn>
 
-
-                            <asp:TemplateColumn HeaderText="<%$ Resources:pages, LastStatus %>">
-                                <ItemStyle HorizontalAlign="Center" />
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemTemplate>
-                                    <%# showRequestStatus(ZeroIntergerIFNull(gets(Eval("OutboundLastStatusCode"))), gets( Eval("OutboundLastStatus"))) %>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
+ 
                             <asp:TemplateColumn>
                                 <HeaderStyle HorizontalAlign="Center" />
                                 <ItemStyle Width="2%" />
@@ -272,7 +242,7 @@
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <ul class="link-list-opt no-bdr">
                                                 <li>
-                                                    <a href="OutboundOperrations.aspx?t=<%#Eval("TypeCode") %>&id=<%#Eval("code") %>" class="btn btn-default btn-xs"><i class="icon ni ni-edit"></i>&nbsp; <%=GetGlobalResourceObject("pages","RequestDetails") %> </a>
+                                                    <a href="OutboundOperations.aspx?t=<%#Eval("TypeCode") %>&id=<%#Eval("code") %>" class="btn btn-default btn-xs"><i class="icon ni ni-edit"></i>&nbsp; <%=GetGlobalResourceObject("pages","RequestDetails") %> </a>
                                                 </li>
 
                                                 <li>

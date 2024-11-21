@@ -30,7 +30,7 @@
             <div class="nk-block-head-content">
                 <h3 class="nk-block-title page-title"><%=_PageTitle %></h3>
                 <ul class="breadcrumb breadcrumb-arrow">
-                    <li><i class="fa fa-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                    <li><i class="icon ni ni-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="icon ni ni-chevrons-left"></i>&nbsp;&nbsp;</li>
                     <li class="active"><%=_PageTitle %></li>
                 </ul>
             </div>
@@ -100,5 +100,5 @@
 
     </div>
 
-    <script src="/Layout/Assets/businessScripts/locationChartlink.js"></script>
+    <script src="/wwwroot/assets/js/businessScripts/locationChartlink.js"></script>
 </asp:Content>

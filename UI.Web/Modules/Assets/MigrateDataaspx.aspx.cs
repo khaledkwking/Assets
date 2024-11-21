@@ -27,23 +27,29 @@ namespace UI.Web.Modules.Assets
             using (var en = new AssetsEntitiesNew())
             {
                 //var queryMember = en.Item_tbl.Where(o=> o.Emp_Id!=0).GroupBy(x => new { x.Emp_Id, x.Item_AssDate}).Select(r => new ItemDTO { Emp_Id = r.Key.Emp_Id,Item_AssDate = r.Key.Item_AssDate}).ToList();
-                var queryMember = en.Item_tbl.Where(o => o.Emp_Id != 0).GroupBy(x => new { x.Emp_Id, x.Item_AssDate }).Select(r => new ItemDTO{Emp_Id = r.Key.Emp_Id,Item_AssDate = r.Key.Item_AssDate}).ToList();
+                var queryMember = en.Item_tbl.Where(o => o.Emp_Id != 0 && o.Emp_Id != null).GroupBy(x => new { x.Emp_Id }).Select(r => new ItemDTO{Emp_Id = r.Key.Emp_Id }).ToList();
                 foreach (var item in queryMember)
                 {
                     int? Emp_Id = item.Emp_Id;
-                    DateTime? AssetDate = item.Item_AssDate;
+                    var QDetails = en.Item_tbl.Where(o => o.Emp_Id == Emp_Id).ToList();
+                    DateTime? AssetDate = QDetails.FirstOrDefault().Item_AssDate;
 
-                    AssetsEventTrackingTestHeader objHeader = new AssetsEventTrackingTestHeader();
+                    AssetsEventTrackingHeader objHeader = new AssetsEventTrackingHeader();
                     objHeader.RequestDate = AssetDate;
-                    objHeader.DueDate = null;
+                    objHeader.DueDate = AssetDate; 
                     objHeader.RequestRefCode = Guid.NewGuid().ToString();
-                    objHeader.RequestActionType = 3;  //(int) CustodyRequestType.CheckOut;
-                    objHeader.ProcessType = (int)CustodyProcessTypes.CheckOut;
-                    objHeader.TMonth = AssetDate.Value.Month;
-                    objHeader.TYear = AssetDate.Value.Year;
+                    objHeader.RequestActionType = 1;  //(int) CustodyRequestType.CheckOut;
+                    objHeader.ProcessType = 1;
+                    if (AssetDate != null)
+                    {
+                        objHeader.TMonth = AssetDate.Value.Month;
+                        objHeader.TYear = AssetDate.Value.Year;
+                    }
+                 
                     objHeader.Serial = generateRequestSerial();
+                    objHeader.RequestNotes = "تقرير الجرد في نظام العهد بتاريخ : " + DateTime.Now.ToString();
 
-                    long? RoomID = en.Item_tbl.Where(o => o.Emp_Id == Emp_Id && o.Item_AssDate == AssetDate).FirstOrDefault().Room_Id;
+                    long? RoomID = en.Item_tbl.Where(o => o.Emp_Id == Emp_Id).FirstOrDefault().Room_Id;
                     int LocationID = 0;
                     int? OrgChartID = 0;
                     var QLocation = en.D_Locations.Where(o => o.MigrationRef == RoomID && o.LocationType==3).ToList();
@@ -67,7 +73,6 @@ namespace UI.Web.Modules.Assets
                         }
                     }
                    
-                    objHeader.RequestNotes = null;
 
                     string EmpName = "";
                     var QEmployee = en.Employee_tbl.Where(o => o.Emp_Id == Emp_Id).ToList();
@@ -78,16 +83,15 @@ namespace UI.Web.Modules.Assets
                     objHeader.EmpRefCode = Emp_Id;
 
 
-
-                    objHeader.CreatedAt = AssetDate;
+                    objHeader.CreatedAt = DateTime.Now;
                     objHeader.CreatedBy = ZeroIntergerIFNull(ReadSession("userid").ToString());
-                    objRepository.AddAssetsEventTrackingTestHeader(objHeader);
+                    objRepository.AddAssetsEventTrackingHeader(objHeader);
                     int HeaderID = objHeader.Code;
                     
-                    var QDetails = en.Item_tbl.Where(o => o.Emp_Id == Emp_Id && o.Item_AssDate == AssetDate).ToList();
+                  //  var QDetails = en.Item_tbl.Where(o => o.Emp_Id == Emp_Id).ToList();
                     foreach (var itemD in QDetails)
                     {
-                        AssetsEventTrackingTest obj = new AssetsEventTrackingTest();
+                        AssetsEventTracking obj = new AssetsEventTracking();
 
                         int? Code = null;
                         var QCard= en.D_ItemCard.Where(o => o.REFID == itemD.CatSub_Id).ToList();
@@ -107,14 +111,14 @@ namespace UI.Web.Modules.Assets
                         obj.EmpName = EmpName;
                         obj.EmpRefCode = Emp_Id;
                         
-                        obj.Notes = null;
+                        obj.Notes = "تقرير الجرد في نظام العهد بتاريخ : " + DateTime.Now.ToString();
                         obj.StoreRequestRefCode = null;
                         obj.Qty = itemD.Item_Count;
 
                         obj.CreatedAt = AssetDate;
                         obj.CreatedBy = null;
 
-                        objRepository.AddEventTrackingTest(obj);
+                        objRepository.AddEventTracking(obj);
 
                     }
                 }
@@ -126,20 +130,26 @@ namespace UI.Web.Modules.Assets
             using (var en = new AssetsEntitiesNew())
             {
                 //var queryMember = en.Item_tbl.Where(o=> o.Emp_Id!=0).GroupBy(x => new { x.Emp_Id, x.Item_AssDate}).Select(r => new ItemDTO { Emp_Id = r.Key.Emp_Id,Item_AssDate = r.Key.Item_AssDate}).ToList();
-                var queryRoom = en.Item_tbl.Where(o => o.Room_Id != 0 && o.Room_Id != -1 && o.Emp_Id == 0).GroupBy(x => new { x.Room_Id, x.Item_AssDate }).Select(r => new ItemDTORoom { Room_Id = r.Key.Room_Id, Item_AssDate = r.Key.Item_AssDate }).ToList();
+                // var queryRoom = en.Item_tbl.Where(o => o.Room_Id != 0 && o.Room_Id != -1 && (o.Emp_Id == 0|| o.Emp_Id == null)).GroupBy(x => new { x.Room_Id }).Select(r => new ItemDTORoom { Room_Id = r.Key.Room_Id }).ToList();
+                var queryRoom = en.Item_tbl.Where(o => o.Emp_Id == 0 || o.Emp_Id == null).GroupBy(x => new { x.Room_Id }).Select(r => new ItemDTORoom { Room_Id = r.Key.Room_Id }).ToList();
+
                 foreach (var item in queryRoom)
                 {
                     long? Room_ID = item.Room_Id;
-                    DateTime? AssetDate = item.Item_AssDate;
+                    var QDetails = en.Item_tbl.Where(o => o.Room_Id == Room_ID).ToList();
+                    DateTime? AssetDate = QDetails.FirstOrDefault().Item_AssDate;
 
-                    AssetsEventTrackingTestHeader objHeader = new AssetsEventTrackingTestHeader();
+                    AssetsEventTrackingHeader objHeader = new AssetsEventTrackingHeader();
                     objHeader.RequestDate = AssetDate;
                     objHeader.DueDate = null;
                     objHeader.RequestRefCode = Guid.NewGuid().ToString();
-                    objHeader.RequestActionType = 3;  //(int) CustodyRequestType.CheckOut;
-                    objHeader.ProcessType = (int)CustodyProcessTypes.CheckOut;
-                    objHeader.TMonth = AssetDate.Value.Month;
-                    objHeader.TYear = AssetDate.Value.Year;
+                    objHeader.RequestActionType = 1;  //(int) CustodyRequestType.CheckOut;
+                    objHeader.ProcessType = 2;
+                    if (AssetDate != null)
+                    {
+                        objHeader.TMonth = AssetDate.Value.Month;
+                        objHeader.TYear = AssetDate.Value.Year;
+                    }
                     objHeader.Serial = generateRequestSerial();
                     
                     int LocationID = 0;
@@ -154,18 +164,19 @@ namespace UI.Web.Modules.Assets
                         // Check if Emplyee Location Saved 
                     }
 
-                    objHeader.RequestNotes = null;
+                    objHeader.RequestNotes = "تقرير الجرد في نظام العهد بتاريخ : " + DateTime.Now.ToString();
+
 
 
                     objHeader.CreatedAt = AssetDate;
                     objHeader.CreatedBy = ZeroIntergerIFNull(ReadSession("userid").ToString());
-                    objRepository.AddAssetsEventTrackingTestHeader(objHeader);
+                    objRepository.AddAssetsEventTrackingHeader(objHeader);
                     int HeaderID = objHeader.Code;
 
-                    var QDetails = en.Item_tbl.Where(o => o.Room_Id == Room_ID && o.Item_AssDate == AssetDate).ToList();
+                    //var QDetails = en.Item_tbl.Where(o => o.Room_Id == Room_ID).ToList();
                     foreach (var itemD in QDetails)
                     {
-                        AssetsEventTrackingTest obj = new AssetsEventTrackingTest();
+                        AssetsEventTracking obj = new AssetsEventTracking();
 
                         int? Code = null;
                         var QCard = en.D_ItemCard.Where(o => o.REFID == itemD.CatSub_Id).ToList();
@@ -182,14 +193,14 @@ namespace UI.Web.Modules.Assets
                         obj.statusId = 2;// CHecked OUt ;
                         obj.ToLocationId = LocationID;
 
-                        obj.Notes = null;
+                        obj.Notes = "تقرير الجرد في نظام العهد بتاريخ : " + DateTime.Now.ToString();
                         obj.StoreRequestRefCode = null;
                         obj.Qty = itemD.Item_Count;
 
                         obj.CreatedAt = AssetDate;
                         obj.CreatedBy = null;
 
-                        objRepository.AddEventTrackingTest(obj);
+                        objRepository.AddEventTracking(obj);
                     }
                 }
             }

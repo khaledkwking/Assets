@@ -1921,6 +1921,7 @@
     <Content Include="Modules\Assets\assetsListPopup.aspx" />
     <Content Include="Modules\Assets\MigrateDataaspx.aspx" />
     <Content Include="Modules\AutoComplete\Services\TextAutoComplete.asmx" />
+    <Content Include="Modules\Dashboard\Dashboard.aspx" />
     <Content Include="Modules\MasterData\AssetsList.aspx" />
     <Content Include="Modules\MasterData\EmployeeLocation.aspx" />
     <Content Include="Modules\MasterData\ItemsCardMasterPrice.aspx" />
@@ -1953,7 +1954,25 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="wwwroot\ApiScripts\Tender\ChartNew.js" />
+    <Content Include="wwwroot\ApiScripts\Tender\index - Copy.js" />
+    <Content Include="wwwroot\ApiScripts\Tender\index.js" />
     <Content Include="wwwroot\assets\js\FormValidation.js" />
+    <Content Include="wwwroot\Charts\dx.common.css" />
+    <Content Include="wwwroot\Charts\dx.dark.css" />
+    <Content Include="wwwroot\Charts\dx.light.css" />
+    <Content Include="wwwroot\Charts\dx.spa.css" />
+    <Content Include="wwwroot\Charts\DX_JS\africa.js" />
+    <Content Include="wwwroot\Charts\DX_JS\canada.js" />
+    <Content Include="wwwroot\Charts\DX_JS\dx.all.js" />
+    <Content Include="wwwroot\Charts\DX_JS\dx.chartjs.js" />
+    <Content Include="wwwroot\Charts\DX_JS\dx.webappjs.js" />
+    <Content Include="wwwroot\Charts\DX_JS\eurasia.js" />
+    <Content Include="wwwroot\Charts\DX_JS\europe.js" />
+    <Content Include="wwwroot\Charts\DX_JS\globalize.min.js" />
+    <Content Include="wwwroot\Charts\DX_JS\jquery.min.js" />
+    <Content Include="wwwroot\Charts\DX_JS\usa.js" />
+    <Content Include="wwwroot\Charts\DX_JS\world.js" />
     <Content Include="wwwroot\images\back.png" />
   </ItemGroup>
   <ItemGroup>
@@ -2171,6 +2190,13 @@
     <Compile Include="Modules\AutoComplete\Services\TextAutoComplete.asmx.cs">
       <DependentUpon>TextAutoComplete.asmx</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Dashboard\Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Dashboard\Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\MasterData\AssetsList.aspx.cs">
       <DependentUpon>AssetsList.aspx</DependentUpon>
@@ -2757,6 +2783,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="wwwroot\Charts\icons\dxicons.eot" />
+    <Content Include="wwwroot\Charts\icons\dxicons.ttf" />
+    <Content Include="wwwroot\Charts\icons\dxicons.woff" />
+    <Content Include="wwwroot\Charts\icons\dxiconsios.eot" />
+    <Content Include="wwwroot\Charts\icons\dxiconsios.ttf" />
+    <Content Include="wwwroot\Charts\icons\dxiconsios.woff" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\ValidationResources.ar.resx">

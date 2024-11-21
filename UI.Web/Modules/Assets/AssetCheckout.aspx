@@ -8,7 +8,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <input id="hdnMasterID" runat="server" type="hidden" />
-    <input id="hdnOrgChartRefCode" runat="server" type="hidden" />
+        <asp:HiddenField runat="server" ID="hdnSelectedNode" ClientIDMode="Static" />
     <input id="hdnActiveTab" runat="server" type="hidden" />
 
     <script language="JavaScript" type="text/javascript">
@@ -27,14 +27,14 @@
                 }
             }
 
-            var txt = document.getElementById("<%=txtFromDate.ClientID %>")
+            var txt = document.getElementById("<%=txtRequestDate.ClientID %>")
             if (txt.value == "") {
                 Swal.fire("فضلا ، ادخل تاريخ إستمارة العهدة");
                 return false;
             }
 
 
-            var hdnSelectedLocation = document.getElementById("<%=selectedLocation.ClientID %>")
+            var hdnSelectedLocation = document.getElementById("<%=lstToLocation.ClientID %>")
 
             if (hdnSelectedLocation.value == "" || hdnSelectedLocation.value == "0") {
                 Swal.fire("فضلا ، إختر موقع العهدة ");
@@ -177,7 +177,7 @@
         }
         function NumberKey(evt, index) // when the user click enter in the new item form
         {
-            //alert("jj");
+        //alert("jj");
             //alert("DEFAULT: "+document.getElementById("<%=txtDefault.ClientID %>"));
             document.getElementById("<%=txtDefault.ClientID %>").value = index;
             var charCode = (evt.which) ? evt.which : event.keyCode
@@ -309,7 +309,7 @@
             <div class="nk-block-head-content">
                 <h3 class="nk-block-title page-title"><%=_PageTitle %></h3>
                 <ul class="breadcrumb breadcrumb-arrow">
-                    <li><i class="icon ni ni-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="icon ni ni-chevrons-left"></i>&nbsp;&nbsp;</li>
+                    <li><i class="fa fa-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
                     <li class="active"><%=_PageTitle %></li>
                 </ul>
             </div>
@@ -354,9 +354,6 @@
 
     <div class="nk-block">
 
-
-
-
         <div class="card card-bordered">
 
 
@@ -364,7 +361,7 @@
                 <div class="card-inner" data-select2-id="22">
                     <div class="card-title-group" data-select2-id="21">
                         <div class="card-title">
-                            <h5 class="title"><%=GetGlobalResourceObject("pages","CustodyDetails") %></h5>
+                            <h5 class="title"><%=_PageSubTitle %></h5>
                         </div>
                         <div class="card-tools mr-n1" data-select2-id="20">
                             <ul class="btn-toolbar gx-1" data-select2-id="19">
@@ -373,20 +370,7 @@
                                 </li>
                                 <li class="btn-toolbar-sep"></li>
 
-                                <%--<li>
-                                    <div class="dropdown">
-                                        <a href="#" class="btn btn-trigger btn-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            <em class="icon ni ni-setting"></em>
-                                        </a>
-                                        <div class="dropdown-menu  dropdown-menu-right" style="">
-                                            <ul class="link-check">
-                                                <li>
-                                                    <asp:LinkButton OnClientClick="return checkDelete();" runat="server" ID="btnDelete" OnClick="btnDelete_Click"><i class="icon ni ni-trash"></i>&nbsp;<%=GetGlobalResourceObject("pages","DeleteSelectedData") %></asp:LinkButton></li>
-                                            </ul>
-
-                                        </div>
-                                    </div>
-                                </li>--%>
+                                 
                                 <li>
                                     <div class="dropdown">
                                         <a href="#" class="btn btn-trigger btn-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -417,495 +401,408 @@
                 </div>
                 <div class="card-inner p-2">
 
+                    <div class="row">
 
+                        <asp:Label runat="server" ID="lblerror"></asp:Label>
+                        <div class="col-md-3 treecontainer">
 
-                    <asp:Label runat="server" ID="lblerror"></asp:Label>
-                    <div class="col-lg-12">
-                                       
-                        <div class="portlet box portlet-blue">
+                            <div class="panel panel-yellow" style="min-height: 70vh">
+                                <div class="panel-heading clearfix">
+                                    <span class="mts"><%=GetGlobalResourceObject("pages","OrgChartTitle") %>  </span>
+                                    <div style="float: left"><a href="../Reports/OrgChartPrint.aspx" class="btn btn-dim btn-primary  btn-xs iframe75 "><i class="icon ni ni-printer"></i></a></div>
+                                </div>
+                                <div class="panel-body" style="padding: 0px; padding-top: 25px; margin-bottom: 10px;">
 
-                            <div class="portlet-body">
-                                <div role="form">
-                                    <div class="row" style="margin-bottom: 20px;">
-                                        <div class="col-md-12">
-                                            <div style="text-align: left; display: none">
-                                                <a href="assetsListPopup.aspx?eventId=1" class="btn btn-primary iframe75callback"><em class="icon ni ni-plus"></em><span>إضافة المواد</span></a>
-                                                <asp:Button runat="server" ID="btnReload" OnClick="btnReload_Click" CssClass="hide" />
-
-                                            </div>
-
-                                            <div class="form-group" style="display:none">
-
-                                                <div class="custom-control custom-radio" onclick="setSelectedtype('1')">
-                                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadio1">عهدة شخصية </label>
-                                                </div>
-
-                                                <div class="custom-control custom-radio" onclick="setSelectedtype('2')">
-                                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadio2">عهدة تنظيمية </label>
-                                                </div>
-                                            </div>
+                                    <div class="form-control-wrap" style="margin-bottom: 20px;">
+                                        <div class="form-icon form-icon-right">
+                                            <em class="icon ni ni-search"></em>
                                         </div>
-                                    </div>
-                                  
-                                    <div class="row">
-                                        <div class="col-md-4">
-
-                                            <div class="form-group" runat="server" style="display: none">
-                                                <label class="control-label" for=""><%=GetGlobalResourceObject("pages","CustodyType") %>  </label>
-
-                                                <asp:RadioButtonList ID="custodyType" runat="server" RepeatDirection="Horizontal">
-                                                    <asp:ListItem Text="شخصية" Value="1"></asp:ListItem>
-                                                    <asp:ListItem Text="تنظيمية" Value="2"></asp:ListItem>
-                                                </asp:RadioButtonList>
-
-                                            </div>
-
-                                            <div class="form-group divEmployee" id="divEmployee" runat="server">
-                                                <label class="control-label" for=""><%=GetGlobalResourceObject("pages","RefEmployee") %>  </label>
-                                                <asp:DropDownList ID="lstRefEmployee" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="lstRefEmployee_SelectedIndexChanged"></asp:DropDownList>
-
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="control-label" for=""><%=GetGlobalResourceObject("pages","CustodtDate") %></label>
-
-                                                <div class="form-control-wrap">
-                                                    <div class="form-icon form-icon-right">
-                                                        <em class="icon ni ni-calendar-alt"></em>
-                                                    </div>
-                                                    <asp:TextBox runat="server" ID="txtFromDate" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                 <asp:UpdatePanel ID="UpdatePanel4" runat="server" ChildrenAsTriggers="true" UpdateMode="conditional">
-                                                                <ContentTemplate>
-                                            <div class="row" id="divLocationOrg" runat="server">
-                                
-                                                <div class="col-md-6">
-                                                    <div class="form-group" runat="server">
-                                                
-                                                <label class="control-label" for="">الجهة  </label>
-                                                <asp:DropDownList ID="ddlDirection" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlDirection_SelectedIndexChanged"></asp:DropDownList>
-                                                
-                                                <br /><br />
-
-                                                <label class="control-label" for="">الامانة  </label>
-                                                <asp:DropDownList ID="ddlAmana" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlAmana_SelectedIndexChanged"></asp:DropDownList>
-                                                
-                                                <br /><br />
-
-                                                <label class="control-label" for="">الادارة  </label>
-                                                <asp:DropDownList ID="ddlDepartment" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlDepartment_SelectedIndexChanged"></asp:DropDownList>
-
-                                                <br /><br />
-
-                                                <label class="control-label" for="">المراقبة </label>
-                                                <asp:DropDownList ID="ddlMorakba" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlMorakba_SelectedIndexChanged"></asp:DropDownList>
-                                                
-                                                <br /><br />
-
-                                                <label class="control-label" for="">القسم  </label>
-                                                <asp:DropDownList ID="ddlSection" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlSection_SelectedIndexChanged"></asp:DropDownList>
-
-                                            </div>
-                                                </div>
-                                                <div class="col-md-6">
-
-                                                    <div class="form-group" runat="server">
-                                                
-                                                <label class="control-label" for="">المبنى  </label>
-                                                <asp:DropDownList ID="ddlBuilding" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlBuilding_SelectedIndexChanged"></asp:DropDownList>
-                                                
-                                                 <br /><br />
-
-                                                <label class="control-label" for="">الدور  </label>
-                                                <asp:DropDownList ID="ddlFloor" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlFloor_SelectedIndexChanged"></asp:DropDownList>
-                                                
-                                                <br /><br />
-
-                                                <label class="control-label" for="">الغرفة  </label>
-                                                <asp:DropDownList ID="ddlRoom" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static" AutoPostBack="true" OnSelectedIndexChanged="ddlRoom_SelectedIndexChanged"></asp:DropDownList>
-
-                                            </div>
-                                                </div>
-                           
-                                            </div>
-                                            
-                                               
-                                            <div class="form-group" runat="server" id="divLocationPersonal">
-                                                <label class="control-label" for=""><%=GetGlobalResourceObject("pages","assignedToLocation") %>  </label>
-
-                                                <input type="text" id="txtOwnerLocationCode" class="form-control" placeholder="Type to filter" autocomplete="off" />
-                                                <input id="selectedLocation" runat="server" value="0" type="hidden" class="selectedLocation" />
-
-                                            </div>
-                                            <br /><br />
-                                            <div class="form-group">
-
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="chkReturnDate">
-                                                    <label class="custom-control-label" for="chkReturnDate"></label>
-                                                </div>
-
-                                                <label class="control-label" for=""><%=GetGlobalResourceObject("pages","ReturnDate") %></label>
-
-                                                <div class="form-control-wrap" id="disReturnDate" style="display: none">
-                                                    <div class="form-icon form-icon-right">
-                                                        <em class="icon ni ni-calendar-alt"></em>
-                                                    </div>
-                                                    <asp:TextBox runat="server" ID="txtReturnDate" placeholder="__/__/____" class="form-control date-picker" ClientIDMode="Static"></asp:TextBox>
-                                                </div>
-
-
-                                            </div>
-                                                  </ContentTemplate>
-
-                                                                <Triggers>
-                                                                    <asp:AsyncPostBackTrigger ControlID="ddlDirection" EventName="SelectedIndexChanged" />
-
-                                                                    <asp:AsyncPostBackTrigger ControlID="ddlAmana" EventName="SelectedIndexChanged" />
-
-                                                                    <asp:AsyncPostBackTrigger ControlID="ddlDepartment" EventName="SelectedIndexChanged" />
-
-                                                                    <asp:AsyncPostBackTrigger ControlID="ddlMorakba" EventName="SelectedIndexChanged" />
-
-                                                                    <asp:AsyncPostBackTrigger ControlID="ddlSection" EventName="SelectedIndexChanged" />
-
-                                                                    <asp:AsyncPostBackTrigger ControlID="ddlBuilding" EventName="SelectedIndexChanged" />
-
-                                                                    <asp:AsyncPostBackTrigger ControlID="ddlFloor" EventName="SelectedIndexChanged" />
-                                                                    
-                                                                    <asp:AsyncPostBackTrigger ControlID="ddlRoom" EventName="SelectedIndexChanged" />
-
-                                                                </Triggers>
-
-                                                            </asp:UpdatePanel>
-                                        </div>
-
-                                        <div class="col-md-4 divSelectedEmployeeInfo" id="divSelectedEmployeeInfo" runat="server">
-                                            <div class="card card-bordered bg-light h-100">
-                                                <div class="card-inner">
-                                                    <div class="project">
-                                                        <div class="project-head">
-                                                            <a href="#" class="project-title">
-                                                                <div class="user-avatar sq bg-warning"><span><em class="icon ni ni-users"></em></span></div>
-                                                                <div class="project-info">
-                                                                    <h6 class="title">
-                                                                        <asp:Label runat="server" ID="lblSelectedEmpName"></asp:Label></h6>
-                                                                    <span class="sub-text">
-                                                                        <asp:Label runat="server" ID="lblSelectedjobTitle"></asp:Label></span>
-                                                                </div>
-                                                            </a>
-                                                            <div class="drodown">
-                                                                <h5 class="title">
-                                                                    <asp:Label runat="server" ID="lblSelectedEmpCode"></asp:Label></h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="project-details" style="direction:rtl">
-                                                            <span class="sub-text">
-                                                                <asp:Label runat="server" ID="lblSelectedEmpLocationName"></asp:Label></span>
-
-                                                        </div>
-                                                        <%--   <div class="project-progress">
-                                                            <div class="project-progress-details">
-                                                                <div class="project-progress-task"><em class="icon ni ni-check-round-cut"></em><span>25 Tasks</span></div>
-                                                                <div class="project-progress-percent">23%</div>
-                                                            </div>
-                                                            <div class="progress progress-pill progress-md bg-light">
-                                                                <div class="progress-bar" data-progress="23" style="width: 23%;"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="project-meta">
-                                                            <ul class="project-users g-1">
-                                                                <li>
-                                                                    <div class="user-avatar sm bg-primary">
-                                                                        <img src="./images/avatar/c-sm.jpg" alt=""></div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="user-avatar sm bg-blue"><span>N</span></div>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="badge badge-dim badge-light text-gray"><em class="icon ni ni-clock"></em><span>21 Days Left</span></span>
-                                                        </div>--%>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                           
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="control-label" for=""><%=GetGlobalResourceObject("pages","Notes") %></label>
-                                                <asp:TextBox runat="server" ID="txtNotes" TextMode="MultiLine" class="form-control" Height="50px"></asp:TextBox>
-                                            </div>
-
-
-                                        </div>
+                                        <input type="text" class="form-control" id="treeSearch" placeholder="  بحث الهيكل التنظيمي">
                                     </div>
 
+                                    <div id="progressbar">
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+
+                                    <div id="orgTree" class=""></div>
                                 </div>
                             </div>
                         </div>
-                         
-                    </div>
+                        <div class="col-lg-9">
+                            <div class="portlet box portlet-blue">
 
-                    <div class="card-inner">
-                        <asp:UpdatePanel runat="server" ID="Updatepanel2" ChildrenAsTriggers="true" UpdateMode="conditional">
-                            <ContentTemplate>
+                                <div class="portlet-body">
+                                    <div role="form">
+                                        <div class="row" style="margin-bottom: 20px;display:none">
+                                            <div class="col-md-12">
+                                                <div style="text-align: left; display: none">
+                                                    <a href="assetsListPopup.aspx?eventId=1" class="btn btn-primary iframe75callback"><em class="icon ni ni-plus"></em><span>إضافة المواد</span></a>
+                                                   
 
-                                <input id="hdnItemCount" runat="server" type="hidden" />
-
-
-
-
-                                <input type="hidden" runat="server" id="txtDefault" value="2" />
-                                <input type="hidden" runat="server" id="hidItemID" value="0" />
-                                <input type="hidden" runat="server" id="hidContentID" value="0" />
-                                <input type="hidden" runat="server" id="hidQty" value="0" />
-                                <input type="hidden" runat="server" id="hidPrice" value="0" />
-                                <input type="hidden" runat="server" id="hidCurrency" value="1" />
-
-                                <input type="hidden" runat="server" id="hidIsbn" />
-                                <input type="hidden" runat="server" id="hidBar" />
-                                <input type="hidden" runat="server" id="hidDesc" />
-
-                                <input type="hidden" runat="server" id="hidOldQuantity" />
-                                <input type="hidden" runat="server" id="hidOldCost" />
-
-                                <asp:Button runat="server" UseSubmitBehavior="false" ID="btnCheckItem" Text="Check Item" Style="display: none;" />
-                                <asp:Button runat="server" UseSubmitBehavior="false" ID="btnAddNewItem" Text="Add Item" Style="display: none;" />
-
-                                <input type="hidden" id="txtFocus" value="0" runat="server" />
-                                <asp:Button runat="server" ID="btnHide" Text="Hide Me" Style="display: none;" OnClick="btnHide_Click" />
-
-
-
-                                <asp:DataGrid ID="grdCustodyItems" runat="server" AllowPaging="false" ShowFooter="true"
-                                    DataKeyField="EventCode" class="table table-hover table-striped table-bordered table-advanced tablesorter" PageSize="15" AutoGenerateColumns="False"
-                                    BackColor="White" BorderStyle="solid" BorderWidth="1px" Font-Names="Tahoma"
-                                    CellPadding="3" GridLines="both" Width="100%" OnItemDataBound="grdCustodyItems_ItemDataBound" OnItemCommand="grdCustodyItems_ItemCommand">
-                                    <SelectedItemStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
-                                    <ItemStyle CssClass="grdItem" />
-                                    <AlternatingItemStyle CssClass="grdItem" />
-                                    <HeaderStyle CssClass="grdHead" />
-                                    <FooterStyle CssClass="grdFoot" />
-                                    <PagerStyle Visible="false" CssClass="grdPager" HorizontalAlign="center" Mode="NextPrev"
-                                        PrevPageText="&lt;&lt; Previous &nbsp;&nbsp;&nbsp;" NextPageText="&nbsp;&nbsp;&nbsp;Next&gt;&gt;" />
-                                    <Columns>
-
-                                        <asp:TemplateColumn HeaderText="">
-                                            <ItemStyle Width="1%" HorizontalAlign="center" />
-                                            <FooterStyle HorizontalAlign="center" />
-                                            <ItemTemplate>
-                                                <asp:LinkButton runat="server" ID="lnkEdit" CommandName="Edit"><em class="icon ni ni-edit" style="font-size:20px;color:cornflowerblue"></em></asp:LinkButton>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                                <asp:LinkButton runat="server" ID="lnkAdd" Visible="false" CommandName="AddNew"> <em class="icon ni ni-property-add" style="font-size:30px;"></em></asp:LinkButton>
-                                                <div style="width: 80px; margin: 0 auto; background: red">
-                                                    <div style="float: left">
-                                                        <asp:LinkButton runat="server" ID="lnkCancel" CommandName="Cancel"> <em class="icon ni ni-undo" style="font-size:20px;color:Highlight"></em></asp:LinkButton>
-                                                    </div>
-                                                    <div style="float: left">
-                                                        <asp:LinkButton runat="server" ID="lnkUpdate" CommandName="Update"> <em class="icon ni ni-save" style="font-size:20px;margin-left:10px;"></em></asp:LinkButton>
-                                                    </div>
                                                 </div>
 
-                                                <asp:Button runat="server" ID="btnUpdateItem" UseSubmitBehavior="false" CommandName="Update" Style="display: none;" />
-                                                <asp:Button runat="server" ID="btnCancelItem" UseSubmitBehavior="false" CommandName="Cancel" Style="display: none;" />
-                                            </EditItemTemplate>
-                                        </asp:TemplateColumn>
-                                        <asp:TemplateColumn HeaderText="">
-                                            <ItemStyle Width="1%" HorizontalAlign="center" />
-                                            <ItemTemplate>
-                                                <asp:LinkButton runat="server" ID="lnkDelete" CommandName="Delete"><em class="icon ni ni-property-remove"  style="font-size:20px;color:red" ></em></asp:LinkButton>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                                &nbsp;
-                                            </EditItemTemplate>
-                                        </asp:TemplateColumn>
-                                        <asp:BoundColumn DataField="EventCode" Visible="false"></asp:BoundColumn>
-                                        <asp:BoundColumn DataField="ItemCode" Visible="false"></asp:BoundColumn>
+                                                <div class="form-group">
 
-                                        <asp:TemplateColumn HeaderText="م">
-                                            <ItemStyle Width="1%" HorizontalAlign="center" />
-                                            <ItemTemplate>
-                                                <%#ZeroIntergerIFNull((DataBinder.Eval(Container, "ItemIndex")).ToString()) + 1%>
-                                            </ItemTemplate>
-                                        </asp:TemplateColumn>
-                                        <asp:TemplateColumn HeaderText="رقم المادة">
-                                            <HeaderStyle Wrap="false" />
-                                            <ItemStyle Width="15%" HorizontalAlign="Center" />
+                                                    <div class="custom-control custom-radio" onclick="setSelectedtype('1')">
+                                                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                                        <label class="custom-control-label" for="customRadio1">عهدة شخصية </label>
+                                                    </div>
 
-                                            <HeaderStyle />
-                                            <ItemTemplate>
-                                                <%#EmptyIfZero( gets(DataBinder.Eval(Container.DataItem, "ItemRefCode")))%>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                                <asp:Label Visible="false" runat="server" ID="lblItemCode">
+                                                    <div class="custom-control custom-radio" onclick="setSelectedtype('2')">
+                                                        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                                                        <label class="custom-control-label" for="customRadio2">عهدة تنظيمية </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+
+                                                <div class="form-group" runat="server" style="display: none">
+                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","CustodyType") %>  </label>
+
+                                                    <asp:RadioButtonList ID="custodyType" runat="server" RepeatDirection="Horizontal">
+                                                        <asp:ListItem Text="شخصية" Value="1"></asp:ListItem>
+                                                        <asp:ListItem Text="تنظيمية" Value="2"></asp:ListItem>
+                                                    </asp:RadioButtonList>
+
+                                                </div>
+
+                                                <div class="form-group divEmployee" id="divEmployee" runat="server">
+                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","RefEmployee") %>  </label>
+                                                    <asp:DropDownList ID="lstRefEmployee" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"  ></asp:DropDownList>
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","CustodtDate") %></label>
+
+                                                    <div class="form-control-wrap">
+                                                        <div class="form-icon form-icon-right">
+                                                            <em class="icon ni ni-calendar-alt"></em>
+                                                        </div>
+                                                        <asp:TextBox runat="server" ID="txtRequestDate" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","assignedToLocation") %>  </label>
+                                                       <asp:DropDownList ID="lstToLocation" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"  ></asp:DropDownList>
+                                                    <%--<asp:DropDownList runat="server" ID="lstToLocation"></asp:DropDownList>--%>
+                                                  
+
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="chkReturnDate">
+                                                        <label class="custom-control-label" for="chkReturnDate"></label>
+                                                    </div>
+
+                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","ReturnDate") %></label>
+
+                                                    <div class="form-control-wrap" id="disReturnDate" style="display: none">
+                                                        <div class="form-icon form-icon-right">
+                                                            <em class="icon ni ni-calendar-alt"></em>
+                                                        </div>
+                                                        <asp:TextBox runat="server" ID="txtReturnDate" placeholder="__/__/____" class="form-control date-picker" ClientIDMode="Static"></asp:TextBox>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-4 divSelectedEmployeeInfo" id="divSelectedEmployeeInfo" style="display:none"  >
+                                                <div class="card card-bordered bg-light">
+                                                   
+                                                        <div id="cboxLoadedContent">
+                                                         
+                                                            
+                                                        </div>
+                                                    
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","Notes") %></label>
+                                                    <asp:TextBox runat="server" ID="txtNotes" TextMode="MultiLine" class="form-control" Height="50px"></asp:TextBox>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-inner">
+                                <asp:UpdatePanel runat="server" ID="Updatepanel2" ChildrenAsTriggers="true" UpdateMode="conditional">
+                                    <ContentTemplate>
+                                      
+
+                                        <input id="hdnItemCount" runat="server" type="hidden" />
+                                         <asp:HiddenField runat="server" ID="hdnEmployeeId" ClientIDMode="Static" />
+
+
+
+                                        <input type="hidden" runat="server" id="txtDefault" value="2" />
+                                        <input type="hidden" runat="server" id="hidItemID" value="0" />
+                                        <input type="hidden" runat="server" id="hidContentID" value="0" />
+                                        <input type="hidden" runat="server" id="hidQty" value="0" />
+                                        <input type="hidden" runat="server" id="hidPrice" value="0" />
+                                        <input type="hidden" runat="server" id="hidCurrency" value="1" />
+
+                                        <input type="hidden" runat="server" id="hidIsbn" />
+                                        <input type="hidden" runat="server" id="hidBar" />
+                                        <input type="hidden" runat="server" id="hidDesc" />
+
+                                        <input type="hidden" runat="server" id="hidOldQuantity" />
+                                        <input type="hidden" runat="server" id="hidOldCost" />
+
+                                        <asp:Button runat="server" UseSubmitBehavior="false" ID="btnCheckItem" Text="Check Item" Style="display: none;" />
+                                        <asp:Button runat="server" UseSubmitBehavior="false" ID="btnAddNewItem" Text="Add Item" Style="display: none;" />
+                                         <asp:Button runat="server" ID="btnReload" OnClick="btnReload_Click" CssClass="hide" ClientIDMode="Static" Style="display: none;" />
+
+
+                                        <input type="hidden" id="txtFocus" value="0" runat="server" />
+                                        <asp:Button runat="server" ID="btnHide" Text="Hide Me" Style="display: none;" OnClick="btnHide_Click" />
+
+
+
+                                        <asp:DataGrid ID="grdCustodyItems" runat="server" AllowPaging="false" ShowFooter="true"
+                                            DataKeyField="EventCode" class="table table-hover table-striped table-bordered table-advanced tablesorter" PageSize="15" AutoGenerateColumns="False"
+                                            BackColor="White" BorderStyle="solid" BorderWidth="1px" Font-Names="Tahoma"
+                                            CellPadding="3" GridLines="both" Width="100%" OnItemDataBound="grdCustodyItems_ItemDataBound" OnItemCommand="grdCustodyItems_ItemCommand">
+                                            <SelectedItemStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                                            <ItemStyle CssClass="grdItem" />
+                                            <AlternatingItemStyle CssClass="grdItem" />
+                                            <HeaderStyle CssClass="grdHead" />
+                                            <FooterStyle CssClass="grdFoot" />
+                                            <PagerStyle Visible="false" CssClass="grdPager" HorizontalAlign="center" Mode="NextPrev"
+                                                PrevPageText="&lt;&lt; Previous &nbsp;&nbsp;&nbsp;" NextPageText="&nbsp;&nbsp;&nbsp;Next&gt;&gt;" />
+                                            <Columns>
+
+                                                <asp:TemplateColumn HeaderText="">
+                                                    <ItemStyle Width="1%" HorizontalAlign="center" />
+                                                    <FooterStyle HorizontalAlign="center" />
+                                                    <ItemTemplate>
+                                                        <asp:LinkButton runat="server" ID="lnkEdit" CommandName="Edit"><em class="icon ni ni-edit" style="font-size:20px;color:cornflowerblue"></em></asp:LinkButton>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <asp:LinkButton runat="server" ID="lnkAdd" Visible="false" CommandName="AddNew"> <em class="icon ni ni-property-add" style="font-size:30px;"></em></asp:LinkButton>
+                                                        <div style="width: 80px; margin: 0 auto; background: red">
+                                                            <div style="float: left">
+                                                                <asp:LinkButton runat="server" ID="lnkCancel" CommandName="Cancel"> <em class="icon ni ni-undo" style="font-size:20px;color:Highlight"></em></asp:LinkButton>
+                                                            </div>
+                                                            <div style="float: left">
+                                                                <asp:LinkButton runat="server" ID="lnkUpdate" CommandName="Update"> <em class="icon ni ni-save" style="font-size:20px;margin-left:10px;"></em></asp:LinkButton>
+                                                            </div>
+                                                        </div>
+
+                                                        <asp:Button runat="server" ID="btnUpdateItem" UseSubmitBehavior="false" CommandName="Update" Style="display: none;" />
+                                                        <asp:Button runat="server" ID="btnCancelItem" UseSubmitBehavior="false" CommandName="Cancel" Style="display: none;" />
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="">
+                                                    <ItemStyle Width="1%" HorizontalAlign="center" />
+                                                    <ItemTemplate>
+                                                        <asp:LinkButton runat="server" ID="lnkDelete" CommandName="Delete"><em class="icon ni ni-property-remove"  style="font-size:20px;color:red" ></em></asp:LinkButton>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        &nbsp;
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:BoundColumn DataField="EventCode" Visible="false"></asp:BoundColumn>
+                                                <asp:BoundColumn DataField="ItemCode" Visible="false"></asp:BoundColumn>
+
+                                                <asp:TemplateColumn HeaderText="م">
+                                                    <ItemStyle Width="1%" HorizontalAlign="center" />
+                                                    <ItemTemplate>
+                                                        <%#ZeroIntergerIFNull((DataBinder.Eval(Container, "ItemIndex")).ToString()) + 1%>
+                                                    </ItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="رقم المادة">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="20%" HorizontalAlign="Center" />
+
+                                                    <HeaderStyle />
+                                                    <ItemTemplate>
+                                                        <%#EmptyIfZero( gets(DataBinder.Eval(Container.DataItem, "ItemRefCode")))%>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <asp:Label Visible="false" runat="server" ID="lblItemCode">
 		                                                                                <%#DataBinder.Eval(Container.DataItem, "ItemRefCode")%>
-                                                </asp:Label>
-                                                <asp:TextBox onkeypress="return NumberKey(event,1)" runat="server"
-                                                    ID="txtItemCode" CssClass="form-control"></asp:TextBox>
-                                            </EditItemTemplate>
-                                            <FooterTemplate>
-                                                <div align="right">
-                                                    <%-- <asp:Label runat="server" ID="lblItTotal"></asp:Label>--%>
-                                                </div>
-                                            </FooterTemplate>
-                                        </asp:TemplateColumn>
+                                                        </asp:Label>
+                                                        <asp:TextBox onkeypress="return NumberKey(event,1)" runat="server"
+                                                            ID="txtItemCode" CssClass="form-control"></asp:TextBox>
+                                                    </EditItemTemplate>
+                                                    <FooterTemplate>
+                                                        <div align="right">
+                                                            <%-- <asp:Label runat="server" ID="lblItTotal"></asp:Label>--%>
+                                                        </div>
+                                                    </FooterTemplate>
+                                                </asp:TemplateColumn>
 
-                                        <asp:TemplateColumn HeaderText="وصف المادة">
-                                            <HeaderStyle Wrap="false" />
-                                            <ItemStyle Width="30%" />
-                                            <ItemTemplate>
-                                                <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                                <asp:Label Visible="false" runat="server" ID="lblDesc">
+                                                <asp:TemplateColumn HeaderText="وصف المادة">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="30%" />
+                                                    <ItemTemplate>
+                                                        <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <asp:Label Visible="false" runat="server" ID="lblDesc">
 		                                                                                   <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
-                                                </asp:Label>
-                                                <asp:TextBox onkeypress="return NumberKey(event,3)" runat="server"
-                                                    ID="txtItemDesc" CssClass="form-control"></asp:TextBox>
-                                                <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2"
-                                                    runat="server" TargetControlID="txtItemDesc"
-                                                    CompletionInterval="10" CompletionSetCount="10" MinimumPrefixLength="1"
-                                                    ServicePath="/modules/autocomplete/Services/TextAutoComplete.asmx" ServiceMethod="ItemAutoCompete" />
-                                            </EditItemTemplate>
-                                        </asp:TemplateColumn>
-                                        <asp:TemplateColumn HeaderText="الكمية/الرصيد">
-                                            <HeaderStyle Wrap="false" HorizontalAlign="center" />
-                                            <ItemStyle HorizontalAlign="center" Width="2%" />
-                                            <ItemTemplate>
-                                                <%#DataBinder.Eval(Container.DataItem, "Qty")%>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                                <asp:TextBox onfocus="this.select();" Visible="false" runat="server" ID="txtQuantity" MaxLength="20" CssClass="form-control"
-                                                    Text='<%#gets(DataBinder.Eval(Container.DataItem, "Qty"))%>'
-                                                    onkeypress="return NumberKeyEdit(event,6)"></asp:TextBox>
-                                                <asp:TextBox onkeypress="return NumberKey(event,4)" runat="server"
-                                                    Text="1" ID="txtFooterQuantity" MaxLength="20" CssClass="form-control"></asp:TextBox>
-                                                <asp:Label Visible="false" runat="server" ID="lblQty">
+                                                        </asp:Label>
+                                                        <asp:TextBox onkeypress="return NumberKey(event,3)" runat="server"
+                                                            ID="txtItemDesc" CssClass="form-control"></asp:TextBox>
+                                                        <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2"
+                                                            runat="server" TargetControlID="txtItemDesc"
+                                                            CompletionInterval="10" CompletionSetCount="10" MinimumPrefixLength="1"
+                                                            ServicePath="/modules/autocomplete/Services/TextAutoComplete.asmx" ServiceMethod="ItemAutoCompete" />
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="الكمية/الرصيد">
+                                                    <HeaderStyle Wrap="false" HorizontalAlign="center" />
+                                                    <ItemStyle HorizontalAlign="center" Width="2%" />
+                                                    <ItemTemplate>
+                                                        <%#DataBinder.Eval(Container.DataItem, "Qty")%>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <asp:TextBox onfocus="this.select();" Visible="false" runat="server" ID="txtQuantity" MaxLength="20" CssClass="form-control"
+                                                            Text='<%#gets(DataBinder.Eval(Container.DataItem, "Qty"))%>'
+                                                            onkeypress="return NumberKeyEdit(event,6)"></asp:TextBox>
+                                                        <asp:TextBox onkeypress="return NumberKey(event,4)" runat="server"
+                                                            Text="1" ID="txtFooterQuantity" MaxLength="20" CssClass="form-control"></asp:TextBox>
+                                                        <asp:Label Visible="false" runat="server" ID="lblQty">
 		                                                                                      <%#DataBinder.Eval(Container.DataItem, "Qty")%>
-                                                </asp:Label>
+                                                        </asp:Label>
 
-                                            </EditItemTemplate>
-                                        </asp:TemplateColumn>
-                                        <asp:TemplateColumn HeaderText="Unit Cost" Visible="false">
-                                            <HeaderStyle Wrap="false" HorizontalAlign="center" />
-                                            <ItemStyle Width="20%" HorizontalAlign="center" />
-                                            <ItemTemplate>
-                                                <%# (DataBinder.Eval(Container.DataItem, "EstimatedUnitCost"))%>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                                <table border="0">
-                                                    <tr>
-                                                        <td>
-                                                            <asp:TextBox onfocus="this.select();" Visible="false" runat="server" ID="txtItemCost" Width="50px"
-                                                                Text='<%#DataBinder.Eval(Container.DataItem, "EstimatedUnitCost")%>'
-                                                                onkeypress="return NumberKeyEdit(event,7)"></asp:TextBox>
-                                                            <asp:TextBox onkeypress="return NumberKey(event,5)" runat="server"
-                                                                Text="1" ID="txtFooterCost" MaxLength="20" Width="50px"></asp:TextBox>
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="Unit Cost" Visible="false">
+                                                    <HeaderStyle Wrap="false" HorizontalAlign="center" />
+                                                    <ItemStyle Width="20%" HorizontalAlign="center" />
+                                                    <ItemTemplate>
+                                                        <%# (DataBinder.Eval(Container.DataItem, "EstimatedUnitCost"))%>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <table border="0">
+                                                            <tr>
+                                                                <td>
+                                                                    <asp:TextBox onfocus="this.select();" Visible="false" runat="server" ID="txtItemCost" Width="50px"
+                                                                        Text='<%#DataBinder.Eval(Container.DataItem, "EstimatedUnitCost")%>'
+                                                                        onkeypress="return NumberKeyEdit(event,7)"></asp:TextBox>
+                                                                    <asp:TextBox onkeypress="return NumberKey(event,5)" runat="server"
+                                                                        Text="1" ID="txtFooterCost" MaxLength="20" Width="50px"></asp:TextBox>
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </table>
 
-                                            </EditItemTemplate>
-                                        </asp:TemplateColumn>
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>
 
-                                        <asp:TemplateColumn HeaderText="وحدة المادة">
-                                            <HeaderStyle Wrap="false" HorizontalAlign="center" />
-                                            <ItemStyle HorizontalAlign="center" />
-                                            <FooterStyle HorizontalAlign="center" />
-                                            <ItemTemplate>
-                                                <%# (DataBinder.Eval(Container.DataItem, "QtyUnitTitleAr"))%>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                                <%# (DataBinder.Eval(Container.DataItem, "QtyUnitTitleAr"))%>
-                                            </EditItemTemplate>
-                                        </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="وحدة المادة">
+                                                    <HeaderStyle Wrap="false" HorizontalAlign="center" />
+                                                    <ItemStyle HorizontalAlign="center" />
+                                                    <FooterStyle HorizontalAlign="center" />
+                                                    <ItemTemplate>
+                                                        <%# (DataBinder.Eval(Container.DataItem, "QtyUnitTitleAr"))%>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <%# (DataBinder.Eval(Container.DataItem, "QtyUnitTitleAr"))%>
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>
 
 
-                                        <asp:TemplateColumn HeaderText="Total" Visible="false">
-                                            <HeaderStyle Wrap="false" HorizontalAlign="center" />
-                                            <ItemStyle Width="20%" HorizontalAlign="center" />
-                                            <FooterStyle HorizontalAlign="center" />
-                                            <ItemTemplate>
-                                                <%# (DataBinder.Eval(Container.DataItem, "Total"))%>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                            </EditItemTemplate>
-                                        </asp:TemplateColumn>
-                                        <asp:TemplateColumn HeaderText="تاريخ العهدة">
-                                            <HeaderStyle Wrap="false" />
-                                            <ItemStyle Width="20%" />
-                                            <ItemTemplate>
-                                                <%#NullDateifEmptyText( DataBinder.Eval(Container.DataItem, "ActionDate"))%>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                                <asp:Label Visible="false" runat="server" ID="lblCustodyDate">
+                                                <asp:TemplateColumn HeaderText="Total" Visible="false">
+                                                    <HeaderStyle Wrap="false" HorizontalAlign="center" />
+                                                    <ItemStyle Width="20%" HorizontalAlign="center" />
+                                                    <FooterStyle HorizontalAlign="center" />
+                                                    <ItemTemplate>
+                                                        <%# (DataBinder.Eval(Container.DataItem, "Total"))%>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="تاريخ العهدة">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="20%" />
+                                                    <ItemTemplate>
+                                                        <%#NullDateifEmptyText( DataBinder.Eval(Container.DataItem, "ActionDate"))%>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <asp:Label Visible="false" runat="server" ID="lblCustodyDate">
 		                                                                                      <%#DataBinder.Eval(Container.DataItem, "ActionDate")%>
-                                                </asp:Label>
-                                                <div class="form-control-wrap">
-                                                    <div class="form-icon form-icon-right">
-                                                        <em class="icon ni ni-calendar-alt"></em>
-                                                    </div>
-                                                    <asp:TextBox runat="server" ID="txtCustodyDate" Text='<%#NullDateifEmptyText(Eval("ActionDate")).Equals("")?NullDateifEmptyText(DateTime.Now):NullDateifEmptyText(Eval("ActionDate")) %>' placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
-                                                </div>
+                                                        </asp:Label>
+                                                        <div class="form-control-wrap">
+                                                            <div class="form-icon form-icon-right">
+                                                                <em class="icon ni ni-calendar-alt"></em>
+                                                            </div>
+                                                            <asp:TextBox runat="server" ID="txtCustodyDate" Text='<%#NullDateifEmptyText(Eval("ActionDate")).Equals("")?NullDateifEmptyText(DateTime.Now):NullDateifEmptyText(Eval("ActionDate")) %>' placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                                                        </div>
 
-                                            </EditItemTemplate>
-                                        </asp:TemplateColumn>
-                                        <asp:TemplateColumn HeaderText="أمر الصرف">
-                                            <HeaderStyle Wrap="false" />
-                                            <ItemStyle Width="10%" />
-                                            <ItemTemplate>
-                                                <%#DataBinder.Eval(Container.DataItem, "StoreRequestRefCode")%>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                                <asp:Label Visible="false" runat="server" ID="lblStoreRequestRefCode"><%#DataBinder.Eval(Container.DataItem, "StoreRequestRefCode")%></asp:Label>
-                                                <asp:TextBox runat="server" ID="txtStoreRequestRefCode" CssClass="form-control" Text='<%#DataBinder.Eval(Container.DataItem, "StoreRequestRefCode")%>'></asp:TextBox>
-                                            </EditItemTemplate>
-                                        </asp:TemplateColumn>
-                                        <asp:TemplateColumn HeaderText=" ملاحظـــات">
-                                            <HeaderStyle Wrap="false" />
-                                            <ItemStyle Width="30%" />
-                                            <ItemTemplate>
-                                                <%#DataBinder.Eval(Container.DataItem, "Notes")%>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                                <asp:Label Visible="false" runat="server" ID="lblNotes">
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="أمر الصرف">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="10%" />
+                                                    <ItemTemplate>
+                                                        <%#DataBinder.Eval(Container.DataItem, "StoreRequestRefCode")%>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <asp:Label Visible="false" runat="server" ID="lblStoreRequestRefCode"><%#DataBinder.Eval(Container.DataItem, "StoreRequestRefCode")%></asp:Label>
+                                                        <asp:TextBox runat="server" ID="txtStoreRequestRefCode" CssClass="form-control" Text='<%#DataBinder.Eval(Container.DataItem, "StoreRequestRefCode")%>'></asp:TextBox>
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText=" ملاحظـــات">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="30%" />
+                                                    <ItemTemplate>
+                                                        <%#DataBinder.Eval(Container.DataItem, "Notes")%>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <asp:Label Visible="false" runat="server" ID="lblNotes">
 		                                                                                      <%#DataBinder.Eval(Container.DataItem, "Notes")%>
-                                                </asp:Label>
-                                                <asp:TextBox runat="server"
-                                                    ID="txtNotes" CssClass="form-control" Text='<%#DataBinder.Eval(Container.DataItem, "Notes")%>'></asp:TextBox>
+                                                        </asp:Label>
+                                                        <asp:TextBox runat="server"
+                                                            ID="txtNotes" CssClass="form-control" Text='<%#DataBinder.Eval(Container.DataItem, "Notes")%>'></asp:TextBox>
 
-                                            </EditItemTemplate>
-                                        </asp:TemplateColumn>
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>
 
-                                        <asp:BoundColumn DataField="Qty" Visible="false"></asp:BoundColumn>
-                                        <asp:BoundColumn DataField="Total" Visible="false"></asp:BoundColumn>
-                                        <asp:BoundColumn DataField="EventCode" Visible="false" HeaderText="CONTENT ID"></asp:BoundColumn>
-                                        <asp:BoundColumn DataField="EstimatedUnitCost" Visible="false"></asp:BoundColumn>
-                                    </Columns>
-                                </asp:DataGrid>
+                                                <asp:BoundColumn DataField="Qty" Visible="false"></asp:BoundColumn>
+                                                <asp:BoundColumn DataField="Total" Visible="false"></asp:BoundColumn>
+                                                <asp:BoundColumn DataField="EventCode" Visible="false" HeaderText="CONTENT ID"></asp:BoundColumn>
+                                                <asp:BoundColumn DataField="EstimatedUnitCost" Visible="false"></asp:BoundColumn>
+                                            </Columns>
+                                        </asp:DataGrid>
 
 
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
 
-                        <div class="form-group mt-2 pull-left">
-                            <asp:LinkButton ID="btnCancel" runat="server" OnClick="btnCancel_Click" class="btn btn-outline-light">  <%=GetGlobalResourceObject("pages","Cancel") %> </asp:LinkButton>
+                                <div class="form-group mt-2 pull-left">
+                                    <asp:LinkButton ID="btnCancel" runat="server" OnClick="btnCancel_Click" class="btn btn-outline-light">  <%=GetGlobalResourceObject("pages","Cancel") %> </asp:LinkButton>
 
-                            <asp:LinkButton ID="btnSave" runat="server" OnClientClick="return chkImage();" OnClick="btnSave_Click" class="btn btn-primary"><i class='icon ni ni-save'></i>&nbsp; &nbsp;<%=GetGlobalResourceObject("pages","Submit") %> </asp:LinkButton>
+                                    <asp:LinkButton ID="btnSave" runat="server" OnClientClick="return chkImage();" OnClick="btnSave_Click" class="btn btn-primary"><i class='icon ni ni-save'></i>&nbsp; &nbsp;<%=GetGlobalResourceObject("pages","Submit") %> </asp:LinkButton>
+
+
+                                </div>
+                            </div>
 
 
                         </div>
+
                     </div>
 
 
@@ -915,6 +812,7 @@
 
         </div>
     </div>
+        <script src="/wwwroot/assets/js/businessScripts/assetsCheckout.js"></script>
 
-    <script src="/Layout/Assets/businessScripts/locationCombo.js"></script>
+  <%--  <script src="/wwwroot/assets/js/businessScripts/locationCombo.js"></script>--%>
 </asp:Content>

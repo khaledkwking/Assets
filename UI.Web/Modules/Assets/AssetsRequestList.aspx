@@ -40,7 +40,7 @@
                 <div class="card-inner" data-select2-id="22">
                     <div class="card-title-group" data-select2-id="21">
                         <div class="card-title">
-                            <h5 class="title"><%=GetGlobalResourceObject("pages","DataListing") %></h5>
+                            <h5 class="title"> سجل إستمارات العهد (<asp:Label ID="lblCountTop" runat="server" tetx="0"></asp:Label>)</h5>
                         </div>
                         <div class="card-tools mr-n1" data-select2-id="20">
                             <ul class="btn-toolbar gx-1" data-select2-id="19">
@@ -73,6 +73,16 @@
                                                                 <asp:ListItem Text="الكل" Value="0"></asp:ListItem>
                                                                 <asp:ListItem Text="عهدة شخصية" Value="1"></asp:ListItem>
                                                                 <asp:ListItem Text="عهدة تنضيمية" Value="2"></asp:ListItem>
+                                                            </asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                       <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","EmpStatus") %></label>
+                                                            <asp:DropDownList ID="lstFilterEmpStatus" runat="server" class="form-control form-select" data-search="on">
+                                                                <asp:ListItem Text="الكل" Value="-1"></asp:ListItem>
+                                                                <asp:ListItem Text="فعال  " Value="1"></asp:ListItem>
+                                                                <asp:ListItem Text="  غير فعال  " Value="0"></asp:ListItem>
                                                             </asp:DropDownList>
                                                         </div>
                                                     </div>
@@ -147,13 +157,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-inner p-0">
+                <div class="card-inner p-2">
 
                     <%--OnItemDataBound="grdData_ItemDataBound"--%>
 
-                    <asp:DataGrid runat="server" ID="grdData" AutoGenerateColumns="False" OnItemDataBound="grdData_ItemDataBound"
-                        AllowPaging="true" PageSize="10" class="table table-hover table-striped table-bordered table-advanced tablesorter dataTable no-footer dtr-inline" data-auto-responsive="false" >
-
+                    <asp:DataGrid runat="server" ID="grdAssets" AutoGenerateColumns="False" OnItemDataBound="grdData_ItemDataBound"
+                        AllowPaging="true" PageSize="20" class="table table-hover table-striped table-bordered table-advanced tablesorter" data-auto-responsive="false" >
+                        
+                        <PagerStyle Visible="false" />
                         <Columns>
                             <asp:TemplateColumn>
                                 <HeaderStyle Wrap="False" HorizontalAlign="Center" />
@@ -168,22 +179,18 @@
                             </asp:TemplateColumn>
 
                             
-                          <%--  <asp:TemplateColumn HeaderText="">
-                                <ItemStyle HorizontalAlign="center" />
-                                <ItemTemplate>
-                                    <img style="cursor: pointer;" src="/layout/images/plus.gif" alt="" border="0" runat="server" id="imgControl" />
-                                </ItemTemplate>
-                            </asp:TemplateColumn>--%>
+                       
                             <asp:BoundColumn DataField="code" Visible="False"></asp:BoundColumn>
                             <asp:BoundColumn DataField="Serial" HeaderText="<%$ Resources:pages,Serial %> "></asp:BoundColumn>
-                            <asp:BoundColumn DataField="RequestRefCode" HeaderText="<%$ Resources:pages,RefCode %> "></asp:BoundColumn>
-                            <asp:BoundColumn DataField="RequestDate" HeaderText=" <%$ Resources:pages,ReceiptDate %>  " DataFormatString="{0:dd/MM/yyyy}"></asp:BoundColumn>
-                            <asp:BoundColumn DataField="CreatedAt" HeaderText=" <%$ Resources:pages,CreatedAt %>  " DataFormatString="{0:dd/MM/yyyy}"></asp:BoundColumn>
-
-                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,Event %>">
+                             <asp:TemplateColumn HeaderText="<%$ Resources:pages,RequestType %>">
                                 <ItemTemplate>
-                                    <div class="text-info"><%#( ZeroIntergerIFNull(gets(Eval("RequestActionType")))==2?"<em class='icon ni ni-building  text-info'></em>&nbsp; <span class='badge badge-outline-info'>عهدة تنظيمية</span>"    :"<em class='icon ni ni-user-list  text-warning'></em> &nbsp; <span class='badge badge-outline-warning'>عهدة شخصية</span>")  %>   </div>
-                                    <div class="text-info"><%#  ZeroIntergerIFNull(gets(Eval("EmpRefCode")))==0?""  : gets(Eval("EmpName")) %></div>
+                                    <div class="text-primary"><%#( ZeroIntergerIFNull(gets(Eval("RequestActionType")))==2?"<em class='icon ni ni-building  text-info'></em>&nbsp; <span class='badge badge-outline-info'>عهدة تنظيمية</span>"    :"<em class='icon ni ni-user-list  text-primary'></em> &nbsp; <span class='badge badge-dim badge-light'>عهدة شخصية</span>")  %>   </div>
+
+                                </ItemTemplate>
+                            </asp:TemplateColumn>
+                              <asp:TemplateColumn HeaderText="<%$ Resources:pages,RequestLocation %>">
+                                <ItemTemplate>
+                                     <div class="text-info"><%#  ZeroIntergerIFNull(gets(Eval("EmpRefCode")))==0?"" :( ZeroIntergerIFNull(gets(Eval("Ora_EmpRefCode")))==0?gets(Eval("EmpName")): gets(Eval("Ora_EmpName"))) %> <%# getBool(Eval("Emp_Active"))==true?"<span class=\"badge badge-dim badge-success\">فعال</span>":"<span class=\"badge badge-dim badge-danger\">غير فعال</span>" %></div>
                                     <div class="text-indigo"><%# gets(Eval("LocationPath")) %></div>
                                     
                                        
@@ -191,6 +198,17 @@
                                 </ItemTemplate>
                             </asp:TemplateColumn>
 
+                          <%--  <asp:BoundColumn DataField="RequestRefCode" HeaderText="<%$ Resources:pages,RefCode %> "></asp:BoundColumn>--%>
+                            <asp:BoundColumn DataField="RequestDate" HeaderText=" <%$ Resources:pages,ReceiptDate %>  " DataFormatString="{0:dd/MM/yyyy}"></asp:BoundColumn>
+                            <asp:BoundColumn DataField="CreatedAt" HeaderText=" <%$ Resources:pages,CreatedAt %>  " DataFormatString="{0:dd/MM/yyyy}"></asp:BoundColumn>
+                              <asp:BoundColumn DataField="RequestNotes" HeaderText="<%$ Resources:pages,RequestNotes %> "></asp:BoundColumn>
+                              <asp:TemplateColumn HeaderText="<%$ Resources:pages,Linked %>">
+                                <ItemTemplate>
+                                  <%#  ZeroIntergerIFNull(gets(Eval("Ora_EmpRefCode")))!=0?"<span class=\"badge badge-dot badge-success\">نعم</span>"  :"<span class=\"badge badge-dot badge-danger\">لا</span>" %>
+                                   
+                                </ItemTemplate>
+                            </asp:TemplateColumn>
+                          
                             <asp:TemplateColumn>
                                 <HeaderStyle HorizontalAlign="Center" />
                                 <ItemStyle Width="2%" />
@@ -200,7 +218,7 @@
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <ul class="link-list-opt no-bdr">
                                                 <li>
-                                                    <a href="AssetCheckout.aspx?t=<%#Eval("RequestActionType") %>&requestCode=<%#Eval("code") %>" class="btn btn-default btn-xs"><i class="icon ni ni-edit"></i>&nbsp; <%=GetGlobalResourceObject("pages","CustodyDetails") %> </a>
+                                                    <a href="AssetCheckout.aspx?t=<%#Eval("ProcessType") %>&requestCode=<%#Eval("code") %>" class="btn btn-default btn-xs"><i class="icon ni ni-edit"></i>&nbsp; <%=GetGlobalResourceObject("pages","CustodyDetails") %> </a>
                                                 </li>
 
                                                  <li>
@@ -235,7 +253,7 @@
                         <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_3_paginate">
 
                             <cc1:Pager CurrentIndex="1" OnCommand="pager_Command" ShowFirstLast="False" ID="pager1"
-                                runat="server" Width="100%" PageSize="10" AlternativeTextEnabled="False" BackToFirstClause="" BackToPageClause="" EnableSmartShortCuts="True" EnableTheming="True" FirstClause="" FromClause="" GoClause="" GoToLastClause="" LastClause="" NextClause="التالى" OfClause="من" PageClause="صفحة" PreviousClause="السابق" RTL="True" ShowingResultClause="" ShowResultClause=""></cc1:Pager>
+                                runat="server" Width="100%" PageSize="20" AlternativeTextEnabled="False" BackToFirstClause="" BackToPageClause="" EnableSmartShortCuts="True" EnableTheming="True" FirstClause="" FromClause="" GoClause="" GoToLastClause="" LastClause="" NextClause="التالى" OfClause="من" PageClause="صفحة" PreviousClause="السابق" RTL="True" ShowingResultClause="" ShowResultClause=""></cc1:Pager>
 
 
                         </div>

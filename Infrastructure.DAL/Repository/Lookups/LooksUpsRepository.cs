@@ -172,16 +172,16 @@ namespace Infrastructure.DAL
             }
         }
 
-        public List<view_LocationTree> FillStoreLocations()
+        public List<sp_LocationTree_Result> FillLocationTree(int startingNode)
         {
             using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.view_LocationTree
-                     where obj.LocationType == 4 // Stores
+                    (from obj in DC.sp_LocationTree(startingNode)
+                    
                      select obj);
 
-                return result.ToList<view_LocationTree>();
+                return result.ToList<sp_LocationTree_Result>();
             }
         }
 

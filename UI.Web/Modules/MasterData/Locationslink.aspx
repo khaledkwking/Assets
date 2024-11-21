@@ -100,5 +100,5 @@
 
     </div>
 
-    <script src="/Layout/Assets/businessScripts/locationChartlink.js"></script>
+    <script src="/wwwroot/assets/js/businessScripts/locationChartlink.js"></script>
 </asp:Content>

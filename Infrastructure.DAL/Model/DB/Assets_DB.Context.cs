@@ -61,7 +61,6 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<Security_pr_SystemPages> Security_pr_SystemPages { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<view_AssetEventLog> view_AssetEventLog { get; set; }
-        public virtual DbSet<view_AssetsEventTrackingHeader> view_AssetsEventTrackingHeader { get; set; }
         public virtual DbSet<view_AssetsInventory> view_AssetsInventory { get; set; }
         public virtual DbSet<view_AssetsList> view_AssetsList { get; set; }
         public virtual DbSet<view_CustodyList> view_CustodyList { get; set; }
@@ -70,7 +69,6 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<View_InboundList> View_InboundList { get; set; }
         public virtual DbSet<view_Inventory> view_Inventory { get; set; }
         public virtual DbSet<view_ItemCategoryTree> view_ItemCategoryTree { get; set; }
-        public virtual DbSet<view_LocationTree> view_LocationTree { get; set; }
         public virtual DbSet<viewTemp> viewTemps { get; set; }
         public virtual DbSet<Security_pr_adminPermittedLocations> Security_pr_adminPermittedLocations { get; set; }
         public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
@@ -83,6 +81,7 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<Outbound> Outbounds { get; set; }
         public virtual DbSet<View_OutboundList> View_OutboundList { get; set; }
         public virtual DbSet<view_ItemCard> view_ItemCard { get; set; }
+        public virtual DbSet<view_AssetsEventTrackingHeader> view_AssetsEventTrackingHeader { get; set; }
     
         [DbFunction("AssetsEntitiesNew", "getChildNodeParentList")]
         public virtual IQueryable<getChildNodeParentList_Result> getChildNodeParentList(Nullable<int> childNodeId)
@@ -351,6 +350,15 @@ namespace Infrastructure.DAL.Model.DB
                 new ObjectParameter("EmpId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Emp_Location_Result>("Get_Emp_Location", empIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_LocationTree_Result> sp_LocationTree(Nullable<int> startingNode)
+        {
+            var startingNodeParameter = startingNode.HasValue ?
+                new ObjectParameter("StartingNode", startingNode) :
+                new ObjectParameter("StartingNode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LocationTree_Result>("sp_LocationTree", startingNodeParameter);
         }
     }
 }

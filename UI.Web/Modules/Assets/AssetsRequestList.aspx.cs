@@ -39,8 +39,8 @@ namespace UI.Web.Modules.MasterData
                 //{
                 //    Response.Redirect("/admin/pages/main.aspx");
                 //}
-                txtTransDate.Text = DateTime.Now.AddYears(-1).ToString();
-                txtTransactionDateTo.Text = DateTime.Now.ToString();
+                //txtTransDate.Text = DateTime.Now.AddYears(-1).ToString();
+                //txtTransactionDateTo.Text = DateTime.Now.ToString();
                 ViewState["itemID"] = "0";
                 fillLookups();
                 FillGrid();
@@ -132,19 +132,20 @@ namespace UI.Web.Modules.MasterData
         private void FillGrid()
         {
             var objlist = objRepository.getAssetsRequestList(txtPartOfName.Text,ZeroIntergerIFNull(lstFilterAction.SelectedValue), 
-                NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text),0,0,0);
+                NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text),0,0,0,ZeroIntergerIFNull(lstFilterEmpStatus.SelectedValue));
             //var duplicatedList = objlist.SelectMany(t =>
             //     Enumerable.Repeat(t, 2)).ToList();
 
             lblcount.Text = (Resources.Utilities.foundTotal + " (" + (objlist.Count.ToString()).ToString() + ") " + Resources.Utilities.records);
-            decimal c = System.Math.Ceiling(Convert.ToDecimal(objlist.Count / grdData.PageSize));
-            if ((c <= grdData.CurrentPageIndex))
+            lblCountTop.Text = objlist.Count.ToString();
+            decimal c = System.Math.Ceiling(Convert.ToDecimal(objlist.Count / grdAssets.PageSize));
+            if ((c <= grdAssets.CurrentPageIndex))
             {
-                grdData.CurrentPageIndex = 0;
+                grdAssets.CurrentPageIndex = 0;
             }
 
-            grdData.DataSource = objlist; //;
-            grdData.DataBind();
+            grdAssets.DataSource = objlist; //;
+            grdAssets.DataBind();
 
             //int _totalCount = objlist.Count;
             pager1.ItemCount = objlist.Count;
@@ -216,13 +217,13 @@ namespace UI.Web.Modules.MasterData
                 currnetPageIndx = 1;
             }
 
-            if ((currnetPageIndx > grdData.PageCount))
+            if ((currnetPageIndx > grdAssets.PageCount))
             {
-                currnetPageIndx = (grdData.PageCount - 1);
+                currnetPageIndx = (grdAssets.PageCount - 1);
             }
 
             pager1.CurrentIndex = currnetPageIndx;
-            grdData.CurrentPageIndex = (currnetPageIndx - 1);
+            grdAssets.CurrentPageIndex = (currnetPageIndx - 1);
             FillGrid();
         }
         #endregion

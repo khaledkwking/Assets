@@ -1000,6 +1000,6 @@
     </div>
             </ContentTemplate>
     </asp:UpdatePanel>
-    <script src="/Layout/Assets/businessScripts/locationCombo.js"></script>
-    <script src="/Layout/Assets/businessScripts/orgEmp.js"></script>
+    <script src="/wwwroot/assets/js/businessScripts/locationCombo.js"></script>
+    <script src="/wwwroot/assets/js/businessScripts/orgEmp.js"></script>
 </asp:Content>

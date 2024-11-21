@@ -228,7 +228,7 @@
                             <asp:TemplateColumn HeaderText="">
                                 <ItemStyle HorizontalAlign="center" />
                                 <ItemTemplate>
-                                    <img style="cursor: pointer;" src="/layout/images/plus.gif" alt="" border="0" runat="server" id="imgControl" />
+                                    <img style="cursor: pointer;" src="/wwwroot/assets/images/plus.gif" alt="" border="0" runat="server" id="imgControl" />
                                 </ItemTemplate>
                             </asp:TemplateColumn>
                             <asp:BoundColumn DataField="code" Visible="False"></asp:BoundColumn>

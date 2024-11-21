@@ -267,5 +267,5 @@
 
     </div>
 
-    <script src="/Layout/Assets/businessScripts/locationChart.js"></script>
+    <script src="/wwwroot/assets/js/businessScripts/locationChart.js"></script>
 </asp:Content>

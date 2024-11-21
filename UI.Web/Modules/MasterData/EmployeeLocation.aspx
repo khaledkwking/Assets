@@ -100,5 +100,5 @@
 
     </div>
 
-    <script src="/Layout/Assets/businessScripts/EmployeeLocarion.js"></script>
+    <script src="/wwwroot/assets/js/businessScripts/EmployeeLocarion.js"></script>
 </asp:Content>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content=" CMGS | Assets Managment System">
     <!-- Fav Icon  -->
-    <link rel="shortcut icon" href="/wwwroot/images/favicon.png">
+    <link rel="shortcut icon" href="/wwwroot/assets/images/favicon.png">
     <!-- Page Title  -->
     <title>Login | Assets Managment System</title>
     <!-- StyleSheets  -->
@@ -56,7 +56,7 @@
                             <div class="brand-logo pb-4 text-center" style="margin-bottom: 30px;">
                                 <a href="#" class="logo-link">
 
-                                    <img class="logo-dark" src="/wwwroot/images/logo/cmgs2@2x.png" srcset="/wwwroot/images/logo/cmgs2@2x.png" alt="logo-dark">
+                                    <img class="logo-dark" src="/wwwroot/assets/images/logo/cmgs2@2x.png" srcset="/wwwroot/assets/images/logo/cmgs2@2x.png" alt="logo-dark">
                                 </a>
                             </div>
                             <div class="card card-bordered">

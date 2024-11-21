@@ -375,6 +375,6 @@
         </div>
     </div>
 
-    <script src="/Layout/Assets/businessScripts/locationCombo.js"></script>
+    <script src="/wwwroot/assets/js/businessScripts/locationCombo.js"></script>
 
 </asp:Content>

@@ -10,11 +10,7 @@ namespace Infrastructure.DAL
 {
     public partial class AssetsRepository
     {
-
         #region "  master Data"
-
-        #region List
-
 
         public IList<view_AssetsList> getAssetsList(string inboundSerial, DateTime TransactionDatFrom, DateTime TransactionDatTo,
             int vendorCode, int LastStatusId, int LastActionId, int ItemCategoryId, int ItemCode, int EmprefCode, int targetLocation)
@@ -55,6 +51,7 @@ namespace Infrastructure.DAL
                 return result.ToList<view_CustodyList>();
             }
         }
+
         public List<view_AssetsList> getAssetReceipt(int EmprefCode, int targetLocation)
         {
             using (var DC = new AssetsEntitiesNew())
@@ -71,7 +68,6 @@ namespace Infrastructure.DAL
             }
         }
 
-
         public IList<view_AssetsList> getAssetsWithLastAction(int LastActionId, int locationId, int EmpRef)
         {
             using (var DC = new AssetsEntitiesNew())
@@ -87,10 +83,8 @@ namespace Infrastructure.DAL
             }
         }
 
-
         public view_ItemCard getItemMaster(string itemCode, string Desc)
         {
-
             //using (var DC = new AssetsEntitiesNew())
             //{
             //    var result =
@@ -110,7 +104,6 @@ namespace Infrastructure.DAL
                          select obj);
                     return result.First();
                 }
-
             }
             else
             {
@@ -123,8 +116,6 @@ namespace Infrastructure.DAL
                     return result.First();
                 }
             }
-
-
         }
 
         public view_AssetsList getItemDetails(int itemId)
@@ -138,9 +129,6 @@ namespace Infrastructure.DAL
 
                 return result.FirstOrDefault();
             }
-
-
-
         }
 
         public AssetsItemUnit getItemDetailsForEdit(int itemId)
@@ -154,9 +142,7 @@ namespace Infrastructure.DAL
 
                 return result.FirstOrDefault();
             }
-
         }
-
 
         public IList<view_AssetEventLog> getAssetEventLog(int inboundItemCode)
         {
@@ -173,6 +159,23 @@ namespace Infrastructure.DAL
                 return result.ToList<view_AssetEventLog>();
             }
         }
+
+        #endregion "  master Data"
+
+        #region "Employee Informations"
+
+        public Employee_tbl checkOraEmployeeExitance(int Emp_Id)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.Employee_tbl
+                     where obj.Ora_EmpRefCode == Emp_Id
+                     select obj).FirstOrDefault();
+                return result;
+            }
+        }
+
         public D_EmployeeList getEmployeeDetails(int _code)
         {
             using (var DC = new AssetsEntitiesNew())
@@ -184,7 +187,6 @@ namespace Infrastructure.DAL
                 return result;
             }
         }
-
 
         public D_EmployeeLocations getEmployeeLocations(int EmpCode)
         {
@@ -198,9 +200,27 @@ namespace Infrastructure.DAL
             }
         }
 
+        public int AddEmployee<T>(T item)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                DC.Employee_tbl.Add(item as Employee_tbl);
+                return DC.SaveChanges();
+            }
+        }
 
-        #endregion
-        #endregion
+        public int UpdateEmployee<T>(T item)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                // Mark entity as modified
+                DC.Entry(item as Employee_tbl).State = System.Data.Entity.EntityState.Modified;
+                return DC.SaveChanges();
+            }
+        }
+
+        #endregion "Employee Informations"
+
         #region "Assets Child Information"
 
         #region "Assets Acting Tracking"
@@ -216,37 +236,33 @@ namespace Infrastructure.DAL
 
                 return result.FirstOrDefault();
             }
-
         }
 
-        public AssetsEventTrackingHeader getTrackingRequestHeaderDetails(int headerCode)
+        public view_AssetsEventTrackingHeader getTrackingRequestHeaderDetails(int headerCode)
         {
             using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.AssetsEventTrackingHeaders
+                    (from obj in DC.view_AssetsEventTrackingHeader
                      where obj.Code == headerCode
                      select obj);
 
                 return result.FirstOrDefault();
             }
-
         }
 
-        public AssetsEventTrackingHeader getTrackingRequestHeaderByEmpCode(int empCode)
+        public view_AssetsEventTrackingHeader getTrackingRequestHeaderByEmpCode(int empCode)
         {
             using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.AssetsEventTrackingHeaders
-                     where obj.EmpRefCode == empCode
+                    (from obj in DC.view_AssetsEventTrackingHeader
+                     where obj.Ora_EmpRefCode == empCode
                      select obj);
 
                 return result.FirstOrDefault();
             }
-
         }
-
 
         public AssetsEventTrackingHeader getTrackingRequestHeaderByCode(string headerCode)
         {
@@ -259,15 +275,11 @@ namespace Infrastructure.DAL
 
                 return result.FirstOrDefault();
             }
-
         }
 
-        #endregion
-
-
+        #endregion "Assets Acting Tracking"
 
         #region "Event Acting Tracking"
-
 
         #region "Add ,  Update  ,Delete" Assets Acting Tracking
 
@@ -279,7 +291,7 @@ namespace Infrastructure.DAL
                 return DC.SaveChanges();
             }
         }
-      
+
         public int DeleteEventTracking<T>(T item)
         {
             using (var DC = new AssetsEntitiesNew())
@@ -300,14 +312,11 @@ namespace Infrastructure.DAL
             }
         }
 
+        #endregion "Add ,  Update  ,Delete" Assets Acting Tracking
 
-        #endregion
+        #endregion "Event Acting Tracking"
 
-        #endregion
-
-
-
-        #endregion
+        #endregion "Assets Child Information"
 
         #region "Tracking Header"
 
@@ -319,20 +328,18 @@ namespace Infrastructure.DAL
                               where obj.RequestDate.Value.Year == TargetYear
                               select obj).ToList();
 
-
                 if (result != null && result.Count > 0)
                 {
                     // return Convert.ToInt32(result.Max(x => x.Serial));
                     return result.Count;
                 }
                 else { return 0; }
-                
             }
         }
 
-
-        public IList<view_AssetsEventTrackingHeader> getAssetsRequestList(string requestSerial, int requestType, DateTime TransactionDatFrom, DateTime TransactionDatTo,
-            int targetLocation, int empRef, int OrgRefCode)
+        public IList<view_AssetsEventTrackingHeader> getAssetsRequestList(string requestSerial, int requestType,
+            DateTime TransactionDatFrom, DateTime TransactionDatTo,
+            int targetLocation, int empRef, int OrgRefCode, int EmpStatus)
         {
             using (var DC = new AssetsEntitiesNew())
             {
@@ -340,27 +347,33 @@ namespace Infrastructure.DAL
                     (from obj in DC.view_AssetsEventTrackingHeader
                      orderby obj.RequestDate descending
                      where 1 == 1
-                  && (requestSerial != "" ? obj.Serial == requestSerial : true)
+                  && (requestSerial != "" ? (obj.Serial == requestSerial
+                  || obj.Ora_EmpCivilId == requestSerial
+                  || obj.Ora_EmpName.Contains(requestSerial)
+                  || obj.EmpName.Contains(requestSerial)
+                  || obj.EmpRefCode.ToString() == requestSerial)
+                   || obj.Code.ToString() == requestSerial : true)
                   && (requestType != 0 ? obj.RequestActionType == requestType : true)
                   && (TransactionDatFrom != new DateTime(1990, 01, 01) ? obj.RequestDate >= TransactionDatFrom : true)
                   && (TransactionDatTo != new DateTime(1990, 01, 01) ? obj.RequestDate <= TransactionDatFrom : true)
                   && (targetLocation != 0 ? obj.ToLocationId == targetLocation : true)
                   && (empRef != 0 ? obj.EmpRefCode == empRef : true)
                   && (OrgRefCode != 0 ? obj.OrgChartRefCode == OrgRefCode : true)
+                  && (EmpStatus != -1 ? (EmpStatus == 1 ? obj.Emp_Active == true : obj.Emp_Active == false) : true)
                      select obj);
 
-                return result.ToList<view_AssetsEventTrackingHeader>();
+                    return result.ToList<view_AssetsEventTrackingHeader>();
             }
         }
 
         public IList<view_CustodyList> getFilteredCustodyList(string requestSerial, int requestType, DateTime TransactionDatFrom, DateTime TransactionDatTo,
-            int targetLocation, int empRef, int [] OrgChartRefCode)
+            int targetLocation, int empRef, int[] OrgChartRefCode)
         {
             using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_CustodyList
-                     orderby obj.ORG_NO,obj.AMANA_NO, obj.DEPT_NO,obj.SEC_NO, obj.SUB_SEC_NO
+                     orderby obj.ORG_NO, obj.AMANA_NO, obj.DEPT_NO, obj.SEC_NO, obj.SUB_SEC_NO
                      where 1 == 1
                   && (requestSerial != "" ? obj.Serial == requestSerial : true)
                   && (requestType != 0 ? obj.RequestActionType == requestType : true)
@@ -368,13 +381,12 @@ namespace Infrastructure.DAL
                   && (TransactionDatTo != new DateTime(1990, 01, 01) ? obj.RequestDate <= TransactionDatFrom : true)
                   && (targetLocation != 0 ? obj.ToLocationId == targetLocation : true)
                   && (empRef != 0 ? obj.EmpRefCode == empRef : true)
-                  && ( OrgChartRefCode.Contains(obj.OrgChartRefCode.Value) )
+                  && (OrgChartRefCode.Contains(obj.OrgChartRefCode.Value))
                      select obj);
 
                 return result.ToList<view_CustodyList>();
             }
         }
-
 
         public IList<view_CustodyList> getRequestAssets(int requestCode)
         {
@@ -390,8 +402,6 @@ namespace Infrastructure.DAL
             }
         }
 
-
-
         #region "Add ,  Update  ,Delete" Assets Acting Tracking
 
         public int AddAssetsEventTrackingHeader<T>(T item)
@@ -402,7 +412,7 @@ namespace Infrastructure.DAL
                 return DC.SaveChanges();
             }
         }
-        
+
         public int DeleteAssetsEventTrackingHeader<T>(T item)
         {
             using (var DC = new AssetsEntitiesNew())
@@ -423,9 +433,7 @@ namespace Infrastructure.DAL
             }
         }
 
-
-        #endregion
-
+        #endregion "Add ,  Update  ,Delete" Assets Acting Tracking
 
         #region "Add ,  Update  ,Delete" Assets Acting Tracking
 
@@ -448,8 +456,9 @@ namespace Infrastructure.DAL
             }
         }
 
-        #endregion
-        #endregion
+        #endregion "Add ,  Update  ,Delete" Assets Acting Tracking
+
+        #endregion "Tracking Header"
 
         #region "Reporting"
 
@@ -486,7 +495,6 @@ namespace Infrastructure.DAL
 
         //}
 
-
         public IList<view_AssetsInventory> getAssetsInventory()
         {
             using (var DC = new AssetsEntitiesNew())
@@ -505,7 +513,7 @@ namespace Infrastructure.DAL
             {
                 var result =
                     (from obj in DC.view_CustodyList
-                     where 1==1
+                     where 1 == 1
                      && (ToLocationId != 0 ? obj.ToLocationId == ToLocationId : true)
                      && (EmpRefCode != 0 ? obj.EmpRefCode == EmpRefCode : true)
                      && (RequestHeaderCode != 0 ? obj.RequestHeaderCode == RequestHeaderCode : true)
@@ -515,27 +523,24 @@ namespace Infrastructure.DAL
             }
         }
 
-
         public List<view_CustodyList> getCustodyListByMasterData(int RequestHeaderCode, int ToLocationId, int EmpRefCode)
         {
             using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_CustodyList
-                     where obj.EmpRefCode == EmpRefCode
-                     && (ToLocationId != 0 ? obj.ToLocationId == ToLocationId : true)
-                     && (RequestHeaderCode != 0 ? obj.RequestHeaderCode == RequestHeaderCode : true)
+                     where true
+                    && (EmpRefCode != 0 ? obj.EmpRefCode == EmpRefCode : true)
+                    && (ToLocationId != 0 ? obj.ToLocationId == ToLocationId : true)
+                    && (RequestHeaderCode != 0 ? obj.RequestHeaderCode == RequestHeaderCode : true)
                      select obj);
 
                 return result.ToList<view_CustodyList>();
             }
         }
 
-
-
-        public List<view_CustodyListGrouped> getCustodyListGrouped(int [] OrgChartRefCode)
+        public List<view_CustodyListGrouped> getCustodyListGrouped(int[] OrgChartRefCode)
         {
-
             using (var DC = new AssetsEntitiesNew())
             {
                 var result =
@@ -549,11 +554,10 @@ namespace Infrastructure.DAL
 
         public List<view_CustodyList> getCustodyListHera(int[] OrgChartRefCode)
         {
-
             using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    (from obj in DC.view_CustodyList 
+                    (from obj in DC.view_CustodyList
                      where OrgChartRefCode.Contains(obj.OrgChartRefCode.Value)
                      select obj);
 
@@ -561,7 +565,6 @@ namespace Infrastructure.DAL
             }
         }
 
-        #endregion
-
+        #endregion "Reporting"
     }
 }

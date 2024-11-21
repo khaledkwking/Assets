@@ -33,5 +33,11 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<System.DateTime> LastModifiedAt { get; set; }
         public string Locationpath { get; set; }
         public Nullable<int> OrgChartRefCode { get; set; }
+        public Nullable<int> Ora_EmpRefCode { get; set; }
+        public string Ora_EmpName { get; set; }
+        public string Ora_EmpCivilId { get; set; }
+        public Nullable<int> OraEntityRefCode { get; set; }
+        public Nullable<int> Emp_Id { get; set; }
+        public Nullable<bool> Emp_Active { get; set; }
     }
 }

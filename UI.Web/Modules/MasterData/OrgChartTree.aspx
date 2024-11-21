@@ -61,7 +61,7 @@
                         <div class="portlet box">
                             <div class="portlet-body">
                                 <div class="row">
-                                    <div class="col-md-3" style="background:#0C476B;padding:10px;border-radius:5px;color:#fff;">
+                                    <div class="col-md-3 treecontainer"  >
 
                                         <div class="panel panel-yellow" style="min-height: 70vh">
                                             <div class="panel-heading clearfix">
@@ -218,5 +218,6 @@
         </div>
     </div>
 
-    <script src="/Layout/Assets/businessScripts/orgchart.js"></script>
+    <script src="/wwwroot/assets/js/businessScripts/orgchart.js"></script>
+    
 </asp:Content>

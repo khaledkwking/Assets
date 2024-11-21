@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" ClientIDMode="AutoID" MasterPageFile="~/Modules/_shared/Main.Master" AutoEventWireup="true" CodeBehind="PermissionsNew.aspx.cs" Inherits="UI.Web.Admin.Pages.PermissionsNew" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script src="<%= GetGlobalResourceObject("Utilities", "Assetspath")%>Assets/Basic/Basic.js"></script>
+    <script src="/wwwroot/Assets/Basic/Basic.js"></script>
     <script language="javascript" type="text/javascript">
         <%=ViewState["Def"].ToString() %>
     </script>
@@ -146,7 +146,7 @@
                                             <table border="0">
                                                 <tr>
                                                     <td style="border-style: none;">
-                                                        <img alt="" runat="server" id="imgSystem" src='/Layout/images/plus.gif' style="cursor: pointer;" />
+                                                        <img alt="" runat="server" id="imgSystem" src='/wwwroot/assets/images/plus.gif' style="cursor: pointer;" />
                                                     </td>
                                                     <td style="border-style: none;" class="gg1">
                                                         <a href="javascript:void(0);" style="color: #999; text-decoration: none;" runat="server" id="lnkSystem"><%#Eval("SystemTitle")%></a>

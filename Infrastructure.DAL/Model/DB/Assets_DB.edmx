@@ -616,7 +616,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.view_AssetsEventTrackingHeader
           <Key>
             <PropertyRef Name="Code" />
           </Key>
-          <Property Name="Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="int" Nullable="false" />
           <Property Name="RequestDate" Type="datetime" />
           <Property Name="DueDate" Type="datetime" />
           <Property Name="RequestRefCode" Type="nvarchar" MaxLength="50" />
@@ -635,6 +635,12 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.view_AssetsEventTrackingHeader
           <Property Name="LastModifiedAt" Type="datetime" />
           <Property Name="Locationpath" Type="nvarchar(max)" />
           <Property Name="OrgChartRefCode" Type="int" />
+          <Property Name="Ora_EmpRefCode" Type="int" />
+          <Property Name="Ora_EmpName" Type="nvarchar(max)" />
+          <Property Name="Ora_EmpCivilId" Type="nvarchar(max)" />
+          <Property Name="OraEntityRefCode" Type="int" />
+          <Property Name="Emp_Id" Type="int" />
+          <Property Name="Emp_Active" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.view_AssetsInventory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1060,20 +1066,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.view_ItemCategoryTree' does no
           <Property Name="Cat_ParentId" Type="int" />
           <Property Name="level" Type="int" />
           <Property Name="TitleAr" Type="nvarchar" MaxLength="250" />
-          <Property Name="path" Type="nvarchar(max)" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.view_LocationTree' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="view_LocationTree">
-          <Key>
-            <PropertyRef Name="PKey" />
-          </Key>
-          <Property Name="PKey" Type="bigint" Nullable="false" />
-          <Property Name="code" Type="int" />
-          <Property Name="LocationParentId" Type="int" />
-          <Property Name="level" Type="int" />
-          <Property Name="LocationNameAr" Type="nvarchar" MaxLength="250" />
-          <Property Name="LocationType" Type="int" />
           <Property Name="path" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -1679,6 +1671,9 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
         <Function Name="sp_ItemAutoComp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pre" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_LocationTree" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StartingNode" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -1779,7 +1774,13 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
     [view_AssetsEventTrackingHeader].[LastModifiedBy] AS [LastModifiedBy], 
     [view_AssetsEventTrackingHeader].[LastModifiedAt] AS [LastModifiedAt], 
     [view_AssetsEventTrackingHeader].[Locationpath] AS [Locationpath], 
-    [view_AssetsEventTrackingHeader].[OrgChartRefCode] AS [OrgChartRefCode]
+    [view_AssetsEventTrackingHeader].[OrgChartRefCode] AS [OrgChartRefCode], 
+    [view_AssetsEventTrackingHeader].[Ora_EmpRefCode] AS [Ora_EmpRefCode], 
+    [view_AssetsEventTrackingHeader].[Ora_EmpName] AS [Ora_EmpName], 
+    [view_AssetsEventTrackingHeader].[Ora_EmpCivilId] AS [Ora_EmpCivilId], 
+    [view_AssetsEventTrackingHeader].[OraEntityRefCode] AS [OraEntityRefCode], 
+    [view_AssetsEventTrackingHeader].[Emp_Id] AS [Emp_Id], 
+    [view_AssetsEventTrackingHeader].[Emp_Active] AS [Emp_Active]
     FROM [dbo].[view_AssetsEventTrackingHeader] AS [view_AssetsEventTrackingHeader]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="view_AssetsInventory" EntityType="Self.view_AssetsInventory" store:Type="Views" store:Schema="dbo">
@@ -2119,17 +2120,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
     [view_ItemCategoryTree].[TitleAr] AS [TitleAr], 
     [view_ItemCategoryTree].[path] AS [path]
     FROM [dbo].[view_ItemCategoryTree] AS [view_ItemCategoryTree]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="view_LocationTree" EntityType="Self.view_LocationTree" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [view_LocationTree].[PKey] AS [PKey], 
-    [view_LocationTree].[code] AS [code], 
-    [view_LocationTree].[LocationParentId] AS [LocationParentId], 
-    [view_LocationTree].[level] AS [level], 
-    [view_LocationTree].[LocationNameAr] AS [LocationNameAr], 
-    [view_LocationTree].[LocationType] AS [LocationType], 
-    [view_LocationTree].[path] AS [path]
-    FROM [dbo].[view_LocationTree] AS [view_LocationTree]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="View_OutboundItems" EntityType="Self.View_OutboundItems" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2917,30 +2907,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="LocationNameEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="LocationNameAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="view_AssetsEventTrackingHeader">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RequestDate" Type="DateTime" Precision="3" />
-          <Property Name="DueDate" Type="DateTime" Precision="3" />
-          <Property Name="RequestRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RequestActionType" Type="Int32" />
-          <Property Name="ProcessType" Type="Int32" />
-          <Property Name="TMonth" Type="Int32" />
-          <Property Name="TYear" Type="Int32" />
-          <Property Name="Serial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ToLocationId" Type="Int32" />
-          <Property Name="EmpRefCode" Type="Int32" />
-          <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="RequestNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="Int32" />
-          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="Locationpath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OrgChartRefCode" Type="Int32" />
-        </EntityType>
         <EntityType Name="view_AssetsInventory">
           <Key>
             <PropertyRef Name="PKey" />
@@ -3312,18 +3278,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="TitleAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="view_LocationTree">
-          <Key>
-            <PropertyRef Name="PKey" />
-          </Key>
-          <Property Name="PKey" Type="Int64" Nullable="false" />
-          <Property Name="code" Type="Int32" />
-          <Property Name="LocationParentId" Type="Int32" />
-          <Property Name="level" Type="Int32" />
-          <Property Name="LocationNameAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="LocationType" Type="Int32" />
-          <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="viewTemp">
           <Key>
             <PropertyRef Name="InboubdItemId" />
@@ -3658,7 +3612,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySet Name="Security_pr_SystemPages" EntityType="Self.Security_pr_SystemPages" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="view_AssetEventLog" EntityType="Self.view_AssetEventLog" />
-          <EntitySet Name="view_AssetsEventTrackingHeader" EntityType="Self.view_AssetsEventTrackingHeader" />
           <EntitySet Name="view_AssetsInventory" EntityType="Self.view_AssetsInventory" />
           <EntitySet Name="view_AssetsList" EntityType="Self.view_AssetsList" />
           <EntitySet Name="view_CustodyList" EntityType="Self.view_CustodyList" />
@@ -3667,7 +3620,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySet Name="View_InboundList" EntityType="Self.View_InboundList" />
           <EntitySet Name="view_Inventory" EntityType="Self.view_Inventory" />
           <EntitySet Name="view_ItemCategoryTree" EntityType="Self.view_ItemCategoryTree" />
-          <EntitySet Name="view_LocationTree" EntityType="Self.view_LocationTree" />
           <EntitySet Name="viewTemps" EntityType="Self.viewTemp" />
           <AssociationSet Name="FK_RequestAttachments_AssetsEventTrackingHeader" Association="Self.FK_RequestAttachments_AssetsEventTrackingHeader">
             <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeaders" />
@@ -3885,6 +3837,10 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
             <End Role="OutboundNote" EntitySet="OutboundNotes" />
           </AssociationSet>
           <EntitySet Name="view_ItemCard" EntityType="CMGS_AssetsMgmtModel.view_ItemCard" />
+          <EntitySet Name="view_AssetsEventTrackingHeader" EntityType="CMGS_AssetsMgmtModel.view_AssetsEventTrackingHeader" />
+          <FunctionImport Name="sp_LocationTree" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_LocationTree_Result)">
+            <Parameter Name="StartingNode" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="Security_SP_PRM_getJobPage_Result">
           <Property Type="Int32" Name="SystemID" Nullable="false" />
@@ -4400,6 +4356,45 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="TotalReceived" Type="Double" />
           <Property Name="TotalDelivered" Type="Double" />
         </EntityType>
+        <EntityType Name="view_AssetsEventTrackingHeader">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="RequestDate" Type="DateTime" Precision="3" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="RequestRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RequestActionType" Type="Int32" />
+          <Property Name="ProcessType" Type="Int32" />
+          <Property Name="TMonth" Type="Int32" />
+          <Property Name="TYear" Type="Int32" />
+          <Property Name="Serial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ToLocationId" Type="Int32" />
+          <Property Name="EmpRefCode" Type="Int32" />
+          <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RequestNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="Locationpath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrgChartRefCode" Type="Int32" />
+          <Property Name="Ora_EmpRefCode" Type="Int32" />
+          <Property Name="Ora_EmpName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ora_EmpCivilId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OraEntityRefCode" Type="Int32" />
+          <Property Name="Emp_Id" Type="Int32" />
+          <Property Name="Emp_Active" Type="Boolean" />
+        </EntityType>
+        <ComplexType Name="sp_LocationTree_Result">
+          <Property Type="Int64" Name="PKey" Nullable="false" />
+          <Property Type="Int32" Name="code" Nullable="true" />
+          <Property Type="Int32" Name="LocationParentId" Nullable="true" />
+          <Property Type="Int32" Name="LEVEL" Nullable="true" />
+          <Property Type="String" Name="LocationNameAr" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="LocationType" Nullable="true" />
+          <Property Type="String" Name="path" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4927,31 +4922,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="view_AssetsEventTrackingHeader">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_AssetsEventTrackingHeader">
-              <MappingFragment StoreEntitySet="view_AssetsEventTrackingHeader">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
-                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-                <ScalarProperty Name="RequestRefCode" ColumnName="RequestRefCode" />
-                <ScalarProperty Name="RequestActionType" ColumnName="RequestActionType" />
-                <ScalarProperty Name="ProcessType" ColumnName="ProcessType" />
-                <ScalarProperty Name="TMonth" ColumnName="TMonth" />
-                <ScalarProperty Name="TYear" ColumnName="TYear" />
-                <ScalarProperty Name="Serial" ColumnName="Serial" />
-                <ScalarProperty Name="ToLocationId" ColumnName="ToLocationId" />
-                <ScalarProperty Name="EmpRefCode" ColumnName="EmpRefCode" />
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-                <ScalarProperty Name="RequestNotes" ColumnName="RequestNotes" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="Locationpath" ColumnName="Locationpath" />
-                <ScalarProperty Name="OrgChartRefCode" ColumnName="OrgChartRefCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="view_AssetsInventory">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_AssetsInventory">
               <MappingFragment StoreEntitySet="view_AssetsInventory">
@@ -5266,19 +5236,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
                 <ScalarProperty Name="Cat_ParentId" ColumnName="Cat_ParentId" />
                 <ScalarProperty Name="level" ColumnName="level" />
                 <ScalarProperty Name="TitleAr" ColumnName="TitleAr" />
-                <ScalarProperty Name="path" ColumnName="path" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="view_LocationTree">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_LocationTree">
-              <MappingFragment StoreEntitySet="view_LocationTree">
-                <ScalarProperty Name="PKey" ColumnName="PKey" />
-                <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="LocationParentId" ColumnName="LocationParentId" />
-                <ScalarProperty Name="level" ColumnName="level" />
-                <ScalarProperty Name="LocationNameAr" ColumnName="LocationNameAr" />
-                <ScalarProperty Name="LocationType" ColumnName="LocationType" />
                 <ScalarProperty Name="path" ColumnName="path" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -5773,6 +5730,50 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="view_AssetsEventTrackingHeader">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_AssetsEventTrackingHeader">
+              <MappingFragment StoreEntitySet="view_AssetsEventTrackingHeader">
+                <ScalarProperty Name="Emp_Active" ColumnName="Emp_Active" />
+                <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
+                <ScalarProperty Name="OraEntityRefCode" ColumnName="OraEntityRefCode" />
+                <ScalarProperty Name="Ora_EmpCivilId" ColumnName="Ora_EmpCivilId" />
+                <ScalarProperty Name="Ora_EmpName" ColumnName="Ora_EmpName" />
+                <ScalarProperty Name="Ora_EmpRefCode" ColumnName="Ora_EmpRefCode" />
+                <ScalarProperty Name="OrgChartRefCode" ColumnName="OrgChartRefCode" />
+                <ScalarProperty Name="Locationpath" ColumnName="Locationpath" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RequestNotes" ColumnName="RequestNotes" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpRefCode" ColumnName="EmpRefCode" />
+                <ScalarProperty Name="ToLocationId" ColumnName="ToLocationId" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="TYear" ColumnName="TYear" />
+                <ScalarProperty Name="TMonth" ColumnName="TMonth" />
+                <ScalarProperty Name="ProcessType" ColumnName="ProcessType" />
+                <ScalarProperty Name="RequestActionType" ColumnName="RequestActionType" />
+                <ScalarProperty Name="RequestRefCode" ColumnName="RequestRefCode" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_LocationTree" FunctionName="CMGS_AssetsMgmtModel.Store.sp_LocationTree">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMGS_AssetsMgmtModel.sp_LocationTree_Result">
+                <ScalarProperty Name="PKey" ColumnName="PKey" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="LocationParentId" ColumnName="LocationParentId" />
+                <ScalarProperty Name="LEVEL" ColumnName="LEVEL" />
+                <ScalarProperty Name="LocationNameAr" ColumnName="LocationNameAr" />
+                <ScalarProperty Name="LocationType" ColumnName="LocationType" />
+                <ScalarProperty Name="path" ColumnName="path" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

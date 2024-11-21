@@ -301,5 +301,5 @@
 
     </div>
 
-    <script src="/Layout/Assets/businessScripts/ItemCategory.js"></script>
+    <script src="/wwwroot/assets/js/businessScripts/ItemCategory.js"></script>
 </asp:Content>

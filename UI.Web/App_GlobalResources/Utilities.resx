@@ -154,10 +154,10 @@
     <value>NameEn</value>
   </data>
   <data name="resourcespath" xml:space="preserve">
-    <value>/Layout/</value>
+    <value>/wwwroot/assets/</value>
   </data>
   <data name="Assetspath" xml:space="preserve">
-    <value>/Layout/</value>
+    <value>/wwwroot/assets/</value>
   </data>
   <data name="selectLang" xml:space="preserve">
     <value>English</value>

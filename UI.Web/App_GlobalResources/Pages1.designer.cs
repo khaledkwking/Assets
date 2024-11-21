@@ -907,6 +907,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to حالة الموظف.
+        /// </summary>
+        internal static string EmpStatus {
+            get {
+                return ResourceManager.GetString("EmpStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to الجهة.
         /// </summary>
         internal static string EntityCode {
@@ -1479,6 +1488,15 @@ namespace Resources {
         internal static string LastStatus {
             get {
                 return ResourceManager.GetString("LastStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تم الربط.
+        /// </summary>
+        internal static string Linked {
+            get {
+                return ResourceManager.GetString("Linked", resourceCulture);
             }
         }
         
@@ -2374,11 +2392,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مكان العهدة.
+        /// </summary>
+        internal static string RequestLocation {
+            get {
+                return ResourceManager.GetString("RequestLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ملاحظات.
+        /// </summary>
+        internal static string RequestNotes {
+            get {
+                return ResourceManager.GetString("RequestNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to إستلام البضائغ.
         /// </summary>
         internal static string RequestsReceiving {
             get {
                 return ResourceManager.GetString("RequestsReceiving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نوع العهدة .
+        /// </summary>
+        internal static string RequestType {
+            get {
+                return ResourceManager.GetString("RequestType", resourceCulture);
             }
         }
         

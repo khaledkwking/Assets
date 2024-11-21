@@ -1056,4 +1056,19 @@
   <data name="OutboundOperations" xml:space="preserve">
     <value>تسجيل إذن صرف</value>
   </data>
+  <data name="RequestLocation" xml:space="preserve">
+    <value>مكان العهدة</value>
+  </data>
+  <data name="RequestNotes" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="RequestType" xml:space="preserve">
+    <value>نوع العهدة </value>
+  </data>
+  <data name="Linked" xml:space="preserve">
+    <value>تم الربط</value>
+  </data>
+  <data name="EmpStatus" xml:space="preserve">
+    <value>حالة الموظف</value>
+  </data>
 </root>

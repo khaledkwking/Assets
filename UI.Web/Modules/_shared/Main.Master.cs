@@ -578,14 +578,7 @@ namespace UI.Web.Modules._shared
                 }
 
 
-                if (ShowPage("AssetsRequestList.aspx"))
-                {
-                    strmenu.Append(("<li class='nk-menu-item'>"));
-                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetsRequestList.aspx' class='nk-menu-link'>"));
-                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-thumb-alt'></em></span><span class='nk-menu-text'>" + Resources.Pages.AssetsRequestList + "</span>"));
-                    strmenu.Append(("</a>"));
-                    strmenu.Append(("</li>"));
-                }
+                
                 //if (ShowPage("AssetsList.aspx"))
                 //{
                 //    strmenu.Append(("<li class='nk-menu-item'>"));
@@ -597,8 +590,24 @@ namespace UI.Web.Modules._shared
                 strmenu.Append("</ul>");
                 strmenu.Append("</li>");
 
+                if (ShowPage("AssetsRequestList.aspx"))
+                {
+                    strmenu.Append(("<li class='nk-menu-item'>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetsRequestList.aspx' class='nk-menu-link'>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-thumb-alt'></em></span><span class='nk-menu-text'>" + Resources.Pages.AssetsRequestList + "</span>"));
+                    strmenu.Append(("</a>"));
+                    strmenu.Append(("</li>"));
+                }
 
-                 
+                if (ShowPage("AssetsRequestList.aspx"))
+                {
+                    strmenu.Append(("<li class='nk-menu-item'>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/OrgChartTree.aspx' class='nk-menu-link'>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-thumb-alt'></em></span><span class='nk-menu-text'>حصر العهد طبقا للهيكل التنظيمي</span>"));
+                    strmenu.Append(("</a>"));
+                    strmenu.Append(("</li>"));
+                }
+
                 strmenu.Append(("</ul>"));
                 strmenu.Append(("</div>"));
             }

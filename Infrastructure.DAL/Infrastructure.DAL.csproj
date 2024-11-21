@@ -245,6 +245,9 @@
     <Compile Include="Model\DB\sp_ItemAutoComp_Result.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DB\sp_LocationTree_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DB\sysdiagram.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
@@ -282,9 +285,6 @@
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\view_ItemCategoryTree.cs">
-      <DependentUpon>Assets_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DB\view_LocationTree.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\View_OutboundItems.cs">

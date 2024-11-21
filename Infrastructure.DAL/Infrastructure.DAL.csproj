@@ -236,6 +236,18 @@
     <Compile Include="Model\DB\sp_CategoryItemList_Result.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DB\sp_GetAllAssetsTypeCount_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\sp_GetAllEmployeesCount_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\sp_GetAllEmpsHaveAssetsCount_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\sp_GetAllEmpsHaveAssetsDetails_Result.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DB\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
@@ -306,7 +318,6 @@
     <Compile Include="Repository\MasterData\VendorRepository.cs" />
     <Compile Include="Repository\MasterData\LookupMaster.cs" />
     <Compile Include="Model\ModelExtension\ModelTrackingExtension.cs" />
-    <Compile Include="Repository\Outbound\OutboundRepository.cs" />
     <Compile Include="Repository\Secuitry\AdminRepository.cs" />
     <Compile Include="Repository\Secuitry\Security_Users.cs" />
   </ItemGroup>
@@ -350,7 +361,6 @@
       <LastGenOutput>Assets_DB.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

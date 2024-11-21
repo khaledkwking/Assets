@@ -360,5 +360,25 @@ namespace Infrastructure.DAL.Model.DB
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LocationTree_Result>("sp_LocationTree", startingNodeParameter);
         }
+    
+        public virtual ObjectResult<sp_GetAllAssetsTypeCount_Result> sp_GetAllAssetsTypeCount()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAllAssetsTypeCount_Result>("sp_GetAllAssetsTypeCount");
+        }
+    
+        public virtual ObjectResult<sp_GetAllEmployeesCount_Result> sp_GetAllEmployeesCount()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAllEmployeesCount_Result>("sp_GetAllEmployeesCount");
+        }
+    
+        public virtual ObjectResult<sp_GetAllEmpsHaveAssetsCount_Result> sp_GetAllEmpsHaveAssetsCount()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAllEmpsHaveAssetsCount_Result>("sp_GetAllEmpsHaveAssetsCount");
+        }
+    
+        public virtual ObjectResult<sp_GetAllEmpsHaveAssetsDetails_Result> sp_GetAllEmpsHaveAssetsDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAllEmpsHaveAssetsDetails_Result>("sp_GetAllEmpsHaveAssetsDetails");
+        }
     }
 }

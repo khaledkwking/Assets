@@ -1657,6 +1657,10 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_GetAllAssetsTypeCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetAllEmployeesCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetAllEmpsHaveAssetsCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetAllEmpsHaveAssetsDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_getEntityEmployeeList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NodeId" Type="int" Mode="In" />
         </Function>
@@ -3839,8 +3843,12 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySet Name="view_ItemCard" EntityType="CMGS_AssetsMgmtModel.view_ItemCard" />
           <EntitySet Name="view_AssetsEventTrackingHeader" EntityType="CMGS_AssetsMgmtModel.view_AssetsEventTrackingHeader" />
           <FunctionImport Name="sp_LocationTree" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_LocationTree_Result)">
-            <Parameter Name="StartingNode" Mode="In" Type="Int32" />
+          <Parameter Name="StartingNode" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_GetAllAssetsTypeCount" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_GetAllAssetsTypeCount_Result)" />
+          <FunctionImport Name="sp_GetAllEmployeesCount" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_GetAllEmployeesCount_Result)" />
+          <FunctionImport Name="sp_GetAllEmpsHaveAssetsCount" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_GetAllEmpsHaveAssetsCount_Result)" />
+          <FunctionImport Name="sp_GetAllEmpsHaveAssetsDetails" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_GetAllEmpsHaveAssetsDetails_Result)" />
         </EntityContainer>
         <ComplexType Name="Security_SP_PRM_getJobPage_Result">
           <Property Type="Int32" Name="SystemID" Nullable="false" />
@@ -4394,6 +4402,51 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Type="String" Name="LocationNameAr" Nullable="true" MaxLength="250" />
           <Property Type="Int32" Name="LocationType" Nullable="true" />
           <Property Type="String" Name="path" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetAllAssetsTypeCount_Result">
+          <Property Type="String" Name="AssetType" Nullable="false" MaxLength="12" />
+          <Property Type="Int32" Name="AssetCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetAllEmployeesCount_Result">
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="13" />
+          <Property Type="Int32" Name="EmployeeCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetAllEmpsHaveAssetsCount_Result">
+          <Property Type="String" Name="AssetStatus" Nullable="false" MaxLength="16" />
+          <Property Type="Int32" Name="EmployeeCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetAllEmpsHaveAssetsDetails_Result">
+          <Property Type="Int32" Name="Emp_Id" Nullable="false" />
+          <Property Type="Int32" Name="DestSub_Id" Nullable="true" />
+          <Property Type="Int32" Name="Control_Id" Nullable="true" />
+          <Property Type="Int32" Name="Depart_Id" Nullable="true" />
+          <Property Type="String" Name="Emp_Name" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Emp_NameEn" Nullable="true" MaxLength="500" />
+          <Property Type="Int64" Name="Emp_IdNo" Nullable="true" />
+          <Property Type="Int32" Name="Job_Id" Nullable="true" />
+          <Property Type="String" Name="Emp_Mobile" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Emp_Phone1" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Emp_Phone2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Emp_Fax" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Emp_Ext" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Emp_Remarks" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Emp_Address" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Emp_Email" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Emp_Floor" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="User_Id" Nullable="true" />
+          <Property Type="Boolean" Name="Emp_Active" Nullable="true" />
+          <Property Type="Int32" Name="buildingID" Nullable="true" />
+          <Property Type="Int32" Name="FloorId" Nullable="true" />
+          <Property Type="Int64" Name="RoomId" Nullable="true" />
+          <Property Type="Int32" Name="Ora_EmpRefCode" Nullable="true" />
+          <Property Type="String" Name="Ora_EmpName" Nullable="true" />
+          <Property Type="String" Name="Ora_EmpCivilId" Nullable="true" />
+          <Property Type="DateTime" Name="OraActionDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="OraEntityRefCode" Nullable="true" />
+          <Property Type="Boolean" Name="OraImported" Nullable="true" />
+          <Property Type="Boolean" Name="AutoLink" Nullable="true" />
+          <Property Type="Boolean" Name="isDeleted" Nullable="true" />
+          <Property Type="Int32" Name="EmployeeId" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5771,6 +5824,67 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
                 <ScalarProperty Name="LocationNameAr" ColumnName="LocationNameAr" />
                 <ScalarProperty Name="LocationType" ColumnName="LocationType" />
                 <ScalarProperty Name="path" ColumnName="path" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetAllAssetsTypeCount" FunctionName="CMGS_AssetsMgmtModel.Store.sp_GetAllAssetsTypeCount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMGS_AssetsMgmtModel.sp_GetAllAssetsTypeCount_Result">
+                <ScalarProperty Name="AssetType" ColumnName="AssetType" />
+                <ScalarProperty Name="AssetCount" ColumnName="AssetCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetAllEmployeesCount" FunctionName="CMGS_AssetsMgmtModel.Store.sp_GetAllEmployeesCount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMGS_AssetsMgmtModel.sp_GetAllEmployeesCount_Result">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EmployeeCount" ColumnName="EmployeeCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetAllEmpsHaveAssetsCount" FunctionName="CMGS_AssetsMgmtModel.Store.sp_GetAllEmpsHaveAssetsCount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMGS_AssetsMgmtModel.sp_GetAllEmpsHaveAssetsCount_Result">
+                <ScalarProperty Name="AssetStatus" ColumnName="AssetStatus" />
+                <ScalarProperty Name="EmployeeCount" ColumnName="EmployeeCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetAllEmpsHaveAssetsDetails" FunctionName="CMGS_AssetsMgmtModel.Store.sp_GetAllEmpsHaveAssetsDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMGS_AssetsMgmtModel.sp_GetAllEmpsHaveAssetsDetails_Result">
+                <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
+                <ScalarProperty Name="DestSub_Id" ColumnName="DestSub_Id" />
+                <ScalarProperty Name="Control_Id" ColumnName="Control_Id" />
+                <ScalarProperty Name="Depart_Id" ColumnName="Depart_Id" />
+                <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
+                <ScalarProperty Name="Emp_NameEn" ColumnName="Emp_NameEn" />
+                <ScalarProperty Name="Emp_IdNo" ColumnName="Emp_IdNo" />
+                <ScalarProperty Name="Job_Id" ColumnName="Job_Id" />
+                <ScalarProperty Name="Emp_Mobile" ColumnName="Emp_Mobile" />
+                <ScalarProperty Name="Emp_Phone1" ColumnName="Emp_Phone1" />
+                <ScalarProperty Name="Emp_Phone2" ColumnName="Emp_Phone2" />
+                <ScalarProperty Name="Emp_Fax" ColumnName="Emp_Fax" />
+                <ScalarProperty Name="Emp_Ext" ColumnName="Emp_Ext" />
+                <ScalarProperty Name="Emp_Remarks" ColumnName="Emp_Remarks" />
+                <ScalarProperty Name="Emp_Address" ColumnName="Emp_Address" />
+                <ScalarProperty Name="Emp_Email" ColumnName="Emp_Email" />
+                <ScalarProperty Name="Emp_Floor" ColumnName="Emp_Floor" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Emp_Active" ColumnName="Emp_Active" />
+                <ScalarProperty Name="buildingID" ColumnName="buildingID" />
+                <ScalarProperty Name="FloorId" ColumnName="FloorId" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="Ora_EmpRefCode" ColumnName="Ora_EmpRefCode" />
+                <ScalarProperty Name="Ora_EmpName" ColumnName="Ora_EmpName" />
+                <ScalarProperty Name="Ora_EmpCivilId" ColumnName="Ora_EmpCivilId" />
+                <ScalarProperty Name="OraActionDate" ColumnName="OraActionDate" />
+                <ScalarProperty Name="OraEntityRefCode" ColumnName="OraEntityRefCode" />
+                <ScalarProperty Name="OraImported" ColumnName="OraImported" />
+                <ScalarProperty Name="AutoLink" ColumnName="AutoLink" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

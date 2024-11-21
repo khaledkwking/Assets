@@ -436,7 +436,7 @@
 
                     <%--OnItemDataBound="grdData_ItemDataBound"--%>
 
-                    <asp:DataGrid runat="server" ID="grdDataAssets" AutoGenerateColumns="False" OnItemDataBound="grdDataAssets_ItemDataBound"
+                    <asp:DataGrid runat="server" ID="grdDataAssets" AutoGenerateColumns="False" OnItemDataBound="grdData_ItemDataBound"
                         AllowPaging="true" PageSize="10" class="table table-hover table-striped table-bordered table-advanced tablesorter dataTable no-footer dtr-inline" data-auto-responsive="false" >
 
                         <Columns>

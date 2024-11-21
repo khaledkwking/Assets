@@ -74,10 +74,7 @@ namespace AssetsManament.ViewModels
         public int? SEC_NO { get; set; }
         public string SEC_NAME { get; set; }
         public int? SUB_SEC_NO { get; set; }
-        public string SUB_SEC_NAME { get; set; }
-
-        public string EmployeeLocationName { get; set; }
-        public string EmployeeLocationId { get; set; }
+      
 
 
     }

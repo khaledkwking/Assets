@@ -122,7 +122,7 @@ namespace UI.Web.Modules.Dashboard
 
             pager1.CurrentIndex = currnetPageIndx;
             grdDataAssets.CurrentPageIndex = (currnetPageIndx - 1);
-            FillGridAssets();
+            FillGridAssets("");
         }
             private void FillGrid(string Type)
         {

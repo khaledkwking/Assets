@@ -291,18 +291,7 @@ namespace Infrastructure.DAL
                 return DC.SaveChanges();
             }
         }
-<<<<<<< HEAD
-        //public int AddEventTrackingTest<T>(T item)
-        //{
-        //    using (var DC = new AssetsEntitiesNew())
-        //    {
-        //        DC.AssetsEventTrackingTests.Add(item as AssetsEventTrackingTest);
-        //        return DC.SaveChanges();
-        //    }
-        //}
-=======
-
->>>>>>> a110ecb92275f560e795a3e46f1745b2cecd7ae2
+ 
         public int DeleteEventTracking<T>(T item)
         {
             using (var DC = new AssetsEntitiesNew())
@@ -423,18 +412,6 @@ namespace Infrastructure.DAL
                 return DC.SaveChanges();
             }
         }
-<<<<<<< HEAD
-        //public int AddAssetsEventTrackingTestHeader<T>(T item)
-        //{
-        //    using (var DC = new AssetsEntitiesNew())
-        //    {
-        //        DC.AssetsEventTrackingTestHeaders.Add(item as AssetsEventTrackingTestHeader);
-        //        return DC.SaveChanges();
-        //    }
-        //}
-=======
-
->>>>>>> a110ecb92275f560e795a3e46f1745b2cecd7ae2
         public int DeleteAssetsEventTrackingHeader<T>(T item)
         {
             using (var DC = new AssetsEntitiesNew())

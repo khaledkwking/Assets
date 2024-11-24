@@ -15,7 +15,7 @@ namespace UI.Web.Modules.Dashboard
 {
     public partial class Dashboard : BaseFormAdmin
     {
-        //public AssetsRepository objRepository = IoC.Resolve<AssetsRepository>();
+        public AssetsRepository objRepository = IoC.Resolve<AssetsRepository>();
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
@@ -74,9 +74,11 @@ namespace UI.Web.Modules.Dashboard
 
         private void FillGridAssets(string Type)
         {
-            using (AssetsEntitiesNew en = new AssetsEntitiesNew())
-            {
-                var objlist = en.AssetsEventTrackingHeaders.ToList();
+            var objlist = objRepository.getAssetsRequestList("", 0,
+                NullDateifEmpty(""), NullDateifEmpty(""), 0, 0, 0, 0);
+            //using (AssetsEntitiesNew en = new AssetsEntitiesNew())
+            //{
+                //var objlist = en.AssetsEventTrackingHeaders.ToList();
                 if(Type== "NoEmpAssets")
                 {
                     objlist = objlist.Where(o => !string.IsNullOrEmpty(o.EmpName) && o.EmpName.Contains("بدون")).ToList();
@@ -103,27 +105,11 @@ namespace UI.Web.Modules.Dashboard
                 grdDataAssets.DataBind();
 
                 //int _totalCount = objlist.Count;
-                pager1.ItemCount = objlist.Count;
-            }
+                //pager1.ItemCount = objlist.Count;
+            //}
 
         }
-        protected void pager_Command(object sender, CommandEventArgs e)
-        {
-            Int32 currnetPageIndx = ((Int32)(e.CommandArgument));
-            if ((currnetPageIndx <= 0))
-            {
-                currnetPageIndx = 1;
-            }
-
-            if ((currnetPageIndx > grdDataAssets.PageCount))
-            {
-                currnetPageIndx = (grdDataAssets.PageCount - 1);
-            }
-
-            pager1.CurrentIndex = currnetPageIndx;
-            grdDataAssets.CurrentPageIndex = (currnetPageIndx - 1);
-            FillGridAssets("");
-        }
+    
             private void FillGrid(string Type)
         {
             using (AssetsEntitiesNew en = new AssetsEntitiesNew())
@@ -221,6 +207,8 @@ namespace UI.Web.Modules.Dashboard
 
             string script659 = "ViewDiv();";
             ScriptManager.RegisterStartupScript(this, GetType(), "CallHide", script659, true);
+            ViewState["T"] = "NoEmpAssets";
+
             FillGridAssets("NoEmpAssets");
         }
 
@@ -237,6 +225,7 @@ namespace UI.Web.Modules.Dashboard
 
             string script659 = "ViewDiv();";
             ScriptManager.RegisterStartupScript(this, GetType(), "CallHide", script659, true);
+            ViewState["T"] = "EmpAssets";
             FillGridAssets("EmpAssets");
         }
 
@@ -253,7 +242,31 @@ namespace UI.Web.Modules.Dashboard
 
             string script659 = "ViewDiv();";
             ScriptManager.RegisterStartupScript(this, GetType(), "CallHide", script659, true);
+            ViewState["T"] = "OrgAssets";
             FillGridAssets("OrgAssets");
+        }
+
+        protected void grdDataAssets_ItemDataBound(object sender, DataGridItemEventArgs e)
+        {
+            if ((e.Item.ItemType == ListItemType.Item))
+            {
+                e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#d5c08e6e\';");
+                e.Item.Attributes.Add("onmouseout", "this.style.backgroundColor=\'#FFFFFF\';");
+            }
+
+            if ((e.Item.ItemType == ListItemType.AlternatingItem))
+            {
+                e.Item.Attributes.Add("onmouseover", "this.style.backgroundColor=\'#d5c08e6e\';");
+                e.Item.Attributes.Add("onmouseout", "this.style.backgroundColor=\'#FFFFFF\';");
+            }
+
+
+            if (!(e.Item.ItemType == ListItemType.AlternatingItem))
+            {
+                e.Item.Cells[1].Visible = false;
+
+
+            }
         }
     }
 }

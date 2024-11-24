@@ -28,7 +28,6 @@ namespace Infrastructure.DAL.Model.DB
         }
     
         public virtual DbSet<AssetsAvailabilityStatu> AssetsAvailabilityStatus { get; set; }
-        public virtual DbSet<AssetsEventTrackingHeader> AssetsEventTrackingHeaders { get; set; }
         public virtual DbSet<AssetsItemUnit> AssetsItemUnits { get; set; }
         public virtual DbSet<AssetsTrackingAction> AssetsTrackingActions { get; set; }
         public virtual DbSet<D_AttachmentType> D_AttachmentType { get; set; }
@@ -82,6 +81,8 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<View_OutboundList> View_OutboundList { get; set; }
         public virtual DbSet<view_ItemCard> view_ItemCard { get; set; }
         public virtual DbSet<view_AssetsEventTrackingHeader> view_AssetsEventTrackingHeader { get; set; }
+        public virtual DbSet<AssetsEventTrackingHeader> AssetsEventTrackingHeaders { get; set; }
+        public virtual DbSet<AssetsTransferOut> AssetsTransferOuts { get; set; }
     
         [DbFunction("AssetsEntitiesNew", "getChildNodeParentList")]
         public virtual IQueryable<getChildNodeParentList_Result> getChildNodeParentList(Nullable<int> childNodeId)

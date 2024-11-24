@@ -29,7 +29,7 @@
     padding: 0;
 }
         .swal2-popup {
-            width: 600px !important;
+            width: auto;
         }
         .dataTables_wrapper
         {
@@ -432,12 +432,10 @@
                                 </div>
                             </div>
 
-                           <div class="card-inner p-0">
+                 
 
-                    <%--OnItemDataBound="grdData_ItemDataBound"--%>
-
-                    <asp:DataGrid runat="server" ID="grdDataAssets" AutoGenerateColumns="False" OnItemDataBound="grdData_ItemDataBound"
-                        AllowPaging="true" PageSize="10" class="table table-hover table-striped table-bordered table-advanced tablesorter dataTable no-footer dtr-inline" data-auto-responsive="false" >
+                    <asp:DataGrid runat="server" ID="grdDataAssets" AutoGenerateColumns="False" OnItemDataBound="grdDataAssets_ItemDataBound"  Width="100%"
+                        AllowPaging="false"  class="table table-hover table-striped table-bordered table-advanced tablesorter" data-auto-responsive="false" >
 
                         <Columns>
                             <asp:TemplateColumn>
@@ -513,20 +511,16 @@
 
 
 
-                    <div class="datatable-footer">
-                        <div class="dataTables_info" id="DataTables_Table_3_info" role="status" aria-live="polite">
-                            <asp:Label ID="lblcountAssets" runat="server"></asp:Label>
-                        </div>
-                        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_3_paginate">
+                     <div class="row mbm">
+                                <div class="col-lg-12">
+                                    <div class="pagination-panel">
+                                        &nbsp;
+                                            <asp:Label ID="lblcountAssets" runat="server"></asp:Label>
 
-                            <cc1:Pager CurrentIndex="1" OnCommand="pager_Command" ShowFirstLast="False" ID="pager1"
-                                runat="server" Width="100%" PageSize="10" AlternativeTextEnabled="False" BackToFirstClause="" BackToPageClause="" EnableSmartShortCuts="True" EnableTheming="True" FirstClause="" FromClause="" GoClause="" GoToLastClause="" LastClause="" NextClause="التالى" OfClause="من" PageClause="صفحة" PreviousClause="السابق" RTL="True" ShowingResultClause="" ShowResultClause=""></cc1:Pager>
+                                    </div>
+                                </div>
+                            </div>
 
-
-                        </div>
-                    </div>
-
-                </div>
 
             </div>
             <div style="float: left">

@@ -26,7 +26,7 @@ function handelSelectedNode(nodeId) {
             $('#lblEmpCount').text(employeeData.length);
             $('#employeeList-datatable').DataTable({
                 data: employeeData,
-                pageLength: 50,
+                pageLength: 10,
                 responsive: true,
                 destroy: true,
                 autoWidth: false,
@@ -176,7 +176,7 @@ function handelSelectedNode(nodeId) {
             
             $('#custodyList-datatable').DataTable({
                 data: CustodyData,
-                pageLength: 50,
+                pageLength: 10,
                 responsive: true,
                 destroy: true,
                 autoWidth: false,

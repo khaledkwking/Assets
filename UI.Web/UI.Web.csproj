@@ -1915,6 +1915,7 @@
     <Content Include="Modules\Assets\AssetCheckin.aspx" />
     <Content Include="Modules\Assets\AssetRegister.aspx" />
     <Content Include="Modules\Assets\AssetsRequestList.aspx" />
+    <Content Include="Modules\Assets\AssetsTransferOut.aspx" />
     <Content Include="Modules\Assets\AssetTransfer.aspx" />
     <Content Include="Modules\Assets\AssetDetails.aspx" />
     <Content Include="Modules\Assets\AssetCheckout.aspx" />
@@ -1955,6 +1956,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="wwwroot\assets\js\businessScripts\orgchart.js" />
     <Content Include="wwwroot\assets\js\FormValidation.js" />
     <Content Include="wwwroot\images\back.png" />
   </ItemGroup>
@@ -2134,6 +2136,13 @@
     </Compile>
     <Compile Include="Modules\Assets\AssetsRequestList.aspx.designer.cs">
       <DependentUpon>AssetsRequestList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Assets\AssetsTransferOut.aspx.cs">
+      <DependentUpon>AssetsTransferOut.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Assets\AssetsTransferOut.aspx.designer.cs">
+      <DependentUpon>AssetsTransferOut.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\Assets\AssetTransfer.aspx.cs">
       <DependentUpon>AssetTransfer.aspx</DependentUpon>

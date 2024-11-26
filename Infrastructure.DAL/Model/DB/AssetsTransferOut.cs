@@ -12,16 +12,14 @@ namespace Infrastructure.DAL.Model.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class RequestAttachment
+    public partial class AssetsTransferOut
     {
-        public long Code { get; set; }
-        public Nullable<int> RequestCode { get; set; }
-        public string FileName { get; set; }
+        public int Id { get; set; }
+        public Nullable<int> DeptID { get; set; }
         public string Notes { get; set; }
-        public Nullable<int> AttachmentTypCode { get; set; }
-        public Nullable<System.DateTime> TransDate { get; set; }
-    
-        public virtual D_AttachmentType D_AttachmentType { get; set; }
-        public virtual AssetsEventTrackingHeader AssetsEventTrackingHeader { get; set; }
+        public string DeliveryAttach { get; set; }
+        public Nullable<System.DateTime> TransferDate { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
     }
 }

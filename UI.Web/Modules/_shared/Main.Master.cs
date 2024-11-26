@@ -607,7 +607,14 @@ namespace UI.Web.Modules._shared
                     strmenu.Append(("</a>"));
                     strmenu.Append(("</li>"));
                 }
-
+                if (ShowPage("AssetsTransferOut.aspx"))
+                {
+                    strmenu.Append(("<li class='nk-menu-item'>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetsTransferOut.aspx' class='nk-menu-link'>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-thumb-alt'></em></span><span class='nk-menu-text'>تحويل العهد خارج الامانة</span>"));
+                    strmenu.Append(("</a>"));
+                    strmenu.Append(("</li>"));
+                }
                 strmenu.Append(("</ul>"));
                 strmenu.Append(("</div>"));
             }

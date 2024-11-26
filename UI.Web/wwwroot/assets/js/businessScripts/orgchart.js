@@ -278,7 +278,20 @@ function handelSelectedNode(nodeId) {
                 columns: [
                     { data: "Serial", title: "مسلسل  " },
                     { data: "Type", title: "نوع العهدة	" },
-                    { data: "Locationpath", title: "مكان العهدة	" },
+                    {
+                        data: "Locationpath",
+                        title: "مكان العهدة",
+                        render: function (data, type, row) {
+                            // Return the HTML structure
+                            return `
+                <div class="text-info">${row.Ora_EmpName} 
+                    <span class="badge badge-dim ${row.Emp_Active ? 'badge-success' : 'badge-danger'}">
+                        ${row.Emp_Active ? 'فعال' : 'غير فعال'}
+                    </span>
+                </div>
+                <div class="text-indigo">${data}</div>`;
+                        }
+                    },
                     {
                         data: "RequestDate",
                         title: "تاريخ الإستمارة	",
@@ -303,8 +316,29 @@ function handelSelectedNode(nodeId) {
                         }
                     },
                     { data: "RequestNotes", title: "ملاحظات   " },
-                    { data: "Connected", title: "تم الربط   " },
-                   
+                    {
+                        data: "Connected", title: "تم الربط",
+                        render: function (data, type, row) {
+                            return (data == 'نعم' ? '<span class="badge badge-pill badge-outline-success font-size-12">' + data + '</span>'
+                                : data == 'لا' ? '<span class="badge badge-pill badge-outline-danger font-size-12">' + data + '</span>'
+                                    : data
+                            );
+                        }
+                    },
+                    {
+                        data: "Code", title: "", orderable: false,
+                        render: function (data, type, row) {
+                            return ("<div class='drodown'>" + "<a href='#' class='btn btn-sm btn-icon btn-trigger dropdown-toggle' data-toggle='dropdown'><em class='icon ni ni-more-h'></em></a>" +
+                                "<div class='dropdown-menu dropdown-menu-right'>" +
+                                "<ul class='link-list-opt no-bdr'>" +
+
+                                "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/AssetCheckout.aspx?t=1&requestCode=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > سجل العهد</span ></a ></li>" +
+                             
+                                "</ul>" +
+                                "</div></div>"
+                            );
+                        }
+                    },
 
                 ],
 

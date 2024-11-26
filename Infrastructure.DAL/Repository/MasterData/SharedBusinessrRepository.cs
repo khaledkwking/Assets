@@ -318,6 +318,7 @@ namespace Infrastructure.DAL
                     (from obj in DC.view_AssetsEventTrackingHeader
                      .GroupBy(x => new
                      {
+                         x.Code,
                          x.OrgChartRefCode,
                          x.Ora_EmpRefCode,
                          x.Serial,
@@ -326,6 +327,7 @@ namespace Infrastructure.DAL
                          x.RequestNotes,
                          x.EmpRefCode,
                          x.EmpName,
+                         x.Emp_Active,
                          x.Ora_EmpName,
                          x.RequestActionType,
                          x.Locationpath
@@ -333,6 +335,7 @@ namespace Infrastructure.DAL
                      where entityNode.Contains(obj.Key.OrgChartRefCode.Value)
                      select new view_AssetsEventTrackingHeaderDisplay
                      {
+                         Code=obj.Key.Code,
                          Serial = obj.Key.Serial,
                          RequestDate = obj.Key.RequestDate,
                          OrgChartRefCode = obj.Key.OrgChartRefCode,
@@ -340,11 +343,13 @@ namespace Infrastructure.DAL
                          RequestNotes = obj.Key.RequestNotes,
                          EmpRefCode = obj.Key.EmpRefCode,
                          EmpName = obj.Key.EmpName,
+                         Emp_Active=obj.Key.Emp_Active,
                          Ora_EmpName = obj.Key.Ora_EmpName,
                          RequestActionType = obj.Key.RequestActionType,
                          Locationpath = obj.Key.Locationpath,
                          Type = obj.Key.EmpRefCode == 0 ? "عهدة تنظيمية" : "عهدة فردية",
                          Connected = obj.Key.Ora_EmpRefCode == 0 ? "لا" : "نعم",
+                         EmpStatus = obj.Key.Emp_Active == false ? "غير فعال" : "فعال",
 
 
                      }).ToList();
@@ -381,6 +386,7 @@ namespace Infrastructure.DAL
         public Nullable<int> Emp_Id { get; set; }
         public Nullable<bool> Emp_Active { get; set; }
 
+        public string EmpStatus { get; set; }
         public string Connected { get; set; }
         public string Type { get; set; }
 

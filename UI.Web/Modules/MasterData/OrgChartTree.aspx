@@ -5,7 +5,20 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+       <style>
+          .pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    max-width: 100%;
+    padding: 0;
+}
+    </style>
     <script language="JavaScript" type="text/javascript">
         function chkImage() {
 
@@ -112,7 +125,7 @@
                                                 <a class="nav-link" data-toggle="tab" href="#tabItem6"><em class="icon ni ni-building"></em><span>المواقع التابعة   (<asp:Label ID="lblcount" runat="server" ClientIDMode="Static">0</asp:Label>)</span></a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#tabCustody"><em class="icon ni ni-menu-circled"></em><span>حصر العهد   (<asp:Label ID="lblAssetsCount" runat="server" ClientIDMode="Static">0</asp:Label>)</span></a>
+                                                <a class="nav-link" data-toggle="tab" href="#tabCustody"><em class="icon ni ni-menu-circled"></em><span>حصر استمارات العهد   (<asp:Label ID="lblAssetsCountHeader" runat="server" ClientIDMode="Static">0</asp:Label>)</span></a>
                                             </li>
                                         </ul>
                                         <div class="tab-content">
@@ -218,7 +231,7 @@
 
 
                                                 <div class="card-inner p-0">
-                                                    <table id="custodyList-datatable" class="table table-hover table-striped table-bordered table-advanced tablesorter"></table>
+                                                    <table id="custodyList-datatableHeader" class="table table-hover table-striped table-bordered table-advanced tablesorter"></table>
                                                 </div>
                                             </div>
 

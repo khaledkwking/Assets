@@ -35,9 +35,6 @@ namespace UI.Web.Modules.Assets
 
         protected void Page_PreRender(object sender, System.EventArgs e)
         {
-
-
-
         }
         protected void Page_Load(object sender, System.EventArgs e)
         {
@@ -200,7 +197,66 @@ namespace UI.Web.Modules.Assets
 
         }
 
+        private void loadHeaderRequest(int EmpId)
+        {
+            var objHeader = objRepository.getTrackingRequestHeaderByEmpCode(EmpId);
+            if (objHeader != null)
+            {
+                if (objHeader.OraEntityRefCode != null && objHeader.OraEntityRefCode != 0)
+                {
+                    hdnSelectedNode.Value = gets(objHeader.OraEntityRefCode);
+                }
+                else
+                {
+                    string script = FormatErrorMSGSwal("عفوا ، يرجي مطابقة بيانات  الموظف مع بيانات الإدارية  ", "1");
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
 
+                    return;
+
+
+                }
+
+                hdnType.Value = objHeader.ProcessType.ToString();
+                if (hdnType.Value == "1")
+                {
+                    custodyType.SelectedValue = hdnType.Value;
+                    divEmployee.Visible = true;
+                    hdnEmployeeId.Value = gets(objHeader.Ora_EmpRefCode);
+                }
+                else
+                {
+                    custodyType.SelectedValue = hdnType.Value;
+                    divEmployee.Visible = false;
+                    hdnEmployeeId.Value = "0";
+                }
+                try
+                {
+                    lstToLocation.SelectedValue = objHeader.ToLocationId.ToString();
+
+                }
+                catch (Exception)
+                {
+
+
+                }
+
+
+
+
+
+                lnkPrintRequest.HRef = Resources.Utilities.cutureRoute + "/Modules/Reports/AssetReceipt.aspx?docId=" + hdnMasterID.Value;
+                viewPrint.Visible = true;
+            }
+            else
+            {
+                // set Selected Employee 
+                viewPrint.Visible = false;
+                lstRefEmployee.SelectedValue = gets(EmpId);
+
+            }
+
+
+        }
 
         protected void btnSave_Click(object sender, System.EventArgs e)
         {

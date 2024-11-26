@@ -9,7 +9,7 @@ LoadContents = function () {
     // handelSelectedNode(1);
 };
 function handelSelectedNode(nodeId) {
-    console.log("handelSelectedNode:", nodeId);
+   // console.log("handelSelectedNode:", nodeId);
     $.ajax({
         url: "/api/hepler/GetEmployeeHierarhcy",
         dataType: "json",
@@ -39,7 +39,7 @@ function handelSelectedNode(nodeId) {
                     // Load employee information (you can customize this part)
                     loadEmployeeInfo(selectedEmployee);
                     // Execute server event to load employee assets
-                    loadEmployeeAssets(selectedEmployeeId);
+                 // loadEmployeeAssets(selectedEmployeeId);
                 }
             });
 

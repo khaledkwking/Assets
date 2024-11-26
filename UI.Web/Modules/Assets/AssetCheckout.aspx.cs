@@ -88,7 +88,7 @@ namespace UI.Web.Modules.Assets
                 {
                     loadEmpRequest(ZeroIntergerIFNull(Request.QueryString["empid"]));
                 }
-               // fillRequestItems();
+             fillRequestItems();
             }
 
 

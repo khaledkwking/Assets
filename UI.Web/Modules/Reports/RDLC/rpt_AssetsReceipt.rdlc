@@ -1375,7 +1375,7 @@
       <Width>11.23139in</Width>
       <Page>
         <PageHeader>
-          <Height>2.34097in</Height>
+          <Height>2.15231in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1397,7 +1397,7 @@
                       <Style>
                         <FontSize>20pt</FontSize>
                         <FontWeight>Bold</FontWeight>
-                        <Color>=IIf(  First(Fields!RequestActionType.Value, "ds_AssetsList") ="1", "Green", "Black" )</Color>
+                        <Color>=IIf(  First(Fields!RequestActionType.Value, "ds_AssetsList") ="1", "#0C476B", "Black" )</Color>
                       </Style>
                     </TextRun>
                     <TextRun>
@@ -1412,7 +1412,7 @@
                       <Style>
                         <FontSize>20pt</FontSize>
                         <FontWeight>Bold</FontWeight>
-                        <Color>=IIf(  First(Fields!RequestActionType.Value, "ds_AssetsList") ="2", "Green", "Black" )</Color>
+                        <Color>=IIf(  First(Fields!RequestActionType.Value, "ds_AssetsList") ="2", "#0C476B", "Black" )</Color>
                       </Style>
                     </TextRun>
                     <TextRun>
@@ -1474,8 +1474,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox18</rd:DefaultName>
-              <Top>1.97676in</Top>
-              <Left>0.14261in</Left>
+              <Top>1.85232in</Top>
+              <Left>0.14662in</Left>
               <Height>0.25in</Height>
               <Width>2.49875in</Width>
               <ZIndex>1</ZIndex>
@@ -1508,7 +1508,7 @@
                       <Style>
                         <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
+                        <Color>#0c476b</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1552,7 +1552,7 @@
                       <Style>
                         <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
+                        <Color>#0c476b</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1562,7 +1562,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox18</rd:DefaultName>
-              <Top>1.35061in</Top>
+              <Top>1.29473in</Top>
               <Left>7.46875in</Left>
               <Height>0.25in</Height>
               <Width>3.56125in</Width>
@@ -1596,7 +1596,7 @@
                       <Style>
                         <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
+                        <Color>#0c476b</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1623,7 +1623,6 @@
               </Style>
             </Textbox>
             <Textbox Name="Textbox22">
-              <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
@@ -1637,10 +1636,11 @@
                     </TextRun>
                     <TextRun>
                       <Value>=Fields!path.Value</Value>
+                      <MarkupType>HTML</MarkupType>
                       <Style>
                         <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
+                        <Color>#0c476b</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1650,103 +1650,11 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox18</rd:DefaultName>
-              <Top>1.97676in</Top>
-              <Left>3.20278in</Left>
+              <Top>1.85232in</Top>
+              <Left>2.77792in</Left>
               <Height>0.25in</Height>
-              <Width>7.82722in</Width>
+              <Width>8.25609in</Width>
               <ZIndex>5</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-                <Direction>RTL</Direction>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox23">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>مراقبة / قسم: </Value>
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Fields!DEPT_NAME.Value</Value>
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value xml:space="preserve"> </Value>
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Fields!DIV_NAME.Value</Value>
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value xml:space="preserve">    </Value>
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Fields!SEC_NAME.Value</Value>
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value xml:space="preserve">  </Value>
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Fields!SUB_SEC_NAME.Value</Value>
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox18</rd:DefaultName>
-              <Top>1.65732in</Top>
-              <Left>0.175in</Left>
-              <Height>0.25in</Height>
-              <Width>10.855in</Width>
-              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1776,7 +1684,7 @@
                       <Style>
                         <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
+                        <Color>#0c476b</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1786,11 +1694,11 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox18</rd:DefaultName>
-              <Top>1.33557in</Top>
+              <Top>1.27969in</Top>
               <Left>3.06361in</Left>
               <Height>0.25in</Height>
               <Width>3.61333in</Width>
-              <ZIndex>7</ZIndex>
+              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1820,7 +1728,7 @@
                       <Style>
                         <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
-                        <Color>DarkGreen</Color>
+                        <Color>#0c476b</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1834,7 +1742,7 @@
               <Left>0.175in</Left>
               <Height>0.25in</Height>
               <Width>1.90597in</Width>
-              <ZIndex>8</ZIndex>
+              <ZIndex>7</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1854,13 +1762,105 @@
               <Left>8.08376in</Left>
               <Height>0.83787in</Height>
               <Width>2.94624in</Width>
-              <ZIndex>9</ZIndex>
+              <ZIndex>8</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
               </Style>
             </Image>
+            <Textbox Name="Textbox23">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>مراقبة / قسم :  </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Fields!DEPT_NAME.Value</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#0c476b</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value xml:space="preserve"> </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#0c476b</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Fields!DIV_NAME.Value</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#0c476b</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value xml:space="preserve"> </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#0c476b</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Fields!SEC_NAME.Value</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#0c476b</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value xml:space="preserve"> </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#0c476b</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Fields!SUB_SEC_NAME.Value</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#0c476b</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox18</rd:DefaultName>
+              <Top>1.56499in</Top>
+              <Left>0.17901in</Left>
+              <Height>0.25in</Height>
+              <Width>10.855in</Width>
+              <ZIndex>9</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Direction>RTL</Direction>
+              </Style>
+            </Textbox>
           </ReportItems>
           <Style>
             <Border>

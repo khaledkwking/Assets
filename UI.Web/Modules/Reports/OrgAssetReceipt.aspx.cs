@@ -20,7 +20,7 @@ namespace UI.Web.Modules.WHM.Forms
     {
         #region "Page Members"
         public AssetsRepository objRepository = IoC.Resolve<AssetsRepository>();
-        public string _PageTitle = Resources.Pages.CustodyRecepit;
+        public string _PageTitle = "إستمارات حصر العهد";
 
         #endregion
         #region "Page Events"
@@ -44,28 +44,30 @@ namespace UI.Web.Modules.WHM.Forms
             }
         }
 
-        private List<view_CustodyList> setChartInfo(List<view_CustodyList> objList)
+        private List<view_CustodyList> setChartInfo(List<view_CustodyList> objList,int selectedEntityId)
         {
 
             var EmpList = new List<EmployeeViewModel>();
             //Load Employee List
-            if (Session["OraEmpList"] != null)
-            {
-                EmpList = (List<EmployeeViewModel>)Session["OraEmpList"];
-            }
-            else
-            {
-                // Request Data From Ora.
-                EmpList = GetOraEmpList(1);
-                Session["OraEmpList"] = EmpList;
+            //if (Session["OraEmpList"] != null)
+            //{
+            //    EmpList = (List<EmployeeViewModel>)Session["OraEmpList"];
+            //}
+            //else
+            //{
+            //    // Request Data From Ora.
 
-            }
+            //    Session["OraEmpList"] = EmpList;
+
+            //}
+            EmpList = GetOraEmpList(selectedEntityId);
 
             foreach (var item in objList)
             {
-                if (item.EmpRefCode != null && item.EmpRefCode != 0 && item.EmpRefCode != -1)
-                {//Set Emp iNFORMATION
-                    var Empinfo = EmpList.Where(x => x.EMP_ID == item.EmpRefCode.ToString()).FirstOrDefault();
+                if (item.OrgChartRefCode != null && item.OrgChartRefCode != 0 )
+                {//Set Emp iNFORMATION by Entity information this option also applicaple for Org Assets
+
+                    var Empinfo = EmpList.Where(x => x.ENTITYCODE == item.OrgChartRefCode).FirstOrDefault();
                     if (Empinfo != null)
                     {
                         item.ORG_NAME = Empinfo.ORG_NAME;
@@ -144,7 +146,7 @@ namespace UI.Web.Modules.WHM.Forms
 
             if (objlist != null && objlist.Count > 0)
             {
-                setChartInfo(objlist.ToList());
+                setChartInfo(objlist.ToList(), entityCode);
 
                 ReportViewer1.ProcessingMode = ProcessingMode.Local;
                 ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailed.rdlc");

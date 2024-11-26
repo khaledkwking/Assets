@@ -39,28 +39,16 @@ namespace UI.Web.Modules.WHM.Forms
             }
         }
 
-        private List<view_CustodyList> setChartInfo(List<view_CustodyList> objList)
+        private List<view_CustodyList> setChartInfo(List<view_CustodyList> objList, int EmpId)
         {
 
-            var EmpList = new List<EmployeeViewModel>();
+            var Empinfo = GetOraEmpDetails(EmpId);
             //Load Employee List
-            if (Session["OraEmpList"] != null)
+            if (Empinfo != null)
             {
-                EmpList = (List<EmployeeViewModel>)Session["OraEmpList"];
-            }
-            else
-            {
-                // Request Data From Ora.
-                EmpList = GetOraEmpList(0);
-                Session["OraEmpList"] = EmpList;
+                foreach (var item in objList)
+                {
 
-            }
-
-            foreach (var item in objList)
-            {
-                if (item.EmpRefCode != null && item.EmpRefCode != 0 && item.EmpRefCode != -1)
-                {//Set Emp iNFORMATION
-                    var Empinfo = EmpList.Where(x => x.EMP_ID == item.EmpRefCode.ToString()).FirstOrDefault();
                     if (Empinfo != null)
                     {
                         item.ORG_NAME = Empinfo.ORG_NAME;
@@ -73,8 +61,11 @@ namespace UI.Web.Modules.WHM.Forms
 
                     }
 
+
                 }
+
             }
+
 
             return objList;
 
@@ -109,7 +100,7 @@ namespace UI.Web.Modules.WHM.Forms
             if (ForceFilter)
             {
                 var objlist = objRepository.getAssetsRequestList(txtPartOfName.Text, ZeroIntergerIFNull(lstFilterAction.SelectedValue),
-                                                                     NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text), 0, 0, 0,-1);
+                                                                     NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text), 0, 0, 0, -1);
 
                 if (objlist != null && objlist.Count > 0)
                 {
@@ -144,7 +135,7 @@ namespace UI.Web.Modules.WHM.Forms
                         var objList = objRepository.getAssetReceiptbyRequestCode(ZeroIntergerIFNull(Request.QueryString["docId"].ToString()), 0);
                         if (objList != null && objList.Count > 0)
                         {
-                            setChartInfo(objList);
+                            setChartInfo(objList, objList[0].EmpRefCode.Value);
 
                             ReportViewer1.ProcessingMode = ProcessingMode.Local;
                             ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsReceipt.rdlc");
@@ -168,7 +159,7 @@ namespace UI.Web.Modules.WHM.Forms
                         var objList = objRepository.getAssetReceiptbyRequestCode(0, ZeroIntergerIFNull(Request.QueryString["empid"].ToString()));
                         if (objList != null && objList.Count > 0)
                         {
-                            setChartInfo(objList);
+                            setChartInfo(objList, objList[0].EmpRefCode.Value);
 
                             ReportViewer1.ProcessingMode = ProcessingMode.Local;
                             ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsReceipt.rdlc");
@@ -205,7 +196,7 @@ namespace UI.Web.Modules.WHM.Forms
 
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {
- 
+
             var objList = objRepository.getAssetReceiptbyRequestCode(ZeroIntergerIFNull(((ReportParameterInfo)e.Parameters["RequestHeaderCode"]).Values[0]), 0);
             if (objList != null && objList.Count > 0)
             {

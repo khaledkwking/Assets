@@ -1276,83 +1276,50 @@ namespace UI.Web.Admin.Controller
 
         public static List<EmployeeViewModel> GetOraEmpList(int nodeId)
         {
-            using (AssetsEntitiesNew en = new AssetsEntitiesNew())
-            {
-                var EmpList = en.Employee_tbl
-                    .Where(o => o.Emp_Active == true)
-                    .Join(
-                        en.D_JobTitle,               // Second table to join (D_JobTitle)
-                        emp => emp.Job_Id,        // Foreign key from Employee_tbl
-                        job => job.Code,        // Primary key from D_JobTitle
-                        (emp, job) => new EmployeeViewModel // Project the result into the view model
-            {
-                            EMP_ID = emp.Emp_Id.ToString(),
-                            EMP_NAME = emp.Emp_Name,
-                            JOB_NAME = job.TitleAr // Assuming JobTitle_Name is the title field in D_JobTitle
-            })
-                    .ToList();
 
-                return EmpList;
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = client.GetAsync(string.Format("OrgChart/EmployeeHierarchy/{0}", nodeId)).Result;
+
+                if (!Res.IsSuccessStatusCode)
+                    throw new Exception(Res.ToString());
+
+                var result = Res.Content.ReadAsStringAsync().Result;
+                var EmpList = new List<EmployeeViewModel>();
+                return JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
+
             }
+        }
 
-           // using (AssetsEntitiesNew en = new AssetsEntitiesNew())
-           // {
-           //     var EmpList = en.Employee_tbl
-           //.Where(o => o.Emp_Active == true)
-           //.Select(item => new EmployeeViewModel
-           //{
-           //    EMP_ID = item.Emp_Id.ToString(),
-           //    EMP_NAME = item.Emp_Name
-           //})
-           //.ToList();
-           //     return EmpList;
-           // }
-            //using (var client = new HttpClient())
-            //{
 
-            //    client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage Res = client.GetAsync(string.Format("OrgChart/EmployeeHierarchy/{0}", nodeId)).Result;
+        public static EmployeeViewModel GetOraEmpDetails(int empId)
+        {
 
-            //    if (!Res.IsSuccessStatusCode)
-            //        throw new Exception(Res.ToString());
+            using (var client = new HttpClient())
+            {
 
-            //    var result = Res.Content.ReadAsStringAsync().Result;
-            //    var EmpList = new List<EmployeeViewModel>();
-            //    return JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
-                
-            //}
+                client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = client.GetAsync(string.Format("OrgChart/GetEmployeeDetails/{0}", empId)).Result;
+
+                if (!Res.IsSuccessStatusCode)
+                    throw new Exception(Res.ToString());
+
+                var result = Res.Content.ReadAsStringAsync().Result;
+                 return (JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result)).FirstOrDefault();
+
+            }
         }
 
 
 
 
-
-        //public string showRequestStatus(int requestStatusId, string StatusText)
-        //{
-        //    string _out = "";
-        //    switch (requestStatusId)
-        //    {
-        //        case 1:
-        //            {
-        //                _out = "<span class='badge badge-dot badge-warning'>" + StatusText + "</span>";
-        //                break;
-        //            }
-        //        case 2:
-        //            {
-        //                _out = "<span class='badge badge-dot badge-primary'>" + StatusText + "</span>";
-        //                break;
-        //            }
-        //        default:
-        //            _out = "<span class='badge badge-dot badge-secondary'>" + StatusText + "</span>";
-        //            break;
-        //    }
-
-
-        //    return _out;
-        //}
-
+ 
 
         public string showAction(int StatusId, string StatusText)
         {

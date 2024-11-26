@@ -15,7 +15,7 @@ namespace UI.Web.Modules.MasterData
     {
         #region "Page Members"
         public LocationsRepository objRepository = IoC.Resolve<LocationsRepository>();
-        public string _PageTitle = Resources.Pages.orgChart;
+        public string _PageTitle = "سجل العهد";
 
         #endregion
 

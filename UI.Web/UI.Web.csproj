@@ -1945,6 +1945,8 @@
     <Content Include="Modules\StoreOperations\Forms\Inboud\InboundList.aspx" />
     <Content Include="Modules\StoreOperations\Forms\Inboud\InboundOperrations.aspx" />
     <Content Include="Modules\StoreOperations\Forms\Inboud\ManageStoreRequest.aspx" />
+    <Content Include="Modules\StoreOperations\Forms\Outbound\OutboundList.aspx" />
+    <Content Include="Modules\StoreOperations\Forms\Outbound\OutboundOperations.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2346,6 +2348,20 @@
     </Compile>
     <Compile Include="Modules\StoreOperations\Forms\Inboud\ManageStoreRequest.aspx.designer.cs">
       <DependentUpon>ManageStoreRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\StoreOperations\Forms\Outbound\OutboundList.aspx.cs">
+      <DependentUpon>OutboundList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\StoreOperations\Forms\Outbound\OutboundList.aspx.designer.cs">
+      <DependentUpon>OutboundList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\StoreOperations\Forms\Outbound\OutboundOperations.aspx.cs">
+      <DependentUpon>OutboundOperations.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\StoreOperations\Forms\Outbound\OutboundOperations.aspx.designer.cs">
+      <DependentUpon>OutboundOperations.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\_shared\MainEmpty.Master.cs">
       <DependentUpon>MainEmpty.Master</DependentUpon>

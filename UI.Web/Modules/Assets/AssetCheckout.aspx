@@ -399,7 +399,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-inner p-2">
+                <div class="card-inner p-4">
 
                     <div class="row">
 
@@ -407,11 +407,27 @@
                         <div class="col-md-3 treecontainer">
 
                             <div class="panel panel-yellow" style="min-height: 70vh">
-                                <div class="panel-heading clearfix">
+
+                                <div class="p-3 " style="background-color: #0C476B">
+                                        <div class="d-flex">
+                                            <div class="align-self-center me-3">
+                                                <img src="/wwwroot/assets/images/logo/KuwaitLogo.png" class="avatar-xs rounded-circle" width="80px" alt="avatar-2">
+                                            </div>
+                                            <div class="flex-1" style="padding-top: 10px;padding-right: 10px;">
+                                                <h5 class="font-size-15 mb-1" style="color: #E4DAC1;">الأمانة العامة لمجلس الوزراء</h5>
+                                                <p class="text-muted text-truncate mb-0" style="line-height: 20px; font-size: 13px; color: #E4DAC1 !important;">الهيكل التنظيمي  </p>
+
+                                            </div>
+
+                                            
+                                        </div>
+                                    </div>
+
+                             <%--   <div class="panel-heading clearfix">
                                     <span class="mts"><%=GetGlobalResourceObject("pages","OrgChartTitle") %>  </span>
                                     <div style="float: left"><a href="../Reports/OrgChartPrint.aspx" class="btn btn-dim btn-primary  btn-xs iframe75 "><i class="icon ni ni-printer"></i></a></div>
-                                </div>
-                                <div class="panel-body" style="padding: 0px; padding-top: 25px; margin-bottom: 10px;">
+                                </div>--%>
+                                <div class="panel-body" style="padding: 0px; padding-top: 0px; margin-bottom: 10px;">
 
                                     <div class="form-control-wrap" style="margin-bottom: 20px;">
                                         <div class="form-icon form-icon-right">

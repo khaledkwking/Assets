@@ -85,6 +85,7 @@ namespace UI.Web.Modules.WHM.Forms
                 {
                     case 1:
                         {
+                            _PageTitle = "تقرير مراقبة العهــــــد حسب الجهــــة";
                             var objList = objRepository.getCustodyListGrouped(nodeChildren.Select(x => x.ENTITYCODE).ToArray());
                             if (objList != null && nodeChildren != null)
                             {
@@ -111,7 +112,8 @@ namespace UI.Web.Modules.WHM.Forms
                             break;
                         }
                     case 2:
-                        {
+                        { 
+                            _PageTitle = "جدول بيانات الأصول";
                             var objList = objRepository.getCustodyListHera(nodeChildren.Select(x => x.ENTITYCODE).ToArray());
                             if (objList != null && nodeChildren != null)
                             {

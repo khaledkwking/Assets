@@ -538,11 +538,16 @@ namespace Infrastructure.DAL
 
         public List<view_CustodyList> getCustodyListByMasterData(int RequestHeaderCode, int ToLocationId, int EmpRefCode)
         {
+            bool filter = true;
+            if (RequestHeaderCode==0 && ToLocationId==0 && EmpRefCode==0)
+            {
+                filter = false;
+            }
             using (var DC = new AssetsEntitiesNew())
             {
                 var result =
                     (from obj in DC.view_CustodyList
-                     where true
+                     where filter
                     && (EmpRefCode != 0 ? obj.EmpRefCode == EmpRefCode : true)
                     && (ToLocationId != 0 ? obj.ToLocationId == ToLocationId : true)
                     && (RequestHeaderCode != 0 ? obj.RequestHeaderCode == RequestHeaderCode : true)

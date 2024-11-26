@@ -321,6 +321,7 @@
     <Compile Include="Repository\MasterData\VendorRepository.cs" />
     <Compile Include="Repository\MasterData\LookupMaster.cs" />
     <Compile Include="Model\ModelExtension\ModelTrackingExtension.cs" />
+    <Compile Include="Repository\Outbound\OutboundRepository.cs" />
     <Compile Include="Repository\Secuitry\AdminRepository.cs" />
     <Compile Include="Repository\Secuitry\Security_Users.cs" />
   </ItemGroup>

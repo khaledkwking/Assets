@@ -33,7 +33,7 @@
                 <div class="card-inner" data-select2-id="22">
                     <div class="card-title-group" data-select2-id="21">
                         <div class="card-title">
-                            <h5 class="title"><%=GetGlobalResourceObject("pages","DataListing") %></h5>
+                            <h5 class="title"></h5>
                         </div>
                         <div class="card-tools mr-n1" data-select2-id="20">
                             <ul class="btn-toolbar gx-1" data-select2-id="19">

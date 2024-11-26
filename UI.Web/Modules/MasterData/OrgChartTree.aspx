@@ -61,16 +61,32 @@
                         <div class="portlet box">
                             <div class="portlet-body">
                                 <div class="row">
-                                    <div class="col-md-3 treecontainer"  >
+                                    <div class="col-md-3 treecontainer">
 
                                         <div class="panel panel-yellow" style="min-height: 70vh">
-                                            <div class="panel-heading clearfix">
+
+                                            <div class="p-3 " style="background-color: #0C476B">
+                                                <div class="d-flex">
+                                                    <div class="align-self-center me-3">
+                                                        <img src="/wwwroot/assets/images/logo/KuwaitLogo.png" class="avatar-xs rounded-circle" width="80px" alt="avatar-2">
+                                                    </div>
+                                                    <div class="flex-1" style="padding-top: 10px; padding-right: 10px;">
+                                                        <h5 class="font-size-15 mb-1" style="color: #E4DAC1;">الأمانة العامة لمجلس الوزراء</h5>
+                                                        <p class="text-muted text-truncate mb-0" style="line-height: 20px; font-size: 13px; color: #E4DAC1 !important;">الهيكل التنظيمي  </p>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                            <%--  <div class="panel-heading clearfix">
                                                 <span class="mts"><%=GetGlobalResourceObject("pages","OrgChartTitle") %>  </span>
                                                 <div style="float: left"><a href="../Reports/OrgChartPrint.aspx" class="btn btn-dim btn-primary  btn-xs iframe75 "><i class="icon ni ni-printer"></i></a></div>
-                                            </div>
-                                            <div class="panel-body" style="padding: 0px; padding-top: 25px;margin-bottom:10px;">
+                                            </div>--%>
+                                            <div class="panel-body" style="padding: 0px; padding-top: 0px; margin-bottom: 10px;">
 
-                                                <div class="form-control-wrap" style="margin-bottom:20px;">
+                                                <div class="form-control-wrap" style="margin-bottom: 20px;">
                                                     <div class="form-icon form-icon-right">
                                                         <em class="icon ni ni-search"></em>
                                                     </div>
@@ -95,7 +111,7 @@
                                             <li class="nav-item">
                                                 <a class="nav-link" data-toggle="tab" href="#tabItem6"><em class="icon ni ni-building"></em><span>المواقع التابعة   (<asp:Label ID="lblcount" runat="server" ClientIDMode="Static">0</asp:Label>)</span></a>
                                             </li>
-                                              <li class="nav-item">
+                                            <li class="nav-item">
                                                 <a class="nav-link" data-toggle="tab" href="#tabCustody"><em class="icon ni ni-menu-circled"></em><span>حصر العهد   (<asp:Label ID="lblAssetsCount" runat="server" ClientIDMode="Static">0</asp:Label>)</span></a>
                                             </li>
                                         </ul>
@@ -182,12 +198,12 @@
                                                                         </a>
                                                                         <div class="dropdown-menu  dropdown-menu-right" style="">
                                                                             <ul class="link-check">
-                                                                                <li><a id="lnkReportOrgCustody"   href="#" class="iframewide"  ><span class='nk-menu-icon'><em class='icon ni ni-files'></em></span><span class='nk-menu-text'>  تقرير مراقبة العهــد  </span></a></li>
-                                                                                <li><a id="lnkReportOrgCustody2"  href="#" class="iframewide"  ><span class='nk-menu-icon'><em class='icon ni ni-files'></em></span><span class='nk-menu-text'>  جدول بيانات الأصول      </span></a></li>
-                                                                                <li><a id="lnkReportOrgReceiptList"  href="#" class="iframewide text-danger"  ><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text'> سجل إستمارات العهد </span></a></li>
-                                                                                 
+                                                                                <li><a id="lnkReportOrgCustody" href="#" class="iframewide"><span class='nk-menu-icon'><em class='icon ni ni-files'></em></span><span class='nk-menu-text'>تقرير مراقبة العهــد  </span></a></li>
+                                                                                <li><a id="lnkReportOrgCustody2" href="#" class="iframewide"><span class='nk-menu-icon'><em class='icon ni ni-files'></em></span><span class='nk-menu-text'>جدول بيانات الأصول      </span></a></li>
+                                                                                <li><a id="lnkReportOrgReceiptList" href="#" class="iframewide text-danger"><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text'>سجل إستمارات العهد </span></a></li>
 
-                                                                                 
+
+
                                                                             </ul>
 
                                                                         </div>
@@ -219,5 +235,5 @@
     </div>
 
     <script src="/wwwroot/assets/js/businessScripts/orgchart.js"></script>
-    
+
 </asp:Content>

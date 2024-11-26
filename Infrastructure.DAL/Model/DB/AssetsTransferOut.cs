@@ -15,11 +15,11 @@ namespace Infrastructure.DAL.Model.DB
     public partial class AssetsTransferOut
     {
         public int Id { get; set; }
-        public Nullable<int> DeptID { get; set; }
+        public Nullable<int> OrgRefCode { get; set; }
         public string Notes { get; set; }
         public string DeliveryAttach { get; set; }
         public Nullable<System.DateTime> TransferDate { get; set; }
-        public string CreatedBy { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
     }
 }

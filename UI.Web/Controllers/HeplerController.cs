@@ -15,6 +15,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Script.Services;
 using System.Web.Services;
+using System.Web.UI;
 
 namespace UI.Web.Controllers
 {
@@ -275,7 +276,57 @@ namespace UI.Web.Controllers
 
         }
 
+        [HttpGet]
+        [ActionName("GetOrgChartCustodyHeader")]
+        public List<view_AssetsEventTrackingHeaderDisplay> GetOrgChartCustodyHeader(int nodeId)
+        
+        {
 
+            List<EmployeeViewModel> nodeChildren = new List<EmployeeViewModel>();
+            List<view_AssetsEventTrackingHeaderDisplay> CustodyList = new List<view_AssetsEventTrackingHeaderDisplay>();
+
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = client.GetAsync(string.Format("OrgChart/NodeChildrenTree/{0}", nodeId)).Result;
+
+                if (!Res.IsSuccessStatusCode)
+                    throw new Exception(Res.ToString());
+
+                var result = Res.Content.ReadAsStringAsync().Result;
+
+                // Get Employee Location 
+                //var assignedLocations =   objRepository.GetLocationList();
+
+                nodeChildren = JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
+
+            }
+
+
+            if (nodeChildren != null && nodeChildren.Count != 0)
+            {//TODO
+             // Get Node List Anbd 
+                List<int> NodeList = new List<int>();
+                foreach (var item in nodeChildren)
+                {
+                    NodeList.Add(item.ENTITYCODE.Value);
+                }
+                CustodyList = objRepository.getCustodyListHeader(NodeList);
+
+                //foreach (var item in CustodyList)
+                //{
+                //    item.OrgChartRefName = nodeChildren.Where(x => x.ENTITYCODE == item.OrgChartRefCode).FirstOrDefault().ENTITYNAME;
+
+                //}
+
+
+            }
+            return CustodyList;
+
+        }
         //[HttpGet]
         //[ActionName("HandleEmployeeSelection")]
         //public List<EmployeeSelectionResponse>  HandleEmployeeSelection(string selectedValue)

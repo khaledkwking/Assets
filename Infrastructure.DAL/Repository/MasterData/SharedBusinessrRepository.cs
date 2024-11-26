@@ -310,6 +310,79 @@ namespace Infrastructure.DAL
 
             }
         }
+        public List<view_AssetsEventTrackingHeaderDisplay> getCustodyListHeader(List<int> entityNode)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                return
+                    (from obj in DC.view_AssetsEventTrackingHeader
+                     .GroupBy(x => new
+                     {
+                         x.OrgChartRefCode,
+                         x.Ora_EmpRefCode,
+                         x.Serial,
+                         x.RequestDate,
+                         x.CreatedAt,
+                         x.RequestNotes,
+                         x.EmpRefCode,
+                         x.EmpName,
+                         x.Ora_EmpName,
+                         x.RequestActionType,
+                         x.Locationpath
+                     })
+                     where entityNode.Contains(obj.Key.OrgChartRefCode.Value)
+                     select new view_AssetsEventTrackingHeaderDisplay
+                     {
+                         Serial = obj.Key.Serial,
+                         RequestDate = obj.Key.RequestDate,
+                         OrgChartRefCode = obj.Key.OrgChartRefCode,
+                         CreatedAt = obj.Key.CreatedAt,
+                         RequestNotes = obj.Key.RequestNotes,
+                         EmpRefCode = obj.Key.EmpRefCode,
+                         EmpName = obj.Key.EmpName,
+                         Ora_EmpName = obj.Key.Ora_EmpName,
+                         RequestActionType = obj.Key.RequestActionType,
+                         Locationpath = obj.Key.Locationpath,
+                         Type = obj.Key.EmpRefCode == 0 ? "عهدة تنظيمية" : "عهدة فردية",
+                         Connected = obj.Key.Ora_EmpRefCode == 0 ? "لا" : "نعم",
+
+
+                     }).ToList();
+
+            }
+        }
+
+    }
+    public partial class view_AssetsEventTrackingHeaderDisplay
+    {
+        public int Code { get; set; }
+        public Nullable<System.DateTime> RequestDate { get; set; }
+        public Nullable<System.DateTime> DueDate { get; set; }
+        public string RequestRefCode { get; set; }
+        public Nullable<int> RequestActionType { get; set; }
+        public Nullable<int> ProcessType { get; set; }
+        public Nullable<int> TMonth { get; set; }
+        public Nullable<int> TYear { get; set; }
+        public string Serial { get; set; }
+        public Nullable<int> ToLocationId { get; set; }
+        public Nullable<int> EmpRefCode { get; set; }
+        public string EmpName { get; set; }
+        public string RequestNotes { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<System.DateTime> LastModifiedAt { get; set; }
+        public string Locationpath { get; set; }
+        public Nullable<int> OrgChartRefCode { get; set; }
+        public Nullable<int> Ora_EmpRefCode { get; set; }
+        public string Ora_EmpName { get; set; }
+        public string Ora_EmpCivilId { get; set; }
+        public Nullable<int> OraEntityRefCode { get; set; }
+        public Nullable<int> Emp_Id { get; set; }
+        public Nullable<bool> Emp_Active { get; set; }
+
+        public string Connected { get; set; }
+        public string Type { get; set; }
 
     }
 }

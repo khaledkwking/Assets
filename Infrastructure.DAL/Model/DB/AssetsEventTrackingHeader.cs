@@ -39,7 +39,7 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedAt { get; set; }
-        public Nullable<bool> IsTransferdOut { get; set; }
+        public Nullable<int> TranferedRequestHeaderId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssetsEventTracking> AssetsEventTrackings { get; set; }

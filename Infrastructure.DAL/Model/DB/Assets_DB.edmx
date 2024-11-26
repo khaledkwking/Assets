@@ -59,7 +59,7 @@
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
           <Property Name="LastModifiedAt" Type="datetime" />
-          <Property Name="IsTransferdOut" Type="bit" />
+          <Property Name="TranferedRequestHeaderId" Type="int" />
         </EntityType>
         <EntityType Name="AssetsItemUnits">
           <Key>
@@ -96,11 +96,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DeptID" Type="int" />
+          <Property Name="OrgRefCode" Type="int" />
           <Property Name="Notes" Type="nvarchar(max)" />
-          <Property Name="DeliveryAttach" Type="nvarchar" MaxLength="50" />
+          <Property Name="DeliveryAttach" Type="nvarchar(max)" />
           <Property Name="TransferDate" Type="datetime" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedAt" Type="datetime" />
         </EntityType>
         <EntityType Name="D_AttachmentType">
@@ -654,6 +654,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.view_AssetsEventTrackingHeader
           <Property Name="OraEntityRefCode" Type="int" />
           <Property Name="Emp_Id" Type="int" />
           <Property Name="Emp_Active" Type="bit" />
+          <Property Name="TranferedRequestHeaderId" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.view_AssetsInventory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1798,7 +1799,8 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
     [view_AssetsEventTrackingHeader].[Ora_EmpCivilId] AS [Ora_EmpCivilId], 
     [view_AssetsEventTrackingHeader].[OraEntityRefCode] AS [OraEntityRefCode], 
     [view_AssetsEventTrackingHeader].[Emp_Id] AS [Emp_Id], 
-    [view_AssetsEventTrackingHeader].[Emp_Active] AS [Emp_Active]
+    [view_AssetsEventTrackingHeader].[Emp_Active] AS [Emp_Active], 
+    [view_AssetsEventTrackingHeader].[TranferedRequestHeaderId] AS [TranferedRequestHeaderId]
     FROM [dbo].[view_AssetsEventTrackingHeader] AS [view_AssetsEventTrackingHeader]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="view_AssetsInventory" EntityType="Self.view_AssetsInventory" store:Type="Views" store:Schema="dbo">
@@ -3818,7 +3820,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <FunctionImport Name="sp_GetAllEmpsHaveAssetsCount" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_GetAllEmpsHaveAssetsCount_Result)" />
           <FunctionImport Name="sp_GetAllEmpsHaveAssetsDetails" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_GetAllEmpsHaveAssetsDetails_Result)" />
           <EntitySet Name="AssetsEventTrackingHeaders" EntityType="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" />
-          <EntitySet Name="AssetsTransferOuts" EntityType="CMGS_AssetsMgmtModel.AssetsTransferOut" />
           <AssociationSet Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1">
             <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeaders" />
             <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
@@ -3827,7 +3828,8 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
             <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeaders" />
             <End Role="RequestAttachment" EntitySet="RequestAttachments" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="AssetsTransferOuts" EntityType="CMGS_AssetsMgmtModel.AssetsTransferOut" />
+          </EntityContainer>
         <ComplexType Name="Security_SP_PRM_getJobPage_Result">
           <Property Type="Int32" Name="SystemID" Nullable="false" />
           <Property Type="Int32" Name="PageID" Nullable="true" />
@@ -4359,6 +4361,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="OraEntityRefCode" Type="Int32" />
           <Property Name="Emp_Id" Type="Int32" />
           <Property Name="Emp_Active" Type="Boolean" />
+          <Property Name="TranferedRequestHeaderId" Type="Int32" />
         </EntityType>
         <ComplexType Name="sp_LocationTree_Result">
           <Property Type="Int64" Name="PKey" Nullable="false" />
@@ -4436,21 +4439,9 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedBy" Type="Int32" />
           <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="IsTransferdOut" Type="Boolean" />
+          <Property Name="TranferedRequestHeaderId" Type="Int32" />
           <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" FromRole="AssetsEventTrackingHeader" ToRole="AssetsEventTracking" />
           <NavigationProperty Name="RequestAttachments" Relationship="CMGS_AssetsMgmtModel.FK_RequestAttachments_AssetsEventTrackingHeader" FromRole="AssetsEventTrackingHeader" ToRole="RequestAttachment" />
-        </EntityType>
-        <EntityType Name="AssetsTransferOut">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DeptID" Type="Int32" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DeliveryAttach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TransferDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1">
           <End Type="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Role="AssetsEventTrackingHeader" Multiplicity="0..1" />
@@ -4476,7 +4467,19 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="AssetsTransferOut">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrgRefCode" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryAttach" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TransferDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -5790,6 +5793,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySetMapping Name="view_AssetsEventTrackingHeader">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_AssetsEventTrackingHeader">
               <MappingFragment StoreEntitySet="view_AssetsEventTrackingHeader">
+                <ScalarProperty Name="TranferedRequestHeaderId" ColumnName="TranferedRequestHeaderId" />
                 <ScalarProperty Name="Emp_Active" ColumnName="Emp_Active" />
                 <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
                 <ScalarProperty Name="OraEntityRefCode" ColumnName="OraEntityRefCode" />
@@ -5895,7 +5899,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
           <EntitySetMapping Name="AssetsEventTrackingHeaders">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader">
               <MappingFragment StoreEntitySet="AssetsEventTrackingHeader">
-                <ScalarProperty Name="IsTransferdOut" ColumnName="IsTransferdOut" />
+                <ScalarProperty Name="TranferedRequestHeaderId" ColumnName="TranferedRequestHeaderId" />
                 <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
@@ -5925,7 +5929,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmt.dbo.viewTemp' does not have a prim
                 <ScalarProperty Name="TransferDate" ColumnName="TransferDate" />
                 <ScalarProperty Name="DeliveryAttach" ColumnName="DeliveryAttach" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+                <ScalarProperty Name="OrgRefCode" ColumnName="OrgRefCode" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

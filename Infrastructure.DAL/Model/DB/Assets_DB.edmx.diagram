@@ -88,10 +88,10 @@
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_OutboundNotes_Outbound" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_ItemCard" Width="1.5" PointX="24.375" PointY="26.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_AssetsEventTrackingHeader" Width="1.5" PointX="5.375" PointY="0.75" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Width="1.5" PointX="10.375" PointY="1.125" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsTransferOut" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Width="1.5" PointX="14.375" PointY="1.125" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_RequestAttachments_AssetsEventTrackingHeader" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsTransferOut" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

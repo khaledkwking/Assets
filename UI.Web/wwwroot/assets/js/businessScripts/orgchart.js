@@ -240,7 +240,85 @@ function handelSelectedNode(nodeId) {
 
     });
 
-    
+
+    $.ajax({
+        url: "/api/hepler/GetOrgChartCustodyHeader",
+        dataType: "json",
+        contentType: 'application/json',
+        type: 'get',
+        data:
+            { nodeId: nodeId },
+        success: function (CustodyData) {
+            $('#lblAssetsCountHeader').text(CustodyData.length);
+
+            $('#custodyList-datatableHeader').DataTable({
+                data: CustodyData,
+                pageLength: 10,
+                responsive: true,
+                destroy: true,
+                autoWidth: false,
+                order: [],
+                language: {
+                    search: "",
+                    searchPlaceholder: "بحث",
+                    lengthMenu: "<span class='d-none d-sm-inline-block'>عرض</span><div class='form-control-select'> _MENU_ </div>",
+                    info: "_START_ -_END_ of _TOTAL_",
+                    infoEmpty: "No records found",
+                    infoFiltered: "( Total _MAX_  )",
+                    paginate: {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Next",
+                        "previous": "Prev"
+                    }
+                },
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                columns: [
+                    { data: "Serial", title: "مسلسل  " },
+                    { data: "Type", title: "نوع العهدة	" },
+                    { data: "Locationpath", title: "مكان العهدة	" },
+                    {
+                        data: "RequestDate",
+                        title: "تاريخ الإستمارة	",
+                        render: function (data) {
+                            if (data) {
+                                // Format date to yyyy-MM-dd or any desired format
+                                const date = new Date(data);
+                                return date.toISOString().split('T')[0];
+                            }
+                            return "";
+                        }
+                    },
+                    {
+                        data: "CreatedAt",
+                        title: "تاريخ العملية	 ",
+                        render: function (data) {
+                            if (data) {
+                                const date = new Date(data);
+                                return date.toISOString().split('T')[0];
+                            }
+                            return "";
+                        }
+                    },
+                    { data: "RequestNotes", title: "ملاحظات   " },
+                    { data: "Connected", title: "تم الربط   " },
+                   
+
+                ],
+
+
+            });
+
+
+        },
+        error: function (request, status, error) {
+            toastr.clear(); NioApp.Toast(JSON.parse(request.responseText).message, 'error', { position: 'top-right' });
+        }
+
+
+    });
 }
 function setRelatedLinks(nodeId) {
      //$("#lnkReportOrgCustody").href  = "../reports/StocktakingReport.aspx?ReportType=1&entityId=" + nodeId;

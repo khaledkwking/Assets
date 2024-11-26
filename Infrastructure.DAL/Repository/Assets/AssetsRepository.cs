@@ -365,7 +365,21 @@ namespace Infrastructure.DAL
                     return result.ToList<view_AssetsEventTrackingHeader>();
             }
         }
+        public List<view_AssetsEventTrackingHeader> getAssetsRequestListByOrgRefCode(int OrgRefCode)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.view_AssetsEventTrackingHeader
+                     orderby obj.RequestDate descending
+                     where 1 == 1
+              
+                  && (OrgRefCode != 0 ? obj.OrgChartRefCode == OrgRefCode : true)
+                     select obj);
 
+                return result.ToList<view_AssetsEventTrackingHeader>();
+            }
+        }
         public IList<view_CustodyList> getFilteredCustodyList(string requestSerial, int requestType, DateTime TransactionDatFrom, DateTime TransactionDatTo,
             int targetLocation, int empRef, int[] OrgChartRefCode)
         {

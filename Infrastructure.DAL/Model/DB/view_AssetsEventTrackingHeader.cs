@@ -39,5 +39,6 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> OraEntityRefCode { get; set; }
         public Nullable<int> Emp_Id { get; set; }
         public Nullable<bool> Emp_Active { get; set; }
+        public Nullable<int> TranferedRequestHeaderId { get; set; }
     }
 }

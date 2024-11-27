@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Modules/_shared/MainEmpty.Master" AutoEventWireup="true" CodeBehind="OrgAssetReceipt.aspx.cs" Inherits="UI.Web.Modules.WHM.Forms.OrgAssetReceipt" %>
+﻿  <%@ Page Title="" Language="C#" MasterPageFile="~/Modules/_shared/MainEmpty.Master" AutoEventWireup="true" CodeBehind="OrgAssetReceipt.aspx.cs" Inherits="UI.Web.Modules.WHM.Forms.OrgAssetReceipt" %>
 
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 

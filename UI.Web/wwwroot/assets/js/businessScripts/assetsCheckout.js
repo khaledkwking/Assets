@@ -201,8 +201,10 @@ function fillOrgChart() {
 function loadEmployeeInfo(employee) {
 
 
+
     var selectedEmployee = cmgs_EmployeeList.filter(emp => parseInt(emp.EMP_ID) === parseInt(employee.EMP_ID));
-    console.log("selectedEmployee:", selectedEmployee);
+    console.log(selectedEmployee);
+    
     if (selectedEmployee != null && selectedEmployee.length > 0) {
 
 

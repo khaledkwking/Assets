@@ -278,13 +278,10 @@ namespace UI.Web.Controllers
 
         [HttpGet]
         [ActionName("GetOrgChartCustodyHeader")]
-        public List<view_AssetsEventTrackingHeaderDisplay> GetOrgChartCustodyHeader(int nodeId)
-        
+        public List<view_AssetsEventTrackingHeader> GetOrgChartCustodyHeader(int nodeId)
         {
-
             List<EmployeeViewModel> nodeChildren = new List<EmployeeViewModel>();
-            List<view_AssetsEventTrackingHeaderDisplay> CustodyList = new List<view_AssetsEventTrackingHeaderDisplay>();
-
+           
             using (var client = new HttpClient())
             {
 
@@ -298,33 +295,11 @@ namespace UI.Web.Controllers
 
                 var result = Res.Content.ReadAsStringAsync().Result;
 
-                // Get Employee Location 
-                //var assignedLocations =   objRepository.GetLocationList();
-
                 nodeChildren = JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
 
             }
-
-
-            if (nodeChildren != null && nodeChildren.Count != 0)
-            {//TODO
-             // Get Node List Anbd 
-                List<int> NodeList = new List<int>();
-                foreach (var item in nodeChildren)
-                {
-                    NodeList.Add(item.ENTITYCODE.Value);
-                }
-                CustodyList = objRepository.getCustodyListHeader(NodeList);
-
-                //foreach (var item in CustodyList)
-                //{
-                //    item.OrgChartRefName = nodeChildren.Where(x => x.ENTITYCODE == item.OrgChartRefCode).FirstOrDefault().ENTITYNAME;
-
-                //}
-
-
-            }
-            return CustodyList;
+            
+            return objRepository.getCustodyListHeader(nodeChildren.Select(x => x.ENTITYCODE.Value).ToList()); 
 
         }
         //[HttpGet]

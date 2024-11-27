@@ -310,53 +310,16 @@ namespace Infrastructure.DAL
 
             }
         }
-        public List<view_AssetsEventTrackingHeaderDisplay> getCustodyListHeader(List<int> entityNode)
+        public List<view_AssetsEventTrackingHeader> getCustodyListHeader(List<int> entityNode)
         {
             using (var DC = new AssetsEntitiesNew())
             {
                 return
                     (from obj in DC.view_AssetsEventTrackingHeader
-                     .GroupBy(x => new
-                     {
-                         x.Code,
-                         x.OrgChartRefCode,
-                         x.Ora_EmpRefCode,
-                         x.Serial,
-                         x.RequestDate,
-                         x.CreatedAt,
-                         x.RequestNotes,
-                         x.EmpRefCode,
-                         x.EmpName,
-                         x.Emp_Active,
-                         x.Ora_EmpName,
-                         x.RequestActionType,
-                         x.Locationpath,
-                         x.Emp_Id,
-                         
-                     })
-                     where entityNode.Contains(obj.Key.OrgChartRefCode.Value)
-                     select new view_AssetsEventTrackingHeaderDisplay
-                     {
-                         Code=obj.Key.Code,
-                         Serial = obj.Key.Serial,
-                         RequestDate = obj.Key.RequestDate,
-                          Ora_EmpRefCode = obj.Key.Ora_EmpRefCode,
-                         OrgChartRefCode = obj.Key.OrgChartRefCode,
-                         CreatedAt = obj.Key.CreatedAt,
-                         Emp_Id = obj.Key.Emp_Id,
-                         RequestNotes = obj.Key.RequestNotes,
-                         EmpRefCode = obj.Key.EmpRefCode,
-                         EmpName = obj.Key.EmpName,
-                         Emp_Active=obj.Key.Emp_Active,
-                         Ora_EmpName = obj.Key.Ora_EmpName,
-                         RequestActionType = obj.Key.RequestActionType,
-                         Locationpath = obj.Key.Locationpath,
-                         Type = obj.Key.EmpRefCode == 0 ? "عهدة تنظيمية" : "عهدة فردية",
-                         Connected = obj.Key.Ora_EmpRefCode == 0 ? "لا" : "نعم",
-                         EmpStatus = obj.Key.Emp_Active == false ? "غير فعال" : "فعال",
 
-
-                     }).ToList();
+                     where entityNode.Contains(obj.OraEntityRefCode.Value)
+                     select obj).ToList();
+                     
 
             }
         }

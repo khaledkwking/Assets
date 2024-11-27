@@ -1,27 +1,21 @@
-﻿using System;
+﻿using Infrastructure.DAL.Model.DB;
+using Infrastructure.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
-using System.Data.SqlClient;
-using System.Data;
-using System.Collections;
 using UI.Web.Admin.Controller;
-using Infrastructure.DAL;
-using Microsoft.VisualBasic;
-using Infrastructure.DAL.Model.DB;
 
 namespace UI.Web.Admin.Pages
 {
-
-    partial class AdminManager : BaseFormAdmin
+    public partial class AdminManager : BaseFormAdmin
     {
         public string _PageTitle = Resources.Pages.userList;
-        protected void Page_Load(object sender, System.EventArgs e) 
+        protected void Page_Load(object sender, System.EventArgs e)
         {
-           
+
             lblerror.Text = "";
 
             btnCancel.Attributes.Add("onclick", "Page_ValidationActive=false;");
@@ -34,7 +28,7 @@ namespace UI.Web.Admin.Pages
                 //}
 
                 ViewState["Item"] = 0;
-                FillDll(Security_Users.ins.FillAdminTypes(),   lstadminType, "Nameen", "id");
+                FillDll(Security_Users.ins.FillAdminTypes(), lstadminType, "Nameen", "id");
                 //FillDllwithoptional_ALL(Security_Users.ins.FillAdminTypes(),   LstFilterAdminType, "Nameen", "id", "الكل");
 
 
@@ -45,7 +39,7 @@ namespace UI.Web.Admin.Pages
 
         private void FillGrid()
         {
-            var userList = Security_Users.ins.GetItems(0,"",0);
+            var userList = Security_Users.ins.GetItems(0, "", 0);
 
             if (userList != null)
             {
@@ -64,10 +58,10 @@ namespace UI.Web.Admin.Pages
 
         }
 
- 
 
-      
-         
+
+
+
 
         protected void btnDelete_Click(object sender, System.EventArgs e)
         {
@@ -138,11 +132,11 @@ namespace UI.Web.Admin.Pages
                 txtPassword.Text = userDetails.password;
                 txtfullName.Text = userDetails.name;
                 chkisactive.Checked = getBool(userDetails.IsActive);
-                chkOperation.Checked = getBool( userDetails.isOperation);
+                chkOperation.Checked = getBool(userDetails.isOperation);
                 txtmobile.Text = userDetails.mobile;
                 txtEmail.Text = userDetails.Email;
                 txtaddress.Text = userDetails.Address;
-                txtPassword.Attributes.Add("value",userDetails.password);
+                txtPassword.Attributes.Add("value", userDetails.password);
 
                 if (userDetails.AdminType != null && userDetails.AdminType != 0)
                 {
@@ -159,14 +153,14 @@ namespace UI.Web.Admin.Pages
 
         private string getImage(ref FileUpload txtFile)
         {
-            string imgname="";
+            string imgname = "";
             string temp;
             string ext;
             int inx;
             int i;
             string RandChar;
             string ValueString;
-          //  Microsoft.VisualBasic.VBMath.Randomize();
+            //  Microsoft.VisualBasic.VBMath.Randomize();
             imgname = "";
             ValueString = "";
             if (!(txtFile.PostedFile == null))
@@ -258,11 +252,11 @@ namespace UI.Web.Admin.Pages
                     obj.mobile = txtmobile.Text;
                     obj.Email = txtEmail.Text;
                     obj.Address = txtaddress.Text;
-                    if (img1!="")
+                    if (img1 != "")
                         obj.AdminPhoto = img1;
-                 
-                 
-                   
+
+
+
 
                     Security_Users.ins.Add(obj);
 
@@ -305,7 +299,7 @@ namespace UI.Web.Admin.Pages
         {
             this.ClearForm();
         }
- 
+
         protected void btnFilter_Click(object sender, EventArgs e)
         {
             this.FillGrid();
@@ -318,10 +312,7 @@ namespace UI.Web.Admin.Pages
 
             this.ClearForm();
             tblAdd.Visible = true;
-            tblshow.Visible = false ;
+            tblshow.Visible = false;
         }
-
-
- 
     }
 }

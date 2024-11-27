@@ -408,13 +408,13 @@
 
                             <div class="panel panel-yellow" style="min-height: 70vh">
 
-                                <div class="p-3 " style="background-color: #0C476B">
+                                <div class="p-1 " style="background-color: #0C476B;margin-bottom:20px">
                                         <div class="d-flex">
                                             <div class="align-self-center me-3">
-                                                <img src="/wwwroot/assets/images/logo/KuwaitLogo.png" class="avatar-xs rounded-circle" width="80px" alt="avatar-2">
+                                                <img src="/wwwroot/assets/images/logo/KuwaitLogo.png" class="avatar-xs rounded-circle" width="50px" alt="avatar-2">
                                             </div>
                                             <div class="flex-1" style="padding-top: 10px;padding-right: 10px;">
-                                                <h5 class="font-size-15 mb-1" style="color: #E4DAC1;">الأمانة العامة لمجلس الوزراء</h5>
+                                                <h5 class="font-size-15 mb-1" style="color: #E4DAC1;font-size:16px;">الأمانة العامة لمجلس الوزراء</h5>
                                                 <p class="text-muted text-truncate mb-0" style="line-height: 20px; font-size: 13px; color: #E4DAC1 !important;">الهيكل التنظيمي  </p>
 
                                             </div>

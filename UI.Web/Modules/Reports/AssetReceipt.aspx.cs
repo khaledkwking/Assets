@@ -138,10 +138,10 @@ namespace UI.Web.Modules.WHM.Forms
                             setChartInfo(objList, objList[0].EmpRefCode.Value);
 
                             ReportViewer1.ProcessingMode = ProcessingMode.Local;
-                            ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsReceipt.rdlc");
+                            ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailed.rdlc");
                             ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
                             //var objlist = objRepository.GetList();
-                            ReportDataSource datasource = new ReportDataSource("ds_AssetsList", objList);
+                            ReportDataSource datasource = new ReportDataSource("ds_RequestList", objList);
 
                             ReportViewer1.LocalReport.DataSources.Clear();
                             ReportViewer1.LocalReport.DataSources.Add(datasource);
@@ -162,10 +162,10 @@ namespace UI.Web.Modules.WHM.Forms
                             setChartInfo(objList, objList[0].EmpRefCode.Value);
 
                             ReportViewer1.ProcessingMode = ProcessingMode.Local;
-                            ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsReceipt.rdlc");
+                            ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailed.rdlc");
                             ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
                             //var objlist = objRepository.GetList();
-                            ReportDataSource datasource = new ReportDataSource("ds_AssetsList", objList);
+                            ReportDataSource datasource = new ReportDataSource("ds_RequestList", objList);
 
                             ReportViewer1.LocalReport.DataSources.Clear();
                             ReportViewer1.LocalReport.DataSources.Add(datasource);
@@ -200,7 +200,7 @@ namespace UI.Web.Modules.WHM.Forms
             var objList = objRepository.getAssetReceiptbyRequestCode(ZeroIntergerIFNull(((ReportParameterInfo)e.Parameters["RequestHeaderCode"]).Values[0]), 0);
             if (objList != null && objList.Count > 0)
             {
-                ReportDataSource datasource = new ReportDataSource("ds_AssetsList", objList);
+                ReportDataSource datasource = new ReportDataSource("ds_RequestList", objList);
                 e.DataSources.Add(datasource);
             }
         }

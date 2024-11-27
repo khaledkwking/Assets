@@ -70,7 +70,7 @@ namespace UI.Web.Modules._shared
                 ViewState["AdminName"] = user.name.ToString();
                 Session["AdminName"] = user.name.ToString();
                 AdminName = user.name.ToString();
-                PrfilePhoto = Resources.Utilities.Assetspath + "uploads/Adminprofile/" + user.AdminPhoto.ToString();
+                PrfilePhoto = user.AdminPhoto!=null? Resources.Utilities.Assetspath + "uploads/Adminprofile/" + user.AdminPhoto.ToString():"";
                 FillPermissions(user.AdminType, user.id);
                 ShowAlerts();
                 FillMenu();
@@ -611,7 +611,7 @@ namespace UI.Web.Modules._shared
                 {
                     strmenu.Append(("<li class='nk-menu-item'>"));
                     strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/OrgChartTree.aspx' class='nk-menu-link'>"));
-                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-layers'></em></span><span class='nk-menu-text'>حصر العهد الجهات</span>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-layers'></em></span><span class='nk-menu-text'>حصر عهد الجهات</span>"));
                     strmenu.Append(("</a>"));
                     strmenu.Append(("</li>"));
                 }

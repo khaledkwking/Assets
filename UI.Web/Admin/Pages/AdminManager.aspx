@@ -1,10 +1,7 @@
-﻿<%@ Page Language="c#" MasterPageFile="~/Modules/_shared/Main.Master" AutoEventWireup="true" CodeFile="AdminManager.aspx.cs" Inherits=" UI.Web.Admin.Pages.AdminManager" Title="System administrator Management" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Modules/_shared/Main.Master" AutoEventWireup="true" CodeBehind="AdminManager.aspx.cs" Inherits="UI.Web.Admin.Pages.AdminManager" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<%@ Register TagPrefix="cc1" Namespace="CutePager" Assembly="ASPnetPagerV2netfx2_0" %>
-
-
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script language="JavaScript" type="text/javascript">
+     <script language="JavaScript" type="text/javascript">
         function chkImage() {
 
             txt = document.getElementById("<%=lstadminType.ClientID %>")
@@ -45,7 +42,7 @@
 
             return true;
         }
-    </script>
+     </script>
 
 
 
@@ -338,7 +335,4 @@
     </div>
 
 
-
-
 </asp:Content>
-

@@ -27,7 +27,7 @@ namespace UI.Web.Modules.Assets
         #region "Page Events"
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            if (Request.QueryString["empid"] != null)
+            if (Request.QueryString["empid"] != null || Request.QueryString["hidemaster"]!=null)
             {
                 this.MasterPageFile = "~/Modules/_shared/MainEmpty.Master";
             }

@@ -15851,3 +15851,15 @@ thead tr {
     display: none;
     /* background: url(/Resources/images/loader.gif) no-repeat top center; */
 }
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    max-width: 100%;
+    padding: 0;
+}

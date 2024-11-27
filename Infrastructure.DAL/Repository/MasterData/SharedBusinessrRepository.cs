@@ -330,7 +330,9 @@ namespace Infrastructure.DAL
                          x.Emp_Active,
                          x.Ora_EmpName,
                          x.RequestActionType,
-                         x.Locationpath
+                         x.Locationpath,
+                         x.Emp_Id,
+                         
                      })
                      where entityNode.Contains(obj.Key.OrgChartRefCode.Value)
                      select new view_AssetsEventTrackingHeaderDisplay
@@ -338,8 +340,10 @@ namespace Infrastructure.DAL
                          Code=obj.Key.Code,
                          Serial = obj.Key.Serial,
                          RequestDate = obj.Key.RequestDate,
+                          Ora_EmpRefCode = obj.Key.Ora_EmpRefCode,
                          OrgChartRefCode = obj.Key.OrgChartRefCode,
                          CreatedAt = obj.Key.CreatedAt,
+                         Emp_Id = obj.Key.Emp_Id,
                          RequestNotes = obj.Key.RequestNotes,
                          EmpRefCode = obj.Key.EmpRefCode,
                          EmpName = obj.Key.EmpName,

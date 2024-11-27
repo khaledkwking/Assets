@@ -5,20 +5,7 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-       <style>
-          .pagination {
-    display: flex;
-    padding-left: 0;
-    list-style: none;
-    border-radius: 4px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 5px;
-    max-width: 100%;
-    padding: 0;
-}
-    </style>
+    
     <script language="JavaScript" type="text/javascript">
         function chkImage() {
 
@@ -119,17 +106,55 @@
 
                                         <ul class="nav nav-tabs">
                                             <li class="nav-item">
-                                                <a class="nav-link active" data-toggle="tab" href="#tabItem5"><em class="icon ni ni-users-fill"></em><span>قائمة الموظفين (<asp:Label ID="lblEmpCount" runat="server" ClientIDMode="Static"></asp:Label>)</span></a>
+                                                <a class="nav-link active" data-toggle="tab" href="#tabCustody"><em class="icon ni ni-menu-circled"></em><span>حصر استمارات العهد   (<asp:Label ID="lblAssetsCountHeader" runat="server" ClientIDMode="Static">0</asp:Label>)</span></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link " data-toggle="tab" href="#tabItem5"><em class="icon ni ni-users-fill"></em><span>قائمة الموظفين (<asp:Label ID="lblEmpCount" runat="server" ClientIDMode="Static"></asp:Label>)</span></a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" data-toggle="tab" href="#tabItem6"><em class="icon ni ni-building"></em><span>المواقع التابعة   (<asp:Label ID="lblcount" runat="server" ClientIDMode="Static">0</asp:Label>)</span></a>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#tabCustody"><em class="icon ni ni-menu-circled"></em><span>حصر استمارات العهد   (<asp:Label ID="lblAssetsCountHeader" runat="server" ClientIDMode="Static">0</asp:Label>)</span></a>
-                                            </li>
+
                                         </ul>
                                         <div class="tab-content">
-                                            <div class="tab-pane active" id="tabItem5">
+                                            <div class="tab-pane active" id="tabCustody">
+
+                                                <div class="card-inner  p-0 pull-left" data-select2-id="22">
+                                                    <div class="card-title-group" data-select2-id="21">
+
+                                                        <div class="card-tools mr-n1" data-select2-id="20">
+                                                            <ul class="btn-toolbar gx-1" data-select2-id="19">
+                                                                <li>
+                                                                    <div class="dropdown">
+                                                                        <a href="#" class="btn btn-round btn-icon btn-dim btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                                            <em class="icon ni ni-more-h"></em>
+                                                                        </a>
+                                                                        <div class="dropdown-menu  dropdown-menu-right" style="">
+                                                                            <ul class="link-check">
+                                                                                <li><a id="lnkReportOrgCustody" href="#" class="iframewide"><span class='nk-menu-icon'><em class='icon ni ni-files'></em></span><span class='nk-menu-text'>تقرير مراقبة العهــد  </span></a></li>
+                                                                                <li><a id="lnkReportOrgCustody2" href="#" class="iframewide"><span class='nk-menu-icon'><em class='icon ni ni-files'></em></span><span class='nk-menu-text'>جدول بيانات الأصول      </span></a></li>
+                                                                                <li><a id="lnkReportOrgReceiptList" href="#" class="iframewide text-danger"><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text'>سجل إستمارات العهد </span></a></li>
+
+
+
+                                                                            </ul>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="card-inner p-0">
+                                                    <table id="custodyList-datatableHeader" class="table table-hover table-striped table-bordered table-advanced tablesorter"></table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane " id="tabItem5">
 
                                                 <div class="card-inner  p-0 pull-left" data-select2-id="22">
                                                     <div class="card-title-group" data-select2-id="21">
@@ -197,43 +222,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="tab-pane" id="tabCustody">
 
-                                                <div class="card-inner  p-0 pull-left" data-select2-id="22">
-                                                    <div class="card-title-group" data-select2-id="21">
-
-                                                        <div class="card-tools mr-n1" data-select2-id="20">
-                                                            <ul class="btn-toolbar gx-1" data-select2-id="19">
-                                                                <li>
-                                                                    <div class="dropdown">
-                                                                        <a href="#" class="btn btn-round btn-icon btn-dim btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                            <em class="icon ni ni-more-h"></em>
-                                                                        </a>
-                                                                        <div class="dropdown-menu  dropdown-menu-right" style="">
-                                                                            <ul class="link-check">
-                                                                                <li><a id="lnkReportOrgCustody" href="#" class="iframewide"><span class='nk-menu-icon'><em class='icon ni ni-files'></em></span><span class='nk-menu-text'>تقرير مراقبة العهــد  </span></a></li>
-                                                                                <li><a id="lnkReportOrgCustody2" href="#" class="iframewide"><span class='nk-menu-icon'><em class='icon ni ni-files'></em></span><span class='nk-menu-text'>جدول بيانات الأصول      </span></a></li>
-                                                                                <li><a id="lnkReportOrgReceiptList" href="#" class="iframewide text-danger"><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text'>سجل إستمارات العهد </span></a></li>
-
-
-
-                                                                            </ul>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-
-                                                            </ul>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="card-inner p-0">
-                                                    <table id="custodyList-datatableHeader" class="table table-hover table-striped table-bordered table-advanced tablesorter"></table>
-                                                </div>
-                                            </div>
 
                                         </div>
 

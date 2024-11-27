@@ -26,7 +26,7 @@ function handelSelectedNode(nodeId) {
             $('#lblEmpCount').text(employeeData.length);
             $('#employeeList-datatable').DataTable({
                 data: employeeData,
-                pageLength: 10,
+                pageLength: 25,
                 responsive: true,
                 destroy: true,
                 autoWidth: false,
@@ -176,7 +176,7 @@ function handelSelectedNode(nodeId) {
             
             $('#custodyList-datatable').DataTable({
                 data: CustodyData,
-                pageLength: 10,
+                pageLength: 25,
                 responsive: true,
                 destroy: true,
                 autoWidth: false,
@@ -253,7 +253,7 @@ function handelSelectedNode(nodeId) {
 
             $('#custodyList-datatableHeader').DataTable({
                 data: CustodyData,
-                pageLength: 10,
+                pageLength: 25,
                 responsive: true,
                 destroy: true,
                 autoWidth: false,
@@ -326,13 +326,16 @@ function handelSelectedNode(nodeId) {
                         }
                     },
                     {
+                        
                         data: "Code", title: "", orderable: false,
                         render: function (data, type, row) {
+                            console.log(row);
                             return ("<div class='drodown'>" + "<a href='#' class='btn btn-sm btn-icon btn-trigger dropdown-toggle' data-toggle='dropdown'><em class='icon ni ni-more-h'></em></a>" +
                                 "<div class='dropdown-menu dropdown-menu-right'>" +
                                 "<ul class='link-list-opt no-bdr'>" +
 
-                                "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/AssetCheckout.aspx?t=1&requestCode=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > سجل العهد</span ></a ></li>" +
+                                "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/AssetCheckout.aspx?hidemaster=1&t=1&requestCode=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > سجل العهد</span ></a ></li>" +
+                                "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Reports/AssetReceipt.aspx?hidemaster=1&locid=0&empid=" + row.Ora_EmpRefCode + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text' > طباعة إستمارة العهدة  </span ></a ></li>" +
                              
                                 "</ul>" +
                                 "</div></div>"

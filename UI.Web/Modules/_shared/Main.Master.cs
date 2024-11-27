@@ -577,8 +577,16 @@ namespace UI.Web.Modules._shared
                     strmenu.Append(("</li>"));
                 }
 
+                if (ShowPage("AssetsTransferOut.aspx"))
+                {
+                    strmenu.Append(("<li class='nk-menu-item'>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetsTransferOut.aspx' class='nk-menu-link'>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-unlink-alt'></em></span><span class='nk-menu-text'>نقل تبعيات الجهات </span>"));
+                    strmenu.Append(("</a>"));
+                    strmenu.Append(("</li>"));
+                }
 
-                
+
                 //if (ShowPage("AssetsList.aspx"))
                 //{
                 //    strmenu.Append(("<li class='nk-menu-item'>"));
@@ -603,18 +611,11 @@ namespace UI.Web.Modules._shared
                 {
                     strmenu.Append(("<li class='nk-menu-item'>"));
                     strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/OrgChartTree.aspx' class='nk-menu-link'>"));
-                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-thumb-alt'></em></span><span class='nk-menu-text'>حصر العهد طبقا للهيكل التنظيمي</span>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-layers'></em></span><span class='nk-menu-text'>حصر العهد الجهات</span>"));
                     strmenu.Append(("</a>"));
                     strmenu.Append(("</li>"));
                 }
-                if (ShowPage("AssetsTransferOut.aspx"))
-                {
-                    strmenu.Append(("<li class='nk-menu-item'>"));
-                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetsTransferOut.aspx' class='nk-menu-link'>"));
-                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-list-thumb-alt'></em></span><span class='nk-menu-text'>تحويل العهد خارج الامانة</span>"));
-                    strmenu.Append(("</a>"));
-                    strmenu.Append(("</li>"));
-                }
+             
                 strmenu.Append(("</ul>"));
                 strmenu.Append(("</div>"));
             }

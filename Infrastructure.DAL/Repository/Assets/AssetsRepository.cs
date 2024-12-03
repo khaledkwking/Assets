@@ -263,6 +263,18 @@ namespace Infrastructure.DAL
                 return result.FirstOrDefault();
             }
         }
+        public AssetsEventTrackingHeader getTrackingRequestHeaderByCodeNew(int headerCode)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.AssetsEventTrackingHeaders
+                     where obj.Code == headerCode
+                     select obj);
+
+                return result.FirstOrDefault();
+            }
+        }
 
         public AssetsEventTrackingHeader getTrackingRequestHeaderByCode(string headerCode)
         {
@@ -440,11 +452,41 @@ namespace Infrastructure.DAL
         {
             using (var DC = new AssetsEntitiesNew())
             {
+
                 // Mark entity as modified
                 DC.Entry(item as AssetsEventTrackingHeader).State = System.Data.Entity.EntityState.Modified;
                 return DC.SaveChanges();
             }
         }
+        //public int UpdateAssetsEventTrackingHeader<T>(T item)
+        //{
+        //    if (item == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(item), "The entity cannot be null.");
+        //    }
+
+        //    using (var DC = new AssetsEntitiesNew())
+        //    {
+        //        var entity = item as view_AssetsEventTrackingHeader;
+        //        if (entity == null)
+        //        {
+        //            throw new InvalidOperationException("The entity type is incorrect.");
+        //        }
+
+        //        // Log null properties before updating
+        //        var nullProperties = DC.Entry(entity).CurrentValues.PropertyNames
+        //            .Where(p => DC.Entry(entity).CurrentValues[p] == null)
+        //            .ToList();
+
+        //        if (nullProperties.Any())
+        //        {
+        //            throw new InvalidOperationException($"The following properties are null: {string.Join(", ", nullProperties)}");
+        //        }
+
+        //        DC.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+        //        return DC.SaveChanges();
+        //    }
+        //}
 
         #endregion "Add ,  Update  ,Delete" Assets Acting Tracking
 

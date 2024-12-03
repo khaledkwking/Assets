@@ -207,6 +207,7 @@
     </Content>
     <Content Include="wwwroot\assets\js\businessScripts\orgchart.js" />
     <Content Include="wwwroot\assets\js\FormValidation.js" />
+    <Content Include="wwwroot\assets\js\libs\colorbox\colorbox\jquery.colorbox.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\Controller\Access.cs" />

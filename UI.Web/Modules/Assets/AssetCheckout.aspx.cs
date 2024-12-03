@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -269,7 +270,7 @@ namespace UI.Web.Modules.Assets
 
                
 
-                if (gets(ViewState["itemID"]).Equals("0"))
+                if (gets(   ViewState["itemID"]).Equals("0"))
                 {//Save
 
 
@@ -360,7 +361,7 @@ namespace UI.Web.Modules.Assets
                     //Update
 
                     // Add Request Header
-                    var objHeader = objRepository.getTrackingRequestHeaderDetails(ZeroIntergerIFNull(gets(ViewState["itemID"])));
+                    var objHeader = objRepository.getTrackingRequestHeaderByCodeNew(ZeroIntergerIFNull(gets(ViewState["itemID"])));
                     objHeader.RequestActionType = (int)CustodyProcessTypes.CheckOut;
                     objHeader.ProcessType = ZeroIntergerIFNull(hdnType.Value);
 
@@ -451,6 +452,7 @@ namespace UI.Web.Modules.Assets
 
 
             }
+
             catch (Exception ex)
             {
 
@@ -663,7 +665,14 @@ namespace UI.Web.Modules.Assets
                 {
                     //Get Person Delatils
                     var objforDelete = objRepository.getTrackingDetails(ZeroIntergerIFNull(code));
-                    objRepository.DeleteEventTracking(objforDelete);
+
+                    objforDelete.IsDeleted = true;
+                    objforDelete.LastModifiedAt = DateTime.Now;
+                    objforDelete.LastModifiedBy = ZeroIntergerIFNull(ReadSession("userid").ToString());
+
+                    objRepository.UpdateEventTracking(objforDelete);
+
+                    //objRepository.DeleteEventTracking(objforDelete);
 
                 }
                 RequestItemList.RemoveAt(e.Item.ItemIndex);

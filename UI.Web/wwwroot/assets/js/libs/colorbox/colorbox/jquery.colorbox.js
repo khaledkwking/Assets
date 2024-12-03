@@ -406,8 +406,17 @@
 					}
 				});
 
-				$('.' + boxElement, document).live('click', function (e) {
-					// ignore non-left-mouse-clicks and clicks modified with ctrl / command, shift, or alt.
+				//$(document).on('click', 'a.colorbox', function () {
+				//$('.' + boxElement, document).live('click', function (e) {
+				//	// ignore non-left-mouse-clicks and clicks modified with ctrl / command, shift, or alt.
+				//	// See: http://jacklmoore.com/notes/click-events/
+				//	if (!(e.which > 1 || e.shiftKey || e.altKey || e.metaKey)) {
+				//		e.preventDefault();
+				//		launch(this);
+				//	}
+				//});
+				$(document).on('click', '.' + boxElement, function (e) {
+					// Ignore non-left-mouse clicks and clicks modified with ctrl / command, shift, or alt.
 					// See: http://jacklmoore.com/notes/click-events/
 					if (!(e.which > 1 || e.shiftKey || e.altKey || e.metaKey)) {
 						e.preventDefault();

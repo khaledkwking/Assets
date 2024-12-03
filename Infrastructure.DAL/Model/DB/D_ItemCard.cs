@@ -18,8 +18,8 @@ namespace Infrastructure.DAL.Model.DB
         public D_ItemCard()
         {
             this.AssetsItemUnits = new HashSet<AssetsItemUnit>();
-            this.AssetsEventTrackings = new HashSet<AssetsEventTracking>();
             this.Outbound_Items = new HashSet<Outbound_Items>();
+            this.AssetsEventTrackings = new HashSet<AssetsEventTracking>();
         }
     
         public int Code { get; set; }
@@ -53,8 +53,8 @@ namespace Infrastructure.DAL.Model.DB
         public virtual D_ItemsCategory D_ItemsCategory { get; set; }
         public virtual D_QtyUnit D_QtyUnit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssetsEventTracking> AssetsEventTrackings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Outbound_Items> Outbound_Items { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AssetsEventTracking> AssetsEventTrackings { get; set; }
     }
 }

@@ -59,18 +59,11 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<Security_pr_Permission> Security_pr_Permission { get; set; }
         public virtual DbSet<Security_pr_SystemPages> Security_pr_SystemPages { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<view_AssetEventLog> view_AssetEventLog { get; set; }
-        public virtual DbSet<view_AssetsInventory> view_AssetsInventory { get; set; }
-        public virtual DbSet<view_AssetsList> view_AssetsList { get; set; }
-        public virtual DbSet<view_CustodyList> view_CustodyList { get; set; }
-        public virtual DbSet<view_CustodyListGrouped> view_CustodyListGrouped { get; set; }
         public virtual DbSet<view_inboubdItems> view_inboubdItems { get; set; }
         public virtual DbSet<View_InboundList> View_InboundList { get; set; }
-        public virtual DbSet<view_Inventory> view_Inventory { get; set; }
         public virtual DbSet<view_ItemCategoryTree> view_ItemCategoryTree { get; set; }
         public virtual DbSet<viewTemp> viewTemps { get; set; }
         public virtual DbSet<Security_pr_adminPermittedLocations> Security_pr_adminPermittedLocations { get; set; }
-        public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
         public virtual DbSet<D_OutboundRefType> D_OutboundRefType { get; set; }
         public virtual DbSet<D_OutboundType> D_OutboundType { get; set; }
         public virtual DbSet<Outbound_Items> Outbound_Items { get; set; }
@@ -83,6 +76,13 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<view_AssetsEventTrackingHeader> view_AssetsEventTrackingHeader { get; set; }
         public virtual DbSet<AssetsEventTrackingHeader> AssetsEventTrackingHeaders { get; set; }
         public virtual DbSet<AssetsTransferOut> AssetsTransferOuts { get; set; }
+        public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
+        public virtual DbSet<view_AssetEventLog> view_AssetEventLog { get; set; }
+        public virtual DbSet<view_AssetsInventory> view_AssetsInventory { get; set; }
+        public virtual DbSet<view_AssetsList> view_AssetsList { get; set; }
+        public virtual DbSet<view_CustodyList> view_CustodyList { get; set; }
+        public virtual DbSet<view_CustodyListGrouped> view_CustodyListGrouped { get; set; }
+        public virtual DbSet<view_Inventory> view_Inventory { get; set; }
     
         [DbFunction("AssetsEntitiesNew", "getChildNodeParentList")]
         public virtual IQueryable<getChildNodeParentList_Result> getChildNodeParentList(Nullable<int> childNodeId)
@@ -334,16 +334,6 @@ namespace Infrastructure.DAL.Model.DB
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_getEntityEmployeeList", nodeIdParameter);
         }
     
-        public virtual ObjectResult<GetAssetUnitsCostDetails_Result> GetAssetUnitsCostDetails()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAssetUnitsCostDetails_Result>("GetAssetUnitsCostDetails");
-        }
-    
-        public virtual ObjectResult<GetAssetUnitsCostCompare_Result> GetAssetUnitsCostCompare()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAssetUnitsCostCompare_Result>("GetAssetUnitsCostCompare");
-        }
-    
         public virtual ObjectResult<Get_Emp_Location_Result> Get_Emp_Location(Nullable<int> empId)
         {
             var empIdParameter = empId.HasValue ?
@@ -362,14 +352,24 @@ namespace Infrastructure.DAL.Model.DB
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LocationTree_Result>("sp_LocationTree", startingNodeParameter);
         }
     
-        public virtual ObjectResult<sp_GetAllAssetsTypeCount_Result> sp_GetAllAssetsTypeCount()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAllAssetsTypeCount_Result>("sp_GetAllAssetsTypeCount");
-        }
-    
         public virtual ObjectResult<sp_GetAllEmployeesCount_Result> sp_GetAllEmployeesCount()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAllEmployeesCount_Result>("sp_GetAllEmployeesCount");
+        }
+    
+        public virtual ObjectResult<GetAssetUnitsCostCompare_Result> GetAssetUnitsCostCompare()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAssetUnitsCostCompare_Result>("GetAssetUnitsCostCompare");
+        }
+    
+        public virtual ObjectResult<GetAssetUnitsCostDetails_Result> GetAssetUnitsCostDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAssetUnitsCostDetails_Result>("GetAssetUnitsCostDetails");
+        }
+    
+        public virtual ObjectResult<sp_GetAllAssetsTypeCount_Result> sp_GetAllAssetsTypeCount()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAllAssetsTypeCount_Result>("sp_GetAllAssetsTypeCount");
         }
     
         public virtual ObjectResult<sp_GetAllEmpsHaveAssetsCount_Result> sp_GetAllEmpsHaveAssetsCount()

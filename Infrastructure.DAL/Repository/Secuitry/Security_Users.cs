@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data.Entity; 
+
 
 namespace Infrastructure.DAL
 {
@@ -43,6 +45,50 @@ namespace Infrastructure.DAL
                 return result.ToList<Security_pr_admin>();
             }
         }
+        public List<Security_pr_admin> GetItemsByOrgCharts(int admintype, string partofname, int DeptId)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    from admin in DC.Security_pr_admin
+                        .AsNoTracking()
+                        .Include(a => a.Security_pr_AdminType)
+                        .Include(a => a.Security_pr_adminPermittedOrgUnits)
+                    join permittedOrgUnit in DC.Security_pr_adminPermittedOrgUnits.AsNoTracking()
+                        on admin.id equals permittedOrgUnit.Code into permittedGroup
+                    from permittedOrgUnit in permittedGroup.DefaultIfEmpty()
+                    where admin.id != 0
+                          && (admintype != 0 ? admin.AdminType == admintype : true)
+                          && (!string.IsNullOrEmpty(partofname) ? admin.name.Contains(partofname) : true)
+                          && (DeptId != 0 ? permittedOrgUnit.OrgChartRefCode == DeptId : true)
+                    orderby admin.id descending
+                    select admin;
+
+                return result.ToList();
+            }
+           
+        }
+        //public List<Security_pr_admin> GetItemsByOrgCharts(int admintype, string partofname, int DeptId)
+        //{
+        //    using (var DC = new AssetsEntitiesNew())
+        //    {
+        //        var result =
+        //            from admin in DC.Security_pr_admin
+        //                .Include("Security_pr_AdminType")
+        //                .Include("Security_pr_adminPermittedOrgUnits")
+        //            join permittedOrgUnit in DC.Security_pr_adminPermittedOrgUnits
+        //             on admin.id equals permittedOrgUnit.Code into permittedGroup // Left join using 'into'
+        //            from permittedOrgUnit in permittedGroup.DefaultIfEmpty()
+        //            where admin.id != 0
+        //                  && (admintype != 0 ? admin.AdminType == admintype : true)
+        //                  && (partofname != "" ? admin.name.Contains(partofname) : true)
+        //                  && (DeptId != 0 ? permittedOrgUnit.OrgChartRefCode == DeptId: true)
+        //            orderby admin.id descending
+        //            select admin;
+
+        //        return result.ToList();
+        //    }
+        //}
         public List<Security_pr_admin> GetUserbyType(int admintype)
         {
             using (var DC = new AssetsEntitiesNew())

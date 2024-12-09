@@ -39,7 +39,7 @@ namespace UI.Web.Admin.Pages
 
         private void FillGrid()
         {
-            var userList = Security_Users.ins.GetItems(0, "", 0);
+            var userList = Security_Users.ins.GetItemsByOrgCharts(0, "", ZeroIntergerIFNull(hdnSelectedNode.Value));
 
             if (userList != null)
             {

@@ -262,6 +262,18 @@ namespace Infrastructure.DAL
                 return result.ToList<D_EmployeeList>();
             }
         }
+        public List<Employee_tbl> FillEmployee_tbl()
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.Employee_tbl//D_EmployeeList
+                     orderby obj.Emp_Id
+                     select obj);
+
+                return result.ToList<Employee_tbl>();
+            }
+        }
         public sp_ItemAutoComp_Result[] FillItemsAuto(string prefixText)
         {
             ArrayList name = new ArrayList();

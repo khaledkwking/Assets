@@ -88,5 +88,35 @@ namespace UI.Web.Modules.MasterData
                 return;
             }
         }
+
+        protected void btnDelete_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                if (hdnSelectedNode.Value != "")
+                {
+                    ////check Relative Exta
+                    //if (objRepository.CheckChildExistance(ZeroIntergerIFNull(hdnSelectedNode.Value)))
+                    //{
+
+                    //    string script = FormatpopupErrorMSG("عفوا ، يوجد بيانات مرتبطة ", "1");
+                    //    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                    //    return;
+                    //}
+                    //{
+                    //    objRepository.Delete((D_Locations)objRepository.GetDetails(ZeroIntergerIFNull(hdnSelectedNode.Value)));
+                    //    string script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");
+                    //    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+
+                string script = FormatpopupErrorMSG(Resources.Alerts.SorryDeleteDataFailed + ex.Message.ToString(), "1");
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+            }
+
+        }
     }
 }

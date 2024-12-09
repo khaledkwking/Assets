@@ -52,7 +52,6 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<InboundStoreEmployee> InboundStoreEmployees { get; set; }
         public virtual DbSet<Item_tbl> Item_tbl { get; set; }
         public virtual DbSet<RequestAttachment> RequestAttachments { get; set; }
-        public virtual DbSet<Security_pr_admin> Security_pr_admin { get; set; }
         public virtual DbSet<Security_pr_AdminType> Security_pr_AdminType { get; set; }
         public virtual DbSet<Security_pr_MainSystem> Security_pr_MainSystem { get; set; }
         public virtual DbSet<Security_pr_ModuleThemes> Security_pr_ModuleThemes { get; set; }
@@ -74,7 +73,6 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<View_OutboundList> View_OutboundList { get; set; }
         public virtual DbSet<view_ItemCard> view_ItemCard { get; set; }
         public virtual DbSet<view_AssetsEventTrackingHeader> view_AssetsEventTrackingHeader { get; set; }
-        public virtual DbSet<AssetsEventTrackingHeader> AssetsEventTrackingHeaders { get; set; }
         public virtual DbSet<AssetsTransferOut> AssetsTransferOuts { get; set; }
         public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
         public virtual DbSet<view_AssetEventLog> view_AssetEventLog { get; set; }
@@ -83,6 +81,9 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<view_CustodyList> view_CustodyList { get; set; }
         public virtual DbSet<view_CustodyListGrouped> view_CustodyListGrouped { get; set; }
         public virtual DbSet<view_Inventory> view_Inventory { get; set; }
+        public virtual DbSet<Security_pr_admin> Security_pr_admin { get; set; }
+        public virtual DbSet<Security_pr_adminPermittedOrgUnits> Security_pr_adminPermittedOrgUnits { get; set; }
+        public virtual DbSet<AssetsEventTrackingHeader> AssetsEventTrackingHeaders { get; set; }
     
         [DbFunction("AssetsEntitiesNew", "getChildNodeParentList")]
         public virtual IQueryable<getChildNodeParentList_Result> getChildNodeParentList(Nullable<int> childNodeId)

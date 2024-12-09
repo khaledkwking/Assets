@@ -96,7 +96,50 @@
 
     <div class="nk-block">
 
+           <div class="row">
+               <div class="col-md-3 treecontainer">
 
+                                        <div class="panel panel-yellow" style="min-height: 70vh">
+
+                                            <div class="p-1 " style="background-color: #0C476B;margin-bottom:20px">
+                                                <div class="d-flex">
+                                                    <div class="align-self-center me-2">
+                                                        <img src="/wwwroot/assets/images/logo/KuwaitLogo.png" class="avatar-xs rounded-circle" width="50px" alt="avatar-2">
+                                                    </div>
+                                                    <div class="flex-1" style="padding-top: 10px; padding-right: 10px;">
+                                                        <h5 class="font-size-15 mb-1" style="color: #E4DAC1;font-size:16px;">الأمانة العامة لمجلس الوزراء</h5>
+                                                        <p class="text-muted text-truncate mb-0" style="line-height: 20px; font-size: 13px; color: #E4DAC1 !important;">الهيكل التنظيمي  </p>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                            <%--  <div class="panel-heading clearfix">
+                                                <span class="mts"><%=GetGlobalResourceObject("pages","OrgChartTitle") %>  </span>
+                                                <div style="float: left"><a href="../Reports/OrgChartPrint.aspx" class="btn btn-dim btn-primary  btn-xs iframe75 "><i class="icon ni ni-printer"></i></a></div>
+                                            </div>--%>
+                                            <div class="panel-body" style="padding: 0px; padding-top: 0px; margin-bottom: 10px;">
+
+                                                <div class="form-control-wrap" style="margin-bottom: 20px;">
+                                                    <div class="form-icon form-icon-right">
+                                                        <em class="icon ni ni-search"></em>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="treeSearch" placeholder="  بحث الهيكل التنظيمي">
+                                                </div>
+
+                                                <div id="progressbar">
+                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+
+                                                <div id="orgTree" class=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+             
+               <div class="col-md-9">
         <div class="card card-bordered" id="tblAdd" runat="server" visible="false">
             <div class="card-header border-bottom">
                 <asp:Label runat="server" ID="lblSubTitle"><%=GetGlobalResourceObject("pages","AddNewRecord") %></asp:Label>
@@ -329,10 +372,14 @@
 
             </div>
         </div>
+                   </div>
 
+                                                    <asp:HiddenField runat="server" ID="hdnSelectedNode" ClientIDMode="Static" />
 
+           </div>
 
     </div>
 
+    <script src="/wwwroot/assets/js/businessScripts/orgchart.js"></script>
 
 </asp:Content>

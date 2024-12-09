@@ -269,14 +269,23 @@ function handelSelectedNode(nodeId) {
                                 "<div class='dropdown-menu dropdown-menu-right'>" +
                                 "<ul class='link-list-opt no-bdr'>" +
 
-                                "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/AssetCheckout.aspx?hidemaster=1&t=1&requestCode=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > سجل العهد</span ></a ></li>" +
+                                "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/AssetCheckout.aspx?hidemaster=1&t=1&requestCode=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > سجل العهدة</span ></a ></li>" +
                                 "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Reports/AssetReceipt.aspx?hidemaster=1&locid=0&empid=" + row.Ora_EmpRefCode + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text' > طباعة إستمارة العهدة  </span ></a ></li>" +
+                                
+                                "<li>" +
+                                "<a href='javascript:void(0)' onclick=\"deleteCustody('" + row.Code + "')\">" +
+                                "<span class='nk-menu-icon'><em class='icon ni ni-trash'></em></span>" +
+                                "<span class='nk-menu-text'> حذف العهدة</span>" +
+                                "</a>" +
+                                "</li>"+
 
-                                "</ul>" +
-                                "</div></div>"
+
+
+                                    "</ul>" +
+                                    "</div></div>"
                             );
-                        }
-                    },
+        }
+    },
 
                 ],
 
@@ -285,11 +294,40 @@ function handelSelectedNode(nodeId) {
 
 
         },
-        error: function (request, status, error) {
-            toastr.clear(); NioApp.Toast(JSON.parse(request.responseText).message, 'error', { position: 'top-right' });
+error: function (request, status, error) {
+    toastr.clear(); NioApp.Toast(JSON.parse(request.responseText).message, 'error', { position: 'top-right' });
+}
+
+
+    });
+}
+function deleteCustody(code) {
+    const confirmation = confirm('هل أنت متأكد أنك تريد حذف العهدة؟');
+    if (!confirmation) return;
+
+    $.ajax({
+        url: '/api/hepler/DeleteCustody', // API endpoint to delete the custody
+        type: 'POST',
+        data: JSON.stringify({ code: code }),
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            if (response.success) {
+                alert('تم حذف العهدة بنجاح.');
+                //return;
+                // Refresh the DataTable after delete
+              //$('#custodyList-datatableHeader').DataTable().ajax.reload();
+                var selected_node = $('#orgTree').jstree().get_selected(true)[0];
+                var nodeId = selected_node.original.id;
+                handelSelectedNode(nodeId);
+                
+            }
+            else {
+                alert(response.message); // Show error message from server
+            }
+        },
+        error: function (xhr, status, error) {
+            alert('حدث خطأ أثناء حذف العهدة: ' + error);
         }
-
-
     });
 }
 function setRelatedLinks(nodeId) {

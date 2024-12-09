@@ -14,6 +14,12 @@ namespace Infrastructure.DAL.Model.DB
     
     public partial class Security_pr_admin
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Security_pr_admin()
+        {
+            this.Security_pr_adminPermittedOrgUnits = new HashSet<Security_pr_adminPermittedOrgUnits>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public string username { get; set; }
@@ -31,5 +37,7 @@ namespace Infrastructure.DAL.Model.DB
         public string AccessCompnayGroup { get; set; }
     
         public virtual Security_pr_AdminType Security_pr_AdminType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Security_pr_adminPermittedOrgUnits> Security_pr_adminPermittedOrgUnits { get; set; }
     }
 }

@@ -302,6 +302,34 @@ namespace UI.Web.Controllers
             return objRepository.getCustodyListHeader(nodeChildren.Select(x => x.ENTITYCODE.Value).ToList()); 
 
         }
+        // POST: /api/hepler/DeleteCustody
+        [HttpPost]
+        [Route("api/hepler/DeleteCustody")]
+        public IHttpActionResult DeleteCustody([FromBody] CustodyDeleteRequest request)
+        {
+            try
+            {
+
+                using (var db = new AssetsEntitiesNew())
+                {
+                    // Find the custody record by the 'Code'
+                    var custodyRecord = db.AssetsEventTrackingHeaders.FirstOrDefault(c => c.Code == request.Code);
+
+                    if (custodyRecord == null)
+                        return NotFound(); // Return 404 if the custody does not exist
+
+                    custodyRecord.IsDeleted = true;
+                    
+                    db.SaveChanges();
+                }
+
+                return Ok(new { success = true, message = "تم الحذف بنجاح" });
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
         //[HttpGet]
         //[ActionName("HandleEmployeeSelection")]
         //public List<EmployeeSelectionResponse>  HandleEmployeeSelection(string selectedValue)
@@ -493,5 +521,9 @@ namespace UI.Web.Controllers
         public string EMP_ID { get; set; }
         public string LOCATION_NAME { get; set; }
         public List<view_CustodyList> REQUEST_ITEMS { get; set; }
+    }
+    public class CustodyDeleteRequest
+    {
+        public int Code { get; set; }
     }
 }

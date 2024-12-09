@@ -266,7 +266,7 @@ namespace UI.Web.Modules.Assets
             //    FillDllwithoptional(Emplist, lstRefEmployee, "EMP_NAME", "EMP_ID");
             //}
 
-            FillDllwithoptional(LooksUpsRepository.ins.FillEmployee(), lstRefEmployee, "EmpName", "Code");
+            FillDllwithoptional(LooksUpsRepository.ins.FillEmployee_tbl(), lstRefEmployee, "Ora_EmpName", "Emp_Id");
 
         }
         #endregion

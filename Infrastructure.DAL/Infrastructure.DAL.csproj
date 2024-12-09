@@ -206,6 +206,9 @@
     <Compile Include="Model\DB\Security_pr_adminPermittedLocations.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DB\Security_pr_adminPermittedOrgUnits.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DB\Security_pr_AdminType.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>

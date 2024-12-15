@@ -110,6 +110,21 @@
 
                     });
                 });
+            function initializeDatepicker() {
+                $(".datepicker").datepicker({
+                    dateFormat: 'dd-mm-yy', // Date format as per your needs
+                    changeMonth: true,
+                    changeYear: true
+                });
+            }
+
+            // Call it on page load
+            initializeDatepicker();
+
+            // Reinitialize datepicker on partial postback or row edit
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+                initializeDatepicker();
+            });
         });
 
         function isNumberKeyq(evt) {
@@ -299,7 +314,37 @@
         listen("load", window, preloadImages);
 
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Function to initialize the DatePicker
+            function initializeDatepicker() {
+                $(".date-picker").datepicker({
+                    dateFormat: 'dd/mm/yyyy',   // Set the date format (optional)
+                    changeMonth: true,
+                    changeYear: true
+                });
+            }
 
+            // Initialize DatePicker when the page loads
+            initializeDatepicker();
+
+            // Reinitialize DatePicker after partial postbacks (AJAX)
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+                initializeDatepicker();
+            });
+        });
+</script>
+    <style>
+        .autocomplete {
+    font-size: 15px !important;
+    line-height:normal;
+       padding: 10px 35px !important; /* Add padding around each item */
+    margin-bottom: 5px !important; /* Add space between items */
+    border-bottom: 1px solid #ddd !important; /* Optional: Add a bottom border for separation */
+    text-align:right;/* Increase font size for all items */
+    width:auto;
+}
+    </style>
     <input id="hdnType" runat="server" type="hidden" />
 
 
@@ -679,10 +724,10 @@
 		                                                                                   <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
                                                         </asp:Label>
                                                         <asp:TextBox onkeypress="return NumberKey(event,3)" runat="server"
-                                                            ID="txtItemDesc" CssClass="form-control"></asp:TextBox>
+                                                            ID="txtItemDesc" CssClass="form-control" ></asp:TextBox>
                                                         <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2"
                                                             runat="server" TargetControlID="txtItemDesc"
-                                                            CompletionInterval="10" CompletionSetCount="10" MinimumPrefixLength="1"
+                                                            CompletionInterval="10" CompletionSetCount="10" MinimumPrefixLength="1" CompletionListItemCssClass="autocomplete"
                                                             ServicePath="/modules/autocomplete/Services/TextAutoComplete.asmx" ServiceMethod="ItemAutoCompete" />
                                                     </EditItemTemplate>
                                                 </asp:TemplateColumn>
@@ -754,7 +799,10 @@
                                                     <HeaderStyle Wrap="false" />
                                                     <ItemStyle Width="20%" />
                                                     <ItemTemplate>
-                                                        <%#NullDateifEmptyText( DataBinder.Eval(Container.DataItem, "ActionDate"))%>
+                                                         
+                                                        <asp:Label ID="lbldates" runat="server">
+                                                            <%#NullDateifEmptyText( DataBinder.Eval(Container.DataItem, "ActionDate" ,"{0:dd-MM-yyyy}"))%>
+                                                        </asp:Label>
                                                     </ItemTemplate>
                                                     <EditItemTemplate>
                                                         <asp:Label Visible="false" runat="server" ID="lblCustodyDate">
@@ -766,7 +814,7 @@
                                                             </div>
                                                             <asp:TextBox runat="server" ID="txtCustodyDate" Text='<%#NullDateifEmptyText(Eval("ActionDate")).Equals("")?NullDateifEmptyText(DateTime.Now):NullDateifEmptyText(Eval("ActionDate")) %>' placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
                                                         </div>
-
+                                                        
                                                     </EditItemTemplate>
                                                 </asp:TemplateColumn>
                                                 <asp:TemplateColumn HeaderText="أمر الصرف">

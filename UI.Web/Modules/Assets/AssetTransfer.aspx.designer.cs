@@ -87,6 +87,15 @@ namespace UI.Web.Modules.Assets
         protected global::System.Web.UI.WebControls.TextBox txtNotes;
 
         /// <summary>
+        /// Updatepanel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel Updatepanel2;
+
+        /// <summary>
         /// lblerror control.
         /// </summary>
         /// <remarks>
@@ -159,15 +168,6 @@ namespace UI.Web.Modules.Assets
         protected global::System.Web.UI.WebControls.Label lblcount;
 
         /// <summary>
-        /// pager1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::CutePager.Pager pager1;
-
-        /// <summary>
         /// lnkAddItem control.
         /// </summary>
         /// <remarks>
@@ -229,14 +229,5 @@ namespace UI.Web.Modules.Assets
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSelectedCount;
-
-        /// <summary>
-        /// pager2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::CutePager.Pager pager2;
     }
 }

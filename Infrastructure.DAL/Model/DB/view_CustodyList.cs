@@ -14,6 +14,7 @@ namespace Infrastructure.DAL.Model.DB
     
     public partial class view_CustodyList
     {
+        public int Code { get; set; }
         public string groupname { get; set; }
         public string ItemRefCode { get; set; }
         public int ItemCode { get; set; }

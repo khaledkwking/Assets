@@ -7,6 +7,7 @@
     TagPrefix="asp" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <input id="hdnMasterID" runat="server" type="hidden" />
     <input id="hdnActiveTab" runat="server" type="hidden" />
 
@@ -127,7 +128,26 @@
 
 
     </script>
+          <script>
+              function reinitializeDropDownSearch() {
+                  console.log("Reinitializing search on DropDownList...");
 
+                  // Select2 reinitialization
+                  if ($('.form-select').length > 0) {
+                      $('.form-select').select2();
+                  }
+              }
+
+              // Attach to UpdatePanel postback completion
+              Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+                  reinitializeDropDownSearch();
+              });
+
+              // Call this on page load to initialize search
+              $(document).ready(function () {
+                  reinitializeDropDownSearch();
+              });
+    </script>
     <input id="hdnType" runat="server" type="hidden" />
     <input id="hdnItemCount" runat="server" type="hidden" />
 
@@ -142,7 +162,7 @@
             </div>
 
             <!-- .nk-block-head-content -->
-            <div class="nk-block-head-content">
+            <div class="nk-block-head-content" style="display:none">
                 <div class="toggle-wrap nk-block-tools-toggle">
                     <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
                     <div class="toggle-expand-content" data-content="pageMenu">
@@ -175,7 +195,7 @@
     <asp:UpdatePanel runat="server" ID="Updatepanel1" ChildrenAsTriggers="true" UpdateMode="conditional">
     </asp:UpdatePanel>
 
-    <div class="nk-block border rounded p-2 bg-primary-dim text-primary">
+    <div class="nk-block border rounded p-2 bg-primary-dim text-primary" >
 
 
 
@@ -201,11 +221,13 @@
         </div>
     </div>
 
-
+    <asp:UpdatePanel runat="server" ID="Updatepanel2">
+        <ContentTemplate>
     <div class="row mt-10" style="margin-top: 20px;">
         <div class="col-5">
 
             <div class="card card-stretch border border-danger" style="min-height: 550px">
+          
                 <div class="card-inner">
 
                     <asp:Label runat="server" ID="lblerror"></asp:Label>
@@ -221,7 +243,7 @@
 
 
 
-                                            <div class="form-group" runat="server">
+                                            <div class="form-group" runat="server" style="display:none">
                                                 <label class="control-label" for=""><%=GetGlobalResourceObject("pages","assignedToLocation") %>  </label>
 
                                                 <input type="text" id="txtOwnerLocationCode" class="form-control" placeholder="Type to filter" autocomplete="off" />
@@ -231,11 +253,11 @@
                                             </div>
                                             <div class="form-group divEmployee" id="divEmployee" runat="server">
                                                 <label class="control-label" for=""><%=GetGlobalResourceObject("pages","RefEmployee") %>  </label>
-                                                <asp:DropDownList ID="lstRefEmployee" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"></asp:DropDownList>
+                                                <asp:DropDownList ID="lstRefEmployee" runat="server" AutoPostBack="true" OnSelectedIndexChanged="lstRefEmployee_SelectedIndexChanged" class="form-control form-select" data-search="on" ClientIDMode="Static"></asp:DropDownList>
 
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group" style="display:none">
                                                 <asp:LinkButton runat="server" ID="lnkFilter" OnClick="lnkFilter_Click" class="btn btn-primary"><em class="icon ni ni-search"></em><span>عرض العهد</span></asp:LinkButton>
                                             </div>
 
@@ -257,7 +279,7 @@
                         <PagerStyle Visible="False" />
                         <HeaderStyle BackColor="#efefef" Font-Bold="True" />
                         <Columns>
-                            <asp:BoundColumn DataField="InboubdItemId" Visible="False"></asp:BoundColumn>
+                            <asp:BoundColumn DataField="Code" Visible="false"></asp:BoundColumn>
                             <asp:TemplateColumn>
                                 <HeaderStyle Wrap="False" HorizontalAlign="Center" />
                                 <ItemStyle Width="2%" />
@@ -269,12 +291,39 @@
 
                                 </ItemTemplate>
                             </asp:TemplateColumn>
-                            <asp:BoundColumn DataField="ItemTag" HeaderText="<%$ Resources:pages,Tagid %>"></asp:BoundColumn>
-                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,PurchaseItems %>">
-                                <ItemTemplate>
-                                    <span><%#( ZeroIntergerIFNull(gets(Eval("EmpRefCode")))==0?"<em class='icon ni ni-building  text-info'></em>&nbsp;" :"<em class='icon ni ni-user-list  text-info'></em> &nbsp;")  %></span> <%#Eval("ItemNameAr") %>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
+                             <asp:TemplateColumn HeaderText="م">
+                                                    <ItemStyle Width="1%" HorizontalAlign="center" />
+                                                    <ItemTemplate>
+                                                        <%#ZeroIntergerIFNull((DataBinder.Eval(Container, "ItemIndex")).ToString()) + 1%>
+                                                    </ItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="رقم المادة">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="20%" HorizontalAlign="Center" />
+
+                                                    <HeaderStyle />
+                                                    <ItemTemplate>
+                                                        <%#EmptyIfZero( gets(DataBinder.Eval(Container.DataItem, "ItemRefCode")))%>
+                                                    </ItemTemplate>
+                                               
+                                                </asp:TemplateColumn>
+
+                                                <asp:TemplateColumn HeaderText="وصف المادة">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="30%" />
+                                                    <ItemTemplate>
+                                                        <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
+                                                    </ItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="الملاحظات">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="40%" />
+                                                    <ItemTemplate>
+                                                        <%#DataBinder.Eval(Container.DataItem, "Notes")%>
+
+                                                    </ItemTemplate>
+                                                 
+                                                </asp:TemplateColumn>
 
                             <%--  <asp:TemplateColumn HeaderText="<%$ Resources:pages,status %>">
                                 <ItemStyle Width="5%" />
@@ -290,16 +339,18 @@
                         <div class="dataTables_info" id="DataTables_Table_3_info" role="status" aria-live="polite">
                             <asp:Label ID="lblcount" runat="server"></asp:Label>
                         </div>
-                        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_3_paginate">
+                       <%-- <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_3_paginate">
 
                             <cc1:Pager CurrentIndex="1" OnCommand="pager_Command" ShowFirstLast="False" ID="pager1"
                                 runat="server" Width="100%" PageSize="20" AlternativeTextEnabled="False" BackToFirstClause="" BackToPageClause="" EnableSmartShortCuts="True" EnableTheming="True" FirstClause="" FromClause="" GoClause="" GoToLastClause="" LastClause="" NextClause="التالى" OfClause="من" PageClause="صفحة" PreviousClause="السابق" RTL="True" ShowingResultClause="" ShowResultClause=""></cc1:Pager>
 
 
-                        </div>
+                        </div>--%>
                     </div>
 
                 </div>
+                  
+
             </div>
 
 
@@ -342,14 +393,14 @@
         <div class="col-6">
 
             <div class="card card-stretch border border-success" style="min-height: 550px">
-
+ 
 
                 <div class="card-inner">
 
                     <div role="form">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="form-group" style="display:none">
                                     <label class="control-label" for=""><%=GetGlobalResourceObject("pages","assignedToLocation") %>  </label>
 
                                     <input type="text" id="txtToLocation" class="form-control" placeholder="Type to filter" autocomplete="off" />
@@ -359,7 +410,7 @@
                                 </div>
                                 <div class="form-group divEmployee">
                                     <label class="control-label" for=""><%=GetGlobalResourceObject("pages","RefEmployee") %>  </label>
-                                    <asp:DropDownList ID="lstToEmpRefCode" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"></asp:DropDownList>
+                                    <asp:DropDownList ID="lstToEmpRefCode" runat="server" AutoPostBack="true" OnSelectedIndexChanged="lstToEmpRefCode_SelectedIndexChanged" class="form-control form-select" data-search="on" ClientIDMode="Static"></asp:DropDownList>
 
                                 </div>
 
@@ -380,8 +431,8 @@
                         <PagerStyle Visible="False" />
                         <HeaderStyle BackColor="#efefef" Font-Bold="True" />
                         <Columns>
-                            <asp:BoundColumn DataField="InboubdItemId" Visible="False"></asp:BoundColumn>
-                            <asp:TemplateColumn>
+                            <asp:BoundColumn DataField="Code" Visible="false"></asp:BoundColumn>
+                              <asp:TemplateColumn>
                                 <HeaderStyle Wrap="False" HorizontalAlign="Center" />
                                 <ItemStyle Width="2%" />
                                 <HeaderTemplate>
@@ -392,20 +443,56 @@
 
                                 </ItemTemplate>
                             </asp:TemplateColumn>
-                            <asp:BoundColumn DataField="ItemTag" HeaderText="<%$ Resources:pages,Tagid %>"></asp:BoundColumn>
-                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,PurchaseItems %>">
-                                <ItemTemplate>
-                                    <span><%#( ZeroIntergerIFNull(gets(Eval("EmpRefCode")))==0?"<em class='icon ni ni-building  text-info'></em>&nbsp;" :"<em class='icon ni ni-user-list  text-info'></em> &nbsp;")  %></span> <%#Eval("ItemNameAr") %>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
+                             <asp:TemplateColumn HeaderText="م">
+                                                    <ItemStyle Width="1%" HorizontalAlign="center" />
+                                                    <ItemTemplate>
+                                                        <%#ZeroIntergerIFNull((DataBinder.Eval(Container, "ItemIndex")).ToString()) + 1%>
+                                                    </ItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="رقم المادة">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="20%" HorizontalAlign="Center" />
 
-                            <%--  <asp:TemplateColumn HeaderText="<%$ Resources:pages,status %>">
-                                <ItemStyle Width="5%" />
-                                <ItemTemplate>
-                                <div><%# showAction(ZeroIntergerIFNull(gets(Eval("ActionId"))), gets( Eval("LastActiontitleAr"))) %></div> 
-                                    <div><%# showAvailability(ZeroIntergerIFNull(gets(Eval("StatusId"))), gets( Eval("AvailabilityStatusAr"))) %></div>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>--%>
+                                                    <HeaderStyle />
+                                                    <ItemTemplate>
+                                                        <%#EmptyIfZero( gets(DataBinder.Eval(Container.DataItem, "ItemRefCode")))%>
+                                                    </ItemTemplate>
+                                                </asp:TemplateColumn>
+
+                                                <asp:TemplateColumn HeaderText="وصف المادة">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="30%" />
+                                                    <ItemTemplate>
+                                                        <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
+                                                    </ItemTemplate>
+                                                  
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="الملاحظات">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="30%" />
+                                                    <ItemTemplate>
+                                                        <%#DataBinder.Eval(Container.DataItem, "Notes")%>
+                                                    </ItemTemplate>
+                                                </asp:TemplateColumn>
+                                          <%--      <asp:TemplateColumn HeaderText="تاريخ العهدة">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="20%" />
+                                                    <ItemTemplate>
+                                                        <%#NullDateifEmptyText( DataBinder.Eval(Container.DataItem, "ActionDate"))%>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <asp:Label Visible="false" runat="server" ID="lblCustodyDate">
+		                                                                                      <%#DataBinder.Eval(Container.DataItem, "ActionDate")%>
+                                                        </asp:Label>
+                                                        <div class="form-control-wrap">
+                                                            <div class="form-icon form-icon-right">
+                                                                <em class="icon ni ni-calendar-alt"></em>
+                                                            </div>
+                                                            <asp:TextBox runat="server" ID="txtCustodyDate" Text='<%#NullDateifEmptyText(Eval("ActionDate")).Equals("")?NullDateifEmptyText(DateTime.Now):NullDateifEmptyText(Eval("ActionDate")) %>' placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                                                        </div>
+
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>--%>
                         </Columns>
                     </asp:DataGrid>
 
@@ -413,13 +500,13 @@
                         <div class="dataTables_info" id="DataTables_Table_3_info" role="status" aria-live="polite">
                             <asp:Label ID="lblSelectedCount" runat="server"></asp:Label>
                         </div>
-                        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_3_paginate">
+                       <%-- <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_3_paginate">
 
                             <cc1:Pager CurrentIndex="1" OnCommand="pager2_Command" ShowFirstLast="False" ID="pager2"
                                 runat="server" Width="100%" PageSize="20" AlternativeTextEnabled="False" BackToFirstClause="" BackToPageClause="" EnableSmartShortCuts="True" EnableTheming="True" FirstClause="" FromClause="" GoClause="" GoToLastClause="" LastClause="" NextClause="التالى" OfClause="من" PageClause="صفحة" PreviousClause="السابق" RTL="True" ShowingResultClause="" ShowResultClause=""></cc1:Pager>
 
 
-                        </div>
+                        </div>--%>
                     </div>
 
                 </div>
@@ -432,7 +519,14 @@
 
     </div>
 
-
+     </ContentTemplate>
+                       <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="lstRefEmployee" EventName="SelectedIndexChanged" />
+                <asp:AsyncPostBackTrigger ControlID="lstToEmpRefCode" EventName="SelectedIndexChanged" />
+                <asp:AsyncPostBackTrigger ControlID="lnkAddItem" EventName="Click" />
+                <asp:AsyncPostBackTrigger ControlID="lnkRemove" EventName="Click" />
+            </Triggers>
+    </asp:UpdatePanel>
 
 
     <script src="/wwwroot/assets/js/businessScripts/locationCombo.js"></script>

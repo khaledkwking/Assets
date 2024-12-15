@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -9,7 +11,10 @@ using AssetsManament.ViewModels;
 using Infrastructure;
 using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
+using Newtonsoft.Json;
 using UI.Web.Admin.Controller;
+using System.Web.Http.Results;
+using System.Configuration;
 
 namespace UI.Web.Modules.Assets
 {
@@ -62,7 +67,9 @@ namespace UI.Web.Modules.Assets
 
                 //}
                 filterItem();
-                FillSelectedItems();
+                filterToItem();
+
+                //FillSelectedItems();
             }
 
 
@@ -105,7 +112,9 @@ namespace UI.Web.Modules.Assets
                 }
                 Session["selectedItems"] = null;
                 filterItem();
-                FillSelectedItems();
+                filterToItem();
+
+                //FillSelectedItems();
                 ClearForm();
 
                 script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");
@@ -121,20 +130,10 @@ namespace UI.Web.Modules.Assets
 
         private void filterItem()
         {
-
-            var objList = objRepository.getAssetsWithLastAction(2, ZeroIntergerIFNull(selectedLocation.Value), ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
+            //getTrackingRequestHeaderByEmpCode
+            var objList = objRepository.getCustodyListByMasterData(0,0, ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
             lblcount.Text = (Resources.Utilities.foundTotal + (objList.Count.ToString()).ToString() + Resources.Utilities.records);
 
-            if (Session["selectedItems"] != null)
-            {
-                var excluded = (List<view_AssetsList>)Session["selectedItems"];
-
-                objList = (from obj in objList
-                                    where !(from objexec in excluded select objexec.InboubdItemId).ToList().Contains(obj.InboubdItemId)
-                                    select obj).ToList();
-
-
-            }
 
             decimal c = System.Math.Ceiling(Convert.ToDecimal(objList.Count / grdItems.PageSize));
             if ((c <= grdItems.CurrentPageIndex))
@@ -147,7 +146,30 @@ namespace UI.Web.Modules.Assets
             grdItems.DataSource = objList;
             grdItems.DataBind();
             int _totalCount = objList.Count;
-            pager1.ItemCount = objList.Count;
+            //.pager1.ItemCount = objList.Count;
+
+
+        }
+
+        private void filterToItem()
+        {
+            //getTrackingRequestHeaderByEmpCode
+            var objList = objRepository.getCustodyListByMasterData(0, 0, ZeroIntergerIFNull(lstToEmpRefCode.SelectedValue));
+            lblSelectedCount.Text = (Resources.Utilities.foundTotal + (objList.Count.ToString()).ToString() + Resources.Utilities.records);
+
+
+            decimal c = System.Math.Ceiling(Convert.ToDecimal(objList.Count / grdSelectedItems.PageSize));
+            if ((c <= grdSelectedItems.CurrentPageIndex))
+            {
+                grdSelectedItems.CurrentPageIndex = 0;
+            }
+
+
+
+            grdSelectedItems.DataSource = objList;
+            grdSelectedItems.DataBind();
+            int _totalCount = objList.Count;
+            //.pager1.ItemCount = objList.Count;
 
 
         }
@@ -157,7 +179,7 @@ namespace UI.Web.Modules.Assets
 
             if (Session["selectedItems"] != null)
             {
-                var objList = (List<view_AssetsList>)Session["selectedItems"];
+                var objList = (List<view_CustodyList>)Session["selectedItems"];
                 decimal c = System.Math.Ceiling(Convert.ToDecimal(objList.Count / grdSelectedItems.PageSize));
                 if ((c <= grdSelectedItems.CurrentPageIndex))
                 {
@@ -167,7 +189,7 @@ namespace UI.Web.Modules.Assets
                 grdSelectedItems.DataSource = objList;
                 grdSelectedItems.DataBind();
                 int _totalCount = objList.Count;
-                pager2.ItemCount = objList.Count;
+                //pager2.ItemCount = objList.Count;
 
                 hdnItemCount.Value = objList.Count.ToString();
 
@@ -175,8 +197,8 @@ namespace UI.Web.Modules.Assets
             }
             else
             {
-                grdSelectedItems.Visible = false;
-                lblSelectedCount.Visible = false;
+                //grdSelectedItems.Visible = false;
+                //lblSelectedCount.Visible = false;
             }
 
 
@@ -196,7 +218,7 @@ namespace UI.Web.Modules.Assets
                 currnetPageIndx = (grdItems.PageCount - 1);
             }
 
-            pager1.CurrentIndex = currnetPageIndx;
+            //pager1.CurrentIndex = currnetPageIndx;
             grdItems.CurrentPageIndex = (currnetPageIndx - 1);
             filterItem();
         }
@@ -206,6 +228,7 @@ namespace UI.Web.Modules.Assets
         protected void btnReload_Click(object sender, EventArgs e)
         {
             filterItem();
+            filterToItem();
         }
 
         #endregion
@@ -265,9 +288,48 @@ namespace UI.Web.Modules.Assets
             //    Session["OraEmpList"] = Emplist;
             //    FillDllwithoptional(Emplist, lstRefEmployee, "EMP_NAME", "EMP_ID");
             //}
+      
 
-            FillDllwithoptional(LooksUpsRepository.ins.FillEmployee_tbl(), lstRefEmployee, "Ora_EmpName", "Emp_Id");
+              
+            FillDllwithoptional(GetEmployeeHierarchy(1), lstToEmpRefCode, "EMP_NAME", "EMP_ID");
 
+            FillDllwithoptional(GetEmployeeHierarchy(1), lstRefEmployee, "EMP_NAME", "EMP_ID");
+
+        }
+        public List<EmployeeViewModel> GetEmployeeHierarchy(int nodeId)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    // Set the Base Address from configuration
+                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["centeralApi"].ToString());
+
+                    // Clear and set request headers
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    // Send GET request to the API endpoint
+                    HttpResponseMessage response = client.GetAsync(string.Format("OrgChart/EmployeeHierarchy/{0}", nodeId)).Result;
+
+                    // Check if the request was successful
+                    if (!response.IsSuccessStatusCode)
+                        throw new Exception($"Failed to retrieve data. Status Code: {response.StatusCode}");
+
+                    // Read the response as a string
+                    var result = response.Content.ReadAsStringAsync().Result;
+
+                    // Deserialize the JSON response into a list of EmployeeViewModel
+                    var empList = JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
+
+                    return empList; // Return the list
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (optional)
+                throw new Exception($"An error occurred while retrieving employee hierarchy: {ex.Message}");
+            }
         }
         #endregion
         public string setmaterstyle()
@@ -304,18 +366,18 @@ namespace UI.Web.Modules.Assets
                 currnetPageIndx = (grdSelectedItems.PageCount - 1);
             }
 
-            pager2.CurrentIndex = currnetPageIndx;
+            //pager2.CurrentIndex = currnetPageIndx;
             grdSelectedItems.CurrentPageIndex = (currnetPageIndx - 1);
  
-            FillSelectedItems();
+            //FillSelectedItems();
         }
 
         protected void lnkRemove_Click(object sender, EventArgs e)
         {
-            List<view_AssetsList> objList = new List<view_AssetsList>();
+            List<view_CustodyList> objList = new List<view_CustodyList>();
             if (Session["selectedItems"] != null)
             {
-                objList = (List<view_AssetsList>)Session["selectedItems"];
+                objList = (List<view_CustodyList>)Session["selectedItems"];
 
             }
 
@@ -326,22 +388,59 @@ namespace UI.Web.Modules.Assets
                     CheckBox check = (CheckBox)grdSelectedItems.Items[i].FindControl("chkItem");
                     if (check.Checked)
                     {
-                        objList.Remove(objList.Where(x => x.InboubdItemId == ZeroIntergerIFNull(grdSelectedItems.Items[i].Cells[0].Text)).FirstOrDefault());
+                        using (AssetsEntitiesNew en = new AssetsEntitiesNew())
+                        {
+                            try
+                            {
+                                int code = ZeroIntergerIFNull(grdSelectedItems.Items[i].Cells[0].Text);
+                                var q = en.AssetsEventTrackings.Where(o => o.Code == code).FirstOrDefault();
+
+                                if (q == null)
+                                {
+                                    throw new Exception($"No record found in AssetsEventTrackings for Code = {code}");
+                                }
+
+                                int empID = GetEmpId(ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
+
+                                if (empID != 0)
+                                {
+                                    var AssHeader = en.AssetsEventTrackingHeaders.Where(o => o.EmpRefCode == empID).ToList();
+                                    if (AssHeader.Count > 0)
+                                    {
+                                        q.EmpRefCode = empID;
+                                        q.EmpName = lstToEmpRefCode.SelectedItem.Text;
+                                        q.RequestHeaderCode = AssHeader.FirstOrDefault().Code;
+                                        q.LastModifiedAt = DateTime.Now;    
+                                        q.LastModifiedBy = ZeroIntergerIFNull(ReadSession("userId").ToString());
+                                        q.Notes = txtNotes.Text;
+                                        q.ActionDate = NullDateifEmpty(txtFromDate.Text);
+                                        q.statusId = 6;
+                                        en.SaveChanges();
+                                    }
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new Exception("An error occurred while updating the records: " + ex.Message, ex);
+                            }
+                        }
                     }
                 }
             }
             Session["selectedItems"] = objList;
             filterItem();
-            FillSelectedItems();
+            filterToItem();
+            //FillSelectedItems();
 
         }
 
         protected void lnkAddItem_Click(object sender, EventArgs e)
         {
-            List<view_AssetsList> objList = new List<view_AssetsList>();
+            List<view_CustodyList> objList = new List<view_CustodyList>();
             if (Session["selectedItems"] != null)
             {
-                objList = (List<view_AssetsList>)Session["selectedItems"];
+                objList = (List<view_CustodyList>)Session["selectedItems"];
 
             }
 
@@ -353,16 +452,73 @@ namespace UI.Web.Modules.Assets
 
                     if (check.Checked)
                     {
-                        objList.Add(objRepository.getItemDetails(ZeroIntergerIFNull(grdItems.Items[i].Cells[0].Text)));
+                        using (AssetsEntitiesNew en = new AssetsEntitiesNew())
+                        {
+                            try
+                            {
+                                int code = ZeroIntergerIFNull(grdItems.Items[i].Cells[0].Text);
+                                var q = en.AssetsEventTrackings.Where(o => o.Code == code).FirstOrDefault();
+
+                                if (q == null)
+                                {
+                                    throw new Exception($"No record found in AssetsEventTrackings for Code = {code}");
+                                }
+
+                                int empID = GetEmpId(ZeroIntergerIFNull(lstToEmpRefCode.SelectedValue));
+
+                                if (empID != 0)
+                                {
+                                    var AssHeader = en.AssetsEventTrackingHeaders.Where(o => o.EmpRefCode == empID).ToList();
+                                    if (AssHeader.Count > 0)
+                                    {
+                                        q.EmpRefCode = empID;
+                                        q.EmpName = lstToEmpRefCode.SelectedItem.Text;
+                                        q.RequestHeaderCode = AssHeader.FirstOrDefault().Code;
+                                        q.LastModifiedAt = DateTime.Now;
+                                        q.LastModifiedBy = ZeroIntergerIFNull(ReadSession("userId").ToString());
+                                        q.Notes = txtNotes.Text;
+                                        q.ActionDate = NullDateifEmpty(txtFromDate.Text);
+                                        q.statusId = 6;
+                                        en.SaveChanges();
+                                    }
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new Exception("An error occurred while updating the records: " + ex.Message, ex);
+                            }
+                        }
+                        //  objList.(objRepository.getItemDetails(ZeroIntergerIFNull(grdItems.Items[i].Cells[0].Text)));
                     }
                 }
             }
             Session["selectedItems"] = objList;
             filterItem();
-            FillSelectedItems();
+            filterToItem();
+            //FillSelectedItems();
+        }
+        public int GetEmpId(int id)
+        {
+            using (AssetsEntitiesNew en = new AssetsEntitiesNew())
+            {
+                var query = en.Employee_tbl.Where(o => o.Ora_EmpRefCode == id).ToList();
+                if(query.Count>0)
+                {
+                    return query.FirstOrDefault().Emp_Id;
+                }
+                return 0;   
+            }
+        }
 
+        protected void lstRefEmployee_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            filterItem();
+        }
 
-
+        protected void lstToEmpRefCode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            filterToItem();
         }
     }
 }

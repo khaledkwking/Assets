@@ -78,12 +78,12 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<view_AssetEventLog> view_AssetEventLog { get; set; }
         public virtual DbSet<view_AssetsInventory> view_AssetsInventory { get; set; }
         public virtual DbSet<view_AssetsList> view_AssetsList { get; set; }
-        public virtual DbSet<view_CustodyList> view_CustodyList { get; set; }
         public virtual DbSet<view_CustodyListGrouped> view_CustodyListGrouped { get; set; }
         public virtual DbSet<view_Inventory> view_Inventory { get; set; }
         public virtual DbSet<Security_pr_admin> Security_pr_admin { get; set; }
         public virtual DbSet<Security_pr_adminPermittedOrgUnits> Security_pr_adminPermittedOrgUnits { get; set; }
         public virtual DbSet<AssetsEventTrackingHeader> AssetsEventTrackingHeaders { get; set; }
+        public virtual DbSet<view_CustodyList> view_CustodyList { get; set; }
     
         [DbFunction("AssetsEntitiesNew", "getChildNodeParentList")]
         public virtual IQueryable<getChildNodeParentList_Result> getChildNodeParentList(Nullable<int> childNodeId)

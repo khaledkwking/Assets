@@ -926,6 +926,15 @@ namespace UI.Web.Modules.Assets
                 LinkButton lnkCancel = (LinkButton)e.Item.Cells[0].FindControl("lnkCancel");
 
                 TextBox txtQuantity = (TextBox)e.Item.FindControl("txtQuantity");
+
+                TextBox txtCustodyDate = (TextBox)e.Item.FindControl("txtCustodyDate");
+                if (txtCustodyDate != null)
+                {
+                    // Add jQuery date-picker support if needed
+                    txtCustodyDate.Attributes.Add("class", "form-control date-picker");
+                }
+                //AjaxControlToolkit.CalendarExtender calDate = (AjaxControlToolkit.CalendarExtender)e.Item.FindControl("txtCustodyDate");
+
                 TextBox txtFooterQuantity = (TextBox)e.Item.FindControl("txtFooterQuantity");
 
                 TextBox txtItemCost = (TextBox)e.Item.FindControl("txtItemCost");

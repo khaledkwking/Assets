@@ -24,7 +24,7 @@ function handelSelectedNode(nodeId) {
             { nodeId: nodeId },
         success: function (employeeData) {
             //  DrawEmployeeTree(employeeData);
-            $('#lblEmpCount').text(employeeData.length);
+            $('#lblEmpCount').text(employeeData.length); GetEmployeeHierarhcy
             $('#employeeList-datatable').DataTable({
                 data: employeeData,
                 pageLength: 25,
@@ -200,7 +200,8 @@ function handelSelectedNode(nodeId) {
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ],
                 columns: [
-                    { data: "Serial", title: "مسلسل  " },
+                    /*{ data: "Serial", title: "مسلسل  " },*/
+                    { data: "Ora_EmpRefCode", title: "الرقم الوظيفي  " },
                     /* { data: "Type", title: "نوع العهدة	" },*/
 
                     {

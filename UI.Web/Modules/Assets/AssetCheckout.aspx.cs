@@ -22,7 +22,7 @@ namespace UI.Web.Modules.Assets
         public LocationsRepository objLocationRepository = IoC.Resolve<LocationsRepository>();
         public string _PageTitle = "إدارة العهد";
         public string _PageSubTitle = "إدارة العهد";
-
+       
         #endregion
 
         #region "Page Events"
@@ -95,6 +95,7 @@ namespace UI.Web.Modules.Assets
 
         private void loadRequest(int RequestHeaderCode)
         {
+            
             var objHeader = objRepository.getTrackingRequestHeaderDetails(RequestHeaderCode);
             if (objHeader != null)
             {
@@ -263,7 +264,9 @@ namespace UI.Web.Modules.Assets
         {
             string script = "";
 
+            string empselectedValue = Request.Form["ctl00$ContentPlaceHolder1$lstRefEmployee"];
 
+            string empSelecetdName = hfSelectedEmployeeText.Value;
 
             try
             {
@@ -291,7 +294,7 @@ namespace UI.Web.Modules.Assets
                     if (hdnType.Value == "1")
                     {
                         //Check Employee Esxiatance 
-                        var OraEmpMapping = objRepository.checkOraEmployeeExitance(ZeroIntergerIFNull( hdnEmployeeId.Value));
+                        var OraEmpMapping = objRepository.checkOraEmployeeExitance(ZeroIntergerIFNull(empselectedValue));
                         if (OraEmpMapping != null)
                         {
                             objHeader.EmpName = OraEmpMapping.Ora_EmpName;
@@ -300,11 +303,15 @@ namespace UI.Web.Modules.Assets
                         else { 
                             //Map Employee Informations\
                             Employee_tbl oraEmp=new Employee_tbl();
-                            oraEmp.Emp_Name = lstRefEmployee.SelectedItem.Text;
-                            oraEmp.Ora_EmpName = lstRefEmployee.SelectedItem.Text;
+
+                           
+
+
+                            oraEmp.Emp_Name = empSelecetdName;
+                            oraEmp.Ora_EmpName = empSelecetdName;
                             oraEmp.OraImported = true;
                             oraEmp.OraActionDate = DateTime.Now;
-                            oraEmp.Ora_EmpRefCode = ZeroIntergerIFNull(hdnEmployeeId.Value);
+                            oraEmp.Ora_EmpRefCode = ZeroIntergerIFNull(empselectedValue);
                             oraEmp.OraEntityRefCode = ZeroIntergerIFNull(hdnSelectedNode.Value);
 
                             objRepository.AddEmployee(oraEmp);
@@ -317,12 +324,13 @@ namespace UI.Web.Modules.Assets
                      
 
                         // Check if Emplyee Location Saved 
-                        if (lstRefEmployee.SelectedValue != "-1")
+                        if (empselectedValue != "-1")
                         {
-                            var emplocation = objRepository.getEmployeeLocations(ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
+
+                            var emplocation = objRepository.getEmployeeLocations(ZeroIntergerIFNull(empselectedValue));
                             if (emplocation != null )
                             {// Update Employee Location
-                                emplocation.EmpCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
+                                emplocation.EmpCode = ZeroIntergerIFNull(empselectedValue);
                                 emplocation.LocationCode = ZeroIntergerIFNull(lstToLocation.SelectedValue);
                                 objRepository.UpdateEmployeeLoation(emplocation);
 
@@ -332,7 +340,7 @@ namespace UI.Web.Modules.Assets
                             {
 
                                 D_EmployeeLocations locationObj = new D_EmployeeLocations();
-                                locationObj.EmpCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
+                                locationObj.EmpCode = ZeroIntergerIFNull(empselectedValue);
                                 locationObj.LocationCode = ZeroIntergerIFNull(lstToLocation.SelectedValue);
                                 objRepository.AddEmployeeLoation(locationObj);
 
@@ -386,8 +394,8 @@ namespace UI.Web.Modules.Assets
                         {
                             //Map Employee Informations\
                             Employee_tbl oraEmp = new Employee_tbl();
-                            oraEmp.Emp_Name = lstRefEmployee.SelectedItem.Text;
-                            oraEmp.Ora_EmpName = lstRefEmployee.SelectedItem.Text;
+                            oraEmp.Emp_Name = empSelecetdName;
+                            oraEmp.Ora_EmpName = empSelecetdName;
                             oraEmp.OraImported = true;
                             oraEmp.OraActionDate = DateTime.Now;
                             oraEmp.Ora_EmpRefCode = ZeroIntergerIFNull(hdnEmployeeId.Value);
@@ -401,12 +409,12 @@ namespace UI.Web.Modules.Assets
                         }
 
 
-                        if (lstRefEmployee.SelectedValue != "-1")
+                        if (empselectedValue != "-1")
                         {
-                            var emplocation = objRepository.getEmployeeLocations(ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
+                            var emplocation = objRepository.getEmployeeLocations(ZeroIntergerIFNull(empselectedValue));
                             if (emplocation != null)
                             {// Update Employee Location
-                                emplocation.EmpCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
+                                emplocation.EmpCode = ZeroIntergerIFNull(empselectedValue);
                                 emplocation.LocationCode = ZeroIntergerIFNull(lstToLocation.SelectedValue);
                                 objRepository.UpdateEmployeeLoation(emplocation);
 
@@ -416,7 +424,7 @@ namespace UI.Web.Modules.Assets
                             {
 
                                 D_EmployeeLocations locationObj = new D_EmployeeLocations();
-                                locationObj.EmpCode = ZeroIntergerIFNull(lstRefEmployee.SelectedValue);
+                                locationObj.EmpCode = ZeroIntergerIFNull(empselectedValue);
                                 locationObj.LocationCode = ZeroIntergerIFNull(lstToLocation.SelectedValue);
                                 objRepository.AddEmployeeLoation(locationObj);
 
@@ -464,6 +472,10 @@ namespace UI.Web.Modules.Assets
 
         private void SaveRequestItems(int headerCode)
         {
+            string empselectedValue = Request.Form["ctl00$ContentPlaceHolder1$lstRefEmployee"];
+
+            string empSelecetdName = hfSelectedEmployeeText.Value;
+
             AssetsEventTracking obj = new AssetsEventTracking();
             if (Session["RequestItemList"] != null)
             {
@@ -481,7 +493,7 @@ namespace UI.Web.Modules.Assets
                         obj.ToLocationId = ZeroIntergerIFNull(lstToLocation.SelectedValue);
                         if (hdnType.Value == "1")
                         {
-                            var OraEmpMapping = objRepository.checkOraEmployeeExitance(ZeroIntergerIFNull(hdnEmployeeId.Value));
+                            var OraEmpMapping = objRepository.checkOraEmployeeExitance(ZeroIntergerIFNull(empselectedValue));
                             if (OraEmpMapping != null)
                             {
                                 obj.EmpName = OraEmpMapping.Ora_EmpName;
@@ -507,7 +519,7 @@ namespace UI.Web.Modules.Assets
                         obj.ToLocationId = ZeroIntergerIFNull(lstToLocation.SelectedValue);
                         if (hdnType.Value == "1")
                         {
-                            var OraEmpMapping = objRepository.checkOraEmployeeExitance(ZeroIntergerIFNull(hdnEmployeeId.Value));
+                            var OraEmpMapping = objRepository.checkOraEmployeeExitance(ZeroIntergerIFNull(empselectedValue));
                             if (OraEmpMapping != null)
                             {
                                 obj.EmpName = OraEmpMapping.Ora_EmpName;

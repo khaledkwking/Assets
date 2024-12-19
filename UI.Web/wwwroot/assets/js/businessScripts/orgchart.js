@@ -23,8 +23,8 @@ function handelSelectedNode(nodeId) {
         data:
             { nodeId: nodeId },
         success: function (employeeData) {
-            //  DrawEmployeeTree(employeeData);
-            $('#lblEmpCount').text(employeeData.length); GetEmployeeHierarhcy
+              //DrawEmployeeTree(employeeData);
+            $('#lblEmpCount').text(employeeData.length); 
             $('#employeeList-datatable').DataTable({
                 data: employeeData,
                 pageLength: 25,
@@ -44,46 +44,46 @@ function handelSelectedNode(nodeId) {
                         "last": "Last",
                         "next": "Next",
                         "previous": "Prev"
-                    }
-                },
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ],
-                columns: [
-                    { data: "EMP_NAME", title: "الاسم  " },
-                    { data: "CIVIL_ID", title: "الرقم المدني  " },
-                    { data: "ENTITYNAME", title: "المكان" },
-                    { data: "POSITION_NAME", title: "الوظيفة  " },
-                    { data: "JOB_NAME", title: "المسمى الوظيفي  " },
-                    {
-                        data: "EMP_STATUS", title: "الحالة",
-                        render: function (data, type, row) {
-                            return (data == 'active' ? '<span class="badge badge-pill badge-outline-success font-size-12">' + data + '</span>'
-                                : data == 'not-active' ? '<span class="badge badge-pill badge-outline-danger font-size-12">' + data + '</span>'
-                                    : data
-                            );
-                        }
+                      }
                     },
-                    {
-                        data: "EMP_ID", title: "", orderable: false,
-                        render: function (data, type, row) {
-                            return ("<div class='drodown'>" + "<a href='#' class='btn btn-sm btn-icon btn-trigger dropdown-toggle' data-toggle='dropdown'><em class='icon ni ni-more-h'></em></a>" +
-                                "<div class='dropdown-menu dropdown-menu-right'>" +
-                                "<ul class='link-list-opt no-bdr'>" +
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ],
+                    columns: [
+                        { data: "EMP_NAME", title: "الاسم  " },
+                        { data: "CIVIL_ID", title: "الرقم المدني  " },
+                        { data: "ENTITYNAME", title: "المكان" },
+                        { data: "POSITION_NAME", title: "الوظيفة  " },
+                        { data: "JOB_NAME", title: "المسمى الوظيفي  " },
+                        {
+                            data: "EMP_STATUS", title: "الحالة",
+                            render: function (data, type, row) {
+                                return (data == 'active' ? '<span class="badge badge-pill badge-outline-success font-size-12">' + data + '</span>'
+                                    : data == 'not-active' ? '<span class="badge badge-pill badge-outline-danger font-size-12">' + data + '</span>'
+                                        : data
+                                );
+                            }
+                        },
+                        {
+                            data: "EMP_ID", title: "", orderable: false,
+                            render: function (data, type, row) {
+                                return ("<div class='drodown'>" + "<a href='#' class='btn btn-sm btn-icon btn-trigger dropdown-toggle' data-toggle='dropdown'><em class='icon ni ni-more-h'></em></a>" +
+                                    "<div class='dropdown-menu dropdown-menu-right'>" +
+                                    "<ul class='link-list-opt no-bdr'>" +
 
-                                "<li> <a href='javascript:void(0)' onclick='call_cboxSmall(`../MasterData/EmployeeLocation.aspx?entityId=" + nodeId + "&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-location'></em></span><span class='nk-menu-text' >  موقع الموظف</span ></a ></li>" +
-                                "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/AssetCheckout.aspx?t=1&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > سجل العهد</span ></a ></li>" +
-                                "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Reports/AssetReceipt.aspx?locid=0&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text' > طباعة إستمارة العهدة  </span ></a ></li>" +
-                                "</ul>" +
-                                "</div></div>"
-                            );
-                        }
-                    },
-                    //{ data: "ENTITYCODE", title: "ENTITYCODE" },
+                                    "<li> <a href='javascript:void(0)' onclick='call_cboxSmall(`../MasterData/EmployeeLocation.aspx?entityId=" + nodeId + "&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-location'></em></span><span class='nk-menu-text' >  موقع الموظف</span ></a ></li>" +
+                                    "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/AssetCheckout.aspx?t=1&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > سجل العهد</span ></a ></li>" +
+                                    "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Reports/AssetReceipt.aspx?locid=0&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text' > طباعة إستمارة العهدة  </span ></a ></li>" +
+                                    "</ul>" +
+                                    "</div></div>"
+                                );
+                            }
+                        },
+
+                    ],
+
                     //{ data: "PARENTCODE", title: "PARENTCODE" },
                     //{ data: "POSITION_NO", title: "POSITION_NO" },
-
-                ],
 
 
             });
@@ -108,51 +108,51 @@ function handelSelectedNode(nodeId) {
         success: function (locationData) {
             //  DrawEmployeeTree(employeeData);
             $('#lblcount').text(locationData.length);
-            //$('#locationList-datatable').DataTable({
-            //    data: locationData,
-            //    pageLength: 20,
-            //    responsive: true,
-            //    destroy: true,
-            //    autoWidth: false,
-            //    order: [],
-            //    language: {
-            //        search: "",
-            //        searchPlaceholder: "بحث",
-            //        lengthMenu: "<span class='d-none d-sm-inline-block'>عرض</span><div class='form-control-select'> _MENU_ </div>",
-            //        info: "_START_ -_END_ of _TOTAL_",
-            //        infoEmpty: "No records found",
-            //        infoFiltered: "( Total _MAX_  )",
-            //        paginate: {
-            //            "first": "First",
-            //            "last": "Last",
-            //            "next": "Next",
-            //            "previous": "Prev"
-            //        }
-            //    },
-            //    buttons: [
-            //        'copy', 'csv', 'excel', 'pdf', 'print'
-            //    ],
-            //    columns: [
-            //        { data: "LocationNameAr", title: "الموقع" },
-            //        { data: "LocationTypeTitleAr", title: "النوع" },
-            //        { data: "LocationRefCode", title: "الكود" },
-            //         {
-            //             data: "Code", title: "", orderable: false,
-            //            render: function (data, type, row) {
-            //                return ("<div class='drodown'>" + "<a href='#' class='btn btn-sm btn-icon btn-trigger dropdown-toggle' data-toggle='dropdown'><em class='icon ni ni-more-h'></em></a>" +
-            //                    "<div class='dropdown-menu dropdown-menu-right'>" +
-            //                    "<ul class='link-list-opt no-bdr'>" +
-            //                    "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/assetsListPopup.aspx?empid=0&locid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > قائمة العهد</span ></a ></li>" +
-            //                    "</ul>" +
-            //                    "</div></div>"
-            //                );
-            //            }
-            //        },
+            $('#locationList-datatable').DataTable({
+                data: locationData,
+                pageLength: 20,
+                responsive: true,
+                destroy: true,
+                autoWidth: false,
+                order: [],
+                language: {
+                    search: "",
+                    searchPlaceholder: "بحث",
+                    lengthMenu: "<span class='d-none d-sm-inline-block'>عرض</span><div class='form-control-select'> _MENU_ </div>",
+                    info: "_START_ -_END_ of _TOTAL_",
+                    infoEmpty: "No records found",
+                    infoFiltered: "( Total _MAX_  )",
+                    paginate: {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Next",
+                        "previous": "Prev"
+                    }
+                },
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                columns: [
+                    { data: "LocationNameAr", title: "الموقع" },
+                    { data: "LocationTypeTitleAr", title: "النوع" },
+                    { data: "LocationRefCode", title: "الكود" },
+                     {
+                         data: "Code", title: "", orderable: false,
+                        render: function (data, type, row) {
+                            return ("<div class='drodown'>" + "<a href='#' class='btn btn-sm btn-icon btn-trigger dropdown-toggle' data-toggle='dropdown'><em class='icon ni ni-more-h'></em></a>" +
+                                "<div class='dropdown-menu dropdown-menu-right'>" +
+                                "<ul class='link-list-opt no-bdr'>" +
+                                "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/assetsListPopup.aspx?empid=0&locid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > قائمة العهد</span ></a ></li>" +
+                                "</ul>" +
+                                "</div></div>"
+                            );
+                        }
+                    },
 
-            //    ],
+                ],
 
 
-            //});
+            });
 
 
         },

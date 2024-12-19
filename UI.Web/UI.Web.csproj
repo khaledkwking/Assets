@@ -753,6 +753,7 @@
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsList_No9_Compare.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsList_No9.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsListWithServicePeriod.rdlc" />
+    <EmbeddedResource Include="Modules\Reports\RDLC\rpt_OrgCustodDetailed - Copy.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\Sub_AssetsReceipt.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsReceipt.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_Inventory.rdlc" />

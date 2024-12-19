@@ -10,12 +10,13 @@
     <input id="hdnMasterID" runat="server" type="hidden" />
         <asp:HiddenField runat="server" ID="hdnSelectedNode" ClientIDMode="Static" />
     <input id="hdnActiveTab" runat="server" type="hidden" />
+    <asp:HiddenField ID="hfSelectedEmployeeText" runat="server" ClientIDMode="Static" />
 
     <script language="JavaScript" type="text/javascript">
 
+      
 
         function chkImage() {
-
 
 
             var txt = document.getElementById("<%=hdnType.ClientID %>")
@@ -25,7 +26,11 @@
                     Swal.fire("فضلا ، إحتر الموظف   ");
                     return false;
                 }
+                else {
+                    document.getElementById("<%=hfSelectedEmployeeText.ClientID %>").value = emp.options[emp.selectedIndex].text;
+                }
             }
+            
 
             var txt = document.getElementById("<%=txtRequestDate.ClientID %>")
             if (txt.value == "") {
@@ -334,6 +339,7 @@
             });
         });
 </script>
+
     <style>
         .autocomplete {
     font-size: 15px !important;
@@ -346,7 +352,6 @@
 }
     </style>
     <input id="hdnType" runat="server" type="hidden" />
-
 
 
     <div class="nk-block-head nk-block-head-sm">
@@ -533,7 +538,7 @@
 
                                                 <div class="form-group divEmployee" id="divEmployee" runat="server">
                                                     <label class="control-label" for=""><%=GetGlobalResourceObject("pages","RefEmployee") %>  </label>
-                                                    <asp:DropDownList ID="lstRefEmployee" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"  ></asp:DropDownList>
+                                                    <asp:DropDownList ID="lstRefEmployee" name="ctl00$ContentPlaceHolder1$lstRefEmployee" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"  ></asp:DropDownList>
 
                                                 </div>
 

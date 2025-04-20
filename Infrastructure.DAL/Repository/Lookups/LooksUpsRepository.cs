@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using Infrastructure.DAL.Model.DB;
@@ -132,6 +133,16 @@ namespace Infrastructure.DAL
 
         #endregion
 
+        public List<D_ItemsCategory> GetCategoriesByLevel(int parentId)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                return DC.D_ItemsCategory
+                .Where(c => c.Cat_ParentId == parentId)
+                .ToList();
+            }
+        }
+
         #region "Inbound lookups"
         public List<D_InboundType> FillInboundTypes()
         {
@@ -199,7 +210,17 @@ namespace Infrastructure.DAL
             }
         }
 
+        public List<D_ItemUsedStatus> FillItemUsedStatus()
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.D_ItemUsedStatus // Stores
+                     select obj);
 
+                return result.ToList<D_ItemUsedStatus>();
+            }
+        }
 
         public List<D_InboundDepositeStatusType> FillDepositeStatusType()
         {

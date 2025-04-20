@@ -5,11 +5,79 @@
  
 });
 loadDashboard = function (val) {
-    DrawEmps(val);
+    DrawCat(val);
+    //DrawEmps(val);
     DrawAssetsType(val);
-    DrawEmpHaveAssets(val);
+    //DrawEmpHaveAssets(val);
 };
 
+function DrawCat(val) {
+
+    $.ajax({
+        type: 'POST',
+        url: '/Modules/Dashboard/Dashboard.aspx/GetChartDataCat',
+        //data: JSON.stringify({selectedValue1:selectedValue1,selectedValue2:selectedValue2,selectedValue3:selectedValue3}),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+
+
+        success: function (result) {
+
+            $("#divChartDataCat").dxPieChart({
+                dataSource: JSON.parse(result.d)
+                ,
+                resolveLabelOverlapping: 'shift',
+                legend: {
+                    horizontalAlignment: "center",
+                    verticalAlignment: "bottom",
+                    visible: false
+                },
+                title: {
+                    text: "التصنيفات",
+                    font: { size: 20, family: 'DroidNaskh' },
+                    subtitle: { text: "اجمالي عدد العهد لكل تصنيف" }
+                },
+                palette: ["#136EA5", "#9313A5", "#A54A13", "#24A513"],
+                series: [{
+                    argumentField: "ParentTitleAr",
+                    valueField: "AssetCount",
+                    label: {
+                        visible: true,
+                        connector: {
+                            visible: true,
+                            width: 0.5
+                        },
+                        format: "fixedPoint",
+                        customizeText: function (point) {
+                            return point.argumentText + "  :  " + point.valueText + " " + "(" + point.percentText + ") ";
+                        }
+                    },
+                    onPointClick: function (e) {
+                        var point = e.target;
+                        toggleVisibility(point);
+                    },
+                    onLegendClick: function (e) {
+                        var arg = e.target;
+                        toggleVisibility(this.getAllSeries()[0].getPointsByArg(arg)[0]);
+                    }
+                    ,
+                    tooltip: {
+                        enabled: true,
+                        customizeTooltip: function (arg) {
+                            return {
+                                text: arg.seriesName + ": " + arg.value
+                            };
+                        }
+                    }
+
+                }],
+
+
+
+            });
+        }
+    });
+}
 function DrawEmps(val) {
     
         $.ajax({
@@ -104,7 +172,7 @@ function DrawAssetsType(val) {
                     font: { size: 20, family: 'DroidNaskh' },
                     subtitle: { text: "اجمالي عدد العهد " }
                 },
-                palette: ["#C5B991", "#91C59F", "#919DC5", "#C591B7"],
+                palette: ["#136EA5", "#9313A5", "#A54A13", "#24A513"],
                 series: [{
                     argumentField: "AssetType",
                     valueField: "AssetCount",

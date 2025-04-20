@@ -38,7 +38,34 @@ namespace UI.Web.Modules.WHM.Forms
                 fillReport(false);
             }
         }
+        private List<view_CustodyList> GetOrgData(List<view_CustodyList> objList , int nodeId)
+        {
 
+            var orglistInfo = GetorgChartList(nodeId).Where(o=> o.ENTITYCODE==nodeId).FirstOrDefault();
+            //Load Employee List
+            if (orglistInfo != null)
+            {
+                foreach (var item in objList)
+                {
+
+                    if (orglistInfo != null)
+                    {
+                        item.AMANA_NAME = orglistInfo.ENTITYNAME;
+                        //item.AMANA_NAME = Empinfo.AMANA_NAME;
+                        //item.DEPT_NAME = Empinfo.DEPT_NAME;
+                        //item.DIV_NAME = Empinfo.DIV_NAME;
+                        //item.SEC_NAME = Empinfo.SEC_NAME;
+                        //item.SUB_SEC_NAME = Empinfo.SUB_SEC_NAME;
+                        //item.JOB_NAME = Empinfo.JOB_NAME;
+
+                    }
+
+
+                }
+
+            }
+            return objList;
+        }
         private List<view_CustodyList> setChartInfo(List<view_CustodyList> objList, int EmpId)
         {
 
@@ -68,6 +95,7 @@ namespace UI.Web.Modules.WHM.Forms
 
 
             return objList;
+
 
         }
         #endregion
@@ -135,13 +163,31 @@ namespace UI.Web.Modules.WHM.Forms
                         var objList = objRepository.getAssetReceiptbyRequestCode(ZeroIntergerIFNull(Request.QueryString["docId"].ToString()), 0);
                         if (objList != null && objList.Count > 0)
                         {
-                            setChartInfo(objList, objList[0].EmpRefCode.Value);
+                            var expandedList = new List<view_CustodyList>();
+                            foreach (var item in objList)
+                            {
+                                // Add the same item multiple times based on its quantity
+                                for (int i = 0; i < item.Qty; i++) // Assuming 'Quantity' is the property name
+                                {
+                                    var clonedItem = CloneObject(item);
+
+                                    expandedList.Add(clonedItem);
+                                }
+                            }
+                            var s = GetOrgData(expandedList , expandedList[0].OrgChartRefCode.Value);
+                            //setChartInfo(expandedList, expandedList[0].EmpRefCode.Value);
+
+                            //setChartInfo(expandedList, expandedList[0].EmpRefCode.Value);
 
                             ReportViewer1.ProcessingMode = ProcessingMode.Local;
-                            ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailed.rdlc");
+                            if (Request.QueryString["assetinv"] != null)
+                                ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsInventory.rdlc");
+                            else
+                                ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailedDept.rdlc");
+
                             ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
                             //var objlist = objRepository.GetList();
-                            ReportDataSource datasource = new ReportDataSource("ds_RequestList", objList);
+                            ReportDataSource datasource = new ReportDataSource("ds_RequestList", expandedList);
 
                             ReportViewer1.LocalReport.DataSources.Clear();
                             ReportViewer1.LocalReport.DataSources.Add(datasource);
@@ -152,6 +198,43 @@ namespace UI.Web.Modules.WHM.Forms
                             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
                         }
 
+                    }
+                    else if (Request.QueryString["requestCode"] != null && Request.QueryString["requestCode"] != "0")
+                    {
+                        var objList = objRepository.getAssetReceiptbyRequestCode(ZeroIntergerIFNull(Request.QueryString["requestCode"].ToString()), 0);
+                        if (objList != null && objList.Count > 0)
+                        {
+                            var expandedList = new List<view_CustodyList>();
+                            foreach (var item in objList)
+                            {
+                                // Add the same item multiple times based on its quantity
+                                for (int i = 0; i < item.Qty; i++) // Assuming 'Quantity' is the property name
+                                {
+                                    var clonedItem = CloneObject(item);
+
+                                    expandedList.Add(clonedItem);
+                                }
+                            }
+                            setChartInfo(expandedList, expandedList[0].EmpRefCode.Value);
+
+                            ReportViewer1.ProcessingMode = ProcessingMode.Local;
+                            if (Request.QueryString["assetinv"] != null)
+                                ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsInventory.rdlc");
+                            else
+                                ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailed.rdlc");
+
+                            ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+                            //var objlist = objRepository.GetList();
+                            ReportDataSource datasource = new ReportDataSource("ds_RequestList", expandedList);
+
+                            ReportViewer1.LocalReport.DataSources.Clear();
+                            ReportViewer1.LocalReport.DataSources.Add(datasource);
+                        }
+                        else
+                        {
+                            string script = FormatErrorMSGSwal(Resources.Alerts.nodatafound, "1");
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                        }
                     }
                     else if (Request.QueryString["empid"] != null && Request.QueryString["empid"] != "0")
                     {
@@ -159,13 +242,29 @@ namespace UI.Web.Modules.WHM.Forms
                         var objList = objRepository.getAssetReceiptbyRequestCode(0, ZeroIntergerIFNull(Request.QueryString["empid"].ToString()));
                         if (objList != null && objList.Count > 0)
                         {
-                            setChartInfo(objList, objList[0].EmpRefCode.Value);
+                            var expandedList = new List<view_CustodyList>();
+                            foreach (var item in objList)
+                            {
+                                // Add the same item multiple times based on its quantity
+                                for (int i = 0; i < item.Qty; i++) // Assuming 'Quantity' is the property name
+                                {
+                                    var clonedItem = CloneObject(item);
+
+                                    expandedList.Add(clonedItem);
+                                }
+                            }
+                            setChartInfo(expandedList, expandedList[0].EmpRefCode.Value);
 
                             ReportViewer1.ProcessingMode = ProcessingMode.Local;
-                            ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailed.rdlc");
+                            if(Request.QueryString["assetinv"] != null)
+                                ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsInventory.rdlc");
+
+                            else
+                                ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailed.rdlc");
+
                             ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
                             //var objlist = objRepository.GetList();
-                            ReportDataSource datasource = new ReportDataSource("ds_RequestList", objList);
+                            ReportDataSource datasource = new ReportDataSource("ds_RequestList", expandedList);
 
                             ReportViewer1.LocalReport.DataSources.Clear();
                             ReportViewer1.LocalReport.DataSources.Add(datasource);
@@ -176,6 +275,7 @@ namespace UI.Web.Modules.WHM.Forms
                             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
                         }
                     }
+
                     else
                     {
                         // User FIlter Critriea
@@ -192,7 +292,18 @@ namespace UI.Web.Modules.WHM.Forms
 
 
         }
-
+        private T CloneObject<T>(T obj) where T : new()
+        {
+            var newObj = new T();
+            foreach (var property in typeof(T).GetProperties())
+            {
+                if (property.CanWrite)
+                {
+                    property.SetValue(newObj, property.GetValue(obj));
+                }
+            }
+            return newObj;
+        }
 
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {

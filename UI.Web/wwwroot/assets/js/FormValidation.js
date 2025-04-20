@@ -1,15 +1,23 @@
 ﻿
+//function CheckAllDataGridCheckBoxes(aspCheckBoxID, checkVal) {
+//    re = new RegExp(':' + aspCheckBoxID + '$')  //generated control name starts with a colon
+//    for (i = 0; i < document.forms[0].elements.length; i++) {
+//        elm = document.forms[0].elements[i]
+//        if (elm.type == 'checkbox') {
+//            if (elm.name.indexOf(aspCheckBoxID) != -1) {
+//                elm.checked = checkVal
+//            }
+//        }
+//    }
+//}
 function CheckAllDataGridCheckBoxes(aspCheckBoxID, checkVal) {
-    re = new RegExp(':' + aspCheckBoxID + '$')  //generated control name starts with a colon
-    for (i = 0; i < document.forms[0].elements.length; i++) {
-        elm = document.forms[0].elements[i]
-        if (elm.type == 'checkbox') {
-            if (elm.name.indexOf(aspCheckBoxID) != -1) {
-                elm.checked = checkVal
-            }
-        }
-    }
+    var checkboxes = document.querySelectorAll('input[type="checkbox"][name*="' + aspCheckBoxID + '"]');
+
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = checkVal;
+    });
 }
+
 function isItemChecked() {
     for (i = 0; i < document.forms[0].elements.length; i++) {
         elm = document.forms[0].elements[i]

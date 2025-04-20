@@ -44,6 +44,8 @@ namespace AssetsManament.ViewModels
         public Nullable<bool> IsScrap { get; set; }
         public string LocationRefCode { get; set; }
 
+        public string City { get; set; }
+
         public string LocationTypeTitleEn { get; set; }
         public string LocationTypeTitleAr { get; set; }
 

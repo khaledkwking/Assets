@@ -193,6 +193,7 @@ namespace Infrastructure.DAL
                          LocationNameEn = obj.LocationNameEn,
                          LocationNameAr = obj.LocationNameAr,
                          LocationParentId = obj.LocationParentId.Value,
+                         City = obj.City,
 
                          OrgChartRefCode = obj.OrgChartRefCode,
                          LocationRefCode = obj.LocationRefCode,
@@ -260,6 +261,7 @@ namespace Infrastructure.DAL
                          LocationNameEn = obj.LocationNameEn,
                          LocationNameAr = obj.LocationNameAr,
                          LocationParentId = obj.LocationParentId.Value,
+                         City = obj.City,
 
                          OrgChartRefCode = obj.OrgChartRefCode,
                          LocationRefCode = obj.LocationRefCode,
@@ -289,7 +291,8 @@ namespace Infrastructure.DAL
                          x.ItemCode,
                          x.ItemRefCode,
                          x.ItemNameAr,
-                         x.QtyUnitTitleAr
+                         x.QtyUnitTitleAr,
+                         x.City
                      })
                      where entityNode.Contains(obj.Key.OrgChartRefCode.Value)
                      select new CustodyListViewModel
@@ -300,6 +303,7 @@ namespace Infrastructure.DAL
                          ItemCode = obj.Key.ItemCode,
                          ItemRefCode = obj.Key.ItemRefCode,
                          ItemNameAr = obj.Key.ItemNameAr,
+                         City = obj.Key.City,
                          ServicePeriod = obj.Key.ServicePeriod,
                          ScrapPrice = obj.Key.ScrapPrice,
                          QtyUnitTitleAr = obj.Key.QtyUnitTitleAr,

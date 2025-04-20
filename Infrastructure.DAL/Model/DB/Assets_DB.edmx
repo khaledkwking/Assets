@@ -37,6 +37,7 @@
           <Property Name="StoreRequestRefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="RequestItemPrice" Type="float" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ItemUsedStatus" Type="int" />
         </EntityType>
         <EntityType Name="AssetsEventTrackingHeader">
           <Key>
@@ -238,6 +239,7 @@
           <Property Name="MigrationRef" Type="int" />
           <Property Name="MigrationRef1" Type="int" />
           <Property Name="AllowInbound" Type="bit" />
+          <Property Name="City" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="D_LocationType">
           <Key>
@@ -860,6 +862,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_CustodyList' does not 
           <Property Name="statusId" Type="int" />
           <Property Name="LocationNameEn" Type="nvarchar" MaxLength="250" />
           <Property Name="LocationNameAr" Type="nvarchar" MaxLength="250" />
+          <Property Name="City" Type="nvarchar" MaxLength="250" />
           <Property Name="DueDate" Type="datetime" />
           <Property Name="RequestNotes" Type="nvarchar(max)" />
           <Property Name="EstimatedUnitCost" Type="float" />
@@ -870,6 +873,10 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_CustodyList' does not 
           <Property Name="MissedQty" Type="float" />
           <Property Name="StoreRequestRefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="path" Type="nvarchar(max)" />
+          <Property Name="Building" Type="nvarchar" MaxLength="250" />
+          <Property Name="Floors" Type="nvarchar" MaxLength="250" />
+          <Property Name="Land" Type="nvarchar" MaxLength="250" />
+          <Property Name="BuildingCity" Type="nvarchar" MaxLength="250" />
           <Property Name="ORG_NO" Type="int" Nullable="false" />
           <Property Name="ORG_NAME" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="AMANA_NO" Type="int" Nullable="false" />
@@ -883,15 +890,19 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_CustodyList' does not 
           <Property Name="SUB_SEC_NO" Type="int" Nullable="false" />
           <Property Name="SUB_SEC_NAME" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="JOB_NAME" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="ItemsCategoryTitleAr" Type="nvarchar" MaxLength="250" />
           <Property Name="ItemsCategoryTitleEn" Type="nvarchar" MaxLength="250" />
           <Property Name="ItemCategoryId" Type="int" />
           <Property Name="FinanceRefCode" Type="nvarchar" MaxLength="250" />
           <Property Name="ServicePeriod" Type="float" />
           <Property Name="ScrapPrice" Type="float" />
+          <Property Name="ItemsCategoryTitleAr" Type="nvarchar" MaxLength="250" />
+          <Property Name="ItemsParentCategoryTitleAr" Type="nvarchar" MaxLength="250" />
+          <Property Name="ItemsMainParentCategoryTitleAr" Type="nvarchar" MaxLength="250" />
           <Property Name="OrgChartRefCode" Type="int" />
           <Property Name="RequestItemPrice" Type="float" />
           <Property Name="ItemServiceMonthes" Type="int" />
+          <Property Name="ItemUsedStatus" Type="int" />
+          <Property Name="ItemUsedStatusTitle" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_CustodyListGrouped' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1965,6 +1976,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
     [view_CustodyList].[statusId] AS [statusId], 
     [view_CustodyList].[LocationNameEn] AS [LocationNameEn], 
     [view_CustodyList].[LocationNameAr] AS [LocationNameAr], 
+    [view_CustodyList].[City] AS [City], 
     [view_CustodyList].[DueDate] AS [DueDate], 
     [view_CustodyList].[RequestNotes] AS [RequestNotes], 
     [view_CustodyList].[EstimatedUnitCost] AS [EstimatedUnitCost], 
@@ -1975,6 +1987,10 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
     [view_CustodyList].[MissedQty] AS [MissedQty], 
     [view_CustodyList].[StoreRequestRefCode] AS [StoreRequestRefCode], 
     [view_CustodyList].[path] AS [path], 
+    [view_CustodyList].[Building] AS [Building], 
+    [view_CustodyList].[Floors] AS [Floors], 
+    [view_CustodyList].[Land] AS [Land], 
+    [view_CustodyList].[BuildingCity] AS [BuildingCity], 
     [view_CustodyList].[ORG_NO] AS [ORG_NO], 
     [view_CustodyList].[ORG_NAME] AS [ORG_NAME], 
     [view_CustodyList].[AMANA_NO] AS [AMANA_NO], 
@@ -1988,15 +2004,19 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
     [view_CustodyList].[SUB_SEC_NO] AS [SUB_SEC_NO], 
     [view_CustodyList].[SUB_SEC_NAME] AS [SUB_SEC_NAME], 
     [view_CustodyList].[JOB_NAME] AS [JOB_NAME], 
-    [view_CustodyList].[ItemsCategoryTitleAr] AS [ItemsCategoryTitleAr], 
     [view_CustodyList].[ItemsCategoryTitleEn] AS [ItemsCategoryTitleEn], 
     [view_CustodyList].[ItemCategoryId] AS [ItemCategoryId], 
     [view_CustodyList].[FinanceRefCode] AS [FinanceRefCode], 
     [view_CustodyList].[ServicePeriod] AS [ServicePeriod], 
     [view_CustodyList].[ScrapPrice] AS [ScrapPrice], 
+    [view_CustodyList].[ItemsCategoryTitleAr] AS [ItemsCategoryTitleAr], 
+    [view_CustodyList].[ItemsParentCategoryTitleAr] AS [ItemsParentCategoryTitleAr], 
+    [view_CustodyList].[ItemsMainParentCategoryTitleAr] AS [ItemsMainParentCategoryTitleAr], 
     [view_CustodyList].[OrgChartRefCode] AS [OrgChartRefCode], 
     [view_CustodyList].[RequestItemPrice] AS [RequestItemPrice], 
-    [view_CustodyList].[ItemServiceMonthes] AS [ItemServiceMonthes]
+    [view_CustodyList].[ItemServiceMonthes] AS [ItemServiceMonthes], 
+    [view_CustodyList].[ItemUsedStatus] AS [ItemUsedStatus], 
+    [view_CustodyList].[ItemUsedStatusTitle] AS [ItemUsedStatusTitle]
     FROM [dbo].[view_CustodyList] AS [view_CustodyList]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="view_CustodyListGrouped" EntityType="Self.view_CustodyListGrouped" store:Type="Views" store:Schema="dbo">
@@ -2602,24 +2622,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
           <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="D_EmployeeList" Relationship="Self.FK_D_EmployeeList_D_JobTitle" FromRole="D_JobTitle" ToRole="D_EmployeeList" />
         </EntityType>
-        <EntityType Name="D_Locations">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LocationType" Type="Int32" />
-          <Property Name="LocationNameEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="LocationNameAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="LocationParentId" Type="Int32" />
-          <Property Name="OrgChartRefCode" Type="Int32" />
-          <Property Name="EmpInCharge" Type="Int32" />
-          <Property Name="IsScrap" Type="Boolean" />
-          <Property Name="LocationRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MigrationRef" Type="Int32" />
-          <Property Name="MigrationRef1" Type="Int32" />
-          <NavigationProperty Name="D_LocationType" Relationship="Self.FK_D_Locations_D_LocationTypes" FromRole="D_Locations" ToRole="D_LocationType" />
-          <Property Name="AllowInbound" Type="Boolean" />
-        </EntityType>
         <EntityType Name="D_LocationType">
           <Key>
             <PropertyRef Name="Code" />
@@ -2627,7 +2629,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
           <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="D_Locations" Relationship="Self.FK_D_Locations_D_LocationTypes" FromRole="D_LocationType" ToRole="D_Locations" />
+          <NavigationProperty Name="D_Locations" Relationship="CMGS_AssetsMgmtModel.FK_D_Locations_D_LocationTypes" FromRole="D_LocationType" ToRole="D_Locations" />
         </EntityType>
         <EntityType Name="D_QtyUnit">
           <Key>
@@ -3178,18 +3180,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_D_Locations_D_LocationTypes">
-          <End Role="D_LocationType" Type="Self.D_LocationType" Multiplicity="0..1" />
-          <End Role="D_Locations" Type="Self.D_Locations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_LocationType">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="D_Locations">
-              <PropertyRef Name="LocationType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_InboundAttachments_Inbound">
           <End Role="Inbound" Type="Self.Inbound" Multiplicity="0..1" />
           <End Role="InboundAttachments" Type="Self.InboundAttachment" Multiplicity="*" />
@@ -3252,7 +3242,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
           <EntitySet Name="D_ItemsCategory" EntityType="Self.D_ItemsCategory" />
           <EntitySet Name="D_ItemUsedStatus" EntityType="Self.D_ItemUsedStatus" />
           <EntitySet Name="D_JobTitle" EntityType="Self.D_JobTitle" />
-          <EntitySet Name="D_Locations" EntityType="Self.D_Locations" />
           <EntitySet Name="D_LocationType" EntityType="Self.D_LocationType" />
           <EntitySet Name="D_QtyUnit" EntityType="Self.D_QtyUnit" />
           <EntitySet Name="D_VendorData" EntityType="Self.D_VendorData" />
@@ -3321,10 +3310,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
           <AssociationSet Name="FK_D_ItemCard_D_QtyUnit" Association="Self.FK_D_ItemCard_D_QtyUnit">
             <End Role="D_QtyUnit" EntitySet="D_QtyUnit" />
             <End Role="D_ItemCard" EntitySet="D_ItemCard" />
-          </AssociationSet>
-          <AssociationSet Name="FK_D_Locations_D_LocationTypes" Association="Self.FK_D_Locations_D_LocationTypes">
-            <End Role="D_LocationType" EntitySet="D_LocationType" />
-            <End Role="D_Locations" EntitySet="D_Locations" />
           </AssociationSet>
           <AssociationSet Name="FK_InboundAttachments_Inbound" Association="Self.FK_InboundAttachments_Inbound">
             <End Role="Inbound" EntitySet="Inbounds" />
@@ -3469,19 +3454,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
           </FunctionImport>
           <FunctionImport Name="sp_GetAllEmployeesCount" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_GetAllEmployeesCount_Result)" />
           <EntitySet Name="AssetsTransferOuts" EntityType="CMGS_AssetsMgmtModel.AssetsTransferOut" />
-          <EntitySet Name="AssetsEventTrackings" EntityType="CMGS_AssetsMgmtModel.AssetsEventTracking" />
-          <AssociationSet Name="FK_AssetsEventTracking_AssetsAvailabilityStatus" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus">
-            <End Role="AssetsAvailabilityStatu" EntitySet="AssetsAvailabilityStatus" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTracking_AssetsTrackingActions" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions">
-            <End Role="AssetsTrackingAction" EntitySet="AssetsTrackingActions" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTracking_D_ItemCard" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard">
-            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-          </AssociationSet>
           <EntitySet Name="view_AssetEventLog" EntityType="CMGS_AssetsMgmtModel.view_AssetEventLog" />
           <EntitySet Name="view_AssetsInventory" EntityType="CMGS_AssetsMgmtModel.view_AssetsInventory" />
           <EntitySet Name="view_AssetsList" EntityType="CMGS_AssetsMgmtModel.view_AssetsList" />
@@ -3503,13 +3475,31 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
             <End Role="Security_pr_adminPermittedOrgUnits" EntitySet="Security_pr_adminPermittedOrgUnits" />
           </AssociationSet>
           <EntitySet Name="AssetsEventTrackingHeaders" EntityType="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" />
+          <AssociationSet Name="FK_RequestAttachments_AssetsEventTrackingHeader" Association="CMGS_AssetsMgmtModel.FK_RequestAttachments_AssetsEventTrackingHeader">
+            <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeaders" />
+            <End Role="RequestAttachment" EntitySet="RequestAttachments" />
+          </AssociationSet>
+          <EntitySet Name="AssetsEventTrackings" EntityType="CMGS_AssetsMgmtModel.AssetsEventTracking" />
+          <AssociationSet Name="FK_AssetsEventTracking_AssetsAvailabilityStatus" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus">
+            <End Role="AssetsAvailabilityStatu" EntitySet="AssetsAvailabilityStatus" />
+            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
+          </AssociationSet>
           <AssociationSet Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1">
             <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeaders" />
             <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
           </AssociationSet>
-          <AssociationSet Name="FK_RequestAttachments_AssetsEventTrackingHeader" Association="CMGS_AssetsMgmtModel.FK_RequestAttachments_AssetsEventTrackingHeader">
-            <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeaders" />
-            <End Role="RequestAttachment" EntitySet="RequestAttachments" />
+          <AssociationSet Name="FK_AssetsEventTracking_AssetsTrackingActions" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions">
+            <End Role="AssetsTrackingAction" EntitySet="AssetsTrackingActions" />
+            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetsEventTracking_D_ItemCard" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard">
+            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
+            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
+          </AssociationSet>
+          <EntitySet Name="D_Locations" EntityType="CMGS_AssetsMgmtModel.D_Locations" />
+          <AssociationSet Name="FK_D_Locations_D_LocationTypes" Association="CMGS_AssetsMgmtModel.FK_D_Locations_D_LocationTypes">
+            <End Role="D_LocationType" EntitySet="D_LocationType" />
+            <End Role="D_Locations" EntitySet="D_Locations" />
           </AssociationSet>
           <EntitySet Name="view_CustodyList" EntityType="CMGS_AssetsMgmtModel.view_CustodyList" />
           </EntityContainer>
@@ -3991,71 +3981,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="AssetsEventTracking">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RequestHeaderCode" Type="Int32" />
-          <Property Name="AssetCode" Type="Int32" />
-          <Property Name="ActionDate" Type="DateTime" Precision="3" />
-          <Property Name="DueDate" Type="DateTime" Precision="3" />
-          <Property Name="actionId" Type="Int32" />
-          <Property Name="statusId" Type="Int32" />
-          <Property Name="ToLocationId" Type="Int32" />
-          <Property Name="EmpRefCode" Type="Int32" />
-          <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="Int32" />
-          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="Qty" Type="Double" />
-          <Property Name="MissedQty" Type="Double" />
-          <Property Name="StoreRequestRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RequestItemPrice" Type="Double" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="AssetsAvailabilityStatu" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus" FromRole="AssetsEventTracking" ToRole="AssetsAvailabilityStatu" />
-          <NavigationProperty Name="AssetsTrackingAction" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions" FromRole="AssetsEventTracking" ToRole="AssetsTrackingAction" />
-          <NavigationProperty Name="D_ItemCard" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard" FromRole="AssetsEventTracking" ToRole="D_ItemCard" />
-          <NavigationProperty Name="AssetsEventTrackingHeader" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" FromRole="AssetsEventTracking" ToRole="AssetsEventTrackingHeader" />
-        </EntityType>
-        <Association Name="FK_AssetsEventTracking_AssetsAvailabilityStatus">
-          <End Type="CMGS_AssetsMgmtModel.AssetsAvailabilityStatu" Role="AssetsAvailabilityStatu" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsAvailabilityStatu">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="statusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTracking_AssetsTrackingActions">
-          <End Type="CMGS_AssetsMgmtModel.AssetsTrackingAction" Role="AssetsTrackingAction" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsTrackingAction">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="actionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTracking_D_ItemCard">
-          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_ItemCard">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="AssetCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="view_AssetEventLog">
           <Key>
             <PropertyRef Name="Code" />
@@ -4425,9 +4350,63 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
           <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
           <Property Name="TranferedRequestHeaderId" Type="Int32" />
           <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" FromRole="AssetsEventTrackingHeader" ToRole="AssetsEventTracking" />
           <NavigationProperty Name="RequestAttachments" Relationship="CMGS_AssetsMgmtModel.FK_RequestAttachments_AssetsEventTrackingHeader" FromRole="AssetsEventTrackingHeader" ToRole="RequestAttachment" />
+          <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" FromRole="AssetsEventTrackingHeader" ToRole="AssetsEventTracking" />
         </EntityType>
+        <Association Name="FK_RequestAttachments_AssetsEventTrackingHeader">
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Role="AssetsEventTrackingHeader" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.RequestAttachment" Role="RequestAttachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetsEventTrackingHeader">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="RequestAttachment">
+              <PropertyRef Name="RequestCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AssetsEventTracking">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestHeaderCode" Type="Int32" />
+          <Property Name="AssetCode" Type="Int32" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="actionId" Type="Int32" />
+          <Property Name="statusId" Type="Int32" />
+          <Property Name="ToLocationId" Type="Int32" />
+          <Property Name="EmpRefCode" Type="Int32" />
+          <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="Qty" Type="Double" />
+          <Property Name="MissedQty" Type="Double" />
+          <Property Name="StoreRequestRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RequestItemPrice" Type="Double" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ItemUsedStatus" Type="Int32" />
+          <NavigationProperty Name="AssetsAvailabilityStatu" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus" FromRole="AssetsEventTracking" ToRole="AssetsAvailabilityStatu" />
+          <NavigationProperty Name="AssetsEventTrackingHeader" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" FromRole="AssetsEventTracking" ToRole="AssetsEventTrackingHeader" />
+          <NavigationProperty Name="AssetsTrackingAction" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions" FromRole="AssetsEventTracking" ToRole="AssetsTrackingAction" />
+          <NavigationProperty Name="D_ItemCard" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard" FromRole="AssetsEventTracking" ToRole="D_ItemCard" />
+        </EntityType>
+        <Association Name="FK_AssetsEventTracking_AssetsAvailabilityStatus">
+          <End Type="CMGS_AssetsMgmtModel.AssetsAvailabilityStatu" Role="AssetsAvailabilityStatu" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetsAvailabilityStatu">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsEventTracking">
+              <PropertyRef Name="statusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1">
           <End Type="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Role="AssetsEventTrackingHeader" Multiplicity="0..1" />
           <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
@@ -4440,15 +4419,58 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RequestAttachments_AssetsEventTrackingHeader">
-          <End Type="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Role="AssetsEventTrackingHeader" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.RequestAttachment" Role="RequestAttachment" Multiplicity="*" />
+        <Association Name="FK_AssetsEventTracking_AssetsTrackingActions">
+          <End Type="CMGS_AssetsMgmtModel.AssetsTrackingAction" Role="AssetsTrackingAction" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AssetsEventTrackingHeader">
+            <Principal Role="AssetsTrackingAction">
               <PropertyRef Name="Code" />
             </Principal>
-            <Dependent Role="RequestAttachment">
-              <PropertyRef Name="RequestCode" />
+            <Dependent Role="AssetsEventTracking">
+              <PropertyRef Name="actionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetsEventTracking_D_ItemCard">
+          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_ItemCard">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsEventTracking">
+              <PropertyRef Name="AssetCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="D_Locations">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationType" Type="Int32" />
+          <Property Name="LocationNameEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LocationNameAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LocationParentId" Type="Int32" />
+          <Property Name="OrgChartRefCode" Type="Int32" />
+          <Property Name="EmpInCharge" Type="Int32" />
+          <Property Name="IsScrap" Type="Boolean" />
+          <Property Name="LocationRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MigrationRef" Type="Int32" />
+          <Property Name="MigrationRef1" Type="Int32" />
+          <Property Name="AllowInbound" Type="Boolean" />
+          <Property Name="City" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="D_LocationType" Relationship="CMGS_AssetsMgmtModel.FK_D_Locations_D_LocationTypes" FromRole="D_Locations" ToRole="D_LocationType" />
+        </EntityType>
+        <Association Name="FK_D_Locations_D_LocationTypes">
+          <End Type="CMGS_AssetsMgmtModel.D_LocationType" Role="D_LocationType" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.D_Locations" Role="D_Locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_LocationType">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="D_Locations">
+              <PropertyRef Name="LocationType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4507,6 +4529,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
           <Property Name="statusId" Type="Int32" />
           <Property Name="LocationNameEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="LocationNameAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="DueDate" Type="DateTime" Precision="3" />
           <Property Name="RequestNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EstimatedUnitCost" Type="Double" />
@@ -4517,6 +4540,10 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
           <Property Name="MissedQty" Type="Double" />
           <Property Name="StoreRequestRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Building" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Floors" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Land" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingCity" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ORG_NO" Type="Int32" Nullable="false" />
           <Property Name="ORG_NAME" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="AMANA_NO" Type="Int32" Nullable="false" />
@@ -4530,15 +4557,19 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
           <Property Name="SUB_SEC_NO" Type="Int32" Nullable="false" />
           <Property Name="SUB_SEC_NAME" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="JOB_NAME" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ItemsCategoryTitleAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ItemsCategoryTitleEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ItemCategoryId" Type="Int32" />
           <Property Name="FinanceRefCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ServicePeriod" Type="Double" />
           <Property Name="ScrapPrice" Type="Double" />
+          <Property Name="ItemsCategoryTitleAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ItemsParentCategoryTitleAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ItemsMainParentCategoryTitleAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="OrgChartRefCode" Type="Int32" />
           <Property Name="RequestItemPrice" Type="Double" />
           <Property Name="ItemServiceMonthes" Type="Int32" />
+          <Property Name="ItemUsedStatus" Type="Int32" />
+          <Property Name="ItemUsedStatusTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4711,24 +4742,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="TitleAr" ColumnName="TitleAr" />
                 <ScalarProperty Name="TitleEn" ColumnName="TitleEn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="D_Locations">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.D_Locations">
-              <MappingFragment StoreEntitySet="D_Locations">
-                <ScalarProperty Name="AllowInbound" ColumnName="AllowInbound" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="LocationType" ColumnName="LocationType" />
-                <ScalarProperty Name="LocationNameEn" ColumnName="LocationNameEn" />
-                <ScalarProperty Name="LocationNameAr" ColumnName="LocationNameAr" />
-                <ScalarProperty Name="LocationParentId" ColumnName="LocationParentId" />
-                <ScalarProperty Name="OrgChartRefCode" ColumnName="OrgChartRefCode" />
-                <ScalarProperty Name="EmpInCharge" ColumnName="EmpInCharge" />
-                <ScalarProperty Name="IsScrap" ColumnName="IsScrap" />
-                <ScalarProperty Name="LocationRefCode" ColumnName="LocationRefCode" />
-                <ScalarProperty Name="MigrationRef" ColumnName="MigrationRef" />
-                <ScalarProperty Name="MigrationRef1" ColumnName="MigrationRef1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5583,32 +5596,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AssetsEventTrackings">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsEventTracking">
-              <MappingFragment StoreEntitySet="AssetsEventTracking">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="RequestItemPrice" ColumnName="RequestItemPrice" />
-                <ScalarProperty Name="StoreRequestRefCode" ColumnName="StoreRequestRefCode" />
-                <ScalarProperty Name="MissedQty" ColumnName="MissedQty" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-                <ScalarProperty Name="EmpRefCode" ColumnName="EmpRefCode" />
-                <ScalarProperty Name="ToLocationId" ColumnName="ToLocationId" />
-                <ScalarProperty Name="statusId" ColumnName="statusId" />
-                <ScalarProperty Name="actionId" ColumnName="actionId" />
-                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="AssetCode" ColumnName="AssetCode" />
-                <ScalarProperty Name="RequestHeaderCode" ColumnName="RequestHeaderCode" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="view_AssetEventLog">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_AssetEventLog">
               <MappingFragment StoreEntitySet="view_AssetEventLog">
@@ -5936,18 +5923,68 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AssetsEventTrackings">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsEventTracking">
+              <MappingFragment StoreEntitySet="AssetsEventTracking">
+                <ScalarProperty Name="ItemUsedStatus" ColumnName="ItemUsedStatus" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="RequestItemPrice" ColumnName="RequestItemPrice" />
+                <ScalarProperty Name="StoreRequestRefCode" ColumnName="StoreRequestRefCode" />
+                <ScalarProperty Name="MissedQty" ColumnName="MissedQty" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpRefCode" ColumnName="EmpRefCode" />
+                <ScalarProperty Name="ToLocationId" ColumnName="ToLocationId" />
+                <ScalarProperty Name="statusId" ColumnName="statusId" />
+                <ScalarProperty Name="actionId" ColumnName="actionId" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="AssetCode" ColumnName="AssetCode" />
+                <ScalarProperty Name="RequestHeaderCode" ColumnName="RequestHeaderCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="D_Locations">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.D_Locations">
+              <MappingFragment StoreEntitySet="D_Locations">
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AllowInbound" ColumnName="AllowInbound" />
+                <ScalarProperty Name="MigrationRef1" ColumnName="MigrationRef1" />
+                <ScalarProperty Name="MigrationRef" ColumnName="MigrationRef" />
+                <ScalarProperty Name="LocationRefCode" ColumnName="LocationRefCode" />
+                <ScalarProperty Name="IsScrap" ColumnName="IsScrap" />
+                <ScalarProperty Name="EmpInCharge" ColumnName="EmpInCharge" />
+                <ScalarProperty Name="OrgChartRefCode" ColumnName="OrgChartRefCode" />
+                <ScalarProperty Name="LocationParentId" ColumnName="LocationParentId" />
+                <ScalarProperty Name="LocationNameAr" ColumnName="LocationNameAr" />
+                <ScalarProperty Name="LocationNameEn" ColumnName="LocationNameEn" />
+                <ScalarProperty Name="LocationType" ColumnName="LocationType" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="view_CustodyList">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_CustodyList">
               <MappingFragment StoreEntitySet="view_CustodyList">
+                <ScalarProperty Name="ItemUsedStatusTitle" ColumnName="ItemUsedStatusTitle" />
+                <ScalarProperty Name="ItemUsedStatus" ColumnName="ItemUsedStatus" />
                 <ScalarProperty Name="ItemServiceMonthes" ColumnName="ItemServiceMonthes" />
                 <ScalarProperty Name="RequestItemPrice" ColumnName="RequestItemPrice" />
                 <ScalarProperty Name="OrgChartRefCode" ColumnName="OrgChartRefCode" />
+                <ScalarProperty Name="ItemsMainParentCategoryTitleAr" ColumnName="ItemsMainParentCategoryTitleAr" />
+                <ScalarProperty Name="ItemsParentCategoryTitleAr" ColumnName="ItemsParentCategoryTitleAr" />
+                <ScalarProperty Name="ItemsCategoryTitleAr" ColumnName="ItemsCategoryTitleAr" />
                 <ScalarProperty Name="ScrapPrice" ColumnName="ScrapPrice" />
                 <ScalarProperty Name="ServicePeriod" ColumnName="ServicePeriod" />
                 <ScalarProperty Name="FinanceRefCode" ColumnName="FinanceRefCode" />
                 <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
                 <ScalarProperty Name="ItemsCategoryTitleEn" ColumnName="ItemsCategoryTitleEn" />
-                <ScalarProperty Name="ItemsCategoryTitleAr" ColumnName="ItemsCategoryTitleAr" />
                 <ScalarProperty Name="JOB_NAME" ColumnName="JOB_NAME" />
                 <ScalarProperty Name="SUB_SEC_NAME" ColumnName="SUB_SEC_NAME" />
                 <ScalarProperty Name="SUB_SEC_NO" ColumnName="SUB_SEC_NO" />
@@ -5961,6 +5998,10 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
                 <ScalarProperty Name="AMANA_NO" ColumnName="AMANA_NO" />
                 <ScalarProperty Name="ORG_NAME" ColumnName="ORG_NAME" />
                 <ScalarProperty Name="ORG_NO" ColumnName="ORG_NO" />
+                <ScalarProperty Name="BuildingCity" ColumnName="BuildingCity" />
+                <ScalarProperty Name="Land" ColumnName="Land" />
+                <ScalarProperty Name="Floors" ColumnName="Floors" />
+                <ScalarProperty Name="Building" ColumnName="Building" />
                 <ScalarProperty Name="path" ColumnName="path" />
                 <ScalarProperty Name="StoreRequestRefCode" ColumnName="StoreRequestRefCode" />
                 <ScalarProperty Name="MissedQty" ColumnName="MissedQty" />
@@ -5971,6 +6012,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
                 <ScalarProperty Name="EstimatedUnitCost" ColumnName="EstimatedUnitCost" />
                 <ScalarProperty Name="RequestNotes" ColumnName="RequestNotes" />
                 <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="LocationNameAr" ColumnName="LocationNameAr" />
                 <ScalarProperty Name="LocationNameEn" ColumnName="LocationNameEn" />
                 <ScalarProperty Name="statusId" ColumnName="statusId" />
@@ -6021,8 +6063,8 @@ warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a p
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

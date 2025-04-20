@@ -98,42 +98,74 @@ namespace UI.Web.Modules.Assets
             }
         }
 
+        //private void fillRequestItems()
+        //{
+
+        //    if (Session["selectedItems"] != null)
+        //    {
+        //        var item = Session["selectedItems"];
+        //        var objList = (List<view_AssetsList>)Session["selectedItems"];
+        //        decimal c = System.Math.Ceiling(Convert.ToDecimal(objList.Count / grdItems.PageSize));
+        //        if ((c <= grdItems.CurrentPageIndex))
+        //        {
+        //            grdItems.CurrentPageIndex = 0;
+        //        }
+        //        grdItems.Visible = true;
+        //        grdItems.DataSource = objList;
+        //        grdItems.DataBind();
+        //        int _totalCount = objList.Count;
+        //        pager1.ItemCount = objList.Count;
+        //        hdnItemCount.Value= objList.Count.ToString();
+
+        //        if (objList != null && objList.Count > 0)
+        //        {
+        //            pager1.Visible = true;
+
+        //        }
+        //        else { pager1.Visible = false; }
+
+
+        //    }
+        //    else
+        //    {
+        //        grdItems.Visible = false;
+        //        pager1.Visible = false;
+        //    }
+
+
+
+        //}
         private void fillRequestItems()
         {
-
-            if (Session["selectedItems"] != null)
+            if (Session["selectedItems"] is List<view_AssetsList> objList)
             {
-                var objList = (List<view_AssetsList>)Session["selectedItems"];
-                decimal c = System.Math.Ceiling(Convert.ToDecimal(objList.Count / grdItems.PageSize));
-                if ((c <= grdItems.CurrentPageIndex))
+                decimal c = Math.Ceiling((decimal)objList.Count / grdItems.PageSize);
+
+                if (c <= grdItems.CurrentPageIndex)
                 {
                     grdItems.CurrentPageIndex = 0;
                 }
+
                 grdItems.Visible = true;
                 grdItems.DataSource = objList;
                 grdItems.DataBind();
+
                 int _totalCount = objList.Count;
-                pager1.ItemCount = objList.Count;
-                hdnItemCount.Value= objList.Count.ToString();
+                pager1.ItemCount = _totalCount;
+                hdnItemCount.Value = _totalCount.ToString();
 
-                if (objList != null && objList.Count > 0)
-                {
-                    pager1.Visible = true;
-
-                }
-                else { pager1.Visible = false; }
-
-
+                pager1.Visible = _totalCount > 0;
             }
             else
             {
+                // Optional: clear the session or log type issue
+                // Session.Remove("selectedItems");
+
                 grdItems.Visible = false;
                 pager1.Visible = false;
             }
-
-
-
         }
+
         protected void pager_Command(object sender, CommandEventArgs e)
         {
             Int32 currnetPageIndx = ((Int32)(e.CommandArgument));

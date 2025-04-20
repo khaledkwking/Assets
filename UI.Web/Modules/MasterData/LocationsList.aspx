@@ -116,9 +116,9 @@
                                         <div class="panel panel-yellow" style="min-height: 70vh">
                                             <div class="panel-heading clearfix">
 
-                                               
 
-                                                 <div class="form-control-wrap">
+
+                                                <div class="form-control-wrap">
                                                     <div class="form-icon form-icon-right">
                                                         <em class="icon ni ni-search"></em>
                                                     </div>
@@ -127,9 +127,9 @@
 
                                             </div>
                                             <div class="panel-body" style="padding: 0px; padding-top: 25px;">
-                                                <div  id="progressbar">
-                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"> <span class="sr-only">Loading...</span></span>
-                                                   
+                                                <div id="progressbar">
+                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"><span class="sr-only">Loading...</span></span>
+
                                                 </div>
                                                 <div id="locationTree" class=""></div>
                                             </div>
@@ -184,6 +184,12 @@
                                                         <label class="col-md-12 control-label"><%=GetGlobalResourceObject("pages","FinRefCode") %>  </label>
                                                         <div class="col-md-12">
                                                             <asp:TextBox runat="server" class="form-control" ID="txtFinRefCode" ClientIDMode="Static"></asp:TextBox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label">المدينة </label>
+                                                        <div class="col-md-12">
+                                                            <asp:TextBox runat="server" class="form-control" ID="txtCity" ClientIDMode="Static"></asp:TextBox>
                                                         </div>
                                                     </div>
 

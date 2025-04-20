@@ -106,12 +106,18 @@ namespace UI.Web.Modules.Assets
                     custodyType.SelectedValue = hdnType.Value;
                     divEmployee.Visible = true;
                     hdnEmployeeId.Value = gets(objHeader.Ora_EmpRefCode);
+                    lnkPrintRequest.HRef = Resources.Utilities.cutureRoute + "/Modules/Reports/AssetReceipt.aspx?empid=" + hdnEmployeeId.Value+ "&requestCode="+ RequestHeaderCode;
+                    lnkAssetsInventoryPrint.HRef = Resources.Utilities.cutureRoute + "/Modules/Reports/AssetReceipt.aspx?empid=" + hdnEmployeeId.Value+ "&requestCode="+ RequestHeaderCode + "&assetinv=y";
+
                 }
                 else
                 {
                     custodyType.SelectedValue = hdnType.Value;
                     divEmployee.Visible = false;
                     hdnEmployeeId.Value = "0";
+                    lnkPrintRequest.HRef = Resources.Utilities.cutureRoute + "/Modules/Reports/AssetReceipt.aspx?docId=" + hdnMasterID.Value;
+                    lnkAssetsInventoryPrint.HRef = Resources.Utilities.cutureRoute + "/Modules/Reports/AssetReceipt.aspx?docId=" + hdnMasterID.Value + "&assetinv=y" ;
+
                 }
                 txtRequestDate.Text = NullDateifEmptyText(objHeader.RequestDate);
 
@@ -121,7 +127,7 @@ namespace UI.Web.Modules.Assets
                 {
                     hdnSelectedNode.Value = gets(objHeader.OraEntityRefCode);
                 }
-                else
+                else if (hdnType.Value == "1")
                 {
                     fillRequestItems();
                     string script = FormatErrorMSGSwal("عفوا ، يرجي مطابقة بيانات  الموظف مع بيانات الإدارية  ", "1");
@@ -131,8 +137,8 @@ namespace UI.Web.Modules.Assets
                 }
 
 
-                lnkPrintRequest.HRef = Resources.Utilities.cutureRoute + "/Modules/Reports/AssetReceipt.aspx?docId=" + hdnMasterID.Value;
                 viewPrint.Visible = true;
+                viewAssetsInventoryPrint.Visible = true;
             }
             else { viewPrint.Visible = false; }
 
@@ -282,7 +288,7 @@ namespace UI.Web.Modules.Assets
                     objHeader.RequestDate = NullDateifEmpty(txtRequestDate.Text);
                     objHeader.DueDate = NullDateifEmpty(txtReturnDate.Text);
                     objHeader.RequestRefCode = Guid.NewGuid().ToString();
-                    objHeader.RequestActionType = (int)CustodyProcessTypes.CheckOut;
+                    objHeader.RequestActionType = ZeroIntergerIFNull(hdnType.Value);
                     objHeader.ProcessType = ZeroIntergerIFNull(hdnType.Value);
                     objHeader.TMonth = NullDateifEmpty(txtRequestDate.Text).Month;
                     objHeader.TYear = NullDateifEmpty(txtRequestDate.Text).Year;
@@ -491,6 +497,7 @@ namespace UI.Web.Modules.Assets
                         obj.actionId = 2;// checkout;
                         obj.statusId = 2;// CHecked OUt ;
                         obj.ToLocationId = ZeroIntergerIFNull(lstToLocation.SelectedValue);
+                        obj.ItemUsedStatus = objItemList[i].ItemUsedStatus;
                         if (hdnType.Value == "1")
                         {
                             var OraEmpMapping = objRepository.checkOraEmployeeExitance(ZeroIntergerIFNull(empselectedValue));
@@ -532,6 +539,8 @@ namespace UI.Web.Modules.Assets
                         obj.ActionDate = objItemList[i].ActionDate;
                         obj.CreatedAt = DateTime.Now;
                         obj.CreatedBy = ZeroIntergerIFNull(ReadSession("userId").ToString());
+                        obj.ItemUsedStatus = objItemList[i].ItemUsedStatus;
+
 
                         objRepository.UpdateEventTracking(obj);
                     }
@@ -621,6 +630,9 @@ namespace UI.Web.Modules.Assets
                 string notes = ((TextBox)e.Item.FindControl("txtNotes")).Text;
                 string StoreRequestRefCode = ((TextBox)e.Item.FindControl("txtStoreRequestRefCode")).Text;
                 string txtCustodyDate = ((TextBox)e.Item.FindControl("txtCustodyDate")).Text;
+                string ItemStatus = ((DropDownList)e.Item.FindControl("ddlStatus")).SelectedValue; 
+                string ItemStatusTitle = ((DropDownList)e.Item.FindControl("ddlStatus")).SelectedItem.Text;
+
                 if (isbn.Equals("") && desc.Equals(""))
                 {
                     string script = FormatErrorMSGSwal("عفوا ، ادخل بيانات المادة    ", "1");
@@ -655,6 +667,8 @@ namespace UI.Web.Modules.Assets
                     newItem.QtyUnitTitleAr = itemobj.D_QtyUnitTitleAr;
                     newItem.QtyUnitTitleEn = itemobj.D_QtyUnitTitleEn;
                     newItem.Qty = ZeroIntergerIFNull(Qty);
+                    newItem.ItemUsedStatus = ZeroIntergerIFNull(ItemStatus);
+                    newItem.ItemUsedStatusTitle = ItemStatusTitle;
                     newItem.Notes = notes;
                     newItem.StoreRequestRefCode = StoreRequestRefCode;
                     newItem.ActionDate = NullDateifEmpty(txtCustodyDate);
@@ -694,6 +708,9 @@ namespace UI.Web.Modules.Assets
             }
             else if (e.CommandName.Equals("Edit"))
             {
+               // string Id = ((Label)e.Item.FindControl("lblStatusIdTitle")).Text;
+
+                //((DropDownList)e.Item.FindControl("ddlStatus")).SelectedItem.Text = Id;
                 ViewState["SpEdit"] = 1;
                 grdCustodyItems.EditItemIndex = e.Item.ItemIndex;
 
@@ -730,11 +747,15 @@ namespace UI.Web.Modules.Assets
                 string notes = ((TextBox)e.Item.FindControl("txtNotes")).Text;
                 string txtCustodyDate = ((TextBox)e.Item.FindControl("txtCustodyDate")).Text;
                 string StoreRequestRefCode = ((TextBox)e.Item.FindControl("txtStoreRequestRefCode")).Text;
+                string ItemStatus = ((DropDownList)e.Item.FindControl("ddlStatus")).SelectedValue;
+                string ItemStatusTitle = ((DropDownList)e.Item.FindControl("ddlStatus")).SelectedItem.Text;
 
                 _Itemobj.Qty = ZeroIntergerIFNull(Qty);
                 _Itemobj.Notes = notes;
                 _Itemobj.StoreRequestRefCode = StoreRequestRefCode;
                 _Itemobj.ActionDate = NullDateifEmpty(txtCustodyDate);
+                _Itemobj.ItemUsedStatus = ZeroIntergerIFNull(ItemStatus);
+                _Itemobj.ItemUsedStatusTitle = ItemStatusTitle;
 
 
 
@@ -888,7 +909,6 @@ namespace UI.Web.Modules.Assets
 
         protected void grdCustodyItems_ItemDataBound(object sender, DataGridItemEventArgs e)
         {
-
             if (e.Item.ItemType == ListItemType.AlternatingItem | e.Item.ItemType == ListItemType.Item)
             {
                 string EventCode = e.Item.Cells[2].Text.Replace("&nbsp;", " ").Trim();
@@ -909,6 +929,8 @@ namespace UI.Web.Modules.Assets
                 {
                     e.Item.Cells[5].Text = "";
                 }
+
+             
             }
             else if (e.Item.ItemType == ListItemType.Footer)
             {
@@ -999,9 +1021,45 @@ namespace UI.Web.Modules.Assets
                     txtItemCost.Visible = true;
 
                 }
+
             }
 
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.EditItem)
+            {
+                
 
+                // Edit Mode
+                if (e.Item.ItemType == ListItemType.EditItem)
+                {
+                    int statusID = ZeroIntergerIFNull(((Label)e.Item.FindControl("lblStatusId")).Text);
+                    // Find DropDownList inside EditItemTemplate
+                    DropDownList ddlStatus = (DropDownList)e.Item.FindControl("ddlStatus");
+                    if (ddlStatus != null)
+                    {
+                        var ItemStatusList = LooksUpsRepository.ins.FillItemUsedStatus();
+                        // Bind DropDownList from database
+                        ddlStatus.DataSource = ItemStatusList; // Fetch dropdown values
+                        ddlStatus.DataTextField = "TitleAr"; // Column name from the database
+                        ddlStatus.DataValueField = "Code";  // Column for the value
+                        ddlStatus.DataBind();
+
+                        // Set the selected value
+                        if (ddlStatus.Items.FindByValue(statusID.ToString()) != null)
+                        {
+                            ddlStatus.SelectedValue = statusID.ToString();
+                        }
+                    }
+                }
+                else
+                {
+                    //// View Mode: Find Label and set Status Name
+                    //Label lblStatus = (Label)e.Item.FindControl("lblStatus");
+                    //if (lblStatus != null)
+                    //{
+                    //    lblStatus.Text = LooksUpsRepository.ins.FillItemUsedStatus().Where(o=> o.Code == statusID).FirstOrDefault().TitleAr; // Convert ID to Name
+                    //}
+                }
+            }
         }
 
         protected void btnHide_Click(object sender, EventArgs e)

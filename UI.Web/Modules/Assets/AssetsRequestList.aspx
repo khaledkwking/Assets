@@ -190,7 +190,9 @@
                             </asp:TemplateColumn>
                               <asp:TemplateColumn HeaderText="<%$ Resources:pages,RequestLocation %>">
                                 <ItemTemplate>
-                                     <div class="text-info"><%#  ZeroIntergerIFNull(gets(Eval("EmpRefCode")))==0?"" :( ZeroIntergerIFNull(gets(Eval("Ora_EmpRefCode")))==0?gets(Eval("EmpName")): gets(Eval("Ora_EmpName"))) %> <%# getBool(Eval("Emp_Active"))==true?"<span class=\"badge badge-dim badge-success\">فعال</span>":"<span class=\"badge badge-dim badge-danger\">غير فعال</span>" %></div>
+                                     <div class="text-info"><%#  ZeroIntergerIFNull(gets(Eval("EmpRefCode")))==0?"" :( ZeroIntergerIFNull(gets(Eval("Ora_EmpRefCode")))==0?gets(Eval("EmpName")): gets(Eval("Ora_EmpName"))) %> 
+                                         <%# Convert.ToInt32(Eval("RequestActionType")) == 2 ? "<span class=\"badge badge-dim badge-success\">فعال</span>" : (getBool(Eval("Emp_Active")) == true ? "<span class=\"badge badge-dim badge-success\">فعال</span>" : "<span class=\"badge badge-dim badge-danger\">غير فعال</span>") %>
+                                     </div>
                                     <div class="text-indigo"><%# gets(Eval("LocationPath")) %></div>
                                     
                                        
@@ -204,7 +206,12 @@
                               <asp:BoundColumn DataField="RequestNotes" HeaderText="<%$ Resources:pages,RequestNotes %> "></asp:BoundColumn>
                               <asp:TemplateColumn HeaderText="<%$ Resources:pages,Linked %>">
                                 <ItemTemplate>
-                                  <%#  ZeroIntergerIFNull(gets(Eval("Ora_EmpRefCode")))!=0?"<span class=\"badge badge-dot badge-success\">نعم</span>"  :"<span class=\"badge badge-dot badge-danger\">لا</span>" %>
+                                  <asp:Label ID="lblOraEmpRefStatus" runat="server" Text='<%# Convert.ToInt32(Eval("RequestActionType")) == 2 
+    ? "<span class=\"badge badge-dot badge-success\">نعم</span>" 
+    : (ZeroIntergerIFNull(gets(Eval("Ora_EmpRefCode"))) != 0 
+        ? "<span class=\"badge badge-dot badge-success\">نعم</span>" 
+        : "<span class=\"badge badge-dot badge-danger\">لا</span>") %>'></asp:Label>
+
                                    
                                 </ItemTemplate>
                             </asp:TemplateColumn>
@@ -221,10 +228,10 @@
                                                     <a href="AssetCheckout.aspx?t=<%#Eval("ProcessType") %>&requestCode=<%#Eval("code") %>" class="btn btn-default btn-xs"><i class="icon ni ni-edit"></i>&nbsp; <%=GetGlobalResourceObject("pages","CustodyDetails") %> </a>
                                                 </li>
 
-                                                 <li>
+                                                <%-- <li>
                                                     <a href="../Reports/AssetReceipt.aspx?docId=<%#Eval("code") %>" class="btn btn-default btn-xs iframe75"><i class="icon ni ni-printer"></i>&nbsp; <%=GetGlobalResourceObject("pages","PrintRequest") %> </a>
-                                                </li>
-
+                                                </li>--%>
+                                               
                                                 <%--  <li runat="server" visible='<%# (ZeroIntergerIFNull(gets(Eval("InboundLastStatusCode")))>1?false: true) %>'>
                                                     <a href="InboundItemReceving.aspx?serial=<%#Eval("serial") %>" class="btn btn-default btn-xs"><i class="icon ni ni-shrink"></i>&nbsp; <%=GetGlobalResourceObject("pages","ReceiveItem") %> </a>
                                                 </li>

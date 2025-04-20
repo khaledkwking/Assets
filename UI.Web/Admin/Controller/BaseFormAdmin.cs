@@ -1315,11 +1315,28 @@ namespace UI.Web.Admin.Controller
 
             }
         }
+        public List<ORGANIZATION_CHART> GetorgChartList(int nodeid)
+        {
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = client.GetAsync(string.Format("orgchart/GetChart/")).Result;
+
+                if (!Res.IsSuccessStatusCode)
+                    throw new Exception(Res.ToString());
+
+                var result = Res.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<List<ORGANIZATION_CHART>>(result);
+            }
+        }
 
 
 
 
- 
+
 
         public string showAction(int StatusId, string StatusText)
         {

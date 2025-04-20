@@ -30,6 +30,7 @@ namespace AssetsManament.ViewModels
         public Nullable<double> ScrapPrice { get; set; }
         public Nullable<int> OrgChartRefCode { get; set; }
         public string  OrgChartRefName { get; set; }
+        public string  City { get; set; }
 
 
     }

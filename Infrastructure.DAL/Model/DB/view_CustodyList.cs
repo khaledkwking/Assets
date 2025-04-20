@@ -47,6 +47,7 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> statusId { get; set; }
         public string LocationNameEn { get; set; }
         public string LocationNameAr { get; set; }
+        public string City { get; set; }
         public Nullable<System.DateTime> DueDate { get; set; }
         public string RequestNotes { get; set; }
         public Nullable<double> EstimatedUnitCost { get; set; }
@@ -57,6 +58,10 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<double> MissedQty { get; set; }
         public string StoreRequestRefCode { get; set; }
         public string path { get; set; }
+        public string Building { get; set; }
+        public string Floors { get; set; }
+        public string Land { get; set; }
+        public string BuildingCity { get; set; }
         public int ORG_NO { get; set; }
         public string ORG_NAME { get; set; }
         public int AMANA_NO { get; set; }
@@ -70,14 +75,18 @@ namespace Infrastructure.DAL.Model.DB
         public int SUB_SEC_NO { get; set; }
         public string SUB_SEC_NAME { get; set; }
         public string JOB_NAME { get; set; }
-        public string ItemsCategoryTitleAr { get; set; }
         public string ItemsCategoryTitleEn { get; set; }
         public Nullable<int> ItemCategoryId { get; set; }
         public string FinanceRefCode { get; set; }
         public Nullable<double> ServicePeriod { get; set; }
         public Nullable<double> ScrapPrice { get; set; }
+        public string ItemsCategoryTitleAr { get; set; }
+        public string ItemsParentCategoryTitleAr { get; set; }
+        public string ItemsMainParentCategoryTitleAr { get; set; }
         public Nullable<int> OrgChartRefCode { get; set; }
         public Nullable<double> RequestItemPrice { get; set; }
         public Nullable<int> ItemServiceMonthes { get; set; }
+        public Nullable<int> ItemUsedStatus { get; set; }
+        public string ItemUsedStatusTitle { get; set; }
     }
 }

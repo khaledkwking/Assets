@@ -8,13 +8,13 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <input id="hdnMasterID" runat="server" type="hidden" />
-        <asp:HiddenField runat="server" ID="hdnSelectedNode" ClientIDMode="Static" />
+    <asp:HiddenField runat="server" ID="hdnSelectedNode" ClientIDMode="Static" />
     <input id="hdnActiveTab" runat="server" type="hidden" />
     <asp:HiddenField ID="hfSelectedEmployeeText" runat="server" ClientIDMode="Static" />
 
     <script language="JavaScript" type="text/javascript">
 
-      
+
 
         function chkImage() {
 
@@ -30,7 +30,7 @@
                     document.getElementById("<%=hfSelectedEmployeeText.ClientID %>").value = emp.options[emp.selectedIndex].text;
                 }
             }
-            
+
 
             var txt = document.getElementById("<%=txtRequestDate.ClientID %>")
             if (txt.value == "") {
@@ -342,14 +342,14 @@
 
     <style>
         .autocomplete {
-    font-size: 15px !important;
-    line-height:normal;
-       padding: 10px 35px !important; /* Add padding around each item */
-    margin-bottom: 5px !important; /* Add space between items */
-    border-bottom: 1px solid #ddd !important; /* Optional: Add a bottom border for separation */
-    text-align:right;/* Increase font size for all items */
-    width:auto;
-}
+            font-size: 15px !important;
+            line-height: normal;
+            padding: 10px 35px !important; /* Add padding around each item */
+            margin-bottom: 5px !important; /* Add space between items */
+            border-bottom: 1px solid #ddd !important; /* Optional: Add a bottom border for separation */
+            text-align: right; /* Increase font size for all items */
+            width: auto;
+        }
     </style>
     <input id="hdnType" runat="server" type="hidden" />
 
@@ -420,7 +420,7 @@
                                 </li>
                                 <li class="btn-toolbar-sep"></li>
 
-                                 
+
                                 <li>
                                     <div class="dropdown">
                                         <a href="#" class="btn btn-trigger btn-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -431,6 +431,8 @@
                                                 <li><a href="<%=GetGlobalResourceObject("Utilities","cutureRoute") %>/Modules/Assets/AssetCheckout.aspx?t=1"><span class='nk-menu-icon'><em class='icon ni ni-user-list-fill'></em></span><span class='nk-menu-text'><%=GetGlobalResourceObject("Pages","CustodyAdd") %></span></a></li>
                                                 <li><a href="<%=GetGlobalResourceObject("Utilities","cutureRoute") %>/Modules/Assets/AssetCheckout.aspx?t=2"><span class='nk-menu-icon'><em class='icon ni ni-focus'></em></span><span class='nk-menu-text'><%=GetGlobalResourceObject("Pages","CustodyAdd1") %></span></a></li>
                                                 <li id="viewPrint" runat="server" visible="false"><a id="lnkPrintRequest" runat="server" href="#" class="iframe75 text-danger"><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text'><%=GetGlobalResourceObject("Pages","PrintRequest") %></span></a></li>
+
+                                                <li id="viewAssetsInventoryPrint" runat="server" visible="false"><a id="lnkAssetsInventoryPrint" runat="server" href="#" class="iframe75 text-danger"><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text'>طباعة بطاقة الجرد</span></a></li>
 
                                             </ul>
 
@@ -458,22 +460,22 @@
 
                             <div class="panel panel-yellow" style="min-height: 70vh">
 
-                                <div class="p-1 " style="background-color: #0C476B;margin-bottom:20px">
-                                        <div class="d-flex">
-                                            <div class="align-self-center me-3">
-                                                <img src="/wwwroot/assets/images/logo/KuwaitLogo.png" class="avatar-xs rounded-circle" width="50px" alt="avatar-2">
-                                            </div>
-                                            <div class="flex-1" style="padding-top: 10px;padding-right: 10px;">
-                                                <h5 class="font-size-15 mb-1" style="color: #E4DAC1;font-size:16px;">الأمانة العامة لمجلس الوزراء</h5>
-                                                <p class="text-muted text-truncate mb-0" style="line-height: 20px; font-size: 13px; color: #E4DAC1 !important;">الهيكل التنظيمي  </p>
-
-                                            </div>
-
-                                            
+                                <div class="p-1 " style="background-color: #0C476B; margin-bottom: 20px">
+                                    <div class="d-flex">
+                                        <div class="align-self-center me-3">
+                                            <img src="/wwwroot/assets/images/logo/KuwaitLogo.png" class="avatar-xs rounded-circle" width="50px" alt="avatar-2">
                                         </div>
-                                    </div>
+                                        <div class="flex-1" style="padding-top: 10px; padding-right: 10px;">
+                                            <h5 class="font-size-15 mb-1" style="color: #E4DAC1; font-size: 16px;">الأمانة العامة لمجلس الوزراء</h5>
+                                            <p class="text-muted text-truncate mb-0" style="line-height: 20px; font-size: 13px; color: #E4DAC1 !important;">الهيكل التنظيمي  </p>
 
-                             <%--   <div class="panel-heading clearfix">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <%--   <div class="panel-heading clearfix">
                                     <span class="mts"><%=GetGlobalResourceObject("pages","OrgChartTitle") %>  </span>
                                     <div style="float: left"><a href="../Reports/OrgChartPrint.aspx" class="btn btn-dim btn-primary  btn-xs iframe75 "><i class="icon ni ni-printer"></i></a></div>
                                 </div>--%>
@@ -500,11 +502,11 @@
 
                                 <div class="portlet-body">
                                     <div role="form">
-                                        <div class="row" style="margin-bottom: 20px;display:none">
+                                        <div class="row" style="margin-bottom: 20px; display: none">
                                             <div class="col-md-12">
                                                 <div style="text-align: left; display: none">
                                                     <a href="assetsListPopup.aspx?eventId=1" class="btn btn-primary iframe75callback"><em class="icon ni ni-plus"></em><span>إضافة المواد</span></a>
-                                                   
+
 
                                                 </div>
 
@@ -538,7 +540,7 @@
 
                                                 <div class="form-group divEmployee" id="divEmployee" runat="server">
                                                     <label class="control-label" for=""><%=GetGlobalResourceObject("pages","RefEmployee") %>  </label>
-                                                    <asp:DropDownList ID="lstRefEmployee" name="ctl00$ContentPlaceHolder1$lstRefEmployee" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"  ></asp:DropDownList>
+                                                    <asp:DropDownList ID="lstRefEmployee" name="ctl00$ContentPlaceHolder1$lstRefEmployee" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"></asp:DropDownList>
 
                                                 </div>
 
@@ -557,10 +559,8 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="control-label" for=""><%=GetGlobalResourceObject("pages","assignedToLocation") %>  </label>
-                                                       <asp:DropDownList ID="lstToLocation" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"  ></asp:DropDownList>
+                                                    <asp:DropDownList ID="lstToLocation" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"></asp:DropDownList>
                                                     <%--<asp:DropDownList runat="server" ID="lstToLocation"></asp:DropDownList>--%>
-                                                  
-
                                                 </div>
 
                                                 <div class="form-group">
@@ -584,14 +584,12 @@
 
                                             </div>
 
-                                            <div class="col-md-4 divSelectedEmployeeInfo" id="divSelectedEmployeeInfo" style="display:none"  >
+                                            <div class="col-md-4 divSelectedEmployeeInfo" id="divSelectedEmployeeInfo" style="display: none">
                                                 <div class="card card-bordered bg-light">
-                                                   
-                                                        <div id="cboxLoadedContent">
-                                                         
-                                                            
-                                                        </div>
-                                                    
+
+                                                    <div id="cboxLoadedContent">
+                                                    </div>
+
                                                 </div>
                                             </div>
 
@@ -613,10 +611,10 @@
                             <div class="card-inner">
                                 <asp:UpdatePanel runat="server" ID="Updatepanel2" ChildrenAsTriggers="true" UpdateMode="conditional">
                                     <ContentTemplate>
-                                      
+
 
                                         <input id="hdnItemCount" runat="server" type="hidden" />
-                                         <asp:HiddenField runat="server" ID="hdnEmployeeId" ClientIDMode="Static" />
+                                        <asp:HiddenField runat="server" ID="hdnEmployeeId" ClientIDMode="Static" />
 
 
 
@@ -636,7 +634,7 @@
 
                                         <asp:Button runat="server" UseSubmitBehavior="false" ID="btnCheckItem" Text="Check Item" Style="display: none;" />
                                         <asp:Button runat="server" UseSubmitBehavior="false" ID="btnAddNewItem" Text="Add Item" Style="display: none;" />
-                                         <asp:Button runat="server" ID="btnReload" OnClick="btnReload_Click" CssClass="hide" ClientIDMode="Static" Style="display: none;" />
+                                        <asp:Button runat="server" ID="btnReload" OnClick="btnReload_Click" CssClass="hide" ClientIDMode="Static" Style="display: none;" />
 
 
                                         <input type="hidden" id="txtFocus" value="0" runat="server" />
@@ -722,14 +720,16 @@
                                                     <HeaderStyle Wrap="false" />
                                                     <ItemStyle Width="30%" />
                                                     <ItemTemplate>
-                                                        <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
+                                                        <%--<%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>--%>
+                                                         <%# HttpUtility.HtmlEncode(Eval("ItemNameAr")) %>
+                                                        
                                                     </ItemTemplate>
                                                     <EditItemTemplate>
                                                         <asp:Label Visible="false" runat="server" ID="lblDesc">
 		                                                                                   <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
                                                         </asp:Label>
                                                         <asp:TextBox onkeypress="return NumberKey(event,3)" runat="server"
-                                                            ID="txtItemDesc" CssClass="form-control" ></asp:TextBox>
+                                                            ID="txtItemDesc" CssClass="form-control"></asp:TextBox>
                                                         <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2"
                                                             runat="server" TargetControlID="txtItemDesc"
                                                             CompletionInterval="10" CompletionSetCount="10" MinimumPrefixLength="1" CompletionListItemCssClass="autocomplete"
@@ -804,7 +804,7 @@
                                                     <HeaderStyle Wrap="false" />
                                                     <ItemStyle Width="20%" />
                                                     <ItemTemplate>
-                                                         
+
                                                         <asp:Label ID="lbldates" runat="server">
                                                             <%#NullDateifEmptyText( DataBinder.Eval(Container.DataItem, "ActionDate" ,"{0:dd-MM-yyyy}"))%>
                                                         </asp:Label>
@@ -819,7 +819,20 @@
                                                             </div>
                                                             <asp:TextBox runat="server" ID="txtCustodyDate" Text='<%#NullDateifEmptyText(Eval("ActionDate")).Equals("")?NullDateifEmptyText(DateTime.Now):NullDateifEmptyText(Eval("ActionDate")) %>' placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
                                                         </div>
-                                                        
+
+                                                    </EditItemTemplate>
+                                                </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="الحالة">
+                                                    <ItemTemplate>
+                                                        <!-- Label for View Mode -->
+                                                       <asp:Label  runat="server" ID="lblStatusIdTitle" Text=' <%#DataBinder.Eval(Container.DataItem, "ItemUsedStatusTitle")%>'> </asp:Label>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <asp:Label Visible="false" runat="server" ID="lblStatusId" Text='<%#DataBinder.Eval(Container.DataItem, "ItemUsedStatus")%>'> </asp:Label>
+                                                        <!-- DropDownList for Add/Edit Mode -->
+                                                        <asp:DropDownList ID="ddlStatus" runat="server" AppendDataBoundItems="true">
+                                                            <asp:ListItem Text="-- Select --" Value="" />
+                                                        </asp:DropDownList>
                                                     </EditItemTemplate>
                                                 </asp:TemplateColumn>
                                                 <asp:TemplateColumn HeaderText="أمر الصرف">
@@ -881,7 +894,7 @@
 
         </div>
     </div>
-        <script src="/wwwroot/assets/js/businessScripts/assetsCheckout.js"></script>
+    <script src="/wwwroot/assets/js/businessScripts/assetsCheckout.js"></script>
 
-  <%--  <script src="/wwwroot/assets/js/businessScripts/locationCombo.js"></script>--%>
+    <%--  <script src="/wwwroot/assets/js/businessScripts/locationCombo.js"></script>--%>
 </asp:Content>

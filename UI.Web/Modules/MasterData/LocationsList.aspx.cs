@@ -155,6 +155,7 @@ namespace UI.Web.Modules.MasterData
                     obj.LocationNameEn = txttitleEn.Text;
                     obj.LocationNameAr = txttitleAr.Text;
                     obj.LocationRefCode = txtFinRefCode.Text;
+                    obj.City = txtCity.Text;
                     obj.LocationParentId = ZeroIntergerIFNull(LstLocationParent.SelectedValue);
                     obj.LocationType = ZeroIntergerIFNull(lstLocationType.SelectedValue);
                     obj.OrgChartRefCode = ZeroIntergerIFNull(gets(Request.QueryString["entityId"]));
@@ -169,6 +170,7 @@ namespace UI.Web.Modules.MasterData
                     obj.LocationNameEn = txttitleEn.Text;
                     obj.LocationNameAr = txttitleAr.Text;
                     obj.LocationRefCode = txtFinRefCode.Text;
+                    obj.City = txtCity.Text;
                     obj.LocationType = ZeroIntergerIFNull(lstLocationType.SelectedValue);
                     obj.LocationParentId = ZeroIntergerIFNull(LstLocationParent.SelectedValue);
                     if (ZeroIntergerIFNull(gets(Request.QueryString["entityId"]))!=0)
@@ -261,6 +263,8 @@ namespace UI.Web.Modules.MasterData
                 txttitleEn.Text = gets(objList.LocationNameEn);
                 txttitleAr.Text = gets(objList.LocationNameAr);
                 txtFinRefCode.Text = gets(objList.LocationRefCode);
+                txtCity.Text = gets(objList.City);
+
 
                 lstLocationType.SelectedValue= gets(objList.LocationType);
 
@@ -275,6 +279,7 @@ namespace UI.Web.Modules.MasterData
             txttitleEn.Text = "";
             txttitleAr.Text = "";
             txtFinRefCode.Text = "";
+            txtCity.Text = "";
             hdnSelectedEditNode.Value = "";
 
             ViewState["itemID"] = 0;

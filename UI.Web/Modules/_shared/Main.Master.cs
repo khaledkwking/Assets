@@ -111,7 +111,7 @@ namespace UI.Web.Modules._shared
                 //dbErrorHandler.ErrorMessage = exp.Message;
                 //objLogController.LogErrordetails(CommonProperties.User, dbErrorHandler, Request.AppRelativeCurrentExecutionFilePath + ".Page_Load", Request.ServerVariables["LOGON_USER"] + " - " + Request.UserHostAddress);
             }
-        }
+            }
         #endregion
 
         #region "Local Methods"
@@ -138,7 +138,14 @@ namespace UI.Web.Modules._shared
             string _out = "";
 
 
-
+            if (ShowSystem("7"))
+            {//OutBound
+                _out += " <li class='nk-menu-item'>";
+                _out += " <a href='#' class='nk-menu-link nk-menu-switch' data-target='navDashboards'>";
+                _out += " <span class='nk-menu-icon'><em class='icon ni ni-growth'></em></span>";
+                _out += "</a>";
+                _out += "</li>";
+            }
             if (ShowSystem("3"))
             {//Inbound
                 _out += " <li class='nk-menu-item'>";
@@ -199,6 +206,24 @@ namespace UI.Web.Modules._shared
         {
             StringBuilder strmenu = new StringBuilder();
             // /************************New Menu**************************/
+
+            if (ShowSystem("7"))
+            {
+                strmenu.Append(("<div class='nk-menu-content' data-content='navDashboards'>"));
+                strmenu.Append(("<h5 class='title'>" + Resources.Pages.Dashboard + "</h5>"));
+                strmenu.Append(("<ul class='nk-menu'>"));
+                if (ShowPage("dashboard.aspx"))
+                {
+                    strmenu.Append(("<li class='nk-menu-item'>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/dashboard/dashboard.aspx' class='nk-menu-link'>"));
+                    strmenu.Append((" <span class='nk-menu-text'>" + Resources.Pages.Dashboard + "</span>"));
+                    strmenu.Append(("</a>"));
+                    strmenu.Append(("</li>"));
+                }
+                strmenu.Append(("</ul>"));
+                strmenu.Append(("</div>"));
+            }
+
             if (ShowSystem("2"))
             {//Master
 
@@ -225,7 +250,7 @@ namespace UI.Web.Modules._shared
                     strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/OrgChartTree.aspx' class='nk-menu-link'>"));
                     strmenu.Append((" <span class='nk-menu-text'>" + Resources.Pages.orgChart + "</span>"));
                     strmenu.Append(("</a>"));
-                    strmenu.Append(("</li>"));
+                    strmenu.Append(("</li>"));    
 
 
 
@@ -579,11 +604,11 @@ namespace UI.Web.Modules._shared
 
                 if (ShowPage("AssetsTransferOut.aspx"))
                 {
-                    strmenu.Append(("<li class='nk-menu-item'>"));
-                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetsTransferOut.aspx' class='nk-menu-link'>"));
-                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-unlink-alt'></em></span><span class='nk-menu-text'>نقل تبعيات الجهات </span>"));
-                    strmenu.Append(("</a>"));
-                    strmenu.Append(("</li>"));
+                    //strmenu.Append(("<li class='nk-menu-item'>"));
+                    //strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetsTransferOut.aspx' class='nk-menu-link'>"));
+                    //strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-unlink-alt'></em></span><span class='nk-menu-text'>نقل تبعيات الجهات </span>"));
+                    //strmenu.Append(("</a>"));
+                    //strmenu.Append(("</li>"));
                 }
 
 
@@ -633,6 +658,12 @@ namespace UI.Web.Modules._shared
                     strmenu.Append(("<li class='nk-menu-item'>"));
                     strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Reports/StocktakingReport.aspx' class='nk-menu-link'>"));
                     strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-property-add'></em></span><span class='nk-menu-text'>" + Resources.Pages.StocktakingReporttitle + "</span>"));
+                    strmenu.Append(("</a>"));
+                    strmenu.Append(("</li>"));
+
+                    strmenu.Append(("<li class='nk-menu-item'>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Reports/StocktakingReport.aspx?ReportType=2' class='nk-menu-link'>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-property-add'></em></span><span class='nk-menu-text'>" + "جدول بيانات الاصول"  + "</span>"));
                     strmenu.Append(("</a>"));
                     strmenu.Append(("</li>"));
                 }

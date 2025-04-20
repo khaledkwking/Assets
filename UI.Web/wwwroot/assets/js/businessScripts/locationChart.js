@@ -38,6 +38,7 @@ function handelSelectedNode(selected_node) {
             $('#lstLocationType').val(objData.LocationType).change();
             $('#LstLocationParent').val(objData.LocationParentId).change();
             $('#txtFinRefCode').val(objData.LocationRefCode);
+            $('#txtCity').val(objData.City);
             
         },
         error: function (request, status, error) {

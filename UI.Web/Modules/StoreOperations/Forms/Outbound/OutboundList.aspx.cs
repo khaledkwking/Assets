@@ -89,7 +89,8 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
             {
 
 
-                string script = FormatpopupErrorMSG(Resources.Alerts.SorryDeleteDataFailed + ex.Message.ToString(), "1");
+                //string script = FormatpopupErrorMSG(Resources.Alerts.SorryDeleteDataFailed + ex.Message.ToString(), "1");
+                string script = FormatpopupErrorMSG("لا يمكن حذف هذا الطلب لأنه مرتبط بعناصر أخرى في النظام.", "1");
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
             }
 

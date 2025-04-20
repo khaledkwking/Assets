@@ -26,6 +26,7 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> MigrationRef { get; set; }
         public Nullable<int> MigrationRef1 { get; set; }
         public Nullable<bool> AllowInbound { get; set; }
+        public string City { get; set; }
     
         public virtual D_LocationType D_LocationType { get; set; }
     }

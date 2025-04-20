@@ -13,32 +13,37 @@
 
             var txt = document.getElementById("<%=txtSerial.ClientID %>")
             if (txt.value == "") {
-                Swal.fire("Please, Enter Serial");
+                Swal.fire("من فضلك، أدخل رقم المسلسل");
                 txt.focus();
                 return false;
             }
-
+            var txt = document.getElementById("<%=txtRefNo.ClientID %>")
+            if (txt.value == "") {
+                Swal.fire("من فضلك، أدخل رقم المرجع");
+                txt.focus();
+                return false;
+            }
+            
 
             var txt = document.getElementById("<%=txtTransDate.ClientID %>")
             if (txt.value == "") {
-                Swal.fire("Please, Enter TransDate");
+                Swal.fire("من فضلك، أدخل تاريخ الطلب");
                 txt.focus();
                 return false;
             }
             var txt = document.getElementById("<%=lstOutboundTypeCode.ClientID %>")
-            if (txt.value == "") {
-                Swal.fire("Please, select Outbound Type");
+            if (txt.value == "" || txt.value == "0") {
+                Swal.fire("من فضلك، اختر نوع طلب الصرف");
                 txt.focus();
                 return false;
             }
 
             var txt = document.getElementById("<%=lstOwnerLocationCode.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
-                Swal.fire("Please, Select store  ");
+                Swal.fire("من فضلك، اختر المخزن ");
                 txt.focus();
                 return false;
             }
-
 
 
             return true;
@@ -62,7 +67,7 @@
 
             var txt = document.getElementById("<%=txtQty.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
-                Swal.fire("Please, Enter Item Qty");
+                Swal.fire("من فضلك، أدخل الكمية");
                 txt.focus();
                 return false;
             }
@@ -74,7 +79,7 @@
             }
 
             if (parseFloat(txtbalance.value) < parseFloat(txt.value)) {
-                Swal.fire("Sorry ,No balance available");
+                Swal.fire("آسف، لا يوجد رصيد متاح.");
                 txt.focus();
                 return false;
             }
@@ -82,6 +87,7 @@
 
             var txt = document.getElementById("<%=lstStatusCode.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
+                lstStatusCode
                 Swal.fire("Please, Select item status");
                 txt.focus();
                 return false;

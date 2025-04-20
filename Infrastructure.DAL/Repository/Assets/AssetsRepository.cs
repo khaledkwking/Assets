@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using DomainInterface;
 using Infrastructure.DAL.Model.DB;
@@ -624,7 +625,132 @@ namespace Infrastructure.DAL
                 return result.ToList<view_CustodyList>();
             }
         }
+        public List<view_CustodyList> getCustodyList()
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.view_CustodyList
+                     where obj.OrgChartRefCode != null && obj.EmpRefCode != null // Ensure these are properties of the object
+                     select obj);
 
+                return result.ToList<view_CustodyList>();
+            }
+        }
+        public List<view_CustodyList> getCustodyListPaged(int pageNumber, int pageSize, string Parent, string Main, string Sub , string ORG)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                // Calculate the number of records to skip based on the current page number
+                int skip = (pageNumber - 1) * pageSize;
+
+                if (Sub == "")
+                    Sub = "0";
+
+                if (Parent == "--- اختر ---")
+                    Parent = "0";
+                if (Main == "--- اختر ---") 
+                    Main = "0";
+
+                if (Sub == "--- اختر ---") 
+                    Sub = "0";
+
+                if (ORG == "--- اختر ---")
+                    ORG = "0";
+                // Fetch the paged data with filtering and sorting
+                //var result = (from obj in DC.view_CustodyList
+                //              where obj.OrgChartRefCode != null && obj.EmpRefCode != null // Ensure these are properties of the object
+                //              orderby obj.EmpName // Sort by EmpName
+                //              select obj)
+                //             .Skip(skip) // Skip the records for previous pages
+                //             .Take(pageSize) // Take only the records for the current page
+                //             .ToList();
+
+                //return result;
+                DC.Database.CommandTimeout = 180; // Set timeout to 3 minutes
+
+                var result = DC.view_CustodyList.AsNoTracking()
+                  .Where(obj =>
+                      (Parent != "0" ? obj.ItemsMainParentCategoryTitleAr == Parent : 1 == 1) &&
+                      (Main != "0" ?  obj.ItemsParentCategoryTitleAr == Main : 1==1) &&
+                      (Sub != "0" ? obj.ItemsCategoryTitleAr == Sub : 1==1) &&
+                      (ORG != "0" ? obj.ORG_NAME == ORG : 1 == 1) &&
+                      obj.OrgChartRefCode != null && obj.EmpRefCode != null
+                  )
+                  .OrderBy(obj => obj.EmpName)
+                  .Skip(skip)
+                  .Take(pageSize)
+                
+                  .ToList();
+
+
+                return result;
+            }
+        }
+        
+        public int GetCustodyListCount(string Parent, string Main, string Sub)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                if (Sub == "")
+                    Sub = "0";
+
+                if (Parent == "--- اختر ---")
+                    Parent = "0";
+                if (Main == "--- اختر ---")
+                    Main = "0";
+
+                if (Sub == "--- اختر ---")
+                    Sub = "0";
+
+                // Count the total number of records
+                //return DC.view_CustodyList.Count();
+
+                var result = DC.view_CustodyList.AsNoTracking()
+                 .Where(obj =>
+                     (Parent != "0" ? obj.ItemsMainParentCategoryTitleAr == Parent : 1 == 1) &&
+                     (Main != "0" ? obj.ItemsParentCategoryTitleAr == Main : 1 == 1) &&
+                     (Sub != "0" ? obj.ItemsCategoryTitleAr == Sub : 1 == 1) &&
+                     obj.OrgChartRefCode != null && obj.EmpRefCode != null
+                 )
+
+                 .ToList();
+
+                return result.Count;
+            }
+        }
+        public List<view_CustodyList> GetCustodyListWithFilter(string Parent, string Main, string Sub)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                if (Sub == "")
+                    Sub = "0";
+
+                if (Parent == "--- اختر ---")
+                    Parent = "0";
+                if (Main == "--- اختر ---")
+                    Main = "0";
+
+                if (Sub == "--- اختر ---")
+                    Sub = "0";
+
+                // Count the total number of records
+                //return DC.view_CustodyList.Count();
+
+                var result = DC.view_CustodyList.AsNoTracking()
+                 .Where(obj =>
+                     (Parent != "0" ? obj.ItemsMainParentCategoryTitleAr == Parent : 1 == 1) &&
+                     (Main != "0" ? obj.ItemsParentCategoryTitleAr == Main : 1 == 1) &&
+                     (Sub != "0" ? obj.ItemsCategoryTitleAr == Sub : 1 == 1) &&
+                     obj.OrgChartRefCode != null && obj.EmpRefCode != null
+                 )
+
+                 .ToList();
+
+                return result;
+            }
+        }
         #endregion "Reporting"
     }
+    
 }

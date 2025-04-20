@@ -83,7 +83,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group" style="display: none">
+                            <div class="form-group">
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemRefCode") %></label>
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtItemRefCode" class="form-control"></asp:TextBox>

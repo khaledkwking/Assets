@@ -9,6 +9,8 @@
     <meta name="author" content="CMGS">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="CMGS Assets Management">
+    <%--<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self';">--%>
+
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="/wwwroot/assets/images/favicon.png">
     <!-- Page Title  -->
@@ -152,11 +154,15 @@
                                 <!-- Menu -->
                                 <ul class="nk-menu apps-menu">
 
-                                    <li class="nk-menu-item">
+                                   <%-- <li class="nk-menu-item">
                                         <a href="#" class="nk-menu-link nk-menu-switch" data-target="navDashboards">
-                                            <span class="nk-menu-icon"><em class="icon ni ni-growth"></em></span>
+                                            <span class="nk-menu-icon">
+                                                <em class="icon ni ni-growth">
+                                                 </em>
+
+                                            </span>
                                         </a>
-                                    </li>
+                                    </li>--%>
                                     <%=FillPermittedModules() %>
                                 </ul>
                             </div>
@@ -208,15 +214,15 @@
             <div class="nk-sidebar-main is-light">
                 <div class="nk-sidebar-inner" data-simplebar>
                     <div class="nk-menu-content menu-active" data-content="navDashboards">
-                        <h5 class="title">لوحة المؤشرات</h5>
+                       <%-- <h5 class="title">لوحة المؤشرات</h5>
                         <ul class="nk-menu">
-                            <%--  <li class="nk-menu-item">
+                              <li class="nk-menu-item">
                                 <a href="html/index.html" class="nk-menu-link">
                                     <span class="nk-menu-icon"><em class="icon ni ni-dashboard-fill"></em></span>
                                     <span class="nk-menu-text">Default Dashboard</span>
                                 </a>
-                            </li>--%>
-                        </ul>
+                            </li>
+                        </ul>--%>
                         <!-- .nk-menu -->
                     </div>
 

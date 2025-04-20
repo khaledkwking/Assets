@@ -40,7 +40,6 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<D_ItemsCategory> D_ItemsCategory { get; set; }
         public virtual DbSet<D_ItemUsedStatus> D_ItemUsedStatus { get; set; }
         public virtual DbSet<D_JobTitle> D_JobTitle { get; set; }
-        public virtual DbSet<D_Locations> D_Locations { get; set; }
         public virtual DbSet<D_LocationType> D_LocationType { get; set; }
         public virtual DbSet<D_QtyUnit> D_QtyUnit { get; set; }
         public virtual DbSet<D_VendorData> D_VendorData { get; set; }
@@ -74,7 +73,6 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<view_ItemCard> view_ItemCard { get; set; }
         public virtual DbSet<view_AssetsEventTrackingHeader> view_AssetsEventTrackingHeader { get; set; }
         public virtual DbSet<AssetsTransferOut> AssetsTransferOuts { get; set; }
-        public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
         public virtual DbSet<view_AssetEventLog> view_AssetEventLog { get; set; }
         public virtual DbSet<view_AssetsInventory> view_AssetsInventory { get; set; }
         public virtual DbSet<view_AssetsList> view_AssetsList { get; set; }
@@ -83,6 +81,8 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<Security_pr_admin> Security_pr_admin { get; set; }
         public virtual DbSet<Security_pr_adminPermittedOrgUnits> Security_pr_adminPermittedOrgUnits { get; set; }
         public virtual DbSet<AssetsEventTrackingHeader> AssetsEventTrackingHeaders { get; set; }
+        public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
+        public virtual DbSet<D_Locations> D_Locations { get; set; }
         public virtual DbSet<view_CustodyList> view_CustodyList { get; set; }
     
         [DbFunction("AssetsEntitiesNew", "getChildNodeParentList")]

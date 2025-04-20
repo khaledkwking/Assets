@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
@@ -20,7 +21,7 @@ namespace UI.Web.Modules.Dashboard
         {
             if(!IsPostBack)
             {
-                BindData();
+               // BindData();
             }
         }
         private void BindData()
@@ -36,6 +37,35 @@ namespace UI.Web.Modules.Dashboard
                 lblEmpAssets.Text = AssetsH.Where(o => o.EmpRefCode != 0 && o.EmpRefCode != null).Count().ToString();
                 lblOrgAssets.Text = AssetsH.Where(o => o.EmpRefCode == 0 || o.EmpRefCode == null).Count().ToString();
                 lblNoEmpAssets.Text = AssetsH.Where(o => !string.IsNullOrEmpty(o.EmpName) && o.EmpName.Contains("بدون")).Count().ToString();
+            }
+        }
+        [WebMethod]
+        public static string GetChartDataCat()
+        {
+
+            using (AssetsEntitiesNew context = new AssetsEntitiesNew())
+            {
+                var validParentIds = new List<int> { 64, 66, 67 };
+
+                //var chartData = en.getca();
+                var chartData = (from vc in context.view_CustodyList
+                              join d in context.D_ItemsCategory on vc.ItemCategoryId equals d.Code
+                              join parent in context.D_ItemsCategory on d.Cat_ParentId equals parent.Code into parentJoin
+                              from parent in parentJoin.DefaultIfEmpty()
+                              join grandParent in context.D_ItemsCategory on parent.Cat_ParentId equals grandParent.Code into grandParentJoin
+                              from grandParent in grandParentJoin.DefaultIfEmpty()
+                                 where grandParent.Code != null && validParentIds.Contains(parent.Cat_ParentId ?? 0)
+
+                                 group vc by new { parent.Code, parent.TitleAr } into grouped
+                              select new
+                              {
+                                  ParentId = grouped.Key.Code,
+                                  ParentTitleAr = grouped.Key.TitleAr,
+                                  AssetCount = grouped.Count(),
+                                  AssetAmount = grouped.Sum(vc => vc.ItemBasePrice)
+                              })
+              .OrderBy(x => x.ParentId);
+                return JsonConvert.SerializeObject(chartData.ToList());
             }
         }
         [WebMethod]

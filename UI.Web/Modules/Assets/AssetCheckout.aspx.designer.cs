@@ -87,6 +87,24 @@ namespace UI.Web.Modules.Assets
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkPrintRequest;
 
         /// <summary>
+        /// viewAssetsInventoryPrint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl viewAssetsInventoryPrint;
+
+        /// <summary>
+        /// lnkAssetsInventoryPrint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkAssetsInventoryPrint;
+
+        /// <summary>
         /// txtFilterCode control.
         /// </summary>
         /// <remarks>

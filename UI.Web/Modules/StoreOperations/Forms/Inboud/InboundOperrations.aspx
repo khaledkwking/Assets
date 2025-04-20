@@ -38,11 +38,16 @@
                 return false;
             }
 
-
+            
+            var txt = document.getElementById("<%=txtDeliveryOrderNo.ClientID %>")
+            if (txt.value == "") {
+                Swal.fire("يرجى إدخال رقم طلب التسليم");
+                return false;
+            }
 
             var txt = document.getElementById("<%=txtRefNo.ClientID %>")
             if (txt.value == "") {
-                Swal.fire("يرجى إدخال رقم طلب التسليم");
+                Swal.fire("يرجى إدخال رقم المرجع");
                 return false;
             }
 

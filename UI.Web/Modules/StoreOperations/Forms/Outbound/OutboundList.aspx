@@ -245,14 +245,14 @@
                                                     <a href="OutboundOperations.aspx?t=<%#Eval("TypeCode") %>&id=<%#Eval("code") %>" class="btn btn-default btn-xs"><i class="icon ni ni-edit"></i>&nbsp; <%=GetGlobalResourceObject("pages","RequestDetails") %> </a>
                                                 </li>
 
-                                                <li>
+                                                <%--<li>
                                                     <a href="../reportsOutbound.aspx?t=<%#Eval("TypeCode") %>&id=<%#Eval("code") %>" class="btn btn-default btn-xs"><i class="icon ni ni-printer"></i>&nbsp; <%=GetGlobalResourceObject("pages","PrintCustosy") %> </a>
                                                 </li>
                                                  
 
                                                 <li>
                                                     <a href="OutboundItemDelivery.aspx?t=<%#Eval("TypeCode") %>&serial=<%#Eval("serial") %>" class="btn btn-default btn-xs"><i class="icon ni ni-wallet-out"></i>&nbsp; <%=GetGlobalResourceObject("pages","OutboundItemDelivery") %> </a>
-                                                </li>
+                                                </li>--%>
 
 
                                             </ul>

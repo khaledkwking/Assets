@@ -21,51 +21,52 @@ namespace UI.Web.Core
         static internal bool isAuthenticationCookie()
         {
 
-            //System.Web.HttpCookie C =
-            //    Request.Cookies[System.Web.Security.FormsAuthentication.FormsCookieName];
-            ////  C.Domain = "example.com";
-            //if (((C != null)))
-            //{
-            //    C.Expires = DateTime.Now.AddDays(-1);
-            //    Response.Cookies.Add(C);
-            //}
-
             AdminRepository objRepository = new AdminRepository();
-            bool Exists = false;
-            string cookieName = System.Web.Security.FormsAuthentication.FormsCookieName;
-            //if (((cookieName != null)))
-            //{
-            //    cookieName.Expires = DateTime.Now.AddDays(-1);
-            //    Response.Cookies.Add(cookieName);
-            //}
-            HttpCookie authCookie = null;
-             authCookie = HttpContext.Current.Request.Cookies["WHMPORTAL"];
-            if (((authCookie != null)))
-            {
-                Security_pr_admin objUser = MemberShipConstantUI.CurrentUser;
+            Security_pr_admin objUser = MemberShipConstantUI.CurrentUser;
 
-                if (objUser == null)
+            if (MemberShipConstantUI.CurrentUser == null)
+            {
+
+                if (objUser == null && HttpContext.Current.Request.Form["calleruser"] != null)
                 {
-                    string strUserName = authCookie["WHMPORTAL"];
-                    objUser = objRepository.GetMemberShipByName(strUserName);
-                    //PermissionCFactory.getController().FindUserByName(strUserName);
+                    objUser = objRepository.GetMemberShipById(int.Parse(HttpContext.Current.Request.Form["calleruser"]));
                     MemberShipConstantUI.CurrentUser = objUser;
+                    return true; //Featch User Data and Returen User Status
                 }
 
-                // There is authentication cookie.
-                if (!authCookie.Value.Trim().Equals("") && !authCookie.Value.Trim().Equals(null))
+
+                HttpCookie authCookie = HttpContext.Current.Request.Cookies["CMGS_CON"];
+                if (authCookie != null && !authCookie.Value.Trim().Equals("") && !authCookie.Value.Trim().Equals(null))
                 {
-                    Exists = true;
-                }
+                    string strUserName = authCookie["CMGS_CON"];
+                    objUser = objRepository.GetMemberShipByName(strUserName);
+                    MemberShipConstantUI.CurrentUser = objUser;
+                    return true;
 
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
-            {
-                Exists = false;
-            }
-            return Exists;
+            return true;
         }
 
+        public static bool ADValidUser(string AdUserName)
+        {
+            //AdminRepository objRepository = IoC.Resolve<AdminRepository>();
+            AdminRepository objRepository = new AdminRepository();
+            bool blnResult = false;
+
+            Security_pr_admin user = objRepository.GetMemberShipByAD(AdUserName);
+            if (user != null && user.IsActive == true)
+            {
+                MemberShipConstantUI.CurrentUser = user;
+                blnResult = true;
+            }
+
+            return blnResult;
+        }
         public static string getHashPassword(string strPassword)
         {
             return FormsAuthentication.HashPasswordForStoringInConfigFile(strPassword, "md5");

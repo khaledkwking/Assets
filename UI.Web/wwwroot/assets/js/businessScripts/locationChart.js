@@ -36,7 +36,12 @@ function handelSelectedNode(selected_node) {
             $('#txttitleEn').val(objData.LocationNameEn);
             $('#txttitleAr').val(objData.LocationNameAr);
             $('#lstLocationType').val(objData.LocationType).change();
-            $('#LstLocationParent').val(objData.LocationParentId).change();
+
+            // Set the value first, then disable
+            $('#LstLocationParent')
+                .val(objData.LocationParentId)
+                .change()
+                .prop('disabled', true); // disable after selection
             $('#txtFinRefCode').val(objData.LocationRefCode);
             $('#txtCity').val(objData.City);
             
@@ -81,6 +86,10 @@ function fillLocationChart() {
                 "plugins": ["types", , "search",
                     "state", "types", "wholerow"]
             }).bind('ready.jstree', function (e, data) {
+                $("#hdnSelectedNode").val(0);
+                $('#hdnSelectedEditNode').val(0);
+                $('#LstLocationParent').val(0).change().prop('disabled', true);
+                $('#locationTree').jstree('deselect_all')
                 $('#locationTree').jstree('close_all')
             }).bind('search.jstree', function (e, data) {
                 if ($("#treeSearch").val() !== "") {
@@ -94,8 +103,20 @@ function fillLocationChart() {
                 var parentId = selected_node.original.parent;
                 
                 $('.selectedNode').text(selected_node.original.text);
-                $('#LstLocationParent').val(nodeId).change();
+                $('#lstLocationType').val(nodeId).change();
+
+                // Set the value first, then disable
+                $('#LstLocationParent')
+                    .val(selected_node.original.id)
+                    .change()
+                    .prop('disabled', true);
+
                 $("#hdnSelectedNode").val(nodeId);
+                $('#hdnSelectedEditNode').val(0);
+                $('#txttitleEn').val('');
+                $('#txttitleAr').val('');
+                $('#txtFinRefCode').val('');
+                $('#txtCity').val('');
 
             }).bind('dblclick.jstree', function (e, data) {
                 var selected_node = $('#locationTree').jstree().get_selected(true)[0];
@@ -128,7 +149,13 @@ function fillLocationChart() {
 
 }
 
-
+function clearTreeSelection() {
+    var tree = $('#locationTree').jstree(true);
+    if (tree) {
+        tree.deselect_all();
+      
+    }
+}
 function getbartype(percentageValue) {
     if (percentageValue < 50) {
         return 'progress-bar-info';

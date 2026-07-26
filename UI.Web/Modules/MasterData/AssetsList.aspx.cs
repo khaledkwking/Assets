@@ -75,8 +75,8 @@ namespace UI.Web.Modules.MasterData
         #region "Fill Information"
         private void FillGrid()
         {
-            var objList = objRepository.getAssetsList(txtFilterCode.Text,NullDateifEmpty( txtTransDate.Text), 
-                NullDateifEmpty( txtTransactionDateTo.Text), ZeroIntergerIFNull( lstFilterVendor.SelectedValue),
+            var objList = objRepository.getAssetsList(txtFilterCode.Text,NullDateifEmptyNew( txtTransDate.Text), 
+                NullDateifEmptyNew( txtTransactionDateTo.Text), ZeroIntergerIFNull( lstFilterVendor.SelectedValue),
                ZeroIntergerIFNull( lstFilterSatus.SelectedValue), ZeroIntergerIFNull(lstFilterAction.SelectedValue),
                ZeroIntergerIFNull(lstFilterSatus.SelectedValue), ZeroIntergerIFNull( lstFilterItem.SelectedValue),  ZeroIntergerIFNull(lstfilterEmployee.SelectedValue), ZeroIntergerIFNull(lstFilterLocation.SelectedValue)) ;
             lblcount.Text = (Resources.Utilities.foundTotal + (objList.Count.ToString()).ToString() + Resources.Utilities.records);

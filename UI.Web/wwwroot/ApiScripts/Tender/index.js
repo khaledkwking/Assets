@@ -34,8 +34,21 @@ function DrawCat(val) {
                 },
                 title: {
                     text: "التصنيفات",
-                    font: { size: 20, family: 'DroidNaskh' },
-                    subtitle: { text: "اجمالي عدد العهد لكل تصنيف" }
+                    //font: { size: 20, family: 'Cairo' },
+                    font: {
+                        color: "#000000", // Set subtitle color to black
+                        family: 'DroidNaskh',
+                        size: 30
+                    },
+                    subtitle: {
+                        text: "اجمالي عدد العهد لكل تصنيف",
+                        font: {
+                            color: "#000000", // Set subtitle color to black
+                            family: 'DroidNaskh',
+                            size: 20
+                        }
+                    },
+                    
                 },
                 palette: ["#136EA5", "#9313A5", "#A54A13", "#24A513"],
                 series: [{
@@ -169,8 +182,19 @@ function DrawAssetsType(val) {
                 },
                 title: {
                     text: "العهد",
-                    font: { size: 20, family: 'DroidNaskh' },
-                    subtitle: { text: "اجمالي عدد العهد " }
+                    font: {
+                        color: "#000000", // Set subtitle color to black
+                        family: 'DroidNaskh',
+                        size: 30
+                    },
+                    subtitle: {
+                        text: "اجمالي عدد العهد ",
+                        font: {
+                            color: "#000000", // Set subtitle color to black
+                            family: 'DroidNaskh',
+                            size: 20
+                        },
+                    }
                 },
                 palette: ["#136EA5", "#9313A5", "#A54A13", "#24A513"],
                 series: [{

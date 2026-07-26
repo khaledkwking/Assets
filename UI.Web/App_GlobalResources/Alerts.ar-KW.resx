@@ -255,6 +255,9 @@
   <data name="SalaryGeneratedSuceessfully" xml:space="preserve">
     <value>تم اصدار الرواتب بنجاح</value>
   </data>
+  <data name="SorryAnErrorOccurred" xml:space="preserve">
+    <value>حدث خطا اثناء التحميل</value>
+  </data>
   <data name="SorryDeleteDataFailed" xml:space="preserve">
     <value>عفوا ،خطأ فى حذف البيانات</value>
   </data>

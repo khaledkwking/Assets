@@ -47,5 +47,18 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<System.DateTime> OperationDate { get; set; }
         public string PurchasingPower { get; set; }
         public string Category { get; set; }
+        public Nullable<bool> CountableFlag { get; set; }
+        public Nullable<bool> OrganizedFlag { get; set; }
+        public string PictureName { get; set; }
+        public Nullable<int> Item_StateId { get; set; }
+        public Nullable<int> Age { get; set; }
+        public Nullable<int> OutFlag { get; set; }
+        public Nullable<int> TransFlag { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> UpdateOn { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     }
 }

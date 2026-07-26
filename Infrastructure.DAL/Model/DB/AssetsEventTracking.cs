@@ -14,9 +14,15 @@ namespace Infrastructure.DAL.Model.DB
     
     public partial class AssetsEventTracking
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AssetsEventTracking()
+        {
+            this.AssetsStores = new HashSet<AssetsStore>();
+        }
+    
         public int Code { get; set; }
         public Nullable<int> RequestHeaderCode { get; set; }
-        public Nullable<int> AssetCode { get; set; }
+        public Nullable<long> AssetCode { get; set; }
         public Nullable<System.DateTime> ActionDate { get; set; }
         public Nullable<System.DateTime> DueDate { get; set; }
         public Nullable<int> actionId { get; set; }
@@ -35,10 +41,14 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<double> RequestItemPrice { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> ItemUsedStatus { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
     
         public virtual AssetsAvailabilityStatu AssetsAvailabilityStatu { get; set; }
         public virtual AssetsEventTrackingHeader AssetsEventTrackingHeader { get; set; }
         public virtual AssetsTrackingAction AssetsTrackingAction { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AssetsStore> AssetsStores { get; set; }
         public virtual D_ItemCard D_ItemCard { get; set; }
     }
 }

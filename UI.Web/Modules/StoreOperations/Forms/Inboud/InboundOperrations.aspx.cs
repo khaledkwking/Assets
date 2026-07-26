@@ -770,36 +770,43 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
             try
             {
                 InboundAttachment obj = new InboundAttachment();
-                if (ViewState["AttachmentitemID"].Equals("0"))
-                {//Save
+                if (ViewState["itemID"].Equals("0")==false)
+                {
+                    if (ViewState["AttachmentitemID"].Equals("0"))
+                    {//Save
 
 
-                    obj.InboundCode = ZeroIntergerIFNull(ViewState["itemID"].ToString());
-                    obj.TransDate = DateTime.Now;
-                    obj.Notes = txtAttachmentNotes.Text;
-                    // obj.FileName = ReadSession("AttachfileName").ToString();
-                    obj.FileName = fileName;
-                    obj.AttachmentTypCode = ZeroIntergerIFNull(lstAttachmentType.SelectedValue);
+                        obj.InboundCode = ZeroIntergerIFNull(ViewState["itemID"].ToString());
+                        obj.TransDate = DateTime.Now;
+                        obj.Notes = txtAttachmentNotes.Text;
+                        // obj.FileName = ReadSession("AttachfileName").ToString();
+                        obj.FileName = fileName;
+                        obj.AttachmentTypCode = ZeroIntergerIFNull(lstAttachmentType.SelectedValue);
 
-                    objRepository.AddAttachments(obj);
+                        objRepository.AddAttachments(obj);
+                    }
+                    else
+                    { //Update 
+                        obj = objRepository.GetAttachmentDeatils(ZeroIntergerIFNull(ViewState["AttachmentitemID"].ToString()));
+
+                        obj.InboundCode = ZeroIntergerIFNull(ViewState["itemID"].ToString());
+                        obj.Notes = txtAttachmentNotes.Text;
+                        //  obj.FileName = ReadSession("AttachfileName").ToString();
+                        if (fileName != "")
+                        {
+                            obj.FileName = fileName;
+                        }
+                        obj.AttachmentTypCode = ZeroIntergerIFNull(lstAttachmentType.SelectedValue);
+
+                        objRepository.UpdateAttachment(obj);
+
+                    }
                 }
                 else
-                { //Update 
-                    obj = objRepository.GetAttachmentDeatils(ZeroIntergerIFNull(ViewState["AttachmentitemID"].ToString()));
-
-                    obj.InboundCode = ZeroIntergerIFNull(ViewState["itemID"].ToString());
-                    obj.Notes = txtAttachmentNotes.Text;
-                    //  obj.FileName = ReadSession("AttachfileName").ToString();
-                    if (fileName != "")
-                    {
-                        obj.FileName = fileName;
-                    }
-                    obj.AttachmentTypCode = ZeroIntergerIFNull(lstAttachmentType.SelectedValue);
-
-                    objRepository.UpdateAttachment(obj);
-
+                {
+                    string scriptss = "Swal.fire('يرجى ادخال بيانات الطلب و حفظها اولا ');";
+                    ClientScript.RegisterStartupScript(this.GetType(), "alertVendor", scriptss, true);
                 }
-
                 ClearAttachmentForm();
                 FillInboundAttachment();
                 script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");

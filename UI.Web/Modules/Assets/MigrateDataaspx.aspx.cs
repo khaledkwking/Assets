@@ -93,7 +93,7 @@ namespace UI.Web.Modules.Assets
                     {
                         AssetsEventTracking obj = new AssetsEventTracking();
 
-                        int? Code = null;
+                        long? Code = null;
                         var QCard= en.D_ItemCard.Where(o => o.REFID == itemD.CatSub_Id).ToList();
                         if(QCard.Count>0)
                         {
@@ -178,7 +178,7 @@ namespace UI.Web.Modules.Assets
                     {
                         AssetsEventTracking obj = new AssetsEventTracking();
 
-                        int? Code = null;
+                        long? Code = null;
                         var QCard = en.D_ItemCard.Where(o => o.REFID == itemD.CatSub_Id).ToList();
                         if (QCard.Count > 0)
                         {

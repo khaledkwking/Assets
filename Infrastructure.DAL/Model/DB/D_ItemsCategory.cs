@@ -30,6 +30,13 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> RefSubID { get; set; }
         public Nullable<double> ServicePeriod { get; set; }
         public Nullable<double> ScrapPrice { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<System.DateTime> UpdateOn { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<D_ItemCard> D_ItemCard { get; set; }

@@ -30,7 +30,7 @@
 
         <div class="card card-stretch" id="Div1" runat="server">
             <div class="card-inner-group">
-                <div class="card-inner" data-select2-id="22">
+                <div class="card-inner" data-select2-id="22" style="display:none">
                     <div class="card-title-group" data-select2-id="21">
                         <div class="card-title">
                             <h5 class="title"></h5>

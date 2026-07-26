@@ -7,12 +7,17 @@
             txt = document.getElementById("<%=lstadminType.ClientID %>")
             if (txt.value == "0") {
 
-                Swal.fire("Please select User Type");
+                Swal.fire("يرجى اختيار نوع المستخدم");
                 txt.focus();
                 return false;
             }
-
-            var txt = document.getElementById("<%=txtfullName.ClientID %>")
+            var txt = document.getElementById("<%=lstActivDirectoryUser.ClientID %>")
+            if (txt.value == "") {
+                Swal.fire("يرجى اختيار اسم المستخدم");
+                txt.focus();
+                return false;
+            }
+           <%-- var txt = document.getElementById("<%=txtfullName.ClientID %>")
             if (txt.value == "") {
                 Swal.fire("Please select User FullName");
                 txt.focus();
@@ -38,7 +43,7 @@
                 Swal.fire("Please select user Mobile");
                 txt.focus();
                 return false;
-            }
+            }--%>
 
             return true;
         }
@@ -97,49 +102,8 @@
     <div class="nk-block">
 
            <div class="row">
-               <div class="col-md-3 treecontainer">
-
-                                        <div class="panel panel-yellow" style="min-height: 70vh">
-
-                                            <div class="p-1 " style="background-color: #0C476B;margin-bottom:20px">
-                                                <div class="d-flex">
-                                                    <div class="align-self-center me-2">
-                                                        <img src="/wwwroot/assets/images/logo/KuwaitLogo.png" class="avatar-xs rounded-circle" width="50px" alt="avatar-2">
-                                                    </div>
-                                                    <div class="flex-1" style="padding-top: 10px; padding-right: 10px;">
-                                                        <h5 class="font-size-15 mb-1" style="color: #E4DAC1;font-size:16px;">الأمانة العامة لمجلس الوزراء</h5>
-                                                        <p class="text-muted text-truncate mb-0" style="line-height: 20px; font-size: 13px; color: #E4DAC1 !important;">الهيكل التنظيمي  </p>
-
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-
-                                            <%--  <div class="panel-heading clearfix">
-                                                <span class="mts"><%=GetGlobalResourceObject("pages","OrgChartTitle") %>  </span>
-                                                <div style="float: left"><a href="../Reports/OrgChartPrint.aspx" class="btn btn-dim btn-primary  btn-xs iframe75 "><i class="icon ni ni-printer"></i></a></div>
-                                            </div>--%>
-                                            <div class="panel-body" style="padding: 0px; padding-top: 0px; margin-bottom: 10px;">
-
-                                                <div class="form-control-wrap" style="margin-bottom: 20px;">
-                                                    <div class="form-icon form-icon-right">
-                                                        <em class="icon ni ni-search"></em>
-                                                    </div>
-                                                    <input type="text" class="form-control" id="treeSearch" placeholder="  بحث الهيكل التنظيمي">
-                                                </div>
-
-                                                <div id="progressbar">
-                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-
-                                                <div id="orgTree" class=""></div>
-                                            </div>
-                                        </div>
-                                    </div>
              
-               <div class="col-md-9">
+               <div class="col-md-12">
         <div class="card card-bordered" id="tblAdd" runat="server" visible="false">
             <div class="card-header border-bottom">
                 <asp:Label runat="server" ID="lblSubTitle"><%=GetGlobalResourceObject("pages","AddNewRecord") %></asp:Label>
@@ -171,15 +135,25 @@
                                     </asp:DropDownList>
                                 </div>
                             </div>
+                             <div class="form-group">
+                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","UserName") %></label>
 
-                            <div class="form-group">
+                                <div class="col-md-12">
+
+                                    <asp:DropDownList ID="lstActivDirectoryUser" runat="server" class="form-control form-select" data-search="on" AutoPostBack="false" >
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                      <div class="form-group" style="display:none">
+
                                 <label class="col-md-12 control-label" for=""> <%= GetGlobalResourceObject("pages","FullName") %></label>
 
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtfullName" placeholder="Enter Full Name" class="form-control"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="form-group">
+                     <div class="form-group" style="display:none">
+
                                 <label class="col-md-12 control-label"> <%= GetGlobalResourceObject("pages","UserName") %></label>
 
                                 <div class="col-md-12">
@@ -191,7 +165,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                      <div class="form-group" style="display:none">
+
                                 <label class="col-md-12 control-label"> <%= GetGlobalResourceObject("pages","password") %>  </label>
 
                                 <div class="col-md-12">

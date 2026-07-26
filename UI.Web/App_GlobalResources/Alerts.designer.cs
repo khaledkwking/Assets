@@ -475,6 +475,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SorryAnErrorOccurred.
+        /// </summary>
+        internal static string SorryAnErrorOccurred {
+            get {
+                return ResourceManager.GetString("SorryAnErrorOccurred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sorry, Delete Data Failed.
         /// </summary>
         internal static string SorryDeleteDataFailed {

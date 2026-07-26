@@ -82,13 +82,13 @@ namespace UI.Web.Modules.Assets
                     var objList = (List<view_AssetsList>)Session["selectedItems"];
                     if (objList.Count > 0)
                     {
-                        var current = (view_AssetsList)objRepository.getItemDetails(ZeroIntergerIFNull(e.Item.Cells[0].Text));
-                        if (objList.Any(x => x.InboubdItemId == current.InboubdItemId)) ;
-                        {
-                            CheckBox check = (CheckBox)e.Item.FindControl("chkItem");
-                            check.Checked = true;
+                        //var current = (view_AssetsList)objRepository.getItemDetails(ZeroIntergerIFNull(e.Item.Cells[0].Text));
+                        //if (objList.Any(x => x.InboubdItemId == current.InboubdItemId)) ;
+                        //{
+                        //    CheckBox check = (CheckBox)e.Item.FindControl("chkItem");
+                        //    check.Checked = true;
 
-                        }
+                        //}
                     }
 
 

@@ -170,10 +170,11 @@ function fillOrgChart() {
             }).bind('select_node.jstree', function (e, data) {
                 // var selected_node = $("#equipment_tree").jstree('get_selected');
                 var selected_node = data.node;
+                
                 //console.log("Selected Node :" + JSON.stringify(selected_node.original));
                 var nodeId = selected_node.original.id;
                 var parentId = selected_node.original.parent;
-
+                $('#hdnSelectedNode').val(nodeId);
                 //document.getElementsByTagName("hdnSelectedNode").value = nodeId;
                 //$('.selectedNode').text(selected_node.original.text);
                 //$('.parentCategory').val(nodeId).change();
@@ -186,6 +187,10 @@ function fillOrgChart() {
             }).bind('dblclick.jstree', function (e, data) {
                 var selected_node = $('#itemCategoryChart').jstree().get_selected(true)[0];
                 handelSelectedNode(selected_node.original.id);
+
+                var nodeId = selected_node.original.id;
+                $('#hdnSelectedNode').val(nodeId);
+
                 // location.href="ItemsCategory.aspx?pid=" + selected_node.original.id;
 
             })

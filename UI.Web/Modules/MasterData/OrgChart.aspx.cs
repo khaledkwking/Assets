@@ -35,7 +35,7 @@ namespace UI.Web.Modules.MasterData
                 {
                     var empList = new List<EmployeeViewModel>();
 
-                    empList = GetOraEmpList(ZeroIntergerIFNull(Request.QueryString["entityId"]));//.Where(x=>x.EMP_STATUS== "active").ToList();
+                    empList = GetOraEmpList(ZeroIntergerIFNull(Request.QueryString["entityIds"])).Where(x=>x.EMP_STATUS== "active").ToList();
 
                     if (empList != null && empList.Count > 0)
                     {

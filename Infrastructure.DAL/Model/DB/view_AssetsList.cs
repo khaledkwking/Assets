@@ -14,53 +14,59 @@ namespace Infrastructure.DAL.Model.DB
     
     public partial class view_AssetsList
     {
-        public string Serial { get; set; }
-        public Nullable<System.DateTime> TransDate { get; set; }
-        public string VendorNameEn { get; set; }
-        public string VendorNameAr { get; set; }
+        public int Code { get; set; }
+        public string groupname { get; set; }
         public string ItemRefCode { get; set; }
+        public int ItemCode { get; set; }
+        public Nullable<System.DateTime> ItemDate { get; set; }
         public string ItemNameEn { get; set; }
         public string ItemNameAr { get; set; }
-        public string ItemsCategoryTitleAr { get; set; }
-        public string ItemsCategoryTitleEn { get; set; }
-        public string FinanceRefCode { get; set; }
-        public string LastActiontitleEn { get; set; }
-        public string LastActiontitleAr { get; set; }
-        public string AvailabilityStatusEn { get; set; }
-        public string AvailabilityStatusAr { get; set; }
-        public int InboubdItemId { get; set; }
-        public Nullable<int> InboundCode { get; set; }
-        public Nullable<int> ItemCode { get; set; }
-        public string UnitRefCode { get; set; }
-        public string ItemTag { get; set; }
-        public Nullable<double> Qty { get; set; }
-        public Nullable<double> ReceivedQty { get; set; }
-        public Nullable<int> QUnitCode { get; set; }
-        public Nullable<double> EstimatedUnitCost { get; set; }
-        public Nullable<int> UnitStatus { get; set; }
-        public string Notes { get; set; }
-        public Nullable<System.DateTime> ExpireDate { get; set; }
-        public string ItemFinanceCode { get; set; }
-        public string StatusTitleAr { get; set; }
-        public string StatusTitleEn { get; set; }
-        public Nullable<int> MinQty { get; set; }
-        public string ItemImage { get; set; }
-        public Nullable<int> FromVendorCode { get; set; }
-        public Nullable<int> ItemCategoryId { get; set; }
-        public Nullable<int> LastEventTrackingId { get; set; }
-        public Nullable<System.DateTime> ActionDate { get; set; }
-        public Nullable<System.DateTime> DueDate { get; set; }
-        public Nullable<int> actionId { get; set; }
-        public Nullable<int> statusId { get; set; }
+        public Nullable<double> ItemBasePrice { get; set; }
+        public int ReceivedQty { get; set; }
+        public Nullable<int> AssetCode { get; set; }
+        public Nullable<int> RequestHeaderCode { get; set; }
+        public Nullable<System.DateTime> RequestDate { get; set; }
+        public string RequestRefCode { get; set; }
+        public Nullable<int> RequestActionType { get; set; }
+        public Nullable<int> TMonth { get; set; }
+        public string AssetOrgOwnerRefCode { get; set; }
+        public string AssetOrgOwnerName { get; set; }
+        public Nullable<int> TYear { get; set; }
+        public Nullable<int> ProcessType { get; set; }
+        public string Serial { get; set; }
         public Nullable<int> ToLocationId { get; set; }
         public Nullable<int> EmpRefCode { get; set; }
         public string EmpName { get; set; }
-        public string TrackingNotes { get; set; }
-        public string LocationNameEn { get; set; }
-        public string LocationNameAr { get; set; }
+        public Nullable<double> Qty { get; set; }
+        public int EventCode { get; set; }
+        public int Total { get; set; }
+        public string Notes { get; set; }
+        public Nullable<int> QUnitCode { get; set; }
         public string QtyUnitTitleAr { get; set; }
         public string QtyUnitTitleEn { get; set; }
+        public Nullable<System.DateTime> ActionDate { get; set; }
+        public string ItemImage { get; set; }
+        public Nullable<int> actionId { get; set; }
+        public Nullable<int> statusId { get; set; }
+        public string LocationNameEn { get; set; }
+        public string LocationNameAr { get; set; }
+        public string City { get; set; }
+        public Nullable<System.DateTime> DueDate { get; set; }
+        public string RequestNotes { get; set; }
+        public Nullable<int> OrgEmpRefCode { get; set; }
+        public string OrgEmpName { get; set; }
+        public Nullable<double> EstimatedUnitCost { get; set; }
+        public string ActionTitleEn { get; set; }
+        public string ActionTitleAr { get; set; }
+        public string AvailabilityStatusEn { get; set; }
+        public string AvailabilityStatusAr { get; set; }
+        public Nullable<double> MissedQty { get; set; }
+        public string StoreRequestRefCode { get; set; }
         public string path { get; set; }
+        public string Building { get; set; }
+        public string Floors { get; set; }
+        public string Land { get; set; }
+        public string BuildingCity { get; set; }
         public int ORG_NO { get; set; }
         public string ORG_NAME { get; set; }
         public int AMANA_NO { get; set; }
@@ -74,6 +80,18 @@ namespace Infrastructure.DAL.Model.DB
         public int SUB_SEC_NO { get; set; }
         public string SUB_SEC_NAME { get; set; }
         public string JOB_NAME { get; set; }
-        public Nullable<int> RequestHeaderCode { get; set; }
+        public string ItemsCategoryTitleEn { get; set; }
+        public Nullable<int> ItemCategoryId { get; set; }
+        public string FinanceRefCode { get; set; }
+        public Nullable<double> ServicePeriod { get; set; }
+        public Nullable<double> ScrapPrice { get; set; }
+        public string ItemsCategoryTitleAr { get; set; }
+        public string ItemsParentCategoryTitleAr { get; set; }
+        public string ItemsMainParentCategoryTitleAr { get; set; }
+        public Nullable<int> OrgChartRefCode { get; set; }
+        public Nullable<double> RequestItemPrice { get; set; }
+        public Nullable<int> ItemServiceMonthes { get; set; }
+        public Nullable<int> ItemUsedStatus { get; set; }
+        public string ItemUsedStatusTitle { get; set; }
     }
 }

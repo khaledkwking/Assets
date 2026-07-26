@@ -8,6 +8,7 @@ using Infrastructure;
 using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
 using UI.Web.Admin.Controller;
+using UI.Web.Helper;
 
 namespace UI.Web.Modules.MasterData
 {
@@ -15,7 +16,7 @@ namespace UI.Web.Modules.MasterData
     {
         #region "Page Members"
         public LocationsRepository objRepository = IoC.Resolve<LocationsRepository>();
-        public string _PageTitle = Resources.Pages.Locations;
+        public string _PageTitle = "قائمة المواقع";
 
         #endregion
 
@@ -98,6 +99,15 @@ namespace UI.Web.Modules.MasterData
                     }
                     {
                         objRepository.Delete((D_Locations)objRepository.GetDetails(ZeroIntergerIFNull(hdnSelectedNode.Value)));
+
+                        Logger.Log(
+                            userId: ReadSession("userId").ToString(),
+                            userName: ReadSession("AdminName").ToString(),
+                            tableName: "D_Locations",
+                            action: "Delete",
+                            recordId: hdnSelectedNode.Value
+                            );
+
                         string script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully , "3");
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
                     }
@@ -148,7 +158,7 @@ namespace UI.Web.Modules.MasterData
             try
             {
                 D_Locations obj = new D_Locations();
-                if (ZeroIntergerIFNull(hdnSelectedEditNode.Value)==0)
+                if (ZeroIntergerIFNull(hdnSelectedEditNode.Value) == 0)
                 {//Save
 
 
@@ -156,11 +166,19 @@ namespace UI.Web.Modules.MasterData
                     obj.LocationNameAr = txttitleAr.Text;
                     obj.LocationRefCode = txtFinRefCode.Text;
                     obj.City = txtCity.Text;
-                    obj.LocationParentId = ZeroIntergerIFNull(LstLocationParent.SelectedValue);
+                    obj.LocationParentId = ZeroIntergerIFNull(hdnSelectedNode.Value);
                     obj.LocationType = ZeroIntergerIFNull(lstLocationType.SelectedValue);
                     obj.OrgChartRefCode = ZeroIntergerIFNull(gets(Request.QueryString["entityId"]));
 
                     objRepository.Add(obj);
+
+                    Logger.Log(
+                             userId: ReadSession("userId").ToString(),
+                             userName: ReadSession("AdminName").ToString(),
+                             tableName: "D_Locations",
+                             action: "Insert",
+                             recordId: obj.Code.ToString()
+                             );
                 }
                 else
                 { //Update 
@@ -172,19 +190,28 @@ namespace UI.Web.Modules.MasterData
                     obj.LocationRefCode = txtFinRefCode.Text;
                     obj.City = txtCity.Text;
                     obj.LocationType = ZeroIntergerIFNull(lstLocationType.SelectedValue);
-                    obj.LocationParentId = ZeroIntergerIFNull(LstLocationParent.SelectedValue);
-                    if (ZeroIntergerIFNull(gets(Request.QueryString["entityId"]))!=0)
+                    //obj.LocationParentId = ZeroIntergerIFNull(LstLocationParent.SelectedValue);
+                    if (ZeroIntergerIFNull(gets(Request.QueryString["entityId"])) != 0)
                     {
                         obj.OrgChartRefCode = ZeroIntergerIFNull(gets(Request.QueryString["entityId"]));
                     }
-                    
+
                     objRepository.Update(obj);
+
+                    Logger.Log(
+                        userId: ReadSession("userId").ToString(),
+                        userName: ReadSession("AdminName").ToString(),
+                        tableName: "D_Locations",
+                        action: "Update",
+                        recordId: obj.Code.ToString()
+                        );
 
                 }
 
-                ClearForm();
                 FillGrid();
                 fillLookups();
+                ClearForm();
+
                 script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
 
@@ -281,6 +308,11 @@ namespace UI.Web.Modules.MasterData
             txtFinRefCode.Text = "";
             txtCity.Text = "";
             hdnSelectedEditNode.Value = "";
+            hdnSelectedNode.Value = "";
+            LstLocationParent.SelectedValue = "0";
+            LstLocationParent.Enabled = false;
+
+
 
             ViewState["itemID"] = 0;
             tblAdd.Visible = false;

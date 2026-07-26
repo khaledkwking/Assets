@@ -20,16 +20,16 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<double> Qty { get; set; }
         public Nullable<double> EstimatedAmount { get; set; }
         public Nullable<System.DateTime> OutTransDate { get; set; }
-        public Nullable<int> ItemCode { get; set; }
+        public Nullable<long> ItemCode { get; set; }
+        public Nullable<int> UnitStatus { get; set; }
         public string Notes { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedAt { get; set; }
-        public Nullable<int> UnitStatus { get; set; }
     
-        public virtual D_ItemCard D_ItemCard { get; set; }
         public virtual D_ItemUsedStatus D_ItemUsedStatus { get; set; }
         public virtual Outbound Outbound { get; set; }
+        public virtual D_ItemCard D_ItemCard { get; set; }
     }
 }

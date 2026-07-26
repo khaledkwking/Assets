@@ -1454,49 +1454,6 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Textbox Name="Textbox18">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>تاريخ الإستمارة:  </Value>
-                      <Style>
-                        <FontSize>11pt</FontSize>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=First(Fields!ActionDate.Value, "ds_AssetsList")</Value>
-                      <Style>
-                        <FontSize>11pt</FontSize>
-                        <Format>d</Format>
-                        <Color>#333333</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox18</rd:DefaultName>
-              <Top>1.6118in</Top>
-              <Left>0.125in</Left>
-              <Height>0.25in</Height>
-              <Width>2.49875in</Width>
-              <ZIndex>1</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-                <Direction>RTL</Direction>
-              </Style>
-            </Textbox>
             <Textbox Name="Textbox19">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -1529,7 +1486,7 @@
               <Left>0.53583in</Left>
               <Height>0.25in</Height>
               <Width>3.61333in</Width>
-              <ZIndex>2</ZIndex>
+              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1573,7 +1530,7 @@
               <Left>6.06597in</Left>
               <Height>0.25in</Height>
               <Width>3.56125in</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1617,7 +1574,7 @@
               <Left>6.06597in</Left>
               <Height>0.25in</Height>
               <Width>3.56125in</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>3</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1661,7 +1618,7 @@
               <Left>3.27792in</Left>
               <Height>0.25in</Height>
               <Width>6.3493in</Width>
-              <ZIndex>5</ZIndex>
+              <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1753,7 +1710,7 @@
               <Left>0.53583in</Left>
               <Height>0.25in</Height>
               <Width>9.09139in</Width>
-              <ZIndex>6</ZIndex>
+              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1797,7 +1754,7 @@
               <Left>2.10875in</Left>
               <Height>0.25in</Height>
               <Width>2.04041in</Width>
-              <ZIndex>7</ZIndex>
+              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1841,7 +1798,7 @@
               <Left>0.175in</Left>
               <Height>0.25in</Height>
               <Width>1.90597in</Width>
-              <ZIndex>8</ZIndex>
+              <ZIndex>7</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1861,7 +1818,7 @@
               <Left>9.78in</Left>
               <Height>1.15616in</Height>
               <Width>1.25in</Width>
-              <ZIndex>9</ZIndex>
+              <ZIndex>8</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>

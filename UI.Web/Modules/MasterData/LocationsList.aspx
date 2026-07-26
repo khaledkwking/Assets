@@ -5,7 +5,7 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+       
     <script language="JavaScript" type="text/javascript">
         function chkImage() {
             var txt = document.getElementById("<%=txttitleEn.ClientID %>")
@@ -41,8 +41,10 @@
 
     <asp:UpdatePanel runat="server" ID="Updatepanel1" ChildrenAsTriggers="true" UpdateMode="conditional">
         <ContentTemplate>
+          
         </ContentTemplate>
     </asp:UpdatePanel>
+
     <!--END TITLE & BREADCRUMB PAGE-->
     <!--BEGIN CONTENT-->
 
@@ -63,7 +65,7 @@
                     <div class="toggle-expand-content" data-content="pageMenu">
                         <ul class="nk-block-tools g-3">
                             <li class="nk-block-tools-opt">
-                                <div class="drodown">
+                                <div class="drodown" style="display:none">
                                     <a href="#" class="dropdown-toggle btn btn-white btn-outline-light" data-toggle="dropdown"><em class="icon ni ni-setting"></em></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <ul class="link-list-opt no-bdr">

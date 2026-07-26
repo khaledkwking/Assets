@@ -70,15 +70,15 @@ namespace UI.Web.Modules.Assets
 
                 ItemNameAr = gets(objList.ItemNameAr);
                 ItemImage = gets(objList.ItemImage);
-                TransDate = NullDateifEmptyText(objList.TransDate);
-                ExpireDate = NullDateifEmptyText(objList.ExpireDate);
-                VendorNameAr = gets(objList.VendorNameAr);
+                //TransDate = NullDateifEmptyText(objList.TransDate);
+                //ExpireDate = NullDateifEmptyText(objList.ExpireDate);
+                //VendorNameAr = gets(objList.VendorNameAr);
                 CategoryName = gets(objList.ItemsCategoryTitleAr);
                 FinanceRefCode = gets(objList.FinanceRefCode);
                 ItemRefCode = gets(objList.ItemRefCode);
-                LastActiontitleAr = (ZeroIntergerIFNull(gets(objList.EmpRefCode)) == 0 ? "<em class='icon ni ni-building text-info'></em> &nbsp;" : "<em class='icon ni ni-user-list  text-info'></em> &nbsp;").ToString() + showAction(ZeroIntergerIFNull(gets(objList.actionId)), gets(objList.LastActiontitleAr));
+                LastActiontitleAr = (ZeroIntergerIFNull(gets(objList.EmpRefCode)) == 0 ? "<em class='icon ni ni-building text-info'></em> &nbsp;" : "<em class='icon ni ni-user-list  text-info'></em> &nbsp;").ToString() + showAction(ZeroIntergerIFNull(gets(objList.actionId)), "");//gets(objList.LastActiontitleAr)
                 AvailabilityStatusAr = showAvailability(ZeroIntergerIFNull(gets(objList.statusId)), gets(objList.AvailabilityStatusAr));
-                UnitRefCode = gets(objList.UnitRefCode);
+               // UnitRefCode = gets(objList.UnitRefCode);
                 Notes = gets(objList.Notes);
 
                 ActionDate = objList.ActionDate.Value.ToString("MM/dd/yyyy");
@@ -95,7 +95,7 @@ namespace UI.Web.Modules.Assets
                 else { checkout.Visible = true; }
 
 
-                FillEventLog(objList.InboubdItemId);
+               // FillEventLog(objList.InboubdItemId);
 
             }
 

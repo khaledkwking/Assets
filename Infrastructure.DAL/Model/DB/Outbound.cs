@@ -17,9 +17,9 @@ namespace Infrastructure.DAL.Model.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Outbound()
         {
-            this.Outbound_Items = new HashSet<Outbound_Items>();
             this.OutboundAttachments = new HashSet<OutboundAttachment>();
             this.OutboundNotes = new HashSet<OutboundNote>();
+            this.Outbound_Items = new HashSet<Outbound_Items>();
         }
     
         public long Code { get; set; }
@@ -46,10 +46,10 @@ namespace Infrastructure.DAL.Model.DB
         public virtual D_OutboundRefType D_OutboundRefType { get; set; }
         public virtual D_OutboundType D_OutboundType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Outbound_Items> Outbound_Items { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OutboundAttachment> OutboundAttachments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OutboundNote> OutboundNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Outbound_Items> Outbound_Items { get; set; }
     }
 }

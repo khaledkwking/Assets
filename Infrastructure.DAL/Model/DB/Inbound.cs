@@ -17,11 +17,11 @@ namespace Infrastructure.DAL.Model.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Inbound()
         {
-            this.AssetsItemUnits = new HashSet<AssetsItemUnit>();
             this.InboundAttachments = new HashSet<InboundAttachment>();
             this.InboundNotes = new HashSet<InboundNote>();
             this.InboundStatusTracks = new HashSet<InboundStatusTrack>();
             this.InboundStoreEmployees = new HashSet<InboundStoreEmployee>();
+            this.AssetsItemUnits = new HashSet<AssetsItemUnit>();
         }
     
         public int Code { get; set; }
@@ -42,8 +42,6 @@ namespace Infrastructure.DAL.Model.DB
         public string DepositeNotes { get; set; }
         public Nullable<int> OutBoundRefCode { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssetsItemUnit> AssetsItemUnits { get; set; }
         public virtual D_InboundType D_InboundType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InboundAttachment> InboundAttachments { get; set; }
@@ -53,5 +51,7 @@ namespace Infrastructure.DAL.Model.DB
         public virtual ICollection<InboundStatusTrack> InboundStatusTracks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InboundStoreEmployee> InboundStoreEmployees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AssetsItemUnit> AssetsItemUnits { get; set; }
     }
 }

@@ -117,7 +117,7 @@
 
                                         </ul>
                                         <div class="tab-content">
-                                            <div class="tab-pane active" id="tabCustody">
+                                            <div class="tab-pane active" id="tabCustody"> <%--حصر استمارات العهد--%>
 
                                                 <div class="card-inner  p-0 pull-left" data-select2-id="22">
                                                     <div class="card-title-group" data-select2-id="21">
@@ -125,7 +125,7 @@
                                                         <div class="card-tools mr-n1" data-select2-id="20">
                                                             <ul class="btn-toolbar gx-1" data-select2-id="19">
                                                                 <li>
-                                                                    <div class="dropdown">
+                                                                    <div class="dropdown" style="display:none">
                                                                         <a href="#" class="btn btn-round btn-icon btn-dim btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                                                             <em class="icon ni ni-more-h"></em>
                                                                         </a>
@@ -154,9 +154,9 @@
                                                     <table id="custodyList-datatableHeader" class="table table-hover table-striped table-bordered table-advanced tablesorter"></table>
                                                 </div>
                                             </div>
-                                            <div class="tab-pane " id="tabItem5">
+                                            <div class="tab-pane " id="tabItem5"> <%--قائمة الموظفين --%>
 
-                                                <div class="card-inner  p-0 pull-left" data-select2-id="22">
+                                      <%--          <div class="card-inner  p-0 pull-left" data-select2-id="22">
                                                     <div class="card-title-group" data-select2-id="21">
 
                                                         <div class="card-tools mr-n1" data-select2-id="20">
@@ -175,14 +175,14 @@
                                                         </div>
 
                                                     </div>
-                                                </div>
+                                                </div>--%>
 
 
                                                 <div class="card-inner p-0">
                                                     <table id="employeeList-datatable" class="table table-hover table-striped table-bordered table-advanced tablesorter"></table>
                                                 </div>
                                             </div>
-                                            <div class="tab-pane" id="tabItem6">
+                                            <div class="tab-pane" id="tabItem6"> <%--المواقع التابعة--%>
 
 
 

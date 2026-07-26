@@ -17,6 +17,10 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="Code">
+          <DataField>Code</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="groupname">
           <DataField>groupname</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -28,6 +32,10 @@
         <Field Name="ItemCode">
           <DataField>ItemCode</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ItemDate">
+          <DataField>ItemDate</DataField>
+          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="ItemNameEn">
           <DataField>ItemNameEn</DataField>
@@ -68,6 +76,14 @@
         <Field Name="TMonth">
           <DataField>TMonth</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="AssetOrgOwnerRefCode">
+          <DataField>AssetOrgOwnerRefCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AssetOrgOwnerName">
+          <DataField>AssetOrgOwnerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TYear">
           <DataField>TYear</DataField>
@@ -145,6 +161,10 @@
           <DataField>LocationNameAr</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="City">
+          <DataField>City</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="DueDate">
           <DataField>DueDate</DataField>
           <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
@@ -183,6 +203,22 @@
         </Field>
         <Field Name="path">
           <DataField>path</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Building">
+          <DataField>Building</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Floors">
+          <DataField>Floors</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Land">
+          <DataField>Land</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BuildingCity">
+          <DataField>BuildingCity</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ORG_NO">
@@ -237,10 +273,6 @@
           <DataField>JOB_NAME</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ItemsCategoryTitleAr">
-          <DataField>ItemsCategoryTitleAr</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="ItemsCategoryTitleEn">
           <DataField>ItemsCategoryTitleEn</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -261,6 +293,18 @@
           <DataField>ScrapPrice</DataField>
           <rd:TypeName>System.Nullable`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="ItemsCategoryTitleAr">
+          <DataField>ItemsCategoryTitleAr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ItemsParentCategoryTitleAr">
+          <DataField>ItemsParentCategoryTitleAr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ItemsMainParentCategoryTitleAr">
+          <DataField>ItemsMainParentCategoryTitleAr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="OrgChartRefCode">
           <DataField>OrgChartRefCode</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
@@ -272,6 +316,14 @@
         <Field Name="ItemServiceMonthes">
           <DataField>ItemServiceMonthes</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="ItemUsedStatus">
+          <DataField>ItemUsedStatus</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="ItemUsedStatusTitle">
+          <DataField>ItemUsedStatusTitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
@@ -771,14 +823,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="ActionDate">
+                                          <Textbox Name="ItemDate">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ActionDate.Value</Value>
+                                                    <Value>=Format(Fields!ItemDate.Value, "dd/MM/yyyy")</Value>
                                                     <Style>
                                                       <Format>d</Format>
                                                       <Color>#333333</Color>
@@ -790,7 +842,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>ActionDate</rd:DefaultName>
+                                            <rd:DefaultName>ItemDate</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -1037,55 +1089,6 @@
                                 <Direction>RTL</Direction>
                               </Style>
                             </Textbox>
-                            <Textbox Name="RequestDate">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value xml:space="preserve"> </Value>
-                                      <Style>
-                                        <FontSize>11pt</FontSize>
-                                        <Format>d</Format>
-                                      </Style>
-                                    </TextRun>
-                                    <TextRun>
-                                      <Value>تاريخ الإستمارة:</Value>
-                                      <Style>
-                                        <FontSize>11pt</FontSize>
-                                      </Style>
-                                    </TextRun>
-                                    <TextRun>
-                                      <Value>=First(Fields!RequestDate.Value)</Value>
-                                      <Style>
-                                        <FontSize>11pt</FontSize>
-                                        <Format>d</Format>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style>
-                                    <TextAlign>Left</TextAlign>
-                                  </Style>
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>RequestDate</rd:DefaultName>
-                              <Top>0.86492in</Top>
-                              <Left>0.26906in</Left>
-                              <Height>0.25in</Height>
-                              <Width>2.41931in</Width>
-                              <ZIndex>4</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                                <Direction>RTL</Direction>
-                              </Style>
-                            </Textbox>
                             <Textbox Name="Textbox20">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
@@ -1117,7 +1120,7 @@
                               <Left>7.47554in</Left>
                               <Height>0.25in</Height>
                               <Width>3.56125in</Width>
-                              <ZIndex>5</ZIndex>
+                              <ZIndex>4</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1161,7 +1164,7 @@
                               <Left>0.49258in</Left>
                               <Height>0.25in</Height>
                               <Width>5.24875in</Width>
-                              <ZIndex>6</ZIndex>
+                              <ZIndex>5</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1205,7 +1208,7 @@
                               <Left>2.60716in</Left>
                               <Height>0.25in</Height>
                               <Width>3.13416in</Width>
-                              <ZIndex>7</ZIndex>
+                              <ZIndex>6</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1249,7 +1252,7 @@
                               <Left>0.49258in</Left>
                               <Height>0.25in</Height>
                               <Width>2.08681in</Width>
-                              <ZIndex>8</ZIndex>
+                              <ZIndex>7</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1317,7 +1320,7 @@
                               <Left>5.93843in</Left>
                               <Height>0.25in</Height>
                               <Width>5.09837in</Width>
-                              <ZIndex>9</ZIndex>
+                              <ZIndex>8</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1385,7 +1388,7 @@
                               <Left>5.93844in</Left>
                               <Height>0.25in</Height>
                               <Width>5.09836in</Width>
-                              <ZIndex>10</ZIndex>
+                              <ZIndex>9</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1474,22 +1477,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>بطاقة عهدة أصل شخصية / وحدة </Value>
-                      <Style>
-                        <FontSize>20pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>تنظيمية</Value>
-                      <Style>
-                        <FontSize>20pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>=iif(First(Fields!RequestActionType.Value, "ds_RequestList")&lt;&gt;1,"#0c476b","Back")</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value xml:space="preserve"> </Value>
+                      <Value>=Parameters!AssetType.Value</Value>
                       <Style>
                         <FontSize>20pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -1657,6 +1645,12 @@
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="AssetType">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -1667,6 +1661,11 @@
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>username</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>AssetType</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

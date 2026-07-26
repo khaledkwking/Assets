@@ -255,6 +255,9 @@
   <data name="SalaryGeneratedSuceessfully" xml:space="preserve">
     <value>Salary Generated Suceessfully</value>
   </data>
+  <data name="SorryAnErrorOccurred" xml:space="preserve">
+    <value>SorryAnErrorOccurred</value>
+  </data>
   <data name="SorryDeleteDataFailed" xml:space="preserve">
     <value>Sorry, Delete Data Failed</value>
   </data>

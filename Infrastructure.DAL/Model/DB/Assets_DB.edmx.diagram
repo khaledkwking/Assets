@@ -4,9 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1c98909adf3f43319d09422e08049f73" Name="Diagram1">
+      <Diagram DiagramId="1c98909adf3f43319d09422e08049f73" Name="Diagram1" ZoomLevel="50">
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsAvailabilityStatu" Width="1.5" PointX="3" PointY="26.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsItemUnit" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsTrackingAction" Width="1.5" PointX="3" PointY="38.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_AttachmentType" Width="1.5" PointX="6" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_Country" Width="1.5" PointX="10.75" PointY="14.5" IsExpanded="true" />
@@ -14,7 +13,6 @@
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_EmployeeLocations" Width="1.5" PointX="15.75" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_InboundDepositeStatusType" Width="1.5" PointX="6" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_InboundType" Width="1.5" PointX="0.75" PointY="15.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_ItemCard" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_ItemsCategory" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_ItemUsedStatus" Width="1.5" PointX="3" PointY="20.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_JobTitle" Width="1.5" PointX="15.75" PointY="8.25" IsExpanded="true" />
@@ -27,7 +25,6 @@
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.InboundNote" Width="1.5" PointX="5.25" PointY="23.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.InboundStatusTrack" Width="1.5" PointX="8.25" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.InboundStoreEmployee" Width="1.5" PointX="5.25" PointY="29.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Item_tbl" Width="1.5" PointX="15.75" PointY="21.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.RequestAttachment" Width="1.5" PointX="8.25" PointY="21.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Security_pr_AdminType" Width="1.5" PointX="11.125" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Security_pr_MainSystem" Width="1.5" PointX="10.75" PointY="23.25" IsExpanded="true" />
@@ -39,18 +36,12 @@
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.View_InboundList" Width="1.5" PointX="21.75" PointY="7.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_ItemCategoryTree" Width="1.5" PointX="5.75" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.viewTemp" Width="1.5" PointX="23.75" PointY="7.25" IsExpanded="true" />
-        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_D_ItemUnits_D_ItemStatus" ManuallyRouted="false" />
-        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_ItemCard" ManuallyRouted="false" />
-        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_QtyUnit" ManuallyRouted="false" />
-        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_Inbound" ManuallyRouted="false" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_InboundAttachments_D_AttachmentType" ManuallyRouted="false" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_RequestAttachments_D_AttachmentType" ManuallyRouted="false" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_D_VendorData_D_Country" ManuallyRouted="false" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_D_EmployeeList_D_JobTitle" ManuallyRouted="false" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_InboundStatusTrack_D_InboundDepositeStatusType" ManuallyRouted="false" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Inbound_D_InboundType" ManuallyRouted="false" />
-        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_D_ItemCard_D_ItemsCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_D_ItemCard_D_QtyUnit" ManuallyRouted="false" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_InboundAttachments_Inbound" ManuallyRouted="false" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_InboundNotes_Inbound" ManuallyRouted="false" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_InboundStatusTrack_Inbound" ManuallyRouted="false" />
@@ -58,42 +49,59 @@
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Security_pr_adminPermittedLocations" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_OutboundRefType" Width="1.5" PointX="24.375" PointY="23.25" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_OutboundType" Width="1.5" PointX="24.375" PointY="20.25" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Outbound_Items" Width="1.5" PointX="28.875" PointY="14.75" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.OutboundAttachment" Width="1.5" PointX="31.875" PointY="16.125" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.OutboundAttachment" Width="2.125" PointX="31.875" PointY="16.125" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.OutboundNote" Width="1.5" PointX="28.875" PointY="31" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_OutboundAttachments_D_AttachmentType" />
-        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemCard" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.View_OutboundItems" Width="1.5" PointX="26.375" PointY="0.75" />
-        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemUsedStatus" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Outbound" Width="1.5" PointX="26.625" PointY="19.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.View_OutboundList" Width="1.5" PointX="8.375" PointY="0.75" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_D_OutboundRefType" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_D_OutboundType" />
-        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_Outbound" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_OutboundAttachments_Outbound" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_OutboundNotes_Outbound" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_ItemCard" Width="1.5" PointX="24.375" PointY="26.75" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_AssetsEventTrackingHeader" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsTransferOut" Width="1.5" PointX="10.375" PointY="0.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_AssetEventLog" Width="1.5" PointX="16.375" PointY="0.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_AssetsInventory" Width="1.5" PointX="18.375" PointY="18.75" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_AssetsList" Width="1.5" PointX="20.375" PointY="13.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_CustodyListGrouped" Width="1.5" PointX="18.375" PointY="27.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_Inventory" Width="1.5" PointX="18.375" PointY="0.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Security_pr_admin" Width="1.5" PointX="13.375" PointY="36" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Security_pr_adminPermittedOrgUnits" Width="1.5" PointX="15.625" PointY="37.25" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_HD_admin_HD_AdminType" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Security_pr_adminPermittedOrgUnits_Security_pr_admin" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Width="2.375" PointX="13.375" PointY="1.125" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_Locations" Width="1.5" PointX="13" PointY="18.25" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_D_Locations_D_LocationTypes" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Width="1.5" PointX="0.75" PointY="29.125" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_RequestAttachments_AssetsEventTrackingHeader" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsEventTracking" Width="1.5" PointX="21.5" PointY="27.625" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsStore" Width="1.5" PointX="26.75" PointY="27.375" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Store" Width="1.5" PointX="24.5" PointY="35.5" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsStores_Stores" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_CustodyListTransfer" Width="1.5" PointX="31.375" PointY="19.75" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_AssetsEventTrackingHeader" Width="1.5" PointX="8.375" PointY="26.75" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_CustodyList" Width="1.5" PointX="5.375" PointY="32.75" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsEventTracking" Width="1.5" PointX="15.25" PointY="23.375" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsStores_AssetsEventTracking" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsItemUnit" Width="1.5" PointX="5.25" PointY="14.125" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_D_ItemUnits_D_ItemStatus" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_QtyUnit" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_Inbound" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Outbound_Items" Width="1.5" PointX="28.875" PointY="14" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemUsedStatus" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_Outbound" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.ItemStatu" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.Item_tbl" Width="1.5" PointX="28.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_ItemCard" Width="1.5" PointX="3" PointY="4" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_Locations" Width="1.5" PointX="13" PointY="18.25" />
-        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_D_Locations_D_LocationTypes" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_CustodyList" Width="1.5" PointX="8.375" PointY="26.75" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_ItemCard" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_D_ItemCard_D_ItemsCategory" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_D_ItemCard_D_QtyUnit" />
+        <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemCard" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_AssetsList" Width="1.5" PointX="20.375" PointY="13.75" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.SystemLog" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_ExcludedOrg" Width="1.5" PointX="5.375" PointY="4.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

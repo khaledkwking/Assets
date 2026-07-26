@@ -26,6 +26,8 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> ToLocationId { get; set; }
         public Nullable<int> EmpRefCode { get; set; }
         public string EmpName { get; set; }
+        public Nullable<int> OrgEmpRefCode { get; set; }
+        public string OrgEmpName { get; set; }
         public string RequestNotes { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
@@ -40,5 +42,7 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> Emp_Id { get; set; }
         public Nullable<bool> Emp_Active { get; set; }
         public Nullable<int> TranferedRequestHeaderId { get; set; }
+        public string AssetOrgOwnerRefCode { get; set; }
+        public string AssetOrgOwnerName { get; set; }
     }
 }

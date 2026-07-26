@@ -277,14 +277,16 @@
                                             <ul class="link-check">
                                                 <li>
                                                     <asp:LinkButton OnClientClick="return checkDelete();" runat="server" ID="btnDelete" OnClick="btnDelete_Click"><i class="icon ni ni-trash"></i>&nbsp;<%=GetGlobalResourceObject("pages","DeleteSelectedData") %></asp:LinkButton></li>
-                                                <li>
-                                                    <asp:LinkButton   runat="server" ID="lnkUpdatePrice" OnClick="lnkUpdatePrice_Click" CssClass="text-danger"><i class="icon ni ni-edit"></i>&nbsp;<%=GetGlobalResourceObject("pages","UpdateMasterPrice") %></asp:LinkButton></li>
+                                                <li style="display:none">
+                                                    <asp:LinkButton runat="server" ID="lnkUpdatePrice" OnClick="lnkUpdatePrice_Click" CssClass="text-danger"><i class="icon ni ni-edit"></i>&nbsp;<%=GetGlobalResourceObject("pages","UpdateMasterPrice") %></asp:LinkButton>
+
+                                                </li>
                                             </ul>
 
                                         </div>
                                     </div>
                                 </li>
-                                <li>
+                                <li style="display:none">
                                     <asp:LinkButton runat="server" ID="btnNew" class="btn btn-icon btn-primary" OnClick="btnNew_Click"><em class="icon ni ni-plus"></em></asp:LinkButton>
 
                                 </li>
@@ -303,7 +305,9 @@
                 <div class="card-inner p-0">
 
                     <asp:DataGrid runat="server" ID="grdItems" AutoGenerateColumns="False"
-                        AllowPaging="true" PageSize="20" class="table table-hover table-striped table-bordered table-advanced tablesorter table-responsive" data-auto-responsive="false" OnItemDataBound="grdItems_ItemDataBound" OnEditCommand="grdItems_EditCommand">
+                        AllowPaging="true" PageSize="20" class="table table-hover table-striped table-bordered table-advanced tablesorter table-responsive"
+                        data-auto-responsive="false" OnItemDataBound="grdItems_ItemDataBound" DataKeyField="code"
+                        OnItemCommand="grdItems_ItemCommand" OnEditCommand="grdItems_EditCommand">
                         <PagerStyle Visible="false" />
                         <Columns>
                             <asp:BoundColumn DataField="code" Visible="False"></asp:BoundColumn>
@@ -340,7 +344,9 @@
                             <asp:TemplateColumn HeaderText="<%$ Resources:pages,MasterPrice %>">
                                 <ItemStyle Width="100px" HorizontalAlign="Center" />
                                 <ItemTemplate>
-                                    <asp:TextBox runat="server" ID="txtmasterPrice" Text='<%#Eval("ItemMasterPrice") %>' class="form-control"></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="txtmasterPrice"
+                                            Text='<%#Eval("ItemMasterPrice") %>'
+                                            CssClass="form-control me-2" Style="width: 100px;"></asp:TextBox>
 
                                 </ItemTemplate>
                             </asp:TemplateColumn>
@@ -349,7 +355,7 @@
                                 <HeaderStyle HorizontalAlign="Center" />
                                 <ItemStyle Width="2%" />
                                 <ItemTemplate>
-                                    <div class="drodown">
+                                    <div class="drodown" style="display: none">
                                         <a href="#" class="btn btn-sm btn-icon btn-trigger dropdown-toggle" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <ul class="link-list-opt no-bdr">
@@ -362,11 +368,17 @@
                                             </ul>
                                         </div>
                                     </div>
-
+                                    <asp:LinkButton runat="server" ID="lnkAdd" CommandName="AddNew" CssClass="btn btn-link p-0">
+                  <em class="icon ni ni-property-add" style="font-size: 30px;"></em>
+                                    </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
 
-
+                            <asp:TemplateColumn Visible="False">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblCode" runat="server" Text='<%# Eval("code") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateColumn>
                         </Columns>
                     </asp:DataGrid>
                     <div class="datatable-footer">

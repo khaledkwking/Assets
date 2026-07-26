@@ -10,7 +10,43 @@
 
     <input id="hdnMasterID" runat="server" type="hidden" />
     <input id="hdnActiveTab" runat="server" type="hidden" />
+   <style>
+    .transfer-type input[type="radio"] {
+        margin-right: 24px; /* مسافة بين الدائرة والنص */
+    }
 
+    .transfer-type label {
+        margin-right: 10px; /* مسافة بين العناصر */
+        font-weight: bold;
+        font-size: 15px;
+        color: #0C476B; /* لون أساسي من ثيمك */
+    }
+</style>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Function to initialize the DatePicker
+            function initializeDatepicker() {
+                $(".date-pickers").datepicker({
+                    dateFormat: 'dd/mm/yy',   // Set the date format (optional)
+                    changeMonth: true,
+                    changeYear: true
+                });
+            }
+
+            // Initialize DatePicker when the page loads
+            initializeDatepicker();
+
+            // Reinitialize DatePicker after partial postbacks (AJAX)
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+                initializeDatepicker();
+            });
+        });
+    </script>
     <script language="JavaScript" type="text/javascript">
 
 
@@ -18,17 +54,17 @@
 
             var txt = document.getElementById("<%=txtFromDate.ClientID %>")
             if (txt.value == "") {
-                Swal.fire("Please, Enter Action Date");
+                Swal.fire("يرجى اختيار التاريخ");
                 return false;
             }
 
 
             var hdnSelectedLocation = document.getElementById("<%=selectedToLocation.ClientID %>")
 
-            if (hdnSelectedLocation.value == "" || hdnSelectedLocation.value == "0") {
-                Swal.fire("Please, select  Location ");
-                return false;
-            }
+            //if (hdnSelectedLocation.value == "" || hdnSelectedLocation.value == "0") {
+            //    Swal.fire("Please, select  Location ");
+            //    return false;
+            //}
 
           <%--  var txt = document.getElementById("<%=hdnType.ClientID %>")
             if (txt.value == "1") {
@@ -38,18 +74,49 @@
                     return false;
                 }
             }--%>
-
-            var emp = document.getElementById("<%=lstToEmpRefCode.ClientID %>")
-            if (emp.value == "" || emp.value == "0") {
-                Swal.fire("Please, Select Employee   ");
+            var emp2 = document.getElementById("<%=lstRefEmployee.ClientID %>")
+            if (emp2.value == "" || emp2.value == "0") {
+                Swal.fire("يرجى اختيار الموظف   ");
                 return false;
             }
 
-       <%--     var txt = document.getElementById("<%=hdnItemCount.ClientID %>")
+           <%-- var emp = document.getElementById("<%=lstToEmpRefCode.ClientID %>")
+            if (emp.value == "" || emp.value == "0") {
+                Swal.fire("يرجى اختيار الموظف   ");
+                return false;
+            }--%>
+
+            <%--     var txt = document.getElementById("<%=hdnItemCount.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
                 Swal.fire("Please, select Items For action");
                 return false;
             }--%>
+
+            var transferType = document.querySelector('input[name="<%= rblTransferType.UniqueID %>"]:checked');
+            if (!transferType) {
+                Swal.fire("يرجى اختيار نوع التحويل (موظف / مخزن)");
+                return false;
+            }
+
+            var selectedValue = transferType.value;
+
+            if (selectedValue === "Employee") {
+                // تحقق من الموظف
+                var emp = document.getElementById("<%= lstToEmpRefCode.ClientID %>");
+        if (!emp || emp.value === "" || emp.value === "0") {
+            Swal.fire("يرجى اختيار الموظف الذي سيتم التحويل له");
+            return false;
+        }
+    } 
+    else if (selectedValue === "Store") {
+        // تحقق من المخزن
+        var store = document.getElementById("<%= lstToStore.ClientID %>");
+        if (!store || store.value === "" || store.value === "0") {
+            Swal.fire("يرجى اختيار المخزن الذي سيتم التحويل له");
+            return false;
+        }
+    }
+
             return true;
         }
 
@@ -209,7 +276,7 @@
                     <div class="form-icon form-icon-right">
                         <em class="icon ni ni-calendar-alt"></em>
                     </div>
-                    <asp:TextBox runat="server" ID="txtFromDate" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtFromDate" placeholder="__/__/____" class="form-control date-pickers"></asp:TextBox>
                 </div>
 
 
@@ -221,312 +288,189 @@
         </div>
     </div>
 
-    <asp:UpdatePanel runat="server" ID="Updatepanel2">
-        <ContentTemplate>
-    <div class="row mt-10" style="margin-top: 20px;">
-        <div class="col-5">
+<asp:UpdatePanel runat="server" ID="Updatepanel2">
+    <ContentTemplate>
+        <div class="row mt-10" style="margin-top: 20px;">
+            <!-- الكارد الأول: الموظف والعهد -->
+            <div class="col-5">
+                <div class="card card-stretch border border-danger" style="min-height: 550px">
+                    <div class="card-inner">
+                        <asp:Label runat="server" ID="lblerror"></asp:Label>
+                        <div class="form-group" style="display:none">
+                           <label class="control-label" for=""><%=GetGlobalResourceObject("pages","assignedToLocation") %>  </label>
 
-            <div class="card card-stretch border border-danger" style="min-height: 550px">
-          
-                <div class="card-inner">
+                           <input type="text" id="txtToLocation" class="form-control" placeholder="Type to filter" autocomplete="off" />
+                           <input id="selectedToLocation" runat="server" value="0" type="hidden" class="selectedToLocation" />
+                           <asp:Button runat="server" ID="Button1" OnClick="btnReload_Click" CssClass="hide" />
 
-                    <asp:Label runat="server" ID="lblerror"></asp:Label>
-                    <div class="col-lg-12">
-                        <div class="portlet box portlet-blue">
-
-                            <div class="portlet-body">
-                                <div role="form">
-
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-
-
-
-                                            <div class="form-group" runat="server" style="display:none">
-                                                <label class="control-label" for=""><%=GetGlobalResourceObject("pages","assignedToLocation") %>  </label>
-
-                                                <input type="text" id="txtOwnerLocationCode" class="form-control" placeholder="Type to filter" autocomplete="off" />
-                                                <input id="selectedLocation" runat="server" value="0" type="hidden" class="selectedLocation" />
-                                                <asp:Button runat="server" ID="btnReload" OnClick="btnReload_Click" CssClass="hide" />
-
-                                            </div>
-                                            <div class="form-group divEmployee" id="divEmployee" runat="server">
-                                                <label class="control-label" for=""><%=GetGlobalResourceObject("pages","RefEmployee") %>  </label>
-                                                <asp:DropDownList ID="lstRefEmployee" runat="server" AutoPostBack="true" OnSelectedIndexChanged="lstRefEmployee_SelectedIndexChanged" class="form-control form-select" data-search="on" ClientIDMode="Static"></asp:DropDownList>
-
-                                            </div>
-
-                                            <div class="form-group" style="display:none">
-                                                <asp:LinkButton runat="server" ID="lnkFilter" OnClick="lnkFilter_Click" class="btn btn-primary"><em class="icon ni ni-search"></em><span>عرض العهد</span></asp:LinkButton>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
+                        </div>
+                        <div class="form-group divEmployee" id="divEmployee" runat="server">
+                            <label class="control-label"><%=GetGlobalResourceObject("pages","RefEmployee") %></label>
+                            <asp:DropDownList ID="lstRefEmployee" runat="server" AutoPostBack="true" 
+                                OnSelectedIndexChanged="lstRefEmployee_SelectedIndexChanged"
+                                class="form-control form-select" data-search="on" ClientIDMode="Static">
+                            </asp:DropDownList>
                         </div>
                     </div>
 
-                </div>
-
-                <div class="card-inner">
-
-                    <asp:DataGrid runat="server" ID="grdItems" AutoGenerateColumns="False"  
-                        AllowPaging="false" class="table table-hover table-striped table-bordered table-advanced tablesorter">
-                        <PagerStyle Visible="False" />
-                        <HeaderStyle BackColor="#efefef" Font-Bold="True" />
-                        <Columns>
-                            <asp:BoundColumn DataField="Code" Visible="false"></asp:BoundColumn>
-                            <asp:TemplateColumn>
-                                <HeaderStyle Wrap="False" HorizontalAlign="Center" />
-                                <ItemStyle Width="2%" />
-                                <HeaderTemplate>
-                                    <input id="chkAllItems" class="checkall" style="border-style: none;" type="checkbox" onclick="CheckAllDataGridCheckBoxes('chkItem', this.checked)" />
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <asp:CheckBox runat="server" ID="chkItem" CssClass="check" />
-
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                             <asp:TemplateColumn HeaderText="م">
-                                                    <ItemStyle Width="1%" HorizontalAlign="center" />
-                                                    <ItemTemplate>
-                                                        <%#ZeroIntergerIFNull((DataBinder.Eval(Container, "ItemIndex")).ToString()) + 1%>
-                                                    </ItemTemplate>
-                                                </asp:TemplateColumn>
-                                                <asp:TemplateColumn HeaderText="رقم المادة">
-                                                    <HeaderStyle Wrap="false" />
-                                                    <ItemStyle Width="20%" HorizontalAlign="Center" />
-
-                                                    <HeaderStyle />
-                                                    <ItemTemplate>
-                                                        <%#EmptyIfZero( gets(DataBinder.Eval(Container.DataItem, "ItemRefCode")))%>
-                                                    </ItemTemplate>
-                                               
-                                                </asp:TemplateColumn>
-
-                                                <asp:TemplateColumn HeaderText="وصف المادة">
-                                                    <HeaderStyle Wrap="false" />
-                                                    <ItemStyle Width="30%" />
-                                                    <ItemTemplate>
-                                                        <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
-                                                    </ItemTemplate>
-                                                </asp:TemplateColumn>
-                                                <asp:TemplateColumn HeaderText="الملاحظات">
-                                                    <HeaderStyle Wrap="false" />
-                                                    <ItemStyle Width="40%" />
-                                                    <ItemTemplate>
-                                                        <%#DataBinder.Eval(Container.DataItem, "Notes")%>
-
-                                                    </ItemTemplate>
-                                                 
-                                                </asp:TemplateColumn>
-
-                            <%--  <asp:TemplateColumn HeaderText="<%$ Resources:pages,status %>">
-                                <ItemStyle Width="5%" />
-                                <ItemTemplate>
-                                <div><%# showAction(ZeroIntergerIFNull(gets(Eval("ActionId"))), gets( Eval("LastActiontitleAr"))) %></div> 
-                                    <div><%# showAvailability(ZeroIntergerIFNull(gets(Eval("StatusId"))), gets( Eval("AvailabilityStatusAr"))) %></div>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>--%>
-                        </Columns>
-                    </asp:DataGrid>
-
-                    <div class="datatable-footer">
-                        <div class="dataTables_info" id="DataTables_Table_3_info" role="status" aria-live="polite">
+                    <div class="card-inner">
+                        <asp:DataGrid runat="server" ID="grdItems" AutoGenerateColumns="False"  
+                            AllowPaging="false" class="table table-hover table-striped table-bordered table-advanced tablesorter">
+                            <PagerStyle Visible="False" />
+                            <HeaderStyle BackColor="#efefef" Font-Bold="True" />
+                            <Columns>
+                                <asp:BoundColumn DataField="Code" Visible="false"></asp:BoundColumn>
+                                <asp:TemplateColumn>
+                                    <HeaderTemplate>
+                                        <input id="chkAllItems" class="checkall" type="checkbox" onclick="CheckAllDataGridCheckBoxes('chkItem', this.checked)" />
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <asp:CheckBox runat="server" ID="chkItem" CssClass="check" />
+                                    </ItemTemplate>
+                                </asp:TemplateColumn>
+                                <asp:TemplateColumn HeaderText="م">
+                                    <ItemTemplate>
+                                        <%#ZeroIntergerIFNull((DataBinder.Eval(Container, "ItemIndex")).ToString()) + 1%>
+                                    </ItemTemplate>
+                                </asp:TemplateColumn>
+                                <asp:TemplateColumn HeaderText="رقم المادة">
+                                    <ItemTemplate>
+                                        <%#EmptyIfZero(gets(DataBinder.Eval(Container.DataItem, "ItemRefCode")))%>
+                                    </ItemTemplate>
+                                </asp:TemplateColumn>
+                                <asp:TemplateColumn HeaderText="وصف المادة">
+                                    <ItemTemplate>
+                                        <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
+                                    </ItemTemplate>
+                                </asp:TemplateColumn>
+                                <asp:TemplateColumn HeaderText="الملاحظات">
+                                    <ItemTemplate>
+                                        <%#DataBinder.Eval(Container.DataItem, "Notes")%>
+                                    </ItemTemplate>
+                                </asp:TemplateColumn>
+                            </Columns>
+                        </asp:DataGrid>
+                        <div class="datatable-footer">
                             <asp:Label ID="lblcount" runat="server"></asp:Label>
                         </div>
-                       <%-- <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_3_paginate">
-
-                            <cc1:Pager CurrentIndex="1" OnCommand="pager_Command" ShowFirstLast="False" ID="pager1"
-                                runat="server" Width="100%" PageSize="20" AlternativeTextEnabled="False" BackToFirstClause="" BackToPageClause="" EnableSmartShortCuts="True" EnableTheming="True" FirstClause="" FromClause="" GoClause="" GoToLastClause="" LastClause="" NextClause="التالى" OfClause="من" PageClause="صفحة" PreviousClause="السابق" RTL="True" ShowingResultClause="" ShowResultClause=""></cc1:Pager>
-
-
-                        </div>--%>
                     </div>
-
                 </div>
-                  
-
             </div>
 
+            <!-- أزرار التحويل -->
+            <div class="col-1" style="padding-top:80px;">
+                <div class="mt-2">
+                    <asp:LinkButton runat="server" ID="lnkAddItem" 
+                        OnClientClick="return chkImage();" 
+                        OnClick="lnkAddItem_Click">
+                        <div class="preview-icon-box card">
+                            <div class="preview-icon-wrap"><em class="ni ni-chevrons-left"></em></div>
+                        </div>
+                    </asp:LinkButton>
+                </div>
+                <div class="mt-2">
+                    <asp:LinkButton runat="server" ID="lnkRemove" 
+                        OnClientClick="return chkImage();" 
+                        OnClick="lnkRemove_Click">
+                        <div class="preview-icon-box card text-danger">
+                            <div class="preview-icon-wrap"><em class="ni ni-chevrons-right"></em></div>
+                        </div>
+                    </asp:LinkButton>
+                </div>
+            </div>
 
-        </div>
-        <div class="col-1" style="padding-top:80px;">
-            <%-- <div class="mt-2">
-                <a href="#">
-                    <div class="preview-icon-box card">
+            <!-- الكارد الثاني: تحويل لموظف أو لمخزن -->
+            <div class="col-6">
+                <div class="card card-stretch border border-success" style="min-height: 550px">
+                    <div class="card-inner">
+                        <!-- اختيار نوع التحويل -->
+                        <div class="form-group">
+                            <label class="control-label" style="font-size:20px;font-weight:bold"> نوع التحويل الى</label>
+                            <asp:RadioButtonList ID="rblTransferType" runat="server" 
+                                AutoPostBack="true"
+                                OnSelectedIndexChanged="rblTransferType_SelectedIndexChanged"
+                                RepeatDirection="Horizontal" 
+                                
+                                CssClass="transfer-type">
+                                <asp:ListItem Text="موظف" Value="Employee" Selected="True"></asp:ListItem>
+                                <asp:ListItem Text="مخزن" Value="Store"></asp:ListItem>
+                            </asp:RadioButtonList>
 
-                        <div class="preview-icon-wrap">
-                            <em class="ni ni-chevrons-left"></em>
                         </div>
 
-
-                    </div>
-                </a>
-
-            </div>--%>
-            <div class="mt-2">
-                <asp:LinkButton runat="server" ID="lnkAddItem" class="mt-5" OnClick="lnkAddItem_Click"><div class="preview-icon-box card"><div class="preview-icon-wrap"> <em class="ni ni-chevrons-left"></em>   </div></div> </asp:LinkButton>
-
-            </div>
-            <div class="mt-2">
-              <asp:LinkButton runat="server" ID="lnkRemove" class="mt-5" OnClick="lnkRemove_Click"><div class="preview-icon-box card text-danger"><div class="preview-icon-wrap"> <em class="ni ni-chevrons-right"></em>   </div></div> </asp:LinkButton>
-            </div>
-
-            <%--<div class="mt-2">
-                <a href="#" class="mt-5">
-                    <div class="preview-icon-box card">
-
-                        <div class="preview-icon-wrap"> <em class="ni ni-chevrons-right"></em>   </div>
-
-
-                    </div>
-                </a>
-
-            </div>--%>
-        </div>
-
-        <div class="col-6">
-
-            <div class="card card-stretch border border-success" style="min-height: 550px">
- 
-
-                <div class="card-inner">
-
-                    <div role="form">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group" style="display:none">
-                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","assignedToLocation") %>  </label>
-
-                                    <input type="text" id="txtToLocation" class="form-control" placeholder="Type to filter" autocomplete="off" />
-                                    <input id="selectedToLocation" runat="server" value="0" type="hidden" class="selectedToLocation" />
-                                    <asp:Button runat="server" ID="Button1" OnClick="btnReload_Click" CssClass="hide" />
-
-                                </div>
-                                <div class="form-group divEmployee">
-                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","RefEmployee") %>  </label>
-                                    <asp:DropDownList ID="lstToEmpRefCode" runat="server" AutoPostBack="true" OnSelectedIndexChanged="lstToEmpRefCode_SelectedIndexChanged" class="form-control form-select" data-search="on" ClientIDMode="Static"></asp:DropDownList>
-
-                                </div>
-
-
-
-                            </div>
+                        <!-- اختيار الموظف -->
+                        <div class="form-group" id="divEmployeeTarget" runat="server">
+                            <label class="control-label"><%=GetGlobalResourceObject("pages","RefEmployee") %></label>
+                            <asp:DropDownList ID="lstToEmpRefCode" runat="server" AutoPostBack="true" 
+                                OnSelectedIndexChanged="lstToEmpRefCode_SelectedIndexChanged"
+                                class="form-control form-select" data-search="on" ClientIDMode="Static">
+                            </asp:DropDownList>
                         </div>
 
-
+                        <!-- اختيار المخزن -->
+                        <div class="form-group" id="divStore" runat="server" style="display:none">
+                            <label class="control-label">المخزن</label>
+                            <asp:DropDownList ID="lstToStore" runat="server" AutoPostBack="true" 
+                                OnSelectedIndexChanged="lstToStore_SelectedIndexChanged"
+                                class="form-control form-select" data-search="on" ClientIDMode="Static">
+                            </asp:DropDownList>
+                        </div>
                     </div>
 
-                </div>
-
-                <div class="card-inner">
-
-                    <asp:DataGrid runat="server" ID="grdSelectedItems" AutoGenerateColumns="False"
-                        AllowPaging="false" class="table table-hover table-striped table-bordered table-advanced tablesorter">
-                        <PagerStyle Visible="False" />
-                        <HeaderStyle BackColor="#efefef" Font-Bold="True" />
-                        <Columns>
-                            <asp:BoundColumn DataField="Code" Visible="false"></asp:BoundColumn>
-                              <asp:TemplateColumn>
-                                <HeaderStyle Wrap="False" HorizontalAlign="Center" />
-                                <ItemStyle Width="2%" />
-                                <HeaderTemplate>
-                                    <input id="chkAllItems" class="checkall" style="border-style: none;" type="checkbox" onclick="CheckAllDataGridCheckBoxes('chkItem', this.checked)" />
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <asp:CheckBox runat="server" ID="chkItem" CssClass="check" />
-
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                             <asp:TemplateColumn HeaderText="م">
-                                                    <ItemStyle Width="1%" HorizontalAlign="center" />
-                                                    <ItemTemplate>
-                                                        <%#ZeroIntergerIFNull((DataBinder.Eval(Container, "ItemIndex")).ToString()) + 1%>
-                                                    </ItemTemplate>
-                                                </asp:TemplateColumn>
-                                                <asp:TemplateColumn HeaderText="رقم المادة">
-                                                    <HeaderStyle Wrap="false" />
-                                                    <ItemStyle Width="20%" HorizontalAlign="Center" />
-
-                                                    <HeaderStyle />
-                                                    <ItemTemplate>
-                                                        <%#EmptyIfZero( gets(DataBinder.Eval(Container.DataItem, "ItemRefCode")))%>
-                                                    </ItemTemplate>
-                                                </asp:TemplateColumn>
-
-                                                <asp:TemplateColumn HeaderText="وصف المادة">
-                                                    <HeaderStyle Wrap="false" />
-                                                    <ItemStyle Width="30%" />
-                                                    <ItemTemplate>
-                                                        <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
-                                                    </ItemTemplate>
-                                                  
-                                                </asp:TemplateColumn>
-                                                <asp:TemplateColumn HeaderText="الملاحظات">
-                                                    <HeaderStyle Wrap="false" />
-                                                    <ItemStyle Width="30%" />
-                                                    <ItemTemplate>
-                                                        <%#DataBinder.Eval(Container.DataItem, "Notes")%>
-                                                    </ItemTemplate>
-                                                </asp:TemplateColumn>
-                                          <%--      <asp:TemplateColumn HeaderText="تاريخ العهدة">
-                                                    <HeaderStyle Wrap="false" />
-                                                    <ItemStyle Width="20%" />
-                                                    <ItemTemplate>
-                                                        <%#NullDateifEmptyText( DataBinder.Eval(Container.DataItem, "ActionDate"))%>
-                                                    </ItemTemplate>
-                                                    <EditItemTemplate>
-                                                        <asp:Label Visible="false" runat="server" ID="lblCustodyDate">
-		                                                                                      <%#DataBinder.Eval(Container.DataItem, "ActionDate")%>
-                                                        </asp:Label>
-                                                        <div class="form-control-wrap">
-                                                            <div class="form-icon form-icon-right">
-                                                                <em class="icon ni ni-calendar-alt"></em>
-                                                            </div>
-                                                            <asp:TextBox runat="server" ID="txtCustodyDate" Text='<%#NullDateifEmptyText(Eval("ActionDate")).Equals("")?NullDateifEmptyText(DateTime.Now):NullDateifEmptyText(Eval("ActionDate")) %>' placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
-                                                        </div>
-
-                                                    </EditItemTemplate>
-                                                </asp:TemplateColumn>--%>
-                        </Columns>
-                    </asp:DataGrid>
-
-                    <div class="datatable-footer">
-                        <div class="dataTables_info" id="DataTables_Table_3_info" role="status" aria-live="polite">
+                    <div class="card-inner">
+                        <asp:DataGrid runat="server" ID="grdSelectedItems" AutoGenerateColumns="False"
+                            AllowPaging="false" class="table table-hover table-striped table-bordered table-advanced tablesorter">
+                            <PagerStyle Visible="False" />
+                            <HeaderStyle BackColor="#efefef" Font-Bold="True" />
+                            <Columns>
+                                <asp:BoundColumn DataField="Code" Visible="false"></asp:BoundColumn>
+                                <asp:TemplateColumn>
+                                    <HeaderTemplate>
+                                        <input id="chkAllSelected" class="checkall" type="checkbox" onclick="CheckAllDataGridCheckBoxes('chkItem', this.checked)" />
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <asp:CheckBox runat="server" ID="chkItem" CssClass="check" />
+                                    </ItemTemplate>
+                                </asp:TemplateColumn>
+                                <asp:TemplateColumn HeaderText="م">
+                                    <ItemTemplate>
+                                        <%#ZeroIntergerIFNull((DataBinder.Eval(Container, "ItemIndex")).ToString()) + 1%>
+                                    </ItemTemplate>
+                                </asp:TemplateColumn>
+                                <asp:TemplateColumn HeaderText="رقم المادة">
+                                    <ItemTemplate>
+                                        <%#EmptyIfZero(gets(DataBinder.Eval(Container.DataItem, "ItemRefCode")))%>
+                                    </ItemTemplate>
+                                </asp:TemplateColumn>
+                                <asp:TemplateColumn HeaderText="وصف المادة">
+                                    <ItemTemplate>
+                                        <%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>
+                                    </ItemTemplate>
+                                </asp:TemplateColumn>
+                                <asp:TemplateColumn HeaderText="الملاحظات">
+                                    <ItemTemplate>
+                                        <%#DataBinder.Eval(Container.DataItem, "Notes")%>
+                                    </ItemTemplate>
+                                </asp:TemplateColumn>
+                            </Columns>
+                        </asp:DataGrid>
+                        <div class="datatable-footer">
                             <asp:Label ID="lblSelectedCount" runat="server"></asp:Label>
                         </div>
-                       <%-- <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_3_paginate">
-
-                            <cc1:Pager CurrentIndex="1" OnCommand="pager2_Command" ShowFirstLast="False" ID="pager2"
-                                runat="server" Width="100%" PageSize="20" AlternativeTextEnabled="False" BackToFirstClause="" BackToPageClause="" EnableSmartShortCuts="True" EnableTheming="True" FirstClause="" FromClause="" GoClause="" GoToLastClause="" LastClause="" NextClause="التالى" OfClause="من" PageClause="صفحة" PreviousClause="السابق" RTL="True" ShowingResultClause="" ShowResultClause=""></cc1:Pager>
-
-
-                        </div>--%>
                     </div>
-
                 </div>
-
             </div>
-
-
-
         </div>
+    </ContentTemplate>
+    <Triggers>
+        <asp:AsyncPostBackTrigger ControlID="lstRefEmployee" EventName="SelectedIndexChanged" />
+        <asp:AsyncPostBackTrigger ControlID="lstToEmpRefCode" EventName="SelectedIndexChanged" />
+        <asp:AsyncPostBackTrigger ControlID="lstToStore" EventName="SelectedIndexChanged" />
+        <asp:AsyncPostBackTrigger ControlID="lnkAddItem" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="lnkRemove" EventName="Click" />
+    </Triggers>
+</asp:UpdatePanel>
 
-    </div>
-
-     </ContentTemplate>
-                       <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="lstRefEmployee" EventName="SelectedIndexChanged" />
-                <asp:AsyncPostBackTrigger ControlID="lstToEmpRefCode" EventName="SelectedIndexChanged" />
-                <asp:AsyncPostBackTrigger ControlID="lnkAddItem" EventName="Click" />
-                <asp:AsyncPostBackTrigger ControlID="lnkRemove" EventName="Click" />
-            </Triggers>
-    </asp:UpdatePanel>
 
 
     <script src="/wwwroot/assets/js/businessScripts/locationCombo.js"></script>

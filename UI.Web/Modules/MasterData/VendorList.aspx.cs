@@ -8,6 +8,7 @@ using Infrastructure;
 using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
 using UI.Web.Admin.Controller;
+using UI.Web.Helper;
 
 namespace UI.Web.Modules.MasterData
 {
@@ -59,6 +60,14 @@ namespace UI.Web.Modules.MasterData
                         if (check.Checked)
                         {
                             objRepository.Delete((D_VendorData)objRepository.GetDetails(ZeroIntergerIFNull(grdVendorList.Items[i].Cells[0].Text)));
+
+                            Logger.Log(
+                              userId: ReadSession("userId").ToString(),
+                              userName: ReadSession("AdminName").ToString(),
+                              tableName: "D_VendorData",
+                              action: "Delete",
+                              recordId: grdVendorList.Items[i].Cells[0].Text
+                              );
                         }
                     }
                 }
@@ -130,6 +139,14 @@ namespace UI.Web.Modules.MasterData
                     }
 
                    objRepository.Add(obj);
+
+                    Logger.Log(
+                             userId: ReadSession("userId").ToString(),
+                             userName: ReadSession("AdminName").ToString(),
+                             tableName: "D_VendorData",
+                             action: "Insert",
+                             recordId: obj.Code.ToString()
+                             );
                 }
                 else
                 { //Update 
@@ -152,6 +169,14 @@ namespace UI.Web.Modules.MasterData
                     }
 
                     objRepository.Update(obj);
+
+                    Logger.Log(
+                          userId: ReadSession("userId").ToString(),
+                          userName: ReadSession("AdminName").ToString(),
+                          tableName: "D_VendorData",
+                          action: "Update",
+                          recordId: obj.Code.ToString()
+                          );
 
                 }
 

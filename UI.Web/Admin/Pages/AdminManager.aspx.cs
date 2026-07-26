@@ -7,12 +7,16 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using UI.Web.Admin.Controller;
+using System.DirectoryServices;
+using System.DirectoryServices.AccountManagement;
 
 namespace UI.Web.Admin.Pages
 {
     public partial class AdminManager : BaseFormAdmin
     {
         public string _PageTitle = Resources.Pages.userList;
+        public PrincipalSearchResult<Principal> userlist;
+
         protected void Page_Load(object sender, System.EventArgs e)
         {
 
@@ -29,6 +33,28 @@ namespace UI.Web.Admin.Pages
 
                 ViewState["Item"] = 0;
                 FillDll(Security_Users.ins.FillAdminTypes(), lstadminType, "Nameen", "id");
+
+                lstActivDirectoryUser.Items.Add(new ListItem("إختر", "0"));
+                using (var context = new PrincipalContext(ContextType.Domain, "CMGS0"))
+                {
+                    using (var searcher = new PrincipalSearcher(new UserPrincipal(context)))
+                    {
+                        userlist = searcher.FindAll();
+                        Session["userList"] = userlist;
+                        foreach (var result in userlist)
+                        {
+                            DirectoryEntry de = result.GetUnderlyingObject() as DirectoryEntry;
+                            //Console.WriteLine("First Name: " + de.Properties["givenName"].Value);
+                            //Console.WriteLine("Last Name : " + de.Properties["sn"].Value);
+                            //Console.WriteLine("SAM account name   : " + de.Properties["samAccountName"].Value);
+                            //Console.WriteLine("User principal name: " + de.Properties["userPrincipalName"].Value);
+                            //Console.WriteLine();
+                            lstActivDirectoryUser.Items.Add(new ListItem(" (" + gets(de.Properties["SamAccountName"].Value) + ") " + gets(de.Properties["DisplayName"].Value), gets(de.Properties["SamAccountName"].Value)));
+
+
+                        }
+                    }
+                }
                 //FillDllwithoptional_ALL(Security_Users.ins.FillAdminTypes(),   LstFilterAdminType, "Nameen", "id", "الكل");
 
 
@@ -57,7 +83,6 @@ namespace UI.Web.Admin.Pages
             }
 
         }
-
 
 
 
@@ -142,6 +167,7 @@ namespace UI.Web.Admin.Pages
                 {
                     lstadminType.SelectedValue = gets(userDetails.AdminType);
                 }
+                lstActivDirectoryUser.SelectedValue = userDetails.username;
 
             }
 
@@ -232,19 +258,43 @@ namespace UI.Web.Admin.Pages
             {
                 //    string img1 = "";
                 string img1 = this.getImage(ref txtImage);
+                string displayName = "";
+
+                using (var context = new PrincipalContext(ContextType.Domain, "CMGS0"))
+                {
+                    using (var searcher = new PrincipalSearcher(new UserPrincipal(context)))
+                    {
+                        userlist = searcher.FindAll();
+                        Session["userList"] = userlist;
+                        foreach (var result in userlist)
+                        {
+                            DirectoryEntry de = result.GetUnderlyingObject() as DirectoryEntry;
+                            if (gets(de.Properties["SamAccountName"].Value) == lstActivDirectoryUser.SelectedValue)
+                            {
+                                displayName = userlist.ToList().Where(x => x.SamAccountName == lstActivDirectoryUser.SelectedValue).FirstOrDefault().DisplayName;
+                            }
+
+
+                        }
+                    }
+                }
+
                 Security_pr_admin obj = new Security_pr_admin();
                 if (ViewState["Item"].ToString().Equals("0"))
                 {
                     // CHeck User Existance
-                    if (Security_Users.ins.CheckUserNameExitance(txtName.Text))
+                    if (Security_Users.ins.CheckUserNameExitance(lstActivDirectoryUser.SelectedValue))
                     {
-                        Script = FormatpopupErrorMSG("Sorry, User Name Not Vaild please enter another User Name ", "1");
+                        Script = FormatpopupErrorMSG("عفوا , هذا الاسم تم اضافته من قبل ", "1");
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", Script, true);
                         return;
                     }
 
-                    obj.name = txtfullName.Text;
-                    obj.username = txtName.Text;
+                    //obj.name = txtfullName.Text;
+                    //obj.username = txtName.Text;
+                    obj.name = displayName;
+                    obj.username = lstActivDirectoryUser.SelectedValue;
+
                     obj.password = txtPassword.Text;
                     obj.AdminType = ZeroIntergerIFNull(lstadminType.SelectedValue);
                     obj.IsActive = chkisactive.Checked;
@@ -264,8 +314,10 @@ namespace UI.Web.Admin.Pages
                 else
                 {
                     obj = Security_Users.ins.GetDetails(ZeroIntergerIFNull(ViewState["Item"].ToString()));
-                    obj.name = txtfullName.Text;
-                    obj.username = txtName.Text;
+                    //obj.name = txtfullName.Text;
+                    //obj.username = txtName.Text;
+                    obj.name = displayName;
+                    obj.username = lstActivDirectoryUser.SelectedValue;
                     obj.password = txtPassword.Text;
                     obj.AdminType = ZeroIntergerIFNull(lstadminType.SelectedValue);
                     obj.IsActive = chkisactive.Checked;

@@ -5,7 +5,36 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+
+<!-- jQuery UI -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function () {
+          // Function to initialize the DatePicker
+          function initializeDatepicker() {
+              $(".date-pickers").datepicker({
+                  dateFormat: 'dd/mm/yy',   // Set the date format (optional)
+                  changeMonth: true,
+                  changeYear: true
+              });
+          }
+
+          // Initialize DatePicker when the page loads
+          initializeDatepicker();
+
+          // Reinitialize DatePicker after partial postbacks (AJAX)
+          Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+              initializeDatepicker();
+          });
+      });
+  </script>
     <script language="JavaScript" type="text/javascript">
+       
         function chkImage() {
 
             var txt = document.getElementById("<%=txtItemNameEn.ClientID %>")
@@ -37,6 +66,27 @@
             }
 
         }
+        $(document).ready(function () {
+          
+            var civilIdInput = $('#<%= txtPrice.ClientID %>');
+
+             // Allow only digits and prevent more than 12 digits
+             civilIdInput.on('keypress', function (e) {
+                 var charCode = e.which ? e.which : e.keyCode;
+
+                 // Block non-digit characters
+                 if (charCode < 48 || charCode > 57) {
+                     e.preventDefault();
+                     return;
+                 }
+
+                 // Prevent input if already 12 digits
+                 if ($(this).val().length >= 12) {
+                     e.preventDefault();
+                 }
+             });
+
+         });
     </script>
 
 
@@ -84,7 +134,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemRefCode") %></label>
+                                <label class="col-md-12 control-label" for="">كود المادة / رقم بطاقة الأصل</label>
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtItemRefCode" class="form-control"></asp:TextBox>
                                 </div>
@@ -98,7 +148,7 @@
                                     <asp:TextBox runat="server" ID="txtItemRFIDCode" class="form-control"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="form-group"  >
+                            <div class="form-group">
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemFinanceCode") %></label>
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtItemFinanceCode" class="form-control"></asp:TextBox>
@@ -138,7 +188,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemNameAr") %>  </label>
+                                <label class="col-md-12 control-label" for="">اسم المادة Ar </label>
 
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtItemNameAr" class="form-control"></asp:TextBox>
@@ -150,7 +200,17 @@
                                     <asp:TextBox runat="server" ID="txtMinQty" class="form-control"></asp:TextBox>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label" for="">تاريخ التشغيل</label>
 
+                                <div class="form-control-wrap">
+                                    <div class="form-icon form-icon-right">
+                                        <em class="icon ni ni-calendar-alt"></em>
+                                    </div>
+                                    <asp:TextBox runat="server" ID="txtItemDate"  placeholder="__/__/____" class="form-control date-pickers"></asp:TextBox>
+
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-4">
 
@@ -162,26 +222,37 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemDescAr") %>  </label>
+                                <label class="col-md-12 control-label" for="">وصف المادة Ar  </label>
 
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtItemDescAr" TextMode="MultiLine" class="form-control"></asp:TextBox>
                                 </div>
                             </div>
 
-                              <div class="form-group" style="display:none">
+                            <div class="form-group" style="display: none">
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ScrapPeriod") %></label>
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtScrapPeriod" class="form-control"></asp:TextBox>
                                 </div>
                             </div>
-                              <div class="form-group" style="display:none">
+                            <div class="form-group" style="display: none">
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ScrapAmount") %></label>
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtScrapAmount" class="form-control"></asp:TextBox>
                                 </div>
                             </div>
-
+                             <div class="form-group" style="display: none">
+                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ScrapAmount") %></label>
+                                 <div class="col-md-12">
+                                     <asp:TextBox runat="server" ID="TextBox1" class="form-control"></asp:TextBox>
+                                 </div>
+                             </div>
+                              <div class="form-group">
+                                  <label class="col-md-12 control-label" for="">السعر</label>
+                                  <div class="col-md-12">
+                                      <asp:TextBox runat="server" ID="txtPrice" class="form-control"></asp:TextBox>
+                                  </div>
+                              </div>
                             <div class="form-group">
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","Active") %>  </label>
 
@@ -189,6 +260,8 @@
                                     <asp:CheckBox ID="chkisactive" runat="server" class=" " ClientIDMode="Static" />
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -325,8 +398,8 @@
                                 </ItemTemplate>
                             </asp:TemplateColumn>
 
-                             <asp:TemplateColumn HeaderText="<%$ Resources:pages,Category %>">
-                                 <ItemTemplate>
+                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,Category %>">
+                                <ItemTemplate>
                                     <a href="ItemsCategory.aspx?id=<%#Eval("itemCategoryId") %>"><%#Eval("D_ItemsCategoryTitleAr") %></a>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
@@ -338,7 +411,7 @@
                             <asp:BoundColumn DataField="EstimatedUnitCost" HeaderText="<%$ Resources:pages,LastPrice %>">
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:BoundColumn>
-                            
+
                             <%--                            <asp:BoundColumn DataField="ItemFinanceCode" HeaderText="<%$ Resources:pages,ItemFinanceCode %>"></asp:BoundColumn>--%>
                             <asp:BoundColumn DataField="MinQty" HeaderText="<%$ Resources:pages,MinQty %>">
                                 <ItemStyle HorizontalAlign="Center" />
@@ -360,8 +433,8 @@
                                                 <li>
                                                     <asp:LinkButton runat="server" ID="lnkEdit" CommandName="Edit" class="btn btn-default btn-xs"><em class="icon ni ni-cards-fill"></em><span> <%=GetGlobalResourceObject("pages","Edit") %></span> </asp:LinkButton></li>
 
-                                                <li>
-                                                    <a><em class="icon ni ni-histroy"></em><span><%=GetGlobalResourceObject("pages","ItemTracking") %></span> </a></li>
+                                             <%--   <li>
+                                                    <a><em class="icon ni ni-histroy"></em><span><%=GetGlobalResourceObject("pages","ItemTracking") %></span> </a></li>--%>
 
                                             </ul>
                                         </div>

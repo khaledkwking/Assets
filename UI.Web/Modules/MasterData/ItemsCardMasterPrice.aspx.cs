@@ -12,6 +12,7 @@ using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
 using QRCoder;
 using UI.Web.Admin.Controller;
+using UI.Web.Helper;
 
 namespace UI.Web.Modules.MasterData
 {
@@ -19,7 +20,7 @@ namespace UI.Web.Modules.MasterData
     {
         #region "Page Members"
         public ItemRepository objRepository = IoC.Resolve<ItemRepository>();
-        public string _PageTitle = Resources.Pages.ItemsList;
+        public string _PageTitle = "تسعير المواد";
 
         #endregion
 
@@ -64,6 +65,14 @@ namespace UI.Web.Modules.MasterData
                         if (check.Checked)
                         {
                             objRepository.Delete((D_ItemCard)objRepository.GetDetails(ZeroIntergerIFNull(grdItems.Items[i].Cells[0].Text)));
+
+                            Logger.Log(
+                                  userId: ReadSession("userId").ToString(),
+                                  userName: ReadSession("AdminName").ToString(),
+                                  tableName: "D_ItemCard",
+                                  action: "Delete",
+                                  recordId: grdItems.Items[i].Cells[0].Text
+                                  );
                         }
                     }
                 }
@@ -145,6 +154,14 @@ namespace UI.Web.Modules.MasterData
                     }
 
                     objRepository.Add(obj);
+
+                    Logger.Log(
+                                 userId: ReadSession("userId").ToString(),
+                                 userName: ReadSession("AdminName").ToString(),
+                                 tableName: "D_ItemCard",
+                                 action: "Insert",
+                                 recordId: obj.Code.ToString()
+                                 );
                 }
                 else
                 { //Update 
@@ -176,6 +193,14 @@ namespace UI.Web.Modules.MasterData
 
 
                     objRepository.Update(obj);
+
+                    Logger.Log(
+                              userId: ReadSession("userId").ToString(),
+                              userName: ReadSession("AdminName").ToString(),
+                              tableName: "D_ItemCard",
+                              action: "Update",
+                              recordId: obj.Code.ToString()
+                              );
 
                 }
 
@@ -403,6 +428,39 @@ namespace UI.Web.Modules.MasterData
             }
 
 
+        }
+
+        protected void grdItems_ItemCommand(object source, DataGridCommandEventArgs e)
+        {
+            if (e.CommandName == "AddNew")
+            {
+                try
+                {
+                    string MasterPrice = ((TextBox)e.Item.FindControl("txtmasterPrice")).Text;
+                    string lblCode = ((Label)e.Item.FindControl("lblCode")).Text;
+                    
+
+                    D_ItemCard obj = new D_ItemCard();
+
+                    if (MasterPrice != null)
+                    {
+                        var objDetails = objRepository.GetDetails(ZeroIntergerIFNull(lblCode));
+                        if (objDetails != null)
+                        {
+                            objDetails.ItemMasterPrice = ZeroIFNull(MasterPrice);
+                            objRepository.Update(objDetails);
+                        }
+                    }
+                    FillGrid();
+                }
+                catch (Exception ex)
+                {
+
+
+                    string script = FormatErrorMSGSwal(Resources.Alerts.SorryDeleteDataFailed + ex.Message.ToString(), "1");
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "Updatepanel1", script, true);
+                }
+            }
         }
     }
 }

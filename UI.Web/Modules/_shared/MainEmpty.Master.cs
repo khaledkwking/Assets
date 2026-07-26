@@ -70,7 +70,7 @@ namespace UI.Web.Modules._shared
                 ViewState["AdminName"] = user.name.ToString();
                 Session["AdminName"] = user.name.ToString();
                 AdminName = user.name.ToString();
-                PrfilePhoto = Resources.Utilities.Assetspath + "uploads/Adminprofile/" + user.AdminPhoto.ToString();
+                //PrfilePhoto = Resources.Utilities.Assetspath + "uploads/Adminprofile/" + user.AdminPhoto.ToString();
                 FillPermissions(user.AdminType, user.id);
                 ShowAlerts();
                 FillMenu();
@@ -170,7 +170,7 @@ namespace UI.Web.Modules._shared
 
             if (ShowSystem("2"))
             {//Users
-                _out += " <li class='nk-menu-item active' >";
+                _out += " <li class='nk-menu-item' >";
                 _out += " <a href = '#' class='nk-menu-link nk-menu-switch' data-target='navMaster'>";
                 _out += "<span class='nk-menu-icon'><em class='icon ni ni-menu-circled'></em></span>";
                 _out += "</a>";

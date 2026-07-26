@@ -9,8 +9,32 @@
 
 </script>
 
+          <!-- jQuery UI CSS -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
 
+  <!-- jQuery UI -->
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Function to initialize the DatePicker
+            function initializeDatepicker() {
+                $(".date-pickers").datepicker({
+                    dateFormat: 'dd/mm/yy',   // Set the date format (optional)
+                    changeMonth: true,
+                    changeYear: true
+                });
+            }
+
+            // Initialize DatePicker when the page loads
+            initializeDatepicker();
+
+            // Reinitialize DatePicker after partial postbacks (AJAX)
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+                initializeDatepicker();
+            });
+        });
+    </script>
     <asp:UpdatePanel runat="server" ID="Updatepanel1" ChildrenAsTriggers="true" UpdateMode="conditional">
         <ContentTemplate>
         </ContentTemplate>
@@ -126,7 +150,7 @@
                                                                         <div class="form-icon form-icon-right">
                                                                             <em class="icon ni ni-calendar-alt"></em>
                                                                         </div>
-                                                                        <asp:TextBox runat="server" ID="txtTransDate" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                                                                        <asp:TextBox runat="server" ID="txtTransDate" placeholder="__/__/____" class="form-control date-pickers"></asp:TextBox>
                                                                     </div>
                                                                 </div>
 
@@ -139,7 +163,7 @@
                                                                         <div class="form-icon form-icon-right">
                                                                             <em class="icon ni ni-calendar-alt"></em>
                                                                         </div>
-                                                                        <asp:TextBox runat="server" ID="txtTransactionDateTo" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                                                                        <asp:TextBox runat="server" ID="txtTransactionDateTo" placeholder="__/__/____" class="form-control date-pickers"></asp:TextBox>
                                                                     </div>
 
                                                                 </div>

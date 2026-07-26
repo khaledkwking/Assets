@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using DomainInterface;
@@ -202,6 +203,171 @@ namespace Infrastructure.DAL
 
         #endregion
 
+        /// <summary>
+        /// Gets locations by LocationType with complete parent tree path
+        /// </summary>
+        /// <param name="locationTypeId">LocationType Code to filter by</param>
+        /// <returns>List of D_Locations with parent names concatenated</returns>
+        public List<D_Locations> GetLocationsByTypeWithParentPath(int locationTypeId)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var locations = DC.D_Locations
+                    .Where(loc => loc.LocationType == locationTypeId)
+                    .Include("D_LocationType")
+                    .ToList();
 
+                return locations;
+            }
+        }
+
+        /// <summary>
+        /// Gets locations by LocationType with parent tree path as a string property (ViewModel recommended)
+        /// </summary>
+        /// <param name="locationTypeId">LocationType Code to filter by</param>
+        /// <returns>List of tuples containing Location and Parent Path</returns>
+        //public List<(D_Locations location, string parentPath)> GetLocationsByTypeWithParentPathString(int locationTypeId , int? LocationParentId)
+        //{
+        //    using (var DC = new AssetsEntitiesNew())
+        //    {
+        //        var locations = DC.D_Locations
+        //            .Where(loc => loc.LocationType == locationTypeId)
+        //            .ToList();
+
+        //        var result = new List<(D_Locations, string)>();
+
+        //        foreach (var location in locations)
+        //        {
+        //            string parentPath = GetLocationPath(location.Code, DC);
+        //            result.Add((location, parentPath));
+        //        }
+
+        //        return result;
+        //    }
+        //}
+        public List<(D_Locations location, string parentPath)> GetLocationsByTypeWithParentPathString(
+    int locationTypeId, int? locationParentId)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var query = DC.D_Locations
+                    .Where(loc => loc.LocationType == locationTypeId);
+
+                // Apply the parent filter only if locationParentId > 0
+               //var query = DC.D_Locations.Where(x => x.LocationType == locationTypeId);
+
+                if (locationParentId.HasValue && locationParentId.Value > 0)
+                {
+                    var ids = GetAllChildIds(locationParentId.Value, DC);
+                    query = query.Where(x =>  x.LocationParentId.HasValue &&   ids.Contains(x.LocationParentId.Value));
+
+
+                    
+                }
+
+                var locations = query.ToList();
+
+                var result = new List<(D_Locations, string)>();
+
+                foreach (var location in locations)
+                {
+                    string parentPath = GetLocationPath(location.Code, DC);
+                    result.Add((location, parentPath));
+                }
+
+                return result;
+            }
+        }
+        private List<int> GetAllChildIds(int parentId, AssetsEntitiesNew dc)
+        {
+            var ids = new List<int> { parentId };
+
+            var children = dc.D_Locations
+                             .Where(x => x.LocationParentId == parentId)
+                             .Select(x => x.Code)
+                             .ToList();
+
+            foreach (var childId in children)
+            {
+                ids.AddRange(GetAllChildIds(childId, dc));
+            }
+
+            return ids;
+        }
+
+        /// <summary>
+        /// Helper method to build complete parent tree path for a location
+        /// </summary>
+        private string GetLocationPath(int locationCode, AssetsEntitiesNew DC)
+        {
+            var pathList = new List<string>();
+            var currentLocation = DC.D_Locations.FirstOrDefault(l => l.Code == locationCode);
+
+            while (currentLocation != null)
+            {
+                pathList.Insert(0, currentLocation.LocationNameAr ?? currentLocation.LocationNameEn ?? "");
+                
+                if (currentLocation.LocationParentId.HasValue && currentLocation.LocationParentId > 0)
+                {
+                    currentLocation = DC.D_Locations.FirstOrDefault(l => l.Code == currentLocation.LocationParentId);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return string.Join(" > ", pathList);
+        }
+
+        /// <summary>
+        /// Gets locations by LocationType with parent tree path (English names)
+        /// </summary>
+        public List<(D_Locations location, string parentPathEn)> GetLocationsByTypeWithParentPathEnglish(int locationTypeId)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var locations = DC.D_Locations
+                    .Where(loc => loc.LocationType == locationTypeId)
+                    .ToList();
+
+                var result = new List<(D_Locations, string)>();
+
+                foreach (var location in locations)
+                {
+                    string parentPath = GetLocationPathEnglish(location.Code, DC);
+                    result.Add((location, parentPath));
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Helper method to build complete parent tree path (English) for a location
+        /// </summary>
+        private string GetLocationPathEnglish(int locationCode, AssetsEntitiesNew DC)
+        {
+            var pathList = new List<string>();
+            var currentLocation = DC.D_Locations.FirstOrDefault(l => l.Code == locationCode);
+
+            while (currentLocation != null)
+            {
+                pathList.Insert(0, currentLocation.LocationNameEn ?? currentLocation.LocationNameAr ?? "");
+
+                if (currentLocation.LocationParentId.HasValue && currentLocation.LocationParentId > 0)
+                {
+                    currentLocation = DC.D_Locations.FirstOrDefault(l => l.Code == currentLocation.LocationParentId);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return string.Join(" > ", pathList);
+        }
     }
 }
+
+

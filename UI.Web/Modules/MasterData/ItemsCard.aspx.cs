@@ -12,6 +12,7 @@ using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
 using QRCoder;
 using UI.Web.Admin.Controller;
+using UI.Web.Helper;
 
 namespace UI.Web.Modules.MasterData
 {
@@ -47,37 +48,67 @@ namespace UI.Web.Modules.MasterData
 
         }
 
-        protected void btnDelete_Click(object sender, System.EventArgs e)
+        protected void btnDelete_Click(object sender, EventArgs e)
         {
             try
             {
-
                 D_ItemCard obj = new D_ItemCard();
-                for (int i = 0; i <= grdItems.Items.Count - 1; i++)
+
+                using (var DC = new AssetsEntitiesNew())
                 {
-
-                    if ((grdItems.Items[i].FindControl("chkItem") != null))
+                    for (int i = 0; i < grdItems.Items.Count; i++)
                     {
-                        CheckBox check = (CheckBox)grdItems.Items[i].FindControl("chkItem");
+                        CheckBox chkItem = grdItems.Items[i].FindControl("chkItem") as CheckBox;
 
-                        if (check.Checked)
+                        if (chkItem != null && chkItem.Checked)
                         {
-                            objRepository.Delete((D_ItemCard)objRepository.GetDetails(ZeroIntergerIFNull(grdItems.Items[i].Cells[0].Text)));
+                            int assetCode = ZeroIntergerIFNull(grdItems.Items[i].Cells[0].Text);
+
+                            // Delete related AssetsEventTrackings
+                            var relatedEvents = DC.AssetsEventTrackings
+                                                  .Where(o => o.AssetCode == assetCode)
+                                                  .ToList();
+
+                            if (relatedEvents.Any())
+                            {
+                                DC.AssetsEventTrackings.RemoveRange(relatedEvents);
+                                DC.SaveChanges();
+                            }
+
+                            // Delete from D_ItemCard repository
+                            var itemCard = objRepository.GetDetails(assetCode);
+                            if (itemCard != null)
+                            {
+                                objRepository.Delete((D_ItemCard)itemCard);
+                            }
+
+                            // Log the deletion
+                            Logger.Log(
+                                userId: ReadSession("userId").ToString(),
+                                userName: ReadSession("AdminName").ToString(),
+                                tableName: "D_ItemCard",
+                                action: "Delete : "+ grdItems.Items[i].Cells[5].Text,
+                                recordId: assetCode.ToString()
+                            );
                         }
                     }
-                }
-                FillGrid();
 
+                    // Commit all changes once
+                    DC.SaveChanges();
+                }
+
+                // Refresh grid after delete
+                FillGrid();
+                string script11 = FormatpopupErrorMSG(Resources.Alerts.DataDeletedSuccessfully, "3");
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), "Updatepanel1", script11, true);
             }
             catch (Exception ex)
             {
-
-
-                string script = FormatpopupErrorMSG(Resources.Alerts.SorryDeleteDataFailed + ex.Message.ToString(), "1");
+                string script = FormatpopupErrorMSG(Resources.Alerts.SorryDeleteDataFailed + " " + ex.Message, "1");
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), "Updatepanel1", script, true);
             }
-
         }
+
 
         protected void grdItems_EditCommand(object source, System.Web.UI.WebControls.DataGridCommandEventArgs e)
         {
@@ -87,6 +118,20 @@ namespace UI.Web.Modules.MasterData
             FillForm();
             tblshow.Visible = false;
             tblAdd.Visible = true;
+        }
+        public string FormatDateForTextbox(object dateObj)
+        {
+            if (dateObj == null || dateObj == DBNull.Value)
+                return "";
+
+            DateTime dt;
+            // نحاول نفهمه كـ DateTime عادي (هيفهم الاتنين)
+            if (DateTime.TryParse(dateObj.ToString(), out dt))
+            {
+                return dt.ToString("dd/MM/yyyy");
+            }
+
+            return "";
         }
 
         protected void grdItems_ItemDataBound(object sender, System.Web.UI.WebControls.DataGridItemEventArgs e)
@@ -126,11 +171,11 @@ namespace UI.Web.Modules.MasterData
                     obj.ItemNameAr = txtItemNameAr.Text;
                     obj.ItemDescEn = txtItemDescEn.Text;
                     obj.ItemDescAr = txtItemDescAr.Text;
-
+                    obj.ItemMasterPrice = ZeroIFNull(txtPrice.Text);
                     obj.ItemCategoryId = ZeroIntergerIFNull(lstCategory.SelectedValue);
                     obj.QUnitCode = ZeroIntergerIFNull(lstQunit.SelectedValue);
 
-
+                    obj.CreatedAt = NullDateifEmptyNew(txtItemDate.Text);
 
                     obj.MinQty = ZeroIntergerIFNull(txtMinQty.Text);
 
@@ -144,6 +189,14 @@ namespace UI.Web.Modules.MasterData
                     }
 
                     objRepository.Add(obj);
+
+                    Logger.Log(
+                            userId: ReadSession("userId").ToString(),
+                            userName: ReadSession("AdminName").ToString(),
+                            tableName: "D_ItemCard",
+                            action: "Insert",
+                            recordId: obj.Code.ToString()
+                            );
                 }
                 else
                 { //Update 
@@ -157,9 +210,11 @@ namespace UI.Web.Modules.MasterData
                     obj.ItemNameAr = txtItemNameAr.Text;
                     obj.ItemDescEn = txtItemDescEn.Text;
                     obj.ItemDescAr = txtItemDescAr.Text;
-
+                    obj.ItemMasterPrice = ZeroIFNull(txtPrice.Text);
                     obj.ItemCategoryId = ZeroIntergerIFNull(lstCategory.SelectedValue);
                     obj.QUnitCode = ZeroIntergerIFNull(lstQunit.SelectedValue);
+
+                    obj.CreatedAt = NullDateifEmptyNew(txtItemDate.Text);
 
                     obj.MinQty = ZeroIntergerIFNull(txtMinQty.Text);
 
@@ -175,6 +230,14 @@ namespace UI.Web.Modules.MasterData
 
 
                     objRepository.Update(obj);
+
+                    Logger.Log(
+                           userId: ReadSession("userId").ToString(),
+                           userName: ReadSession("AdminName").ToString(),
+                           tableName: "D_ItemCard",
+                           action: "Update",
+                           recordId: obj.Code.ToString()
+                           );
 
                 }
 
@@ -268,10 +331,10 @@ namespace UI.Web.Modules.MasterData
                 txtItemRefCode.Text = gets(objList.ItemRefCode);
                 txtItemRFIDCode.Text = gets(objList.ItemRFIDCode);
                 txtItemFinanceCode.Text = gets(objList.ItemFinanceCode);
-
+                txtPrice.Text = gets(objList.ItemMasterPrice.ToString());
                 chkisactive.Checked = getBool(objList.isActive);
 
-
+                txtItemDate.Text = getDBDate(objList.CreatedAt);
                 txtScrapPeriod.Text = gets(objList.ScrapPeriod);
                 txtScrapAmount.Text = gets(objList.ScrapAmount);
 
@@ -307,6 +370,7 @@ namespace UI.Web.Modules.MasterData
             txtItemNameAr.Text = "";
             txtItemNameEn.Text = "";
             txtMinQty.Text = "";
+            txtItemDate.Text = "";
             txtItemRefCode.Text = "";
             txtItemRFIDCode.Text = "";
             txtItemFinanceCode.Text = "";

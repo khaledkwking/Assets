@@ -558,7 +558,11 @@
             document.getElementById("divPopup").style.visibility = "visible";
         }
     </script>
+    <script src="/wwwroot/apiscripts/tender/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+     <script src="https://cdn3.devexpress.com/jslib/23.2.3/js/jquery.min.js"></script>
+ <script src="https://cdn3.devexpress.com/jslib/23.2.3/js/jszip.min.js"></script>
+ <script src="https://cdn3.devexpress.com/jslib/23.2.3/js/dx.all.js"></script>
 
     <link href="/wwwroot/Charts/dx.common.css" rel="stylesheet" />
     <link href="/wwwroot/Charts/dx.dark.css" rel="stylesheet" />

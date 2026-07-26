@@ -23,6 +23,13 @@ namespace Infrastructure.DAL.Model.DB
         public int Code { get; set; }
         public string TitleAr { get; set; }
         public string TitleEn { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<System.DateTime> UpdateOn { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<D_Locations> D_Locations { get; set; }

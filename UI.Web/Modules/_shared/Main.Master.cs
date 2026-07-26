@@ -70,7 +70,7 @@ namespace UI.Web.Modules._shared
                 ViewState["AdminName"] = user.name.ToString();
                 Session["AdminName"] = user.name.ToString();
                 AdminName = user.name.ToString();
-                PrfilePhoto = user.AdminPhoto!=null? Resources.Utilities.Assetspath + "uploads/Adminprofile/" + user.AdminPhoto.ToString():"";
+                //PrfilePhoto = user.AdminPhoto!=null? Resources.Utilities.Assetspath + "uploads/Adminprofile/" + user.AdminPhoto.ToString():"";
                 FillPermissions(user.AdminType, user.id);
                 ShowAlerts();
                 FillMenu();
@@ -137,7 +137,15 @@ namespace UI.Web.Modules._shared
         {
             string _out = "";
 
+            if (ShowSystem("4"))
+            {//Assets
+                _out += " <li class='nk-menu-item'>";
+                _out += " <a href = '#' class='nk-menu-link nk-menu-switch' data-target='navAssetsOperation'>";
+                _out += "<span class='nk-menu-icon'><em class='icon ni ni-wallet-saving'></em></span>";
+                _out += "</a>";
+                _out += "</li>";
 
+            }
             if (ShowSystem("7"))
             {//OutBound
                 _out += " <li class='nk-menu-item'>";
@@ -155,15 +163,7 @@ namespace UI.Web.Modules._shared
                 _out += "</li>";
 
             }
-            if (ShowSystem("4"))
-            {//Assets
-                _out += " <li class='nk-menu-item'>";
-                _out += " <a href = '#' class='nk-menu-link nk-menu-switch' data-target='navAssetsOperation'>";
-                _out += "<span class='nk-menu-icon'><em class='icon ni ni-wallet-saving'></em></span>";
-                _out += "</a>";
-                _out += "</li>";
-
-            }
+            
 
 
 
@@ -202,7 +202,7 @@ namespace UI.Web.Modules._shared
         }
 
 
-        public string FillMenu()
+         public string FillMenu()
         {
             StringBuilder strmenu = new StringBuilder();
             // /************************New Menu**************************/
@@ -515,6 +515,7 @@ namespace UI.Web.Modules._shared
                     //    strmenu.Append(("</li>"));
                     //}
 
+                    
 
                     strmenu.Append("</ul>");
                     strmenu.Append("</li>");
@@ -522,7 +523,7 @@ namespace UI.Web.Modules._shared
 
                 }
 
-
+              
 
 
 
@@ -640,7 +641,17 @@ namespace UI.Web.Modules._shared
                     strmenu.Append(("</a>"));
                     strmenu.Append(("</li>"));
                 }
-             
+
+
+                if (ShowPage("InventoryList.aspx"))
+                {
+                    strmenu.Append(("<li class='nk-menu-item'>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/InventoryList.aspx' class='nk-menu-link'>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-property-add'></em></span><span class='nk-menu-text'>" + Resources.Pages.StoreLocations + "</span>"));
+                    strmenu.Append(("</a>"));
+                    strmenu.Append(("</li>"));
+                }
+
                 strmenu.Append(("</ul>"));
                 strmenu.Append(("</div>"));
             }

@@ -86,7 +86,32 @@ namespace Infrastructure.DAL
         //        return result.ToList<DomainInterface.Security_pr_admin>();
         //    }
         //}
+        public Security_pr_admin GetMemberShipByAD(string Name)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.Security_pr_admin
+                         // .Include("Rule")
+                     where obj.username == Name
+                     select obj).FirstOrDefault<Security_pr_admin>();
 
+                return result;
+            }
+        }
+        public Security_pr_admin GetMemberShipById(int userCode)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.Security_pr_admin
+                         // .Include("Rule")
+                     where obj.id == userCode
+                     select obj).FirstOrDefault<Security_pr_admin>();
+
+                return result;
+            }
+        }
         public Security_pr_admin GetMemberShipByName(string Name)
         {
             using (var DC = new AssetsEntitiesNew())

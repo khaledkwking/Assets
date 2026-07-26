@@ -131,6 +131,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Drawing.Common.8.0.4\lib\net462\System.Drawing.Common.dll</HintPath>
     </Reference>
@@ -209,6 +212,7 @@
     <Content Include="Modules\Dashboard\Dashboard.aspx" />
     <Content Include="Modules\MasterData\AssetsList.aspx" />
     <Content Include="Modules\MasterData\EmployeeLocation.aspx" />
+    <Content Include="Modules\MasterData\InventoryList.aspx" />
     <Content Include="Modules\MasterData\ItemsCardMasterPrice.aspx" />
     <Content Include="Modules\MasterData\Locationslink.aspx" />
     <Content Include="Modules\MasterData\LocationsList.aspx" />
@@ -241,9 +245,48 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="wwwroot\ApiScripts\Tender\index.js" />
+    <Content Include="wwwroot\assets\css\dashlite.css" />
+    <Content Include="wwwroot\assets\css\dashlite.min.css" />
+    <Content Include="wwwroot\assets\css\dashlite.rtl.css" />
+    <Content Include="wwwroot\assets\css\dashlite.rtl.min.css" />
+    <Content Include="wwwroot\assets\css\editors\quill.css" />
+    <Content Include="wwwroot\assets\css\editors\quill.rtl.css" />
+    <Content Include="wwwroot\assets\css\editors\summernote.css" />
+    <Content Include="wwwroot\assets\css\editors\summernote.rtl.css" />
+    <Content Include="wwwroot\assets\css\editors\tinymce.css" />
+    <Content Include="wwwroot\assets\css\editors\tinymce.rtl.css" />
+    <Content Include="wwwroot\assets\css\libs\bootstrap-icons.css" />
+    <Content Include="wwwroot\assets\css\libs\buttons.dataTables.min.css" />
+    <Content Include="wwwroot\assets\css\libs\fontawesome-icons.css" />
+    <Content Include="wwwroot\assets\css\libs\jstree.css" />
+    <Content Include="wwwroot\assets\css\libs\themify-icons.css" />
+    <Content Include="wwwroot\assets\css\skins\theme-blue.css" />
+    <Content Include="wwwroot\assets\css\skins\theme-bluelite.css" />
+    <Content Include="wwwroot\assets\css\skins\theme-egyptian.css" />
+    <Content Include="wwwroot\assets\css\skins\theme-purple.css" />
+    <Content Include="wwwroot\assets\css\skins\theme-red.css" />
+    <Content Include="wwwroot\assets\css\style-email.css" />
+    <Content Include="wwwroot\assets\css\theme.css" />
     <Content Include="wwwroot\assets\js\businessScripts\orgchart.js" />
     <Content Include="wwwroot\assets\js\FormValidation.js" />
     <Content Include="wwwroot\assets\js\libs\colorbox\colorbox\jquery.colorbox.js" />
+    <Content Include="wwwroot\assets\js\libs\jstree\pdfmake.min.js" />
+    <Content Include="wwwroot\assets\js\libs\jstree\jszip.min.js.js" />
+    <Content Include="wwwroot\assets\js\libs\jstree\buttons.print.min.js" />
+    <Content Include="wwwroot\assets\js\libs\jstree\buttons.html5.min.js" />
+    <Content Include="wwwroot\assets\js\libs\jstree\dataTables.buttons.min.js" />
+    <Content Include="wwwroot\assets\js\libs\jstree\jstree.js" />
+    <Content Include="wwwroot\assets\js\libs\jstree\jstree.min.js" />
+    <Content Include="wwwroot\assets\js\libs\jstree\themes\default-dark\32px.png" />
+    <Content Include="wwwroot\assets\js\libs\jstree\themes\default-dark\40px.png" />
+    <Content Include="wwwroot\assets\js\libs\jstree\themes\default-dark\style.css" />
+    <Content Include="wwwroot\assets\js\libs\jstree\themes\default-dark\style.min.css" />
+    <Content Include="wwwroot\assets\js\libs\jstree\themes\default-dark\throbber.gif" />
+    <Content Include="wwwroot\assets\js\libs\jstree\themes\default\32px.png" />
+    <Content Include="wwwroot\assets\js\libs\jstree\themes\default\40px.png" />
+    <Content Include="wwwroot\assets\js\libs\jstree\themes\default\style.css" />
+    <Content Include="wwwroot\assets\js\libs\jstree\themes\default\style.min.css" />
+    <Content Include="wwwroot\assets\js\libs\jstree\themes\default\throbber.gif" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\Controller\Access.cs" />
@@ -401,6 +444,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Logger.cs" />
     <Compile Include="Modules\Assets\AssetCheckin.aspx.cs">
       <DependentUpon>AssetCheckin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -488,6 +532,13 @@
     </Compile>
     <Compile Include="Modules\MasterData\EmployeeLocation.aspx.designer.cs">
       <DependentUpon>EmployeeLocation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MasterData\InventoryList.aspx.cs">
+      <DependentUpon>InventoryList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\MasterData\InventoryList.aspx.designer.cs">
+      <DependentUpon>InventoryList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\MasterData\ItemsCardMasterPrice.aspx.cs">
       <DependentUpon>ItemsCardMasterPrice.aspx</DependentUpon>
@@ -786,6 +837,7 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>actions.ar-kw.designer.cs</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="Modules\Reports\RDLC\rpt_Employees.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\orgChart.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsListWithServicePeriod - Copy.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsList_No9_Compare.rdlc" />

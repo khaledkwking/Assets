@@ -7,10 +7,20 @@
     TagPrefix="asp" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <input id="hdnMasterID" runat="server" type="hidden" />
     <asp:HiddenField runat="server" ID="hdnSelectedNode" ClientIDMode="Static" />
     <input id="hdnActiveTab" runat="server" type="hidden" />
     <asp:HiddenField ID="hfSelectedEmployeeText" runat="server" ClientIDMode="Static" />
+
+
+
+        <!-- jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 
     <script language="JavaScript" type="text/javascript">
 
@@ -20,10 +30,16 @@
 
 
             var txt = document.getElementById("<%=hdnType.ClientID %>")
-            if (txt.value == "1") {
+            if (txt.value == "1" || txt.value == "2") {
                 var emp = document.getElementById("<%=lstRefEmployee.ClientID %>")
-                if (emp.value == "" || emp.value == "0") {
-                    Swal.fire("فضلا ، إحتر الموظف   ");
+                var txtName = document.getElementById("<%=txtName.ClientID %>")
+                var txtCivilID = document.getElementById("<%=txtCivilID.ClientID %>")
+                if ((emp.value == "" || emp.value == "0") && (txtName.value == "" || txtCivilID.value == "")) {
+                    Swal.fire("يجب اختيار الموظف او ادخال الاسم و الرقم المدني  ");
+                    return false;
+                }
+                else if ((emp.value != "" && emp.value != "0") && (txtName.value != "")) {
+                    Swal.fire(" فضلا ، إختر مابين الموظف او الاسم و الرقم المدني   ");
                     return false;
                 }
                 else {
@@ -60,6 +76,7 @@
             txt.value = tab;
 
         }
+
         function setSelectedtype(type) {
 
             var txt = document.getElementById("<%=hdnType.ClientID %>");
@@ -68,15 +85,61 @@
             if (txt.value == "1") {
                 $('.divEmployee').toggle(true);
                 $('.divSelectedEmployeeInfo').toggle(true);
+                /*$('.divOrgOwner').toggle(false);*/
 
             } else {
-                $('.divEmployee').toggle(false);
-                $('.divSelectedEmployeeInfo').toggle(false);
+                $('.divEmployee').toggle(true);
+                $('.divSelectedEmployeeInfo').toggle(true);
+                /*$('.divOrgOwner').toggle(true);*/
+
             }
         }
 
 
         $(document).ready(function () {
+
+            var civilIdInput = $('#<%= txtCivilID.ClientID %>');
+
+            // Allow only digits and prevent more than 12 digits
+            civilIdInput.on('keypress', function (e) {
+                var charCode = e.which ? e.which : e.keyCode;
+
+                // Block non-digit characters
+                if (charCode < 48 || charCode > 57) {
+                    e.preventDefault();
+                    return;
+                }
+
+                // Prevent input if already 12 digits
+                if ($(this).val().length >= 12) {
+                    e.preventDefault();
+                }
+            });
+
+            // Client-side validation on form submit
+            $('form').on('submit', function (e) {
+                var value = civilIdInput.val();
+                if (!/^\d{12}$/.test(value)) {
+                    alert("الرقم المدني يجب أن يكون مكونًا من 12 رقمًا");
+                    civilIdInput.addClass('is-invalid').focus();
+                    e.preventDefault();
+                    return false;
+                } else {
+                    civilIdInput.removeClass('is-invalid');
+                }
+            });
+
+            // Validate on blur (when leaving the field)
+            civilIdInput.on('blur', function () {
+                var value = $(this).val();
+                if (!/^\d{12}$/.test(value)) {
+                    civilIdInput.addClass('is-invalid');
+                    alert("الرقم المدني يجب أن يكون مكونًا من 12 رقمًا");
+                } else {
+                    civilIdInput.removeClass('is-invalid');
+                }
+            });
+
             // $("#disReturnDate").toggle(false);
             $('#chkReturnDate').click(function () {
                 $("#disReturnDate").toggle(this.checked);
@@ -91,13 +154,17 @@
                 $("#customRadio1").prop("checked", true);
                 $("#customRadio2").prop("checked", false);
                 $('.divEmployee').toggle(true);
+                /*$('.divOrgOwner').toggle(true);*/
             } else if (hdnType.value == "2") {
                 $("#customRadio1").prop("checked", false);
                 $("#customRadio2").prop("checked", true);
-                $('.divEmployee').toggle(false);
+                $('.divEmployee').toggle(true);
+                /*$('.divOrgOwner').toggletruefalse);*/
+
             } else {
                 $("#customRadio1").prop("checked", true);
                 $("#customRadio2").prop("checked", false);
+                /*$('.divOrgOwner').toggle(false);*/
             }
 
 
@@ -115,216 +182,176 @@
 
                     });
                 });
-            function initializeDatepicker() {
-                $(".datepicker").datepicker({
-                    dateFormat: 'dd-mm-yy', // Date format as per your needs
-                    changeMonth: true,
-                    changeYear: true
-                });
+
+
+            function isNumberKeyq(evt) {
+               
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                if (charCode == 13) {
+                    var btn = getObjById("btnAddItem")
+                    //alert("Enter Key "+btn.value);
+                    btn.click();
+                    return false
+                }
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+
+                return true;
             }
 
-            // Call it on page load
-            initializeDatepicker();
+            function InsertItem() {
+                //   alert("insert");
+                var isbn = getObjById("txtItemCode").value;
+                var barcode = getObjById("txtBar").value;
+                var desc = getObjById("txtItemDesc").value;
 
-            // Reinitialize datepicker on partial postback or row edit
-            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-                initializeDatepicker();
-            });
-        });
+                alert(isbn);
 
-        function isNumberKeyq(evt) {
-            var charCode = (evt.which) ? evt.which : event.keyCode
-            if (charCode == 13) {
-                var btn = getObjById("btnAddItem")
-                //alert("Enter Key "+btn.value);
-                btn.click();
-                return false
+                if (isbn == "" && barcode == "" && desc == "") {
+                    alert("You should insert either the item Number, Bar Code or the item description");
+                    return false;
+                }
+                document.getElementById("<%=hidIsbn.ClientID %>").value = isbn;
+                document.getElementById("<%=hidBar.ClientID %>").value = barcode;
+                document.getElementById("<%=hidDesc.ClientID %>").value = desc;
+
+                var txtCurr = getObjById("txtFooterQuantity");
+                var txtCost = getObjById("txtFooterCost");
+                if (txtCurr.value == "") {
+                    alert("Error, Please insert the quantity  !");
+                    txtCurr.focus();
+                    return false;
+                }
+                if (!chkPriceObj(txtCurr)) {
+                    alert("Error, Please insert a valid quantity number!");
+                    txtCurr.focus();
+                    return false;
+                }
+                //if (txtCost.value == "") {
+                //    alert("Error, Please insert the unit cost!");
+                //    txtCost.focus();
+                //    return false;
+                //}
+                //if (!chkPriceObj(txtCost)) {
+                //    alert("Error, Please insert a valid unit cost number!");
+                //    txtCost.focus();
+                //    return false;
+                //}
+
+
+                document.getElementById("<%=hidQty.ClientID %>").value = txtCurr.value;
+                document.getElementById("<%=hidPrice.ClientID %>").value = txtCost.value;
+                document.getElementById("<%=hidCurrency.ClientID %>").value = getObjById("lstCurrency").value;
+
+                // alert("before add");
+                var btnAdd = document.getElementById("<%=btnAddNewItem.ClientID %>")
+                alert(btnAdd);
+                btnAdd.click();
             }
-            if (charCode > 31 && (charCode < 48 || charCode > 57))
-                return false;
+            function NumberKey(evt, index) // when the user click enter in the new item form
+            {
+                alert("jj");
+                //alert("DEFAULT: "+document.getElementById("<%=txtDefault.ClientID %>"));
 
-            return true;
-        }
-
-        function InsertItem() {
-            //   alert("insert");
-            var isbn = getObjById("txtItemCode").value;
-            var barcode = getObjById("txtBar").value;
-            var desc = getObjById("txtItemDesc").value;
-
-            alert(isbn);
-
-            if (isbn == "" && barcode == "" && desc == "") {
-                alert("You should insert either the item Number, Bar Code or the item description");
-                return false;
+                document.getElementById("<%=txtDefault.ClientID %>").value = index;
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                //alert("CODE: "+charCode);
+                if (charCode == 13) {
+                    InsertItem();
+                    return false;
+                }
             }
-            document.getElementById("<%=hidIsbn.ClientID %>").value = isbn;
-            document.getElementById("<%=hidBar.ClientID %>").value = barcode;
-            document.getElementById("<%=hidDesc.ClientID %>").value = desc;
-
-            var txtCurr = getObjById("txtFooterQuantity");
-            var txtCost = getObjById("txtFooterCost");
-            if (txtCurr.value == "") {
-                alert("Error, Please insert the quantity  !");
-                txtCurr.focus();
-                return false;
+            function NumberKeyEdit(evt, index) // when the user click enter in the edit quantity
+            {
+                document.getElementById("<%=txtDefault.ClientID %>").value = index;
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                alert("CODE: "+charCode);
+                if (charCode == 13) {
+                    //alert("ENTER KEY CONTENT: "+hidContent);
+                    if (CheckQuantity(getObjById("txtQuantity").id, getObjById("txtItemCost").id)) {
+                        //alert("SUCCESS");
+                        btnUp = getObjById("btnUpdateItem");
+                        //alert("UP: "+btnUp);
+                        btnUp.click();
+                    }
+                    return false
+                }
+                else if (charCode == 27) {
+                    btnCancel = getObjById("btnCancelItem");
+                    btnCancel.click();
+                }
             }
-            if (!chkPriceObj(txtCurr)) {
-                alert("Error, Please insert a valid quantity number!");
-                txtCurr.focus();
-                return false;
-            }
-            //if (txtCost.value == "") {
-            //    alert("Error, Please insert the unit cost!");
-            //    txtCost.focus();
-            //    return false;
-            //}
-            //if (!chkPriceObj(txtCost)) {
-            //    alert("Error, Please insert a valid unit cost number!");
-            //    txtCost.focus();
-            //    return false;
-            //}
-
-
-            document.getElementById("<%=hidQty.ClientID %>").value = txtCurr.value;
-            document.getElementById("<%=hidPrice.ClientID %>").value = txtCost.value;
-            document.getElementById("<%=hidCurrency.ClientID %>").value = getObjById("lstCurrency").value;
-
-            // alert("before add");
-            var btnAdd = document.getElementById("<%=btnAddNewItem.ClientID %>")
-            alert(btnAdd);
-            btnAdd.click();
-        }
-        function NumberKey(evt, index) // when the user click enter in the new item form
-        {
-        //alert("jj");
-            //alert("DEFAULT: "+document.getElementById("<%=txtDefault.ClientID %>"));
-            document.getElementById("<%=txtDefault.ClientID %>").value = index;
-            var charCode = (evt.which) ? evt.which : event.keyCode
-            //alert("CODE: "+charCode);
-            if (charCode == 13) {
+            function LinkAddClick() {
                 InsertItem();
                 return false;
             }
-        }
-        function NumberKeyEdit(evt, index) // when the user click enter in the edit quantity
-        {
-            document.getElementById("<%=txtDefault.ClientID %>").value = index;
-            var charCode = (evt.which) ? evt.which : event.keyCode
-            //alert("CODE: "+charCode);
-            if (charCode == 13) {
-                //alert("ENTER KEY CONTENT: "+hidContent);
-                if (CheckQuantity(getObjById("txtQuantity").id, getObjById("txtItemCost").id)) {
-                    //alert("SUCCESS");
-                    btnUp = getObjById("btnUpdateItem");
-                    //alert("UP: "+btnUp);
-                    btnUp.click();
-                }
-                return false
-            }
-            else if (charCode == 27) {
-                btnCancel = getObjById("btnCancelItem");
-                btnCancel.click();
-            }
-        }
-        function LinkAddClick() {
-            InsertItem();
-            return false;
-        }
 
-        function ShipKey(evt) {
-            var charCode = (evt.which) ? evt.which : event.keyCode
-            if (charCode == 13) {
-                var btn = getObjById("btnAddExpense")
-                //alert("Enter Key "+btn.value);
-                btn.click();
-                return false
-            }
-        }
-
-
-        function CheckQuantity(quanid, costid) {
-            var txt = document.getElementById(quanid);
-            var c = document.getElementById(costid);
-            if (txt.value == "") {
-                alert("You should insert the modified quantity!");
-                txt.focus();
-                txt.select();
-                return false;
-            }
-            if (!chkPriceObj(txt)) {
-                alert("Error, Please insert a valid quantity number");
-                txt.focus();
-                txt.select();
-                return false;
-            }
-            if (c.value == "") {
-                alert("You should insert the item unit cost!");
-                c.focus();
-                c.select();
-                return false;
-            }
-            if (!chkPriceObj(c)) {
-                alert("Error, Please insert a valid cost number");
-                c.focus();
-                c.select();
-                return false;
-            }
-            var oldq = document.getElementById("<%=hidOldQuantity.ClientID %>").value;
-            var oldc = document.getElementById("<%=hidOldCost.ClientID %>").value;
-            //alert("OLD Q: "+oldq+" and OLD C: "+oldc+" NEW Q: "+txt.value+" and New C: "+c.value);
-            if ((oldq != txt.value) || (oldc != c.value))
-                return confirm("Are you sure you want to update this item??");
-
-            return true;
-        }
-        function getObjById(id) {
-            for (var i = 0; i < document.forms[0].elements.length; i++) {
-                elm = document.forms[0].elements[i]
-                if (elm.id.indexOf(id) != -1) {
-                    return elm;
+            function ShipKey(evt) {
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                if (charCode == 13) {
+                    var btn = getObjById("btnAddExpense")
+                    //alert("Enter Key "+btn.value);
+                    btn.click();
+                    return false
                 }
             }
-            return null;
-        }
 
-        function ComputeTotal() {
 
-          <%--  var txtItems = document.getElementById("<%=lblItemsTotal.ClientID %>");
-            document.getElementById("spnItem").innerHTML = txtItems.innerHTML;
-            var txtExp = document.getElementById("<%=lblExpTotal.ClientID %>");
-            document.getElementById("spnOther").innerHTML = txtExp.innerHTML;
-            var txtShip = document.getElementById("<%=txtShip.ClientID %>");
+            function CheckQuantity(quanid, costid) {
+                var txt = document.getElementById(quanid);
+                var c = document.getElementById(costid);
+                if (txt.value == "") {
+                    alert("You should insert the modified quantity!");
+                    txt.focus();
+                    txt.select();
+                    return false;
+                }
+                if (!chkPriceObj(txt)) {
+                    alert("Error, Please insert a valid quantity number");
+                    txt.focus();
+                    txt.select();
+                    return false;
+                }
+                if (c.value == "") {
+                    alert("You should insert the item unit cost!");
+                    c.focus();
+                    c.select();
+                    return false;
+                }
+                if (!chkPriceObj(c)) {
+                    alert("Error, Please insert a valid cost number");
+                    c.focus();
+                    c.select();
+                    return false;
+                }
+                var oldq = document.getElementById("<%=hidOldQuantity.ClientID %>").value;
+                var oldc = document.getElementById("<%=hidOldCost.ClientID %>").value;
+                //alert("OLD Q: "+oldq+" and OLD C: "+oldc+" NEW Q: "+txt.value+" and New C: "+c.value);
+                if ((oldq != txt.value) || (oldc != c.value))
+                    return confirm("Are you sure you want to update this item??");
 
-            var it = parseFloat(txtItems.innerHTML);
-            var ex = parseFloat(txtExp.innerHTML);
-            var ss = parseFloat(txtShip.value);
-            var total = 0;
-            //alert("COMPUTING: IT: "+it+"   and EXPEN: "+ex+" ISNAN: "+isNaN);
-            if (!isNaN(parseFloat(txtItems.innerHTML)) && !isNaN(parseFloat(txtExp.innerHTML))) {
-                //alert("ALL IS RIGHT:")
-                total = it + ex;
+                return true;
             }
-            if (parseFloat(txtShip.value)) {
-                //alert("TOTAL BEFORE: "+total);
-                total = total + ss;
-
+            function getObjById(id) {
+                for (var i = 0; i < document.forms[0].elements.length; i++) {
+                    elm = document.forms[0].elements[i]
+                    if (elm.id.indexOf(id) != -1) {
+                        return elm;
+                    }
+                }
+                return null;
             }
-            //alert("TOTAL: "+total+" and PLACE: "+document.getElementById("<%=lblTotalAmount.ClientID %>"));
-            document.getElementById("<%=lblTotalAmount.ClientID %>").innerHTML = formatCurrency(total + "");
-            document.getElementById("hidTotal").value = total;
-            //document.getElementById("<%=txtPaidAmount.ClientID %>").value=total;--%>
 
-        }
-        listen("load", window, preloadImages);
 
+            listen("load", window, preloadImages);
+        });
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
             // Function to initialize the DatePicker
             function initializeDatepicker() {
-                $(".date-picker").datepicker({
-                    dateFormat: 'dd/mm/yyyy',   // Set the date format (optional)
+                $(".date-pickers").datepicker({
+                    dateFormat: 'dd/mm/yy',   // Set the date format (optional)
                     changeMonth: true,
                     changeYear: true
                 });
@@ -338,18 +365,60 @@
                 initializeDatepicker();
             });
         });
-</script>
+
+    </script>
 
     <style>
-        .autocomplete {
-            font-size: 15px !important;
-            line-height: normal;
-            padding: 10px 35px !important; /* Add padding around each item */
-            margin-bottom: 5px !important; /* Add space between items */
-            border-bottom: 1px solid #ddd !important; /* Optional: Add a bottom border for separation */
-            text-align: right; /* Increase font size for all items */
-            width: auto;
-        }
+    
+/* القائمة نفسها (ul) */
+/* القائمة نفسها */
+.autocomplete_completionListElement {
+    width: 400px !important;
+    max-height: 500px;
+    overflow-y: auto;
+    background-color: #fff;
+    z-index: 9999;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 5px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: "Cairo", Tahoma, sans-serif;
+    font-size: 15px;
+    text-align: right !important;
+    direction: rtl !important;      /* 🔥 يفرض الاتجاه من اليمين */
+    unicode-bidi: bidi-override;    /* 🔥 يجبر ترتيب النص RTL */
+    left:700px !important;
+}
+
+/* العناصر داخل القائمة */
+.autocomplete_completionListElement li {
+    line-height:50px;
+    display: block !important;      /* مهم عشان padding يشتغل */
+    text-align: right !important;
+    direction: rtl !important;
+    padding: 8px 20px;
+    margin-bottom: 3px;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* آخر عنصر بدون خط */
+.autocomplete_completionListElement li:last-child {
+    border-bottom: none;
+}
+
+/* عند المرور بالماوس */
+.autocomplete_completionListElement li:hover {
+    background-color: #f5f8fc;
+    color: #0C476B;
+    padding-right: 25px;
+}
+
+
+
     </style>
     <input id="hdnType" runat="server" type="hidden" />
 
@@ -401,7 +470,6 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
-
     <div class="nk-block">
 
         <div class="card card-bordered">
@@ -428,8 +496,8 @@
                                         </a>
                                         <div class="dropdown-menu  dropdown-menu-right" style="">
                                             <ul class="link-check">
-                                                <li><a href="<%=GetGlobalResourceObject("Utilities","cutureRoute") %>/Modules/Assets/AssetCheckout.aspx?t=1"><span class='nk-menu-icon'><em class='icon ni ni-user-list-fill'></em></span><span class='nk-menu-text'><%=GetGlobalResourceObject("Pages","CustodyAdd") %></span></a></li>
-                                                <li><a href="<%=GetGlobalResourceObject("Utilities","cutureRoute") %>/Modules/Assets/AssetCheckout.aspx?t=2"><span class='nk-menu-icon'><em class='icon ni ni-focus'></em></span><span class='nk-menu-text'><%=GetGlobalResourceObject("Pages","CustodyAdd1") %></span></a></li>
+                                                <%--<li><a href="<%=GetGlobalResourceObject("Utilities","cutureRoute") %>/Modules/Assets/AssetCheckout.aspx?t=1"><span class='nk-menu-icon'><em class='icon ni ni-user-list-fill'></em></span><span class='nk-menu-text'><%=GetGlobalResourceObject("Pages","CustodyAdd") %></span></a></li>
+                                                <li><a href="<%=GetGlobalResourceObject("Utilities","cutureRoute") %>/Modules/Assets/AssetCheckout.aspx?t=2"><span class='nk-menu-icon'><em class='icon ni ni-focus'></em></span><span class='nk-menu-text'><%=GetGlobalResourceObject("Pages","CustodyAdd1") %></span></a></li>--%>
                                                 <li id="viewPrint" runat="server" visible="false"><a id="lnkPrintRequest" runat="server" href="#" class="iframe75 text-danger"><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text'><%=GetGlobalResourceObject("Pages","PrintRequest") %></span></a></li>
 
                                                 <li id="viewAssetsInventoryPrint" runat="server" visible="false"><a id="lnkAssetsInventoryPrint" runat="server" href="#" class="iframe75 text-danger"><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text'>طباعة بطاقة الجرد</span></a></li>
@@ -545,13 +613,14 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","CustodtDate") %></label>
+                                                    <label class="control-label" for="">تاريخ إنشاء الإستمارة</label>
 
                                                     <div class="form-control-wrap">
                                                         <div class="form-icon form-icon-right">
                                                             <em class="icon ni ni-calendar-alt"></em>
                                                         </div>
-                                                        <asp:TextBox runat="server" ID="txtRequestDate" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                                                        <asp:TextBox runat="server" ID="txtRequestDate" placeholder="__/__/____" class="form-control date-pickers"></asp:TextBox>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -563,7 +632,7 @@
                                                     <%--<asp:DropDownList runat="server" ID="lstToLocation"></asp:DropDownList>--%>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" style="display:none">
 
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input" id="chkReturnDate">
@@ -576,7 +645,7 @@
                                                         <div class="form-icon form-icon-right">
                                                             <em class="icon ni ni-calendar-alt"></em>
                                                         </div>
-                                                        <asp:TextBox runat="server" ID="txtReturnDate" placeholder="__/__/____" class="form-control date-picker" ClientIDMode="Static"></asp:TextBox>
+                                                        <asp:TextBox runat="server" ID="txtReturnDate" placeholder="__/__/____" class="form-control date-pickers" ClientIDMode="Static"></asp:TextBox>
                                                     </div>
 
 
@@ -589,6 +658,25 @@
 
                                                     <div id="cboxLoadedContent">
                                                     </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row" id="divOrgOwner" runat="server">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="">الاسم</label>
+                                                    <asp:TextBox runat="server" ID="txtName" CssClass="form-control"></asp:TextBox>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="">الرقم المدني</label>
+                                                    <asp:TextBox runat="server" ID="txtCivilID" CssClass="form-control"></asp:TextBox>
+
 
                                                 </div>
                                             </div>
@@ -640,7 +728,9 @@
                                         <input type="hidden" id="txtFocus" value="0" runat="server" />
                                         <asp:Button runat="server" ID="btnHide" Text="Hide Me" Style="display: none;" OnClick="btnHide_Click" />
 
-
+                                        <div class="form-group mt-2 pull-left">
+                                            <asp:LinkButton ID="btnConvert" runat="server" OnClientClick="return chkImage();" OnClick="btnConvert_Click" class="btn btn-primary"><i class='icon ni ni-edit'></i> </asp:LinkButton>
+                                        </div>
 
                                         <asp:DataGrid ID="grdCustodyItems" runat="server" AllowPaging="false" ShowFooter="true"
                                             DataKeyField="EventCode" class="table table-hover table-striped table-bordered table-advanced tablesorter" PageSize="15" AutoGenerateColumns="False"
@@ -721,8 +811,7 @@
                                                     <ItemStyle Width="30%" />
                                                     <ItemTemplate>
                                                         <%--<%#DataBinder.Eval(Container.DataItem, "ItemNameAr")%>--%>
-                                                         <%# HttpUtility.HtmlEncode(Eval("ItemNameAr")) %>
-                                                        
+                                                        <%# HttpUtility.HtmlEncode(Eval("ItemNameAr")) %>
                                                     </ItemTemplate>
                                                     <EditItemTemplate>
                                                         <asp:Label Visible="false" runat="server" ID="lblDesc">
@@ -730,10 +819,23 @@
                                                         </asp:Label>
                                                         <asp:TextBox onkeypress="return NumberKey(event,3)" runat="server"
                                                             ID="txtItemDesc" CssClass="form-control"></asp:TextBox>
-                                                        <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2"
+                                                      <%--  <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2"
                                                             runat="server" TargetControlID="txtItemDesc"
                                                             CompletionInterval="10" CompletionSetCount="10" MinimumPrefixLength="1" CompletionListItemCssClass="autocomplete"
-                                                            ServicePath="/modules/autocomplete/Services/TextAutoComplete.asmx" ServiceMethod="ItemAutoCompete" />
+                                                            ServicePath="/modules/autocomplete/Services/TextAutoComplete.asmx" ServiceMethod="ItemAutoCompete" />--%>
+                                                      <ajaxToolkit:AutoCompleteExtender 
+                                                            ID="AutoCompleteExtender2"
+                                                            runat="server"
+                                                            TargetControlID="txtItemDesc"
+                                                            CompletionInterval="10"
+                                                            CompletionSetCount="10"
+                                                            MinimumPrefixLength="1"
+                                                            ServicePath="/modules/autocomplete/Services/TextAutoComplete.asmx"
+                                                            ServiceMethod="ItemAutoCompete"
+                                                            CompletionListCssClass="autocomplete_completionListElement" />
+
+
+
                                                     </EditItemTemplate>
                                                 </asp:TemplateColumn>
                                                 <asp:TemplateColumn HeaderText="الكمية/الرصيد">
@@ -806,7 +908,9 @@
                                                     <ItemTemplate>
 
                                                         <asp:Label ID="lbldates" runat="server">
-                                                            <%#NullDateifEmptyText( DataBinder.Eval(Container.DataItem, "ActionDate" ,"{0:dd-MM-yyyy}"))%>
+<%--                                                            <%#NullDateifEmptyText( DataBinder.Eval(Container.DataItem, "ActionDate" ,"{0:dd-MM-yyyy}"))% --%>
+                                                            <%# FormatDate(Eval("ActionDate")) %>
+
                                                         </asp:Label>
                                                     </ItemTemplate>
                                                     <EditItemTemplate>
@@ -817,15 +921,26 @@
                                                             <div class="form-icon form-icon-right">
                                                                 <em class="icon ni ni-calendar-alt"></em>
                                                             </div>
-                                                            <asp:TextBox runat="server" ID="txtCustodyDate" Text='<%#NullDateifEmptyText(Eval("ActionDate")).Equals("")?NullDateifEmptyText(DateTime.Now):NullDateifEmptyText(Eval("ActionDate")) %>' placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                                                            <asp:TextBox runat="server" ID="txtCustodyDate" Text='<%#NullDateifEmptyText(Eval("ActionDate")).Equals("")?NullDateifEmptyText(DateTime.Now):NullDateifEmptyText(Eval("ActionDate")) %>' placeholder="__/__/____" class="form-control date-pickers"></asp:TextBox>
                                                         </div>
 
                                                     </EditItemTemplate>
                                                 </asp:TemplateColumn>
+                                                <asp:TemplateColumn HeaderText="تاريخ التشغيل">
+                                                    <HeaderStyle Wrap="false" />
+                                                    <ItemStyle Width="20%" />
+                                                    <ItemTemplate>
+
+                                                        <asp:Label ID="lbldatesxx" runat="server" Enabled="false">
+                                                            <%#NullDateifEmptyText( DataBinder.Eval(Container.DataItem, "ItemDate" ,"{0:dd-MM-yyyy}"))%>
+                                                        </asp:Label>
+                                                    </ItemTemplate>
+
+                                                </asp:TemplateColumn>
                                                 <asp:TemplateColumn HeaderText="الحالة">
                                                     <ItemTemplate>
                                                         <!-- Label for View Mode -->
-                                                       <asp:Label  runat="server" ID="lblStatusIdTitle" Text=' <%#DataBinder.Eval(Container.DataItem, "ItemUsedStatusTitle")%>'> </asp:Label>
+                                                        <asp:Label runat="server" ID="lblStatusIdTitle" Text=' <%#DataBinder.Eval(Container.DataItem, "ItemUsedStatusTitle")%>'> </asp:Label>
                                                     </ItemTemplate>
                                                     <EditItemTemplate>
                                                         <asp:Label Visible="false" runat="server" ID="lblStatusId" Text='<%#DataBinder.Eval(Container.DataItem, "ItemUsedStatus")%>'> </asp:Label>
@@ -835,7 +950,7 @@
                                                         </asp:DropDownList>
                                                     </EditItemTemplate>
                                                 </asp:TemplateColumn>
-                                                <asp:TemplateColumn HeaderText="أمر الصرف">
+                                                <asp:TemplateColumn HeaderText="أمر الصرف" Visible="false">
                                                     <HeaderStyle Wrap="false" />
                                                     <ItemStyle Width="10%" />
                                                     <ItemTemplate>
@@ -894,7 +1009,7 @@
 
         </div>
     </div>
-    <script src="/wwwroot/assets/js/businessScripts/assetsCheckout.js"></script>
+    <script src="/wwwroot/assets/js/businessscripts/Assetscheckout.js"></script>
 
     <%--  <script src="/wwwroot/assets/js/businessScripts/locationCombo.js"></script>--%>
 </asp:Content>

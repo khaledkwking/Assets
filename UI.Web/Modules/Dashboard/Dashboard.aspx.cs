@@ -21,7 +21,7 @@ namespace UI.Web.Modules.Dashboard
         {
             if(!IsPostBack)
             {
-               // BindData();
+                BindData();
             }
         }
         private void BindData()
@@ -105,7 +105,7 @@ namespace UI.Web.Modules.Dashboard
         private void FillGridAssets(string Type)
         {
             var objlist = objRepository.getAssetsRequestList("", 0,
-                NullDateifEmpty(""), NullDateifEmpty(""), 0, 0, 0, 0);
+                NullDateifEmpty(""), NullDateifEmpty(""), 0, 0, 0, 0,"");
             //using (AssetsEntitiesNew en = new AssetsEntitiesNew())
             //{
                 //var objlist = en.AssetsEventTrackingHeaders.ToList();

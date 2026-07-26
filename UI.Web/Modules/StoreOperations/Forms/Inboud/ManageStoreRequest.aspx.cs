@@ -139,12 +139,12 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud
 
                 if (Session["selectedItems"] != null)
                 {
-                    var objList = (List<view_AssetsList>)Session["selectedItems"];
-                    view_AssetsList selected = objList.Where(x => x.InboubdItemId == ZeroIntergerIFNull(e.Item.Cells[0].Text)).FirstOrDefault();
-                    objList.Remove(selected);
+                    //var objList = (List<view_AssetsList>)Session["selectedItems"];
+                    //view_AssetsList selected = objList.Where(x => x.InboubdItemId == ZeroIntergerIFNull(e.Item.Cells[0].Text)).FirstOrDefault();
+                    //objList.Remove(selected);
 
-                    Session["selectedItems"] = objList;
-                    fillRequestItems();
+                    //Session["selectedItems"] = objList;
+                    //fillRequestItems();
                 }
 
             }

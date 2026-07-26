@@ -790,7 +790,6 @@
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -987,55 +986,6 @@
                                 <Direction>RTL</Direction>
                               </Style>
                             </Textbox>
-                            <Textbox Name="RequestDate">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value xml:space="preserve"> </Value>
-                                      <Style>
-                                        <FontSize>11pt</FontSize>
-                                        <Format>d</Format>
-                                      </Style>
-                                    </TextRun>
-                                    <TextRun>
-                                      <Value>تاريخ الإستمارة:</Value>
-                                      <Style>
-                                        <FontSize>11pt</FontSize>
-                                      </Style>
-                                    </TextRun>
-                                    <TextRun>
-                                      <Value>=First(Fields!RequestDate.Value)</Value>
-                                      <Style>
-                                        <FontSize>11pt</FontSize>
-                                        <Format>d</Format>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style>
-                                    <TextAlign>Left</TextAlign>
-                                  </Style>
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>RequestDate</rd:DefaultName>
-                              <Top>0.86492in</Top>
-                              <Left>0.26906in</Left>
-                              <Height>0.25in</Height>
-                              <Width>2.41931in</Width>
-                              <ZIndex>4</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                                <Direction>RTL</Direction>
-                              </Style>
-                            </Textbox>
                             <Textbox Name="Textbox20">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
@@ -1067,7 +1017,7 @@
                               <Left>7.47554in</Left>
                               <Height>0.25in</Height>
                               <Width>3.56125in</Width>
-                              <ZIndex>5</ZIndex>
+                              <ZIndex>4</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1111,7 +1061,7 @@
                               <Left>0.49258in</Left>
                               <Height>0.25in</Height>
                               <Width>5.24875in</Width>
-                              <ZIndex>6</ZIndex>
+                              <ZIndex>5</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1155,43 +1105,7 @@
                               <Left>2.60716in</Left>
                               <Height>0.25in</Height>
                               <Width>3.13416in</Width>
-                              <ZIndex>7</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                                <Direction>RTL</Direction>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox25">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>رقم مركز العمل:  </Value>
-                                      <Style>
-                                        <FontSize>12pt</FontSize>
-                                        <FontWeight>Bold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style>
-                                    <TextAlign>Right</TextAlign>
-                                  </Style>
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox18</rd:DefaultName>
-                              <Top>0.4359in</Top>
-                              <Left>0.49258in</Left>
-                              <Height>0.25in</Height>
-                              <Width>2.08681in</Width>
-                              <ZIndex>8</ZIndex>
+                              <ZIndex>6</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1259,7 +1173,7 @@
                               <Left>5.93843in</Left>
                               <Height>0.25in</Height>
                               <Width>5.09837in</Width>
-                              <ZIndex>9</ZIndex>
+                              <ZIndex>7</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1327,7 +1241,7 @@
                               <Left>5.93844in</Left>
                               <Height>0.25in</Height>
                               <Width>5.09836in</Width>
-                              <ZIndex>10</ZIndex>
+                              <ZIndex>8</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1363,7 +1277,7 @@
                               <Left>0.85284in</Left>
                               <Height>0.7135in</Height>
                               <Width>2.28in</Width>
-                              <ZIndex>11</ZIndex>
+                              <ZIndex>9</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1403,7 +1317,7 @@
                               <Left>8.73882in</Left>
                               <Height>0.7135in</Height>
                               <Width>2.28in</Width>
-                              <ZIndex>12</ZIndex>
+                              <ZIndex>10</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1443,7 +1357,7 @@
                               <Left>4.77856in</Left>
                               <Height>0.7135in</Height>
                               <Width>2.28in</Width>
-                              <ZIndex>13</ZIndex>
+                              <ZIndex>11</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1483,7 +1397,7 @@
                               <Left>4.11232in</Left>
                               <Height>0.34722in</Height>
                               <Width>2.94624in</Width>
-                              <ZIndex>14</ZIndex>
+                              <ZIndex>12</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1523,7 +1437,7 @@
                               <Left>4.11232in</Left>
                               <Height>0.34722in</Height>
                               <Width>2.94624in</Width>
-                              <ZIndex>15</ZIndex>
+                              <ZIndex>13</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1563,7 +1477,7 @@
                               <Left>4.11232in</Left>
                               <Height>0.34722in</Height>
                               <Width>2.94624in</Width>
-                              <ZIndex>16</ZIndex>
+                              <ZIndex>14</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1603,7 +1517,7 @@
                               <Left>0.1866in</Left>
                               <Height>0.34722in</Height>
                               <Width>2.94624in</Width>
-                              <ZIndex>17</ZIndex>
+                              <ZIndex>15</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1643,7 +1557,7 @@
                               <Left>0.1866in</Left>
                               <Height>0.34722in</Height>
                               <Width>2.94624in</Width>
-                              <ZIndex>18</ZIndex>
+                              <ZIndex>16</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1683,7 +1597,7 @@
                               <Left>0.1866in</Left>
                               <Height>0.34722in</Height>
                               <Width>2.94624in</Width>
-                              <ZIndex>19</ZIndex>
+                              <ZIndex>17</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1696,6 +1610,50 @@
                                 <PaddingRight>5pt</PaddingRight>
                                 <PaddingTop>5pt</PaddingTop>
                                 <PaddingBottom>5pt</PaddingBottom>
+                                <Direction>RTL</Direction>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox43">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>رقم مركز العمل :  </Value>
+                                      <Style>
+                                        <FontSize>12pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=First(Fields!EmpRefCode.Value)</Value>
+                                      <Style>
+                                        <FontSize>12pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>#0c476b</Color>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox18</rd:DefaultName>
+                              <Top>0.4359in</Top>
+                              <Left>0.29687in</Left>
+                              <Height>0.25in</Height>
+                              <Width>2.08681in</Width>
+                              <ZIndex>18</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
                                 <Direction>RTL</Direction>
                               </Style>
                             </Textbox>
@@ -1944,6 +1902,12 @@
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="AssetType">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -1954,6 +1918,11 @@
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>username</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>AssetType</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

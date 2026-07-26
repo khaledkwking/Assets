@@ -168,7 +168,7 @@ namespace Infrastructure.DAL
 
 
         #region "Inbound Items Units"
-        public D_ItemCard getItemCardDetails(int _Code)
+        public D_ItemCard getItemCardDetails(long _Code)
         {
             using (var DC = new AssetsEntitiesNew())
             {
@@ -271,7 +271,11 @@ namespace Infrastructure.DAL
             {
                 //var item = DC.News.Where(N => N.newsId == id).FirstOrDefault();
                 DC.Entry(item as AssetsItemUnit).State = System.Data.Entity.EntityState.Deleted;
+
+
                 return DC.SaveChanges();
+
+
             }
         }
 

@@ -31,9 +31,21 @@ namespace UI.Web.Admin.Pages
                             Response.Redirect(Request.QueryString["ReturnUrl"]);
                         }
                         else
-                        { Response.Redirect(Resources.Utilities.cutureRoute +"/Admin/Pages/Home.aspx"); }
+                        { Response.Redirect(Resources.Utilities.cutureRoute + "/Modules/MasterData/OrgChartTree.aspx"); }
                       
                     }
+                    ADLogin();
+                }
+                else
+                {
+                    Session.Clear();
+                    Session.Abandon();
+                    // Response.Cookies..Delete("CMGS_CON");
+                    // clear authentication cookie
+                    HttpCookie cookie1 = new HttpCookie("CMGS_CON", "");
+                    cookie1.Expires = DateTime.Now.AddYears(-1);
+                    Response.Cookies.Add(cookie1);
+
                 }
             }
         }
@@ -58,9 +70,9 @@ namespace UI.Web.Admin.Pages
                     // Now encrypt the ticket.
                     string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
                     // Add the encrypted ticket to the cookie collection.
-                    HttpCookie authCookie = new HttpCookie("WHMPORTAL", encryptedTicket);
+                    HttpCookie authCookie = new HttpCookie("CMGS_CON", encryptedTicket);
                     //Add Cookie With User Name 
-                    authCookie["WHMPORTAL"] = UserInfo;
+                    authCookie["CMGS_CON"] = UserInfo;
                     authCookie.Expires = DateTime.Now.AddDays(1);
                     Response.Cookies.Add(authCookie);
                     lblError.Visible = false;
@@ -82,7 +94,7 @@ namespace UI.Web.Admin.Pages
                     Response.Redirect(Request.QueryString["ReturnUrl"]);
                 }
                 else
-                { Response.Redirect(Resources.Utilities.cutureRoute  +"/Admin/Pages/Home.aspx"); }
+                { Response.Redirect(Resources.Utilities.cutureRoute  + "/Modules/MasterData/OrgChartTree.aspx"); }
 
             }
             else
@@ -90,6 +102,80 @@ namespace UI.Web.Admin.Pages
                 lblError.Visible = true;
                 lblError.Text = "<div class='alert alert-danger'>Error, "+ txtUsername.Text + " is invalid user Or Wrong Password</div>";
             }
+
+
+
+        }
+        private void ADLogin()
+        {
+            // Validate Current User
+
+            // string Name = new System.Security.Principal.WindowsPrincipal(System.Security.Principal.WindowsIdentity.GetCurrent()).Identity.Name;
+           // string userName = HttpContext.Current.User.Identity.Name;
+
+            string Name = Page.User.Identity.Name;
+            // string Name = HttpContext.Current.User.Identity.Name;
+
+
+            if (Name != "")
+            {
+                txtUsername.Text = Name;
+                bool blnIsValidUser = MemberShip_Permission.ADValidUser(Name.Replace("CMGS0\\", ""));
+
+                if (blnIsValidUser)
+                {
+                    try
+                    {
+                        string UserInfo = Name.Replace("CMGS0\\", "");
+                        // Create the authetication ticket
+                        FormsAuthenticationTicket authTicket =
+                             new FormsAuthenticationTicket(1, UserInfo, DateTime.Now, DateTime.Now.AddDays(1),
+                                                             true, UserInfo, FormsAuthentication.FormsCookiePath);
+                        FormsIdentity identitiy = new FormsIdentity(authTicket);
+                        // Now encrypt the ticket.
+                        string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+                        // Add the encrypted ticket to the cookie collection.   
+                        HttpCookie authCookie = new HttpCookie("CMGS_CON", encryptedTicket);
+                        //Add Cookie With User Name 
+                        authCookie["CMGS_CON"] = UserInfo;
+                        authCookie.Expires = DateTime.Now.AddDays(30);
+                        Response.Cookies.Add(authCookie);
+                        lblError.Visible = false;
+                        lblError.Text = "";
+
+
+                        //check user Permission
+
+                    }
+
+                    catch (System.Exception ex)
+                    {
+                        lblError.Visible = true;
+                        lblError.Text = "<div class='alert alert-danger'>Error, You are not authorized to access this site!</div>";
+                    }
+
+                    if (Request.QueryString["ReturnUrl"] != null)
+                    {
+                        Response.Redirect(Request.QueryString["ReturnUrl"]);
+                    }
+                    else
+                    { Response.Redirect(Resources.Utilities.cutureRoute + "/Modules/MasterData/OrgChartTree.aspx"); }
+
+                }
+                else
+                {
+                    lblError.Visible = true;
+                    lblError.Text = "<div class='alert alert-danger'>Error, You are not authorized to access this site!</div>";
+                }
+            }
+            else
+                {
+                txtUsername.Text = "Enter your user-name.";
+                lblError.Visible = true;
+                lblError.Text = "<div class='alert alert-danger'>Error, Fail Loading AD User Profile!</div>";
+
+            }
+
 
 
 

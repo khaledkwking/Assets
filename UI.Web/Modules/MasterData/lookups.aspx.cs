@@ -14,6 +14,7 @@ using Infrastructure.DAL;
 using Microsoft.VisualBasic;
 using Infrastructure;
 using System.Resources;
+using UI.Web.Helper;
 
 namespace UI.Web.Modules.MasterData
 {
@@ -33,12 +34,19 @@ namespace UI.Web.Modules.MasterData
                 {
                     TargetTableName = Request.QueryString["tableName"].ToString();
 
-                   
-                  //  string someString =
+
+                    //  string someString =
                     //_PageTitle = (String)GetGlobalResourceObject(
                     // "lockups", TargetTableName); // Resources.Utilities.TargetTableName;
+                    if (TargetTableName == "D_LocationType")
+                        _PageTitle = "انواع المواقع";
+                    else if (TargetTableName == "D_Country")
+                        _PageTitle = "قائمة الدول";
+                    else if (TargetTableName == "D_AttachmentType")
+                        _PageTitle = "أنواع المرفقات";
+                    else if (TargetTableName == "D_QtyUnit")
+                        _PageTitle = "وحدات القياس";
 
-                     _PageTitle = Resources.Pages.systemSetting;
                 }
                 else
                 {
@@ -110,20 +118,24 @@ namespace UI.Web.Modules.MasterData
         {
             string Script = "";
             string lst = "";
+            string lstName = "";
             for (int i = 0; (i
                         <= (grdData.Items.Count - 1)); i++)
             {
                 string id = grdData.Items[i].Cells[0].Text;
+                string name = grdData.Items[i].Cells[2].Text;
                 CheckBox check = ((CheckBox)(grdData.Items[i].FindControl("chkItem")));
                 if (check.Checked)
                 {
                     if (lst.Equals(""))
                     {
                         lst = (lst + id);
+                        lstName = (lstName + name);
                     }
                     else
                     {
                         lst = (lst + ("," + id));
+                        lstName = (lstName + ("," + name));
                     }
 
                 }
@@ -137,6 +149,13 @@ namespace UI.Web.Modules.MasterData
                     objLookup.DeleteList(TargetTableName, lst);
                     this.FillGrid();
 
+                    Logger.Log(
+                      userId: ReadSession("userId").ToString(),
+                      userName: ReadSession("AdminName").ToString(),
+                      tableName: TargetTableName,
+                      action: "Delete",
+                      recordId: lstName
+                      );
                     Script = FormatpopupErrorMSG("Data Deleted Successfully", "3");
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", Script, true);
                 }
@@ -298,10 +317,26 @@ namespace UI.Web.Modules.MasterData
                     }
 
                     objLookup.Insert(TargetTableName, txtNameEn.Text, txtNameAr.Text);
+
+                    Logger.Log(
+                           userId: ReadSession("userId").ToString(),
+                           userName: ReadSession("AdminName").ToString(),
+                           tableName: TargetTableName,
+                           action: "Insert",
+                           recordId: txtNameAr.Text
+                           );
+
                 }
                 else
                 {
                     objLookup.Update(TargetTableName, ViewState["Item"].ToString(), txtNameEn.Text, txtNameAr.Text);
+                    Logger.Log(
+                         userId: ReadSession("userId").ToString(),
+                         userName: ReadSession("AdminName").ToString(),
+                         tableName: TargetTableName,
+                         action: "Update",
+                         recordId: txtNameAr.Text
+                         );
                 }
 
                 Script = FormatpopupErrorMSG("Data Saved Successfully", "3");

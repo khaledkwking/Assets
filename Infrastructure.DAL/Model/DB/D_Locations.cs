@@ -27,6 +27,15 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> MigrationRef1 { get; set; }
         public Nullable<bool> AllowInbound { get; set; }
         public string City { get; set; }
+        public string Location_BarCode { get; set; }
+        public Nullable<System.DateTime> Location_LastUpdate { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<System.DateTime> UpdateOn { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         public virtual D_LocationType D_LocationType { get; set; }
     }

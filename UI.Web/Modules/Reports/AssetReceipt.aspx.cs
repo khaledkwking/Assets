@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.UI;
-using AssetsManament.ViewModels;
+﻿using AssetsManament.ViewModels;
 using Infrastructure;
 using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
 using Microsoft.Reporting.WebForms;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web.UI;
 using UI.Web.Admin.Controller;
 
 
@@ -128,7 +131,7 @@ namespace UI.Web.Modules.WHM.Forms
             if (ForceFilter)
             {
                 var objlist = objRepository.getAssetsRequestList(txtPartOfName.Text, ZeroIntergerIFNull(lstFilterAction.SelectedValue),
-                                                                     NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text), 0, 0, 0, -1);
+                                                                     NullDateifEmpty(txtTransDate.Text), NullDateifEmpty(txtTransactionDateTo.Text), 0, 0, 0, -1,"");
 
                 if (objlist != null && objlist.Count > 0)
                 {
@@ -176,8 +179,19 @@ namespace UI.Web.Modules.WHM.Forms
                             }
                             var s = GetOrgData(expandedList , expandedList[0].OrgChartRefCode.Value);
                             //setChartInfo(expandedList, expandedList[0].EmpRefCode.Value);
+                            int? empRefCode = 0;
+                            int emp_Id = expandedList[0].OrgEmpRefCode.Value;
 
-                            //setChartInfo(expandedList, expandedList[0].EmpRefCode.Value);
+                            if (emp_Id != 0)
+                            {
+                                using (var db = new AssetsEntitiesNew())
+                                {
+                                    int? x = emp_Id;
+                                    var emp = db.Employee_tbl.FirstOrDefault(o => o.Emp_Id == x);
+                                    empRefCode = emp.Ora_EmpRefCode;
+                                }
+                            }
+                            setChartInfo(expandedList,int.Parse(empRefCode.ToString()));
 
                             ReportViewer1.ProcessingMode = ProcessingMode.Local;
                             if (Request.QueryString["assetinv"] != null)
@@ -186,6 +200,8 @@ namespace UI.Web.Modules.WHM.Forms
                                 ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailedDept.rdlc");
 
                             ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+                            ReportViewer1.LocalReport.SetParameters(new ReportParameter("AssetType", "بطاقة عهدة اصل وحدة تنظيمية"));
+
                             //var objlist = objRepository.GetList();
                             ReportDataSource datasource = new ReportDataSource("ds_RequestList", expandedList);
 
@@ -224,6 +240,8 @@ namespace UI.Web.Modules.WHM.Forms
                                 ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailed.rdlc");
 
                             ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+                            ReportViewer1.LocalReport.SetParameters(new ReportParameter("AssetType", "بطاقة عهدة أصل شخصية"));
+
                             //var objlist = objRepository.GetList();
                             ReportDataSource datasource = new ReportDataSource("ds_RequestList", expandedList);
 
@@ -263,6 +281,8 @@ namespace UI.Web.Modules.WHM.Forms
                                 ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailed.rdlc");
 
                             ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+                            ReportViewer1.LocalReport.SetParameters(new ReportParameter("AssetType", "بطاقة عهدة أصل شخصية"));
+
                             //var objlist = objRepository.GetList();
                             ReportDataSource datasource = new ReportDataSource("ds_RequestList", expandedList);
 
@@ -275,7 +295,51 @@ namespace UI.Web.Modules.WHM.Forms
                             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
                         }
                     }
+                    else if(Request.QueryString["nodeId"] != null && Request.QueryString["EmpFlag"] == "1")
+                    {
 
+
+                        using (var client = new HttpClient())
+                        {
+                            client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
+                            client.DefaultRequestHeaders.Clear();
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            int nodeId = ZeroIntergerIFNull(Request.QueryString["nodeId"].ToString());
+                            HttpResponseMessage Res = client.GetAsync($"OrgChart/EmployeeHierarchy/{nodeId}").Result;
+
+                            if (!Res.IsSuccessStatusCode)
+                                throw new Exception(Res.ToString());
+
+                            var result = Res.Content.ReadAsStringAsync().Result;
+
+                            var objList = JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
+
+                            //var objList = objRepository.getEntityEmployeeList(0, ZeroIntergerIFNull(Request.QueryString["nodeId"].ToString()));
+                            if (objList != null && objList.Count > 0)
+                            {
+                                
+
+                                ReportViewer1.ProcessingMode = ProcessingMode.Local;
+                                
+                                ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_Employees.rdlc");
+                                                              
+
+                                ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+                                ReportViewer1.LocalReport.SetParameters(new ReportParameter("OrgName", objList.FirstOrDefault().ENTITYNAME));
+
+                                //var objlist = objRepository.GetList();
+                                ReportDataSource datasource = new ReportDataSource("dsEmployees", objList.ToList());
+
+                                ReportViewer1.LocalReport.DataSources.Clear();
+                                ReportViewer1.LocalReport.DataSources.Add(datasource);
+                            }
+                            else
+                            {
+                                string script = FormatErrorMSGSwal(Resources.Alerts.nodatafound, "1");
+                                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                            }
+                        }
+                    }
                     else
                     {
                         // User FIlter Critriea

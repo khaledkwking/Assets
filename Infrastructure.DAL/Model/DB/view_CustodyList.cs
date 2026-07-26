@@ -18,6 +18,7 @@ namespace Infrastructure.DAL.Model.DB
         public string groupname { get; set; }
         public string ItemRefCode { get; set; }
         public int ItemCode { get; set; }
+        public Nullable<System.DateTime> ItemDate { get; set; }
         public string ItemNameEn { get; set; }
         public string ItemNameAr { get; set; }
         public Nullable<double> ItemBasePrice { get; set; }
@@ -28,6 +29,8 @@ namespace Infrastructure.DAL.Model.DB
         public string RequestRefCode { get; set; }
         public Nullable<int> RequestActionType { get; set; }
         public Nullable<int> TMonth { get; set; }
+        public string AssetOrgOwnerRefCode { get; set; }
+        public string AssetOrgOwnerName { get; set; }
         public Nullable<int> TYear { get; set; }
         public Nullable<int> ProcessType { get; set; }
         public string Serial { get; set; }
@@ -88,5 +91,7 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> ItemServiceMonthes { get; set; }
         public Nullable<int> ItemUsedStatus { get; set; }
         public string ItemUsedStatusTitle { get; set; }
+        public Nullable<int> OrgEmpRefCode { get; set; }
+        public string OrgEmpName { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using Infrastructure;
 using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -142,7 +143,45 @@ namespace UI.Web.Controllers
                     throw new Exception(Res.ToString());
 
                 var result = Res.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<List<ORGANIZATION_CHART>>(result);
+                //return JsonConvert.DeserializeObject<List<ORGANIZATION_CHART>>(result);
+
+                //var json = Res.Content.ReadAsStringAsync().Result;
+
+                // Convert JSON to objects
+               var organizationCharts = JsonConvert.DeserializeObject<List<ORGANIZATION_CHART>>(result);
+                // exclude organiztion
+
+               
+                var allExcluded = objRepository2.GetExcludedCodes();
+
+              
+               // var allExcluded = new HashSet<int>(excludedEntityCodes);
+
+                void AddChildren(int parentCode)
+                {
+                    var children = organizationCharts
+                        .Where(x => x.PARENTCODE == parentCode)
+                        .Select(x => x.ENTITYCODE);
+
+                    foreach (var child in children)
+                    {
+                        if (allExcluded.Add(child))
+                            AddChildren(child);
+                    }
+                }
+
+                foreach (var code in allExcluded.ToList()) // ToList() avoids modifying the collection while iterating
+                {
+                    AddChildren(code);
+                }
+
+                organizationCharts = organizationCharts
+                    .Where(x => !allExcluded.Contains(x.ENTITYCODE))
+                    .ToList();
+
+                return organizationCharts;
+
+
             }
         }
 
@@ -222,7 +261,32 @@ namespace UI.Web.Controllers
 
         }
 
+        [HttpGet]
+        [ActionName("GetEmployeeEntityCode")]
+        public async Task<string> GetEmployeeEntityCode(int nodeId, string empId)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                HttpResponseMessage Res = await client.GetAsync($"OrgChart/EmployeeHierarchy/{nodeId}");
+
+                if (!Res.IsSuccessStatusCode)
+                    throw new Exception(Res.ToString());
+
+                var result = await Res.Content.ReadAsStringAsync();
+
+                var employees = JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
+
+                string entityCode = employees
+                                   .FirstOrDefault(e => e.EMP_ID == empId)?
+                                   .ENTITYCODE.ToString();
+
+                return entityCode;
+            }
+        }
 
         //////Custody 
         ///
@@ -274,6 +338,59 @@ namespace UI.Web.Controllers
             }
             return CustodyList;
 
+        }
+        public static async Task<string> GetEmployeePosition(int empId)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://mystro-dev/mystroapi/api/OrgChart/");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response = await client.GetAsync($"GetEmployeeDetails/{empId}");
+                var json = await response.Content.ReadAsStringAsync();
+                var arr = JArray.Parse(json);
+
+                if (arr == null || arr.Count == 0)
+                    return "not-found";
+
+                var firstItem = arr[0];
+                return firstItem["positioN_NO"]?.ToString() ?? "unknown";
+            }
+        }
+
+
+        [HttpGet]
+        [ActionName("GetEmployeeStatus")]
+        public async Task<IHttpActionResult> GetEmployeeStatus(int empId)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("https://mystro-dev/mystroapi/api/OrgChart/");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var response = await client.GetAsync($"GetEmployeeDetails/{empId}");
+                    if (!response.IsSuccessStatusCode)
+                        return Ok(new { status = "not-found" });
+
+                    var json = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize into JArray (because response is array)
+                    var arr = JsonConvert.DeserializeObject<JArray>(json);
+                    if (arr == null || arr.Count == 0)
+                        return Ok(new { status = "not-found" });
+
+                    var firstItem = arr[0];
+                    var status = firstItem["emP_STATUS"]?.ToString() ?? "unknown";
+
+                    return Ok(new { status = status });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { status = "error", message = ex.Message });
+            }
         }
 
         [HttpGet]

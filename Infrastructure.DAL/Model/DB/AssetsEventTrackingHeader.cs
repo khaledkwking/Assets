@@ -41,6 +41,12 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<System.DateTime> LastModifiedAt { get; set; }
         public Nullable<int> TranferedRequestHeaderId { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public string AssetOrgOwnerRefCode { get; set; }
+        public string AssetOrgOwnerName { get; set; }
+        public Nullable<int> OrgEmpRefCode { get; set; }
+        public string OrgEmpName { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestAttachment> RequestAttachments { get; set; }

@@ -50,18 +50,18 @@ namespace Infrastructure.DAL
             using (var DC = new AssetsEntitiesNew())
             {
                 var result =
-                    from admin in DC.Security_pr_admin
-                        .AsNoTracking()
-                        .Include(a => a.Security_pr_AdminType)
-                        .Include(a => a.Security_pr_adminPermittedOrgUnits)
-                    join permittedOrgUnit in DC.Security_pr_adminPermittedOrgUnits.AsNoTracking()
-                        on admin.id equals permittedOrgUnit.Code into permittedGroup
-                    from permittedOrgUnit in permittedGroup.DefaultIfEmpty()
-                    where admin.id != 0
-                          && (admintype != 0 ? admin.AdminType == admintype : true)
-                          && (!string.IsNullOrEmpty(partofname) ? admin.name.Contains(partofname) : true)
-                          && (DeptId != 0 ? permittedOrgUnit.OrgChartRefCode == DeptId : true)
-                    orderby admin.id descending
+                    from admin in DC.Security_pr_admin.Where(o=> o.username!= "admin" && o.username != "CMGS " && o.username != "assets")
+                        //.AsNoTracking()
+                        .Include("Security_pr_AdminType")
+                        .Include("Security_pr_adminPermittedOrgUnits")
+                    //join permittedOrgUnit in DC.Security_pr_adminPermittedOrgUnits
+                    //    on admin.id equals permittedOrgUnit.Code into permittedGroup
+                    //from permittedOrgUnit in permittedGroup.DefaultIfEmpty()
+                    //where admin.id != 0
+                    //      && (admintype != 0 ? admin.AdminType == admintype : true)
+                    //      && (!string.IsNullOrEmpty(partofname) ? admin.name.Contains(partofname) : true)
+                    //      && (DeptId != 0 ? permittedOrgUnit.OrgChartRefCode == DeptId : true)
+                   // orderby admin.id descending
                     select admin;
 
                 return result.ToList();

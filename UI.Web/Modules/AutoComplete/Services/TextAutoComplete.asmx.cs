@@ -39,7 +39,7 @@ namespace UI.Web.Modules.AutoComplete.Services
 
              foreach (var item in result)
             {
-                items.Add(item.name);
+                items.Add(item.Name);
 
             }
 

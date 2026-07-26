@@ -529,6 +529,10 @@ namespace UI.Web.Admin.Controller
                         //Success
                         _out = "Swal.fire('تم بنجاح !','" + msg + "','success')";
                         break;
+                    case "4":
+                        //Sorry
+                        _out = "Swal.fire('عفوا !','" + msg + "','warning')";
+                        break;
                 }
 
             }
@@ -621,7 +625,73 @@ namespace UI.Web.Admin.Controller
 
             }
         }
+        protected DateTime NullDateifEmptyNew(object obj)
+        {
+            if (obj == null || obj.Equals("") || obj.ToString().Equals("1/1/0001 12:00:00 AM"))
+            {
+                return new DateTime(1990, 01, 01);
+            }
+            else
+            {
+                try
+                {
+                    CultureInfo ci = new CultureInfo("ar-EG");
 
+                    return Convert.ToDateTime(ReadFromDb2(obj.ToString()), ci);
+                    //return Convert.ToDateTime(GetDateTimeForDB(obj.ToString())); 
+                }
+                catch
+                {
+                    try
+                    {
+                        CultureInfo ci = new CultureInfo("en-US");
+
+                        return Convert.ToDateTime(ReadFromDb2(obj.ToString()), ci);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        return Convert.ToDateTime(ReadFromDb2(new DateTime(1990, 01, 01).ToString()));
+                    }
+
+                }
+
+            }
+        }
+        
+        protected DateTime? NullDateifEmptyAsset(object obj)
+        {
+            if (obj == null || obj.Equals("") || obj.ToString().Equals("1/1/0001 12:00:00 AM"))
+            {
+                return null;
+            }
+            else
+            {
+                try
+                {
+                    CultureInfo ci = new CultureInfo("ar-EG");
+
+                    return Convert.ToDateTime(GetDateTimeForDB(obj.ToString()), ci);
+                    //return Convert.ToDateTime(GetDateTimeForDB(obj.ToString())); 
+                }
+                catch
+                {
+                    try
+                    {
+                        CultureInfo ci = new CultureInfo("en-US");
+
+                        return Convert.ToDateTime(GetDateTimeForDB2(obj.ToString()), ci);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        return Convert.ToDateTime(GetDateTimeForDB(new DateTime(1990, 01, 01).ToString()));
+                    }
+
+                }
+
+            }
+        }
 
         protected string NullDateifEmptyText(object obj)
         {
@@ -631,7 +701,7 @@ namespace UI.Web.Admin.Controller
             }
             else
             {
-                return Convert.ToDateTime(obj).ToString("MM/dd/yyyy");
+                return Convert.ToDateTime(obj).ToString("dd/MM/yyyy");
 
             }
         }
@@ -847,13 +917,13 @@ namespace UI.Web.Admin.Controller
 
         protected string getDBDate(object obj)
         {
-            if (object.ReferenceEquals(obj, DBNull.Value))
+            if (obj==null)
             {
                 return "";
             }
             else
             {
-                return Convert.ToDateTime(obj).ToString("MM/dd/yyyy");
+                return Convert.ToDateTime(obj).ToString("dd/MM/yyyy");
             }
         }
 

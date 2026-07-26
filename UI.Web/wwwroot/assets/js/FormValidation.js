@@ -62,7 +62,7 @@ function checkDelete(neglictValivation) {
         //    }
         //})
 
-        return confirm("are you sure you want to delete selected items?");
+        return confirm("هل أنت متأكد أنك تريد حذف العناصر المحددة؟");
     }
     return true;
 

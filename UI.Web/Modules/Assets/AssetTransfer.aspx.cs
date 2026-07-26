@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using UI.Web.Admin.Controller;
 using System.Web.Http.Results;
 using System.Configuration;
+using UI.Web.Helper;
 
 namespace UI.Web.Modules.Assets
 {
@@ -68,6 +69,7 @@ namespace UI.Web.Modules.Assets
                 //}
                 filterItem();
                 filterToItem();
+                filterStoreItem();
 
                 //FillSelectedItems();
             }
@@ -86,7 +88,7 @@ namespace UI.Web.Modules.Assets
 
                     var selectedItem = (AssetsItemUnit)objRepository.getItemDetailsForEdit(ZeroIntergerIFNull(grdSelectedItems.Items[i].Cells[0].Text));
                     obj.AssetCode = selectedItem.Code;
-                    obj.ActionDate = NullDateifEmpty(txtFromDate.Text);
+                    obj.ActionDate = NullDateifEmptyNew(txtFromDate.Text);
 
 
                     obj.actionId = 2;// Tranfered;
@@ -113,6 +115,8 @@ namespace UI.Web.Modules.Assets
                 Session["selectedItems"] = null;
                 filterItem();
                 filterToItem();
+                filterStoreItem();
+
 
                 //FillSelectedItems();
                 ClearForm();
@@ -229,6 +233,7 @@ namespace UI.Web.Modules.Assets
         {
             filterItem();
             filterToItem();
+            filterStoreItem();
         }
 
         #endregion
@@ -290,7 +295,8 @@ namespace UI.Web.Modules.Assets
             //}
       
 
-              
+            FillDllwithoptional(objRepository.getStores(), lstToStore, "Name", "Id");
+
             FillDllwithoptional(GetEmployeeHierarchy(1), lstToEmpRefCode, "EMP_NAME", "EMP_ID");
 
             FillDllwithoptional(GetEmployeeHierarchy(1), lstRefEmployee, "EMP_NAME", "EMP_ID");
@@ -380,6 +386,8 @@ namespace UI.Web.Modules.Assets
                 objList = (List<view_CustodyList>)Session["selectedItems"];
 
             }
+            bool checkItem = false;
+            bool? IsTransfered = null;
 
             for (int i = 0; i <= grdSelectedItems.Items.Count - 1; i++)
             {
@@ -399,23 +407,75 @@ namespace UI.Web.Modules.Assets
                                 {
                                     throw new Exception($"No record found in AssetsEventTrackings for Code = {code}");
                                 }
-
                                 int empID = GetEmpId(ZeroIntergerIFNull(lstRefEmployee.SelectedValue));
-
-                                if (empID != 0)
+                                string ConvertedName = "";
+                                if (rblTransferType.SelectedValue == "Employee")
                                 {
-                                    var AssHeader = en.AssetsEventTrackingHeaders.Where(o => o.EmpRefCode == empID).ToList();
-                                    if (AssHeader.Count > 0)
+
+                                    if (empID != 0)
                                     {
-                                        q.EmpRefCode = empID;
-                                        q.EmpName = lstToEmpRefCode.SelectedItem.Text;
-                                        q.RequestHeaderCode = AssHeader.FirstOrDefault().Code;
-                                        q.LastModifiedAt = DateTime.Now;    
-                                        q.LastModifiedBy = ZeroIntergerIFNull(ReadSession("userId").ToString());
-                                        q.Notes = txtNotes.Text;
-                                        q.ActionDate = NullDateifEmpty(txtFromDate.Text);
-                                        q.statusId = 6;
-                                        en.SaveChanges();
+                                        var AssHeader = en.AssetsEventTrackingHeaders.Where(o => o.EmpRefCode == empID).ToList();
+                                        if (AssHeader.Count > 0)
+                                        {
+                                            q.EmpRefCode = empID;
+                                            q.EmpName = lstToEmpRefCode.SelectedItem.Text;
+                                            q.RequestHeaderCode = AssHeader.FirstOrDefault().Code;
+                                            q.LastModifiedAt = DateTime.Now;
+                                            q.LastModifiedBy = ZeroIntergerIFNull(ReadSession("userId").ToString());
+                                            q.Notes = txtNotes.Text;
+                                            q.ActionDate = NullDateifEmptyNew(txtFromDate.Text);
+                                            q.statusId = 6;
+                                            en.SaveChanges();
+                                            IsTransfered = true;
+                                            ConvertedName = lstToEmpRefCode.SelectedItem.Text;
+                                        }
+                                        else
+                                            IsTransfered = false;
+                                    }
+
+                                }
+                                else if (rblTransferType.SelectedValue == "Store")
+                                {
+                                    if (string.IsNullOrEmpty(lstToStore.SelectedValue) || lstToStore.SelectedValue == "0")
+                                    {
+                                        lblerror.Text = "يرجى اختيار المخزن .";
+                                        return;
+                                    }
+                                    using (var transaction = en.Database.BeginTransaction())
+                                    {
+                                        try
+                                        {
+                                            // تحديث الأصل
+                                            q.IsDeleted = false;
+                                            q.EmpRefCode = empID;
+                                            q.EmpName = lstRefEmployee.SelectedItem.Text;
+
+                                            // حذف السجل إذا موجود
+                                            var AssStore = en.AssetsStores.FirstOrDefault(o => o.AssetId == code);
+
+                                            if (AssStore != null)
+                                            {
+                                                en.AssetsStores.Remove(AssStore);
+                                            }
+                                            else
+                                            {
+                                                throw new Exception("السجل غير موجود."); // هيرجع rollback
+                                            }
+
+                                            // حفظ كل التغييرات دفعة واحدة
+                                            en.SaveChanges();
+
+                                            // إذا كل حاجة نجحت
+                                            transaction.Commit();
+                                            IsTransfered = true;
+                                            ConvertedName = lstToStore.SelectedItem.Text;
+
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            transaction.Rollback();
+                                            lblerror.Text = "حدث خطأ أثناء التحويل: " + ex.Message;
+                                        }
                                     }
                                 }
 
@@ -424,14 +484,41 @@ namespace UI.Web.Modules.Assets
                             {
                                 throw new Exception("An error occurred while updating the records: " + ex.Message, ex);
                             }
+
                         }
+                        checkItem = true;
+
                     }
                 }
             }
-            Session["selectedItems"] = objList;
-            filterItem();
-            filterToItem();
-            //FillSelectedItems();
+            if (checkItem && IsTransfered==true)
+            {
+                Session["selectedItems"] = objList;
+                filterItem();
+                filterToItem();
+                filterStoreItem();
+
+                Logger.Log(
+                   userId: ReadSession("userId").ToString(),
+                   userName: ReadSession("AdminName").ToString(),
+                   tableName: "AssetsEventTrackings",
+                   action: "Transfer",
+                   recordId:"From : " +lstToEmpRefCode.SelectedItem.Text + "    " +"To : " +lstRefEmployee.SelectedItem.Text
+                   );
+                string scriptAdd = "Swal.fire('تم التحويل بنجاح ');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertVendor", scriptAdd, true);
+                //FillSelectedItems();
+            }
+            else if (checkItem && IsTransfered==false)
+            {
+                string scriptAdd22 = "Swal.fire('عفوا , يجب ادخال عهدة للموظف حتى يتم التحويل اليه');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertVendor", scriptAdd22, true);
+            }
+            else
+            {
+                string script22 = "Swal.fire('يرجى اختيار المواد المراد تحويلها ');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertVendor", script22, true);
+            }
 
         }
 
@@ -443,6 +530,8 @@ namespace UI.Web.Modules.Assets
                 objList = (List<view_CustodyList>)Session["selectedItems"];
 
             }
+            bool checkItem = false;
+            bool? IsTransfered = null;
 
             for (int i = 0; i <= grdItems.Items.Count - 1; i++)
             {
@@ -464,23 +553,50 @@ namespace UI.Web.Modules.Assets
                                     throw new Exception($"No record found in AssetsEventTrackings for Code = {code}");
                                 }
 
-                                int empID = GetEmpId(ZeroIntergerIFNull(lstToEmpRefCode.SelectedValue));
-
-                                if (empID != 0)
+                                if (rblTransferType.SelectedValue == "Employee")
                                 {
-                                    var AssHeader = en.AssetsEventTrackingHeaders.Where(o => o.EmpRefCode == empID).ToList();
-                                    if (AssHeader.Count > 0)
+                                    int empID = GetEmpId(ZeroIntergerIFNull(lstToEmpRefCode.SelectedValue));
+
+                                    if (empID != 0)
                                     {
-                                        q.EmpRefCode = empID;
-                                        q.EmpName = lstToEmpRefCode.SelectedItem.Text;
-                                        q.RequestHeaderCode = AssHeader.FirstOrDefault().Code;
-                                        q.LastModifiedAt = DateTime.Now;
-                                        q.LastModifiedBy = ZeroIntergerIFNull(ReadSession("userId").ToString());
-                                        q.Notes = txtNotes.Text;
-                                        q.ActionDate = NullDateifEmpty(txtFromDate.Text);
-                                        q.statusId = 6;
-                                        en.SaveChanges();
+                                        var AssHeader = en.AssetsEventTrackingHeaders.Where(o => o.EmpRefCode == empID).ToList();
+                                        if (AssHeader.Count > 0)
+                                        {
+                                            q.EmpRefCode = empID;
+                                            q.EmpName = lstToEmpRefCode.SelectedItem.Text;
+                                            q.RequestHeaderCode = AssHeader.FirstOrDefault().Code;
+                                            q.LastModifiedAt = DateTime.Now;
+                                            q.LastModifiedBy = ZeroIntergerIFNull(ReadSession("userId").ToString());
+                                            q.Notes = txtNotes.Text;
+                                            q.ActionDate = NullDateifEmptyNew(txtFromDate.Text);
+                                            q.statusId = 6;
+                                            en.SaveChanges();
+
+                                            IsTransfered = true;
+                                        }
+                                        else
+                                            IsTransfered = false;
                                     }
+                                }
+                                else if (rblTransferType.SelectedValue == "Store")
+                                {
+                                    if (string.IsNullOrEmpty(lstToStore.SelectedValue) || lstToStore.SelectedValue == "0")
+                                    {
+                                        lblerror.Text = "يرجى اختيار المخزن .";
+                                        return;
+                                    }
+                                    q.IsDeleted = true;
+
+                                    var AssStore = new AssetsStore();
+                                    AssStore.AssetId = code;
+                                    AssStore.StoreId = ZeroIntergerIFNull(lstToStore.SelectedValue);
+                                    AssStore.CreatedBy = ReadSession("userId").ToString();
+                                    AssStore.CreatedAt = DateTime.Now;
+
+                                    en.AssetsStores.Add(AssStore);
+                                    en.SaveChanges();
+
+                                    IsTransfered = true;
                                 }
 
                             }
@@ -488,15 +604,56 @@ namespace UI.Web.Modules.Assets
                             {
                                 throw new Exception("An error occurred while updating the records: " + ex.Message, ex);
                             }
+
                         }
+                        checkItem = true;
                         //  objList.(objRepository.getItemDetails(ZeroIntergerIFNull(grdItems.Items[i].Cells[0].Text)));
                     }
                 }
             }
-            Session["selectedItems"] = objList;
-            filterItem();
-            filterToItem();
-            //FillSelectedItems();
+            //if (checkItem)
+            //{
+            //    Session["selectedItems"] = objList;
+            //    filterItem();
+            //    filterToItem();
+            //    string scriptAdd = "Swal.fire('تم التحويل بنجاح ');";
+            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertVendor", scriptAdd, true);
+            //    //FillSelectedItems();
+            //}
+            //else
+            //{
+            //    string script22 = "Swal.fire('يرجى اختيار المواد المراد تحويلها ');";
+            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertVendor", script22, true);
+            //}
+            if (checkItem && IsTransfered == true)
+            {
+                Session["selectedItems"] = objList;
+                filterItem();
+                filterToItem();
+                filterStoreItem();
+
+                Logger.Log(
+                userId: ReadSession("userId").ToString(),
+                userName: ReadSession("AdminName").ToString(),
+                tableName: "AssetsEventTrackings",
+                action: "Transfer",
+                recordId: "From : " + lstRefEmployee.SelectedItem.Text + "    " + "To : " + lstToEmpRefCode.SelectedItem.Text
+                );
+
+                string scriptAdd = "Swal.fire('تم التحويل بنجاح ');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertVendor", scriptAdd, true);
+                //FillSelectedItems();
+            }
+            else if (checkItem && IsTransfered == false)
+            {
+                string scriptAdd22 = "Swal.fire('عفوا , يجب ادخال عهدة للموظف حتى يتم التحويل اليه');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertVendor", scriptAdd22, true);
+            }
+            else
+            {
+                string script22 = "Swal.fire('يرجى اختيار المواد المراد تحويلها ');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertVendor", script22, true);
+            }
         }
         public int GetEmpId(int id)
         {
@@ -519,6 +676,61 @@ namespace UI.Web.Modules.Assets
         protected void lstToEmpRefCode_SelectedIndexChanged(object sender, EventArgs e)
         {
             filterToItem();
+        }
+
+        protected void rblTransferType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ToggleTransferType();
+        }
+
+        private void ToggleTransferType()
+        {
+            if (rblTransferType.SelectedValue == "Employee")
+            {
+                divEmployeeTarget.Style["display"] = "block";
+                divStore.Style["display"] = "none";
+                grdSelectedItems.DataSource = null;
+                grdSelectedItems.DataBind();
+                lblSelectedCount.Text = string.Empty;
+                lstToStore.SelectedValue = "0";
+            }
+            else if (rblTransferType.SelectedValue == "Store")
+            {
+                divEmployeeTarget.Style["display"] = "none";
+                divStore.Style["display"] = "block";
+                grdSelectedItems.DataSource = null;
+                grdSelectedItems.DataBind();
+                lblSelectedCount.Text = string.Empty;
+                lstToEmpRefCode.SelectedValue = "0";
+            }
+        }
+        protected void lstToStore_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            filterStoreItem();
+        }
+        private void filterStoreItem()
+        {
+            using (AssetsEntitiesNew en = new AssetsEntitiesNew())
+            {
+                int storeId = ZeroIntergerIFNull(lstToStore.SelectedValue);
+                if (storeId == 0) return;
+
+                // جلب قائمة AssetIds من المخزن
+
+                var storeAssets = en.AssetsStores
+                                .Where(a => a.StoreId == storeId)
+                                .Select(a => a.AssetId)
+                                .ToList();
+
+                // جلب الـ CustodyList فقط للعناصر الموجودة في القائمة
+                var filteredList = objRepository.getCustodyListByAssets(storeAssets);
+
+                // ربط النتائج بالـ Grid
+                grdSelectedItems.DataSource = filteredList;
+                grdSelectedItems.DataBind();
+
+                lblSelectedCount.Text = Resources.Utilities.foundTotal + filteredList.Count.ToString() + Resources.Utilities.records;
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Infrastructure.DAL.Model.DB
     {
         public int Code { get; set; }
         public Nullable<int> InboundCode { get; set; }
-        public Nullable<int> ItemCode { get; set; }
+        public Nullable<long> ItemCode { get; set; }
         public string UnitRefCode { get; set; }
         public string ItemTag { get; set; }
         public Nullable<double> Qty { get; set; }
@@ -31,10 +31,13 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedAt { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         public virtual D_ItemUsedStatus D_ItemUsedStatus { get; set; }
-        public virtual D_ItemCard D_ItemCard { get; set; }
         public virtual D_QtyUnit D_QtyUnit { get; set; }
         public virtual Inbound Inbound { get; set; }
+        public virtual D_ItemCard D_ItemCard { get; set; }
     }
 }

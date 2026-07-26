@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
+
     LoadContents();
+
 });
 function showLoader() {
     $("#progressbar").css("display", "");
@@ -24,9 +26,10 @@ function handelSelectedNode(nodeId) {
             { nodeId: nodeId },
         success: function (employeeData) {
               //DrawEmployeeTree(employeeData);
-            $('#lblEmpCount').text(employeeData.length); 
+            $('#lblEmpCount').text(employeeData.filter(emp => emp.EMP_STATUS === 'active').length); 
             $('#employeeList-datatable').DataTable({
-                data: employeeData,
+                //data: employeeData,
+                data: employeeData.filter(emp => emp.EMP_STATUS === 'active'),
                 pageLength: 25,
                 responsive: true,
                 destroy: true,
@@ -63,22 +66,24 @@ function handelSelectedNode(nodeId) {
                                         : data
                                 );
                             }
-                        },
-                        {
-                            data: "EMP_ID", title: "", orderable: false,
-                            render: function (data, type, row) {
-                                return ("<div class='drodown'>" + "<a href='#' class='btn btn-sm btn-icon btn-trigger dropdown-toggle' data-toggle='dropdown'><em class='icon ni ni-more-h'></em></a>" +
-                                    "<div class='dropdown-menu dropdown-menu-right'>" +
-                                    "<ul class='link-list-opt no-bdr'>" +
+                        }
 
-                                    "<li> <a href='javascript:void(0)' onclick='call_cboxSmall(`../MasterData/EmployeeLocation.aspx?entityId=" + nodeId + "&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-location'></em></span><span class='nk-menu-text' >  موقع الموظف</span ></a ></li>" +
-                                    "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/AssetCheckout.aspx?t=1&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > سجل العهد</span ></a ></li>" +
-                                    "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Reports/AssetReceipt.aspx?locid=0&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text' > طباعة إستمارة العهدة  </span ></a ></li>" +
-                                    "</ul>" +
-                                    "</div></div>"
-                                );
-                            }
-                        },
+                        //,
+                        //{
+                        //    data: "EMP_ID", title: "", orderable: false,
+                            //render: function (data, type, row) {
+                                //return ("<div class='drodown'>" + "<a href='#' class='btn btn-sm btn-icon btn-trigger dropdown-toggle' data-toggle='dropdown'><em class='icon ni ni-more-h'></em></a>" +
+                                //    "<div class='dropdown-menu dropdown-menu-right'>" +
+                                    /*"<ul class='link-list-opt no-bdr'>" +*/
+
+                                    /*"<li> <a href='javascript:void(0)' onclick='call_cboxSmall(`../MasterData/EmployeeLocation.aspx?entityId=" + nodeId + "&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-location'></em></span><span class='nk-menu-text' >  موقع الموظف</span ></a ></li>" +*/
+                                    //"<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/AssetCheckout.aspx?t=1&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > سجل العهد</span ></a ></li>" +
+                                    //"<li> <a href='javascript:void(0)' onclick='call_cbox(`../Reports/AssetReceipt.aspx?locid=0&empid=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text' > طباعة إستمارة العهدة  </span ></a ></li>" +
+                                   /* "</ul>" +*/
+                                   /* "</div></div>"*/
+                                //);
+                        //    }
+                        //},
 
                     ],
 
@@ -87,7 +92,17 @@ function handelSelectedNode(nodeId) {
 
 
             });
+            // Remove existing button if DataTable is recreated
+            $('#employeeList-datatable_filter .btn-print-node').remove();
 
+            // Add Print button beside search box
+            $('#employeeList-datatable_filter').append(
+                '<a href="javascript:void(0)" ' +
+                'class="btn btn-primary btn-sm ms-2 btn-print-node" ' +
+                'onclick="call_cbox(\'../Reports/AssetReceipt.aspx?hidemaster=1&EmpFlag=1&nodeId=' + nodeId + '\')">' +
+                '<em class="icon ni ni-printer"></em> Print' +
+                '</a>'
+            );
 
         },
         error: function (request, status, error) {
@@ -165,17 +180,61 @@ function handelSelectedNode(nodeId) {
     loadLocationFrame(nodeId);
 
 
+  
+
     $.ajax({
         url: "/api/hepler/GetOrgChartCustodyHeader",
         dataType: "json",
         contentType: 'application/json',
         type: 'get',
-        data:
-            { nodeId: nodeId },
+        data: { nodeId: nodeId },
         success: function (CustodyData) {
+
             $('#lblAssetsCountHeader').text(CustodyData.length);
 
-            $('#custodyList-datatableHeader').DataTable({
+            // 🟢 Cache لتخزين نتائج الموظفين
+            const empCache = {};
+
+            // 🟢 Helper لتحديث الـ badge
+            function applyStatus(badgeId, status) {
+                const badge = document.getElementById(badgeId);
+                if (!badge) return;
+
+                const s = (status || "").toLowerCase();
+                if (s === "active") {
+                    badge.className = "badge badge-dim badge-success";
+                    badge.innerText = "فعال";
+                } else if (s === "not-active") {
+                    badge.className = "badge badge-dim badge-danger";
+                    badge.innerText = "غير فعال";
+                } else if (s === "error") {
+                    badge.className = "badge badge-dim badge-warning";
+                    badge.innerText = "فشل التحميل";
+                } else {
+                    badge.className = "badge badge-dim badge-secondary";
+                    badge.innerText = "غير معروف";
+                }
+            }
+
+            // 🟢 Function لجلب status لكل موظف
+            function updateEmployeeStatus(empId, badgeId) {
+                if (empCache[empId]) {
+                    applyStatus(badgeId, empCache[empId]);
+                    return;
+                }
+
+                fetch(`/api/hepler/GetEmployeeStatus?empId=${empId}`)
+                    .then(res => res.json())
+                    .then(result => {
+                        const status = result?.status || "unknown";
+                        empCache[empId] = status;
+                        applyStatus(badgeId, status);
+                    })
+                    .catch(() => applyStatus(badgeId, "error"));
+            }
+
+            // 🟢 بناء الـ DataTable
+            const table = $('#custodyList-datatableHeader').DataTable({
                 data: CustodyData,
                 pageLength: 25,
                 responsive: true,
@@ -189,118 +248,109 @@ function handelSelectedNode(nodeId) {
                     info: "_START_ -_END_ of _TOTAL_",
                     infoEmpty: "No records found",
                     infoFiltered: "( Total _MAX_  )",
-                    paginate: {
-                        "first": "First",
-                        "last": "Last",
-                        "next": "Next",
-                        "previous": "Prev"
-                    }
+                    paginate: { "first": "First", "last": "Last", "next": "Next", "previous": "Prev" }
                 },
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ],
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 columns: [
-                    /*{ data: "Serial", title: "مسلسل  " },*/
-                    { data: "Ora_EmpRefCode", title: "الرقم الوظيفي  " },
-                    /* { data: "Type", title: "نوع العهدة	" },*/
-
+                    { data: "Ora_EmpRefCode", title: "الرقم الوظيفي" },
                     {
-                        data: "RequestActionType", title: "نوع العهدة	",
+                        data: "RequestActionType",
+                        title: "نوع العهدة",
                         render: function (data, type, row) {
-                            return (data == '1' ? '<span class="badge badge-dim badge-light">عهدة شخصية</span>'
-                                : data == '2' ? '<span class="badge badge-outline-info">عهدة تنظيمية</span>'
-                                    : data
-                            );
+                            if (row.ProcessType == 1 &&
+                                (row.EmpRefCode != 0 || (row.AssetOrgOwnerName && row.AssetOrgOwnerName !== ""))) {
+                                return '<em class="icon ni ni-user-list text-primary"></em> &nbsp; ' +
+                                    '<span class="badge badge-dim badge-light">عهدة شخصية</span>';
+                            }
+                            if (row.ProcessType == 2 && row.OrgChartRefCode != 0) {
+                                return '<em class="icon ni ni-building text-info"></em> &nbsp; ' +
+                                    '<span class="badge badge-outline-info">عهدة تنظيمية</span>';
+                            }
+                            return '<em class="icon ni ni-alert-circle text-danger"></em> &nbsp; ' +
+                                '<span class="badge badge-outline-danger">عهدة غير محددة</span>';
                         }
                     },
-
                     {
                         data: "Locationpath",
                         title: "مكان العهدة",
-                        render: function (data, type, row) {
-                            // Return the HTML structure
+                        render: function (data, type, row, meta) {
+                            // ID فريد لكل صف لتجنب مشكلة التكرار
+                            const badgeId = `emp-badge-${row.Ora_EmpRefCode}-${meta.row}-${row.Code}`;
                             return `
-                <div class="text-info">${row.Ora_EmpName} 
-                    <span class="badge badge-dim ${row.Emp_Active ? 'badge-success' : 'badge-danger'}">
-                        ${row.Emp_Active ? 'فعال' : 'غير فعال'}
-                    </span>
-                </div>
-                <div class="text-indigo">${data}</div>`;
+                            <div class="text-info">
+                                ${row.Ora_EmpName}
+                                <span id="${badgeId}" class="badge badge-dim badge-secondary">
+                                    جاري التحميل...
+                                </span>
+                            </div>
+                            <div class="text-indigo">${data}</div>`;
                         }
                     },
                     {
                         data: "RequestDate",
-                        title: "تاريخ الإستمارة	",
+                        title: "تاريخ الإستمارة",
                         render: function (data) {
-                            if (data) {
-                                // Format date to yyyy-MM-dd or any desired format
-                                const date = new Date(data);
-                                return date.toISOString().split('T')[0];
-                            }
-                            return "";
+                            if (!data) return "";
+                            const date = new Date(data);
+                            const day = ("0" + date.getDate()).slice(-2);
+                            const month = ("0" + (date.getMonth() + 1)).slice(-2);
+                            const year = date.getFullYear();
+                            return `${day}/${month}/${year}`;
                         }
                     },
-                    {
-                        data: "CreatedAt",
-                        title: "تاريخ العملية	 ",
-                        render: function (data) {
-                            if (data) {
-                                const date = new Date(data);
-                                return date.toISOString().split('T')[0];
-                            }
-                            return "";
-                        }
-                    },
-                    { data: "RequestNotes", title: "ملاحظات   " },
-                    //{
-                    //    data: "Connected", title: "تم الربط",
-                    //    render: function (data, type, row) {
-                    //        return (data == 'نعم' ? '<span class="badge badge-pill badge-outline-success font-size-12">' + data + '</span>'
-                    //            : data == 'لا' ? '<span class="badge badge-pill badge-outline-danger font-size-12">' + data + '</span>'
-                    //                : data
-                    //        );
-                    //    }
-                    //},
+                    { data: "RequestNotes", title: "ملاحظات" },
                     {
 
                         data: "Code", title: "", orderable: false,
                         render: function (data, type, row) {
+                            var printCustodyLink = "";
 
-                            return ("<div class='drodown'>" + "<a href='#' class='btn btn-sm btn-icon btn-trigger dropdown-toggle' data-toggle='dropdown'><em class='icon ni ni-more-h'></em></a>" +
+                            if (row.ProcessType == 2 && row.OrgChartRefCode != 0) {
+                                // Case: Use docid version
+                                printCustodyLink =
+                                    "<li><a href='javascript:void(0)' onclick='call_cbox(`../Reports/AssetReceipt.aspx?docid=" + data + "`)' >" +
+                                    "<span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span>" +
+                                    "<span class='nk-menu-text'> طباعة إستمارة العهدة</span></a></li>";
+                            } else {
+                                // Default case: use empid + requestCode version
+                                printCustodyLink =
+                                    "<li><a href='javascript:void(0)' onclick='call_cbox(`../Reports/AssetReceipt.aspx?hidemaster=1&locid=0&empid=" + row.Ora_EmpRefCode + "&requestCode=" + row.Code + "`)' >" +
+                                    "<span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span>" +
+                                    "<span class='nk-menu-text'> طباعة إستمارة العهدة</span></a></li>";
+                            }
+                            return "<div class='drodown'>" +
+                                "<a href='#' class='btn btn-sm btn-icon btn-trigger dropdown-toggle' data-toggle='dropdown'><em class='icon ni ni-more-h'></em></a>" +
                                 "<div class='dropdown-menu dropdown-menu-right'>" +
                                 "<ul class='link-list-opt no-bdr'>" +
-
-                                "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Assets/AssetCheckout.aspx?hidemaster=1&t=1&requestCode=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text' > سجل العهدة</span ></a ></li>" +
-                                "<li> <a href='javascript:void(0)' onclick='call_cbox(`../Reports/AssetReceipt.aspx?hidemaster=1&locid=0&empid=" + row.Ora_EmpRefCode + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text' > طباعة إستمارة العهدة  </span ></a ></li>" +
-                                
-                                "<li>" +
-                                "<a href='javascript:void(0)' onclick=\"deleteCustody('" + row.Code + "')\">" +
-                                "<span class='nk-menu-icon'><em class='icon ni ni-trash'></em></span>" +
-                                "<span class='nk-menu-text'> حذف العهدة</span>" +
-                                "</a>" +
-                                "</li>"+
-
-
-
-                                    "</ul>" +
-                                    "</div></div>"
-                            );
-        }
-    },
-
+                                "<li><a href='javascript:void(0)' onclick='call_cbox(`../Assets/AssetCheckout.aspx?hidemaster=1&t=1&requestCode=" + data + "`)' ><span class='nk-menu-icon'><em class='icon ni ni-cards'></em></span><span class='nk-menu-text'> سجل العهدة</span></a></li>" +
+                                printCustodyLink + // 🔹 this line changes dynamically
+                                "<li><a href='javascript:void(0)' onclick='call_cbox(`../Reports/AssetReceipt.aspx?empid=" + row.Ora_EmpRefCode + "&requestCode=" + row.Code + "&assetinv=y`)' ><span class='nk-menu-icon'><em class='icon ni ni-printer'></em></span><span class='nk-menu-text'> طباعة بطاقة الجرد</span></a></li>" +
+                                "<li><a href='javascript:void(0)' onclick=\"deleteCustody('" + row.Code + "')\"><span class='nk-menu-icon'><em class='icon ni ni-trash'></em></span><span class='nk-menu-text'> حذف العهدة</span></a></li>" +
+                                "</ul></div></div>";
+                        }
+                    },
                 ],
-
-
             });
 
+            // 🟢 تحديث status لكل موظف بعد كل draw
+            table.on('draw.dt', function () {
+                table.rows({ page: 'current' }).every(function (rowIdx, tableLoop, rowLoop) {
+                    const row = this.data();
+                    const badgeId = `emp-badge-${row.Ora_EmpRefCode}-${rowIdx}-${row.Code}`;
+                    updateEmployeeStatus(row.Ora_EmpRefCode, badgeId);
+                });
+            });
 
+            // Trigger أول مرة
+            table.draw();
         },
-error: function (request, status, error) {
-    toastr.clear(); NioApp.Toast(JSON.parse(request.responseText).message, 'error', { position: 'top-right' });
-}
-
-
+        error: function (request, status, error) {
+            toastr.clear();
+            NioApp.Toast(JSON.parse(request.responseText).message, 'error', { position: 'top-right' });
+        }
     });
+
+
 }
 function deleteCustody(code) {
     const confirmation = confirm('هل أنت متأكد أنك تريد حذف العهدة؟');

@@ -13,7 +13,7 @@ namespace Infrastructure.DAL.Model.DB
     
     public partial class sp_ItemAutoComp_Result
     {
-        public int code { get; set; }
-        public string name { get; set; }
+        public long Code { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using Infrastructure;
 using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
 using UI.Web.Admin.Controller;
+using UI.Web.Helper;
 
 namespace UI.Web.Modules.MasterData
 {
@@ -15,7 +16,7 @@ namespace UI.Web.Modules.MasterData
     {
         #region "Page Members"
         public GoodsCategoryRepository objRepository = IoC.Resolve<GoodsCategoryRepository>();
-        public string _PageTitle = Resources.Pages.GoodsCategory;
+        public string _PageTitle = "تصنيف المواد";
 
         #endregion
 
@@ -113,6 +114,14 @@ namespace UI.Web.Modules.MasterData
                     }
                     {
                         objRepository.Delete((D_ItemsCategory)objRepository.GetDetails(ZeroIntergerIFNull(hdnSelectedNode.Value)));
+
+                        Logger.Log(
+                     userId: ReadSession("userId").ToString(),
+                     userName: ReadSession("AdminName").ToString(),
+                     tableName: "D_ItemsCategory",
+                     action: "Delete",
+                     recordId: hdnSelectedNode.Value
+                     );
                         string script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
                     }
@@ -177,6 +186,14 @@ namespace UI.Web.Modules.MasterData
                     obj.ServicePeriod = ZeroIFNull(txtScrapPeriod.Text);
 
                     objRepository.Add(obj);
+
+                    Logger.Log(
+                 userId: ReadSession("userId").ToString(),
+                 userName: ReadSession("AdminName").ToString(),
+                 tableName: "D_ItemsCategory",
+                 action: "Insert",
+                 recordId: obj.Code.ToString()
+                 );
                 }
                 else
                 { //Update 
@@ -191,6 +208,14 @@ namespace UI.Web.Modules.MasterData
                     obj.ServicePeriod = ZeroIFNull(txtScrapPeriod.Text);
 
                     objRepository.Update(obj);
+
+                    Logger.Log(
+              userId: ReadSession("userId").ToString(),
+              userName: ReadSession("AdminName").ToString(),
+              tableName: "D_ItemsCategory",
+              action: "Update",
+              recordId: obj.Code.ToString()
+              );
 
                 }
 

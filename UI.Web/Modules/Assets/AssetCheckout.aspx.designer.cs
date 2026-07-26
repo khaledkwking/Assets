@@ -186,6 +186,33 @@ namespace UI.Web.Modules.Assets
         protected global::System.Web.UI.WebControls.TextBox txtReturnDate;
 
         /// <summary>
+        /// divOrgOwner control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOrgOwner;
+
+        /// <summary>
+        /// txtName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtName;
+
+        /// <summary>
+        /// txtCivilID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCivilID;
+
+        /// <summary>
         /// txtNotes control.
         /// </summary>
         /// <remarks>
@@ -364,6 +391,15 @@ namespace UI.Web.Modules.Assets
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnHide;
+
+        /// <summary>
+        /// btnConvert control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnConvert;
 
         /// <summary>
         /// grdCustodyItems control.

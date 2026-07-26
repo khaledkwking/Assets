@@ -29,6 +29,7 @@ namespace UI.Web.Modules.WHM.Forms
         public string _PageTitle = Resources.Pages.CustodyItems;
         #endregion
         private const int PageSize = 50; // Number of records per page
+        private const int PageNumber = 1; // Number of records per page
         private int CurrentPage
         {
             get
@@ -61,11 +62,54 @@ namespace UI.Web.Modules.WHM.Forms
             lblerror.Text = "";
             if (!IsPostBack)
             {
-                fillLookups();
+                if (Request.QueryString["ReportType"] == null)
+                {
+                    divFilter.Visible = false;
+                    string css = @"<style>
+    .ToolbarPageNav.WidgetSet {
+        visibility: visible !important;
+    }
+</style>";
 
+                    if (!Page.ClientScript.IsStartupScriptRegistered("CustomCSS"))
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "CustomCSS", css, false);
+                    }
+                }
+                else if (Request.QueryString["ReportType"] == "1")
+                {
+                    divFilter.Visible = false;
+                    string css = @"<style>
+    .ToolbarPageNav.WidgetSet {
+        visibility: visible !important;
+    }
+</style>";
+
+                    if (!Page.ClientScript.IsStartupScriptRegistered("CustomCSS"))
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "CustomCSS", css, false);
+                    }
+                }
+                else if (Request.QueryString["ReportType"] == "2")
+                {
+                    fillLookups();
+
+                    divFilter.Visible = true;
+                    string css = @"<style>
+    .ToolbarPageNav.WidgetSet {
+        visibility: hidden !important;
+    }
+</style>";
+
+                    if (!Page.ClientScript.IsStartupScriptRegistered("CustomCSS"))
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "CustomCSS", css, false);
+                    }
+                }
                 ViewState["parent"] = "0";
                 ViewState["main"] = "0";
                 ViewState["sub"] = "0";
+                ViewState["PageNum"] = "1";
                 fillReport();
             }
 
@@ -107,8 +151,19 @@ namespace UI.Web.Modules.WHM.Forms
         }
         protected void btnPrevious_Click(object sender, EventArgs e)
         {
+            string css = @"<style>
+    .ToolbarPageNav.WidgetSet {
+        visibility: hidden !important;
+    }
+</style>";
+
+            if (!Page.ClientScript.IsStartupScriptRegistered("CustomCSS"))
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "CustomCSS", css, false);
+            }
             if (CurrentPage > 1)
             {
+
                 CurrentPage--;
                 LoadData(CurrentPage);
             }
@@ -116,6 +171,16 @@ namespace UI.Web.Modules.WHM.Forms
 
         protected void btnNext_Click(object sender, EventArgs e)
         {
+            string css = @"<style>
+    .ToolbarPageNav.WidgetSet {
+        visibility: hidden !important;
+    }
+</style>";
+
+            if (!Page.ClientScript.IsStartupScriptRegistered("CustomCSS"))
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "CustomCSS", css, false);
+            }
             int totalRecords = objRepository.GetCustodyListCount(ViewState["parent"].ToString(), ViewState["main"].ToString(), ViewState["sub"].ToString());
             int totalPages = (int)Math.Ceiling((double)totalRecords / PageSize);
 
@@ -171,7 +236,7 @@ namespace UI.Web.Modules.WHM.Forms
                             {
                                 //FillDllwithoptional_ALL(nodeChildren.Where(x => x.PARENTCODE == 0 || x.PARENTCODE == null).ToList(), ddlGov, "ENTITYNAME", "ENTITYCODE", "--- اختر ---");
 
-                                ViewState["ORG"] = ddlGov.SelectedItem.Text;
+                                ViewState["ORG"] = "0";// ddlGov.SelectedItem.Text;
                                 string ORG = ViewState["ORG"].ToString();
 
                                 foreach (var item in objList)
@@ -180,14 +245,14 @@ namespace UI.Web.Modules.WHM.Forms
                                     item.groupname = nodeChildren.Where(x => x.ENTITYCODE == item.OrgChartRefCode).FirstOrDefault().ENTITYNAME;
                                     
                                 }
-
-                                ReportViewer1.ProcessingMode = ProcessingMode.Local;
-                                ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_Inventory.rdlc");
-                                ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+                                rptProjects.Visible = true;
+                                rptProjects.ProcessingMode = ProcessingMode.Local;
+                                rptProjects.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_Inventory.rdlc");
+                                rptProjects.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
                                 //var objlist = objRepository.GetList();
                                 ReportDataSource datasource = new ReportDataSource("Ds_StockTaking", objList);
-                                ReportViewer1.LocalReport.DataSources.Clear();
-                                ReportViewer1.LocalReport.DataSources.Add(datasource);
+                                rptProjects.LocalReport.DataSources.Clear();
+                                rptProjects.LocalReport.DataSources.Add(datasource);
                             }
                             else
                             {
@@ -198,6 +263,7 @@ namespace UI.Web.Modules.WHM.Forms
                         }
                     case 2:
                         {
+                            rptProjects.Visible = false;
                             //_PageTitle = "جدول بيانات الأصول";
                             ////var objList = objRepository.getCustodyListHera(nodeChildren.Select(x => x.ENTITYCODE).ToArray());
                             //var objList = objRepository.getCustodyList();
@@ -271,7 +337,8 @@ namespace UI.Web.Modules.WHM.Forms
                                 int skip = (pageNumber - 1) * pageSize;
                                 objList = objList.OrderBy(obj => obj.EmpName).Skip(skip).Take(pageSize).ToList(); 
                           
-                                
+                                //objList = objList.OrderBy(obj => obj.EmpName).ToList();
+
 
                                 ReportViewer1.ProcessingMode = ProcessingMode.Local;
                                 ReportViewer1.Reset();
@@ -286,6 +353,7 @@ namespace UI.Web.Modules.WHM.Forms
 
                                 
                                 // Optionally, you can set parameters for total pages and current page
+                                ReportViewer1.LocalReport.SetParameters(new ReportParameter("TotalPagesBottom", lblCurrentPage.Text));
                                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("TotalPages", totalRecords.ToString()));
                                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("CurrentPage", pageNumber.ToString()));
 
@@ -334,12 +402,25 @@ namespace UI.Web.Modules.WHM.Forms
                 //var assignedLocations =   objRepository.GetLocationList();
 
                 nodeChildren = JsonConvert.DeserializeObject<List<OrgChartViewModel>>(result);
-                // Fetch the paged data
+
+                _PageTitle = "جدول بيانات الأصول";
+
+                ViewState["parent"] = ddlParent.SelectedItem.Text;
+                ViewState["main"] = ddlMain.SelectedItem.Text;
+                ViewState["sub"] = ddlSub.SelectedItem.Text;
+                ViewState["ORG"] = ddlGov.SelectedItem.Text;
+
+                // Define pagination parameters
+                int pageSize = 50; // Number of records per page
+                //int pageNumber = 1; // Current page number (you can set this based on user input)
+
+                //// Fetch the total count of records (for pagination purposes)
+                //int totalRecords = objRepository.GetCustodyListCount(ViewState["parent"].ToString(), ViewState["main"].ToString(), ViewState["sub"].ToString()); // Implement this method to return the total count
+                //int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
                 var objList = objRepository.GetCustodyListWithFilter(ViewState["parent"].ToString(), ViewState["main"].ToString(), ViewState["sub"].ToString()); // Implement this method to return the total count
                 if (objList != null && nodeChildren != null)
                 {
-                    FillDllwithoptional_ALL(nodeChildren.Where(x => x.PARENTCODE == 0 || x.PARENTCODE == null).ToList(), ddlGov, "ENTITYNAME", "ENTITYCODE", "--- اختر ---");
-
 
                     string ORG = ViewState["ORG"].ToString();
 
@@ -356,29 +437,118 @@ namespace UI.Web.Modules.WHM.Forms
                         ORG = "0";
                     objList = objList.Where(obj => (ORG != "0" ? obj.ORG_NAME == ORG : 1 == 1)).ToList();
 
-                    // Get the total number of records for pagination
-                    //    int totalRecords = objRepository.GetCustodyListCount(ViewState["parent"].ToString(), ViewState["main"].ToString(), ViewState["sub"].ToString());
-                    //int totalPages = (int)Math.Ceiling((double)totalRecords / PageSize);
-
                     int totalRecords = objList.Count; // Implement this method to return the total count
-                    int totalPages = (int)Math.Ceiling((double)totalRecords / 50);
+                    int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 
-                    // Set up the report data source
-                    ReportDataSource rds = new ReportDataSource("Ds_StockTaking", objList);
-                    ReportViewer1.LocalReport.DataSources.Clear();
-                    ReportViewer1.LocalReport.DataSources.Add(rds);
-                    ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsListWithServicePeriod.rdlc");
-
-                    // Set parameters if needed
-                    ReportParameter param = new ReportParameter("username", "YourUsername"); // Replace with actual username
-                    ReportViewer1.LocalReport.SetParameters(new ReportParameter[] { param });
-
-                    // Refresh the report
-                    ReportViewer1.LocalReport.Refresh();
-
-                    // Update the current page label
                     lblCurrentPage.Text = $"صفحة {pageNumber} من {totalPages}";
+
+                    // Fetch the paged data
+                    //    var objList = objRepository.getCustodyListPaged(pageNumber, pageSize, ViewState["parent"].ToString(), ViewState["main"].ToString(), ViewState["sub"].ToString() , ViewState["ORG"].ToString()); // Implement this method to return paged data
+                    int skip = (pageNumber - 1) * pageSize;
+                    objList = objList.OrderBy(obj => obj.EmpName).Skip(skip).Take(pageSize).ToList();
+
+
+
+                    ReportViewer1.ProcessingMode = ProcessingMode.Local;
+                    ReportViewer1.Reset();
+                    ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsListWithServicePeriod.rdlc");
+                    ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+
+                    // Create the report data source
+                    ReportDataSource datasource = new ReportDataSource("Ds_StockTaking", objList);
+                    ReportViewer1.LocalReport.DataSources.Clear();
+
+                    ReportViewer1.LocalReport.DataSources.Add(datasource);
+
+
+                    // Optionally, you can set parameters for total pages and current page
+                    ReportViewer1.LocalReport.SetParameters(new ReportParameter("TotalPagesBottom", lblCurrentPage.Text));
+                    ReportViewer1.LocalReport.SetParameters(new ReportParameter("TotalPages", totalRecords.ToString()));
+                    ReportViewer1.LocalReport.SetParameters(new ReportParameter("CurrentPage", pageNumber.ToString()));
+
+                    ReportViewer1.LocalReport.Refresh();
                 }
+                else
+                {
+                    string script = FormatErrorMSGSwal(Resources.Alerts.FailToSaveData, "1");
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                }
+
+
+
+
+                //break;
+
+
+
+                // Fetch the paged data
+                //var objList = objRepository.GetCustodyListWithFilter(ViewState["parent"].ToString(), ViewState["main"].ToString(), ViewState["sub"].ToString()); // Implement this method to return the total count
+                //if (objList != null && nodeChildren != null)
+                //{
+                //    FillDllwithoptional_ALL(nodeChildren.Where(x => x.PARENTCODE == 0 || x.PARENTCODE == null).ToList(), ddlGov, "ENTITYNAME", "ENTITYCODE", "--- اختر ---");
+
+
+                //    string ORG = ViewState["ORG"].ToString();
+
+
+                //    //foreach (var item in objList)
+                //    //{
+                //    //    item.ORG_NAME = nodeChildren.Where(x => x.ENTITYCODE == item.OrgChartRefCode).FirstOrDefault()?.ENTITYNAME;
+                //    //    item.groupname = nodeChildren.Where(x => x.ENTITYCODE == item.OrgChartRefCode).FirstOrDefault()?.ENTITYNAME;
+                //    //}
+
+                //    setChartInfos(objList);
+
+                //    if (ORG == "--- اختر ---")
+                //        ORG = "0";
+                //    objList = objList.Where(obj => (ORG != "0" ? obj.ORG_NAME == ORG : 1 == 1)).ToList();
+
+                //    // Get the total number of records for pagination
+                //    //    int totalRecords = objRepository.GetCustodyListCount(ViewState["parent"].ToString(), ViewState["main"].ToString(), ViewState["sub"].ToString());
+                //    //int totalPages = (int)Math.Ceiling((double)totalRecords / PageSize);
+
+                //    int totalRecords = objList.Count; // Implement this method to return the total count
+                //    int totalPages = (int)Math.Ceiling((double)totalRecords / 50);
+
+                //    // Set up the report data source
+                //    //ReportViewer1.ProcessingMode = ProcessingMode.Local;
+                //    //ReportViewer1.Reset();
+                //    //ReportDataSource rds = new ReportDataSource("Ds_StockTaking", objList);
+                //    //ReportViewer1.LocalReport.DataSources.Clear();
+                //    //ReportViewer1.LocalReport.DataSources.Add(rds);
+                //    //ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsListWithServicePeriod.rdlc");
+
+                //    //// Set parameters if needed
+                //    //ReportParameter param = new ReportParameter("username", "YourUsername"); // Replace with actual username
+                //    //ReportViewer1.LocalReport.SetParameters(new ReportParameter[] { param });
+
+                //    //// Refresh the report
+                //    //ReportViewer1.LocalReport.Refresh();
+
+
+
+                //    ReportViewer1.ProcessingMode = ProcessingMode.Local;
+                //    ReportViewer1.Reset();
+                //    ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsListWithServicePeriod.rdlc");
+                //    ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+
+                //    // Create the report data source
+                //    ReportDataSource datasource = new ReportDataSource("Ds_StockTaking", objList);
+                //    ReportViewer1.LocalReport.DataSources.Clear();
+
+                //    ReportViewer1.LocalReport.DataSources.Add(datasource);
+
+
+                //    // Optionally, you can set parameters for total pages and current page
+                //    ReportViewer1.LocalReport.SetParameters(new ReportParameter("TotalPages", totalRecords.ToString()));
+                //    ReportViewer1.LocalReport.SetParameters(new ReportParameter("CurrentPage", pageNumber.ToString()));
+
+                //    ReportViewer1.LocalReport.Refresh();
+
+
+
+                //    // Update the current page label
+                //    lblCurrentPage.Text = $"صفحة {pageNumber} من {totalPages}";
             }
         }
 
@@ -386,10 +556,14 @@ namespace UI.Web.Modules.WHM.Forms
 
         private List<view_CustodyList> setChartInfos(List<view_CustodyList> objList)
         {
+            var AllEmp = GetOraEmpList(0);
+           
 
-                foreach (var item in objList)
+            foreach (var item in objList)
                 {
-                    var Empinfo = GetOraEmpDetails(item.EmpRefCode.Value);
+                if (item.EmpRefCode != null)
+                {
+                    var Empinfo = AllEmp.Where(o => int.Parse(o.EMP_ID) == item.EmpRefCode.Value).FirstOrDefault();
                     if (Empinfo != null)
                     {
                         item.ORG_NAME = Empinfo.ORG_NAME;
@@ -403,7 +577,7 @@ namespace UI.Web.Modules.WHM.Forms
 
                     }
 
-
+                }
                 }
 
             return objList;
@@ -464,47 +638,54 @@ namespace UI.Web.Modules.WHM.Forms
         //    Response.Flush();
         //    Response.End();
         //}
-        private void ExportReportToCSV()
+        private void ExportReportToExcel()
         {
-            // Set up the report
-            LocalReport localReport = new LocalReport();
-            localReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsListWithServicePeriod.rdlc");
+            string ORG = ViewState["ORG"].ToString();
 
-            // Fetch your data (this should match the data source used in the RDLC)
-            List<view_CustodyList> dataList = objRepository.getCustodyList(); // Adjust this method as needed
+            LocalReport report = new LocalReport();
+            report.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsListWithServicePeriod.rdlc");
 
-            // Create a report data source
+            //List<view_CustodyList> dataList = objRepository.getCustodyList().ToList();
+            List<view_CustodyList> dataList = objRepository.GetCustodyListWithFilter(ViewState["parent"].ToString(), ViewState["main"].ToString(), ViewState["sub"].ToString());
+            setChartInfos(dataList);
+            if (ORG == "--- اختر ---")
+                ORG = "0";
+            dataList = dataList.Where(obj => (ORG != "0" ? obj.ORG_NAME == ORG : 1 == 1)).ToList();
             ReportDataSource rds = new ReportDataSource("Ds_StockTaking", dataList);
-            localReport.DataSources.Clear();
-            localReport.DataSources.Add(rds);
 
-            // Render the report to a byte array
+            report.DataSources.Clear();
+            report.DataSources.Add(rds);
+
+            // Optional: Set report parameters
+            report.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+
             string mimeType;
             string encoding;
             string fileNameExtension;
             string[] streams;
             Warning[] warnings;
 
-            byte[] renderedBytes = localReport.Render(
-                "Excel", null, out mimeType, out encoding, out fileNameExtension,
-                out streams, out warnings);
+            // ✅ Use EXCELOPENXML for .xlsx output
+            byte[] bytes = report.Render(
+                "EXCELOPENXML", // Correct format for modern Excel
+                null,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings
+            );
 
-            // Convert the Excel byte array to CSV format
-            string csvData = ConvertExcelToCSV(renderedBytes);
-
-            // Set the response to be a CSV file
+            // Output to browser as .xlsx
             Response.Clear();
             Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment;filename=CustodyList.csv");
-
-
-            Response.ContentType = "text/csv";
-
-            // Write the CSV data to the response
-            Response.Output.Write(csvData);
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("Content-Disposition", "attachment; filename=CustodyList.xlsx");
+            Response.BinaryWrite(bytes);
             Response.Flush();
             Response.End();
         }
+
         private string ConvertExcelToCSV(byte[] excelData)
         {
             // Use a library like EPPlus or NPOI to read the Excel data and convert it to CSV
@@ -530,7 +711,7 @@ namespace UI.Web.Modules.WHM.Forms
         }
         protected void btnExportToExcel_Click(object sender, EventArgs e)
         {
-            ExportReportToCSV();
+            ExportReportToExcel();
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -561,5 +742,16 @@ namespace UI.Web.Modules.WHM.Forms
             FillDllwithoptional_ALL(query, ddlSub, "FinanceRefCode", "Code", "--- اختر ---");
 
         }
+    }
+
+    public class UserInfos
+    {
+      public string ORG_NAME { get; set; }
+        public string AMANA_NAME { get; set; }
+        public string DEPT_NAME { get; set; }
+        public string DIV_NAME { get; set; }
+        public string SEC_NAME { get; set; }
+        public string SUB_SEC_NAME { get; set; }
+        public string JOB_NAME { get; set; }
     }
 }

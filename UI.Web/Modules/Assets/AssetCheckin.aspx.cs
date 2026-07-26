@@ -10,6 +10,7 @@ using Infrastructure;
 using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
 using UI.Web.Admin.Controller;
+using UI.Web.Helper;
 
 namespace UI.Web.Modules.Assets
 {
@@ -78,10 +79,25 @@ namespace UI.Web.Modules.Assets
 
                     objRepository.AddEventTracking(obj);
 
+                    Logger.Log(
+                       userId: ReadSession("userId").ToString(),
+                       userName: ReadSession("AdminName").ToString(),
+                       tableName: "AssetsEventTrackings",
+                       action: "Insert",
+                       recordId: obj.Code.ToString()
+                       );
 
                     //update
                     selectedItem.LastEventTrackingId = obj.Code;
                     objInboundRepository.UpdateItemunit(selectedItem);
+
+                    Logger.Log(
+                     userId: ReadSession("userId").ToString(),
+                     userName: ReadSession("AdminName").ToString(),
+                     tableName: "AssetsItemUnits",
+                     action: "Update",
+                     recordId: selectedItem.Code.ToString()
+                     );
                 }
                 Session["selectedItems"] = null;
                 fillRequestItems();
@@ -190,15 +206,15 @@ namespace UI.Web.Modules.Assets
             if (e.CommandName == "delete")
             {
 
-                if (Session["selectedItems"] != null)
-                {
-                    var objList = (List<view_AssetsList>)Session["selectedItems"];
-                    view_AssetsList selected = objList.Where(x => x.InboubdItemId == ZeroIntergerIFNull(e.Item.Cells[0].Text)).FirstOrDefault();
-                    objList.Remove(selected);
+                //if (Session["selectedItems"] != null)
+                //{
+                //    var objList = (List<view_AssetsList>)Session["selectedItems"];
+                //    view_AssetsList selected = objList.Where(x => x.InboubdItemId == ZeroIntergerIFNull(e.Item.Cells[0].Text)).FirstOrDefault();
+                //    objList.Remove(selected);
 
-                    Session["selectedItems"] = objList;
-                    fillRequestItems();
-                }
+                //    Session["selectedItems"] = objList;
+                //    fillRequestItems();
+                //}
 
             }
 

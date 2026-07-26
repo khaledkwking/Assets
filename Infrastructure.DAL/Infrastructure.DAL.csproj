@@ -80,6 +80,9 @@
     <Compile Include="Model\DB\AssetsItemUnit.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DB\AssetsStore.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DB\AssetsTrackingAction.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
@@ -111,6 +114,9 @@
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\D_EmployeeLocations.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\D_ExcludedOrg.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\D_InboundDepositeStatusType.cs">
@@ -180,6 +186,9 @@
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\InboundStoreEmployee.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\ItemStatu.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\Item_tbl.cs">
@@ -266,7 +275,13 @@
     <Compile Include="Model\DB\sp_LocationTree_Result.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DB\Store.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DB\sysdiagram.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\SystemLog.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\viewTemp.cs">
@@ -288,6 +303,9 @@
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\view_CustodyListGrouped.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_CustodyListTransfer.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\view_inboubdItems.cs">

@@ -105,22 +105,22 @@ namespace UI.Web.Modules.Assets
         protected global::System.Web.UI.WebControls.Label lblerror;
 
         /// <summary>
-        /// selectedLocation control.
+        /// selectedToLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden selectedLocation;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden selectedToLocation;
 
         /// <summary>
-        /// btnReload control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnReload;
+        protected global::System.Web.UI.WebControls.Button Button1;
 
         /// <summary>
         /// divEmployee control.
@@ -139,15 +139,6 @@ namespace UI.Web.Modules.Assets
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstRefEmployee;
-
-        /// <summary>
-        /// lnkFilter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkFilter;
 
         /// <summary>
         /// grdItems control.
@@ -186,22 +177,22 @@ namespace UI.Web.Modules.Assets
         protected global::System.Web.UI.WebControls.LinkButton lnkRemove;
 
         /// <summary>
-        /// selectedToLocation control.
+        /// rblTransferType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden selectedToLocation;
+        protected global::System.Web.UI.WebControls.RadioButtonList rblTransferType;
 
         /// <summary>
-        /// Button1 control.
+        /// divEmployeeTarget control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEmployeeTarget;
 
         /// <summary>
         /// lstToEmpRefCode control.
@@ -211,6 +202,24 @@ namespace UI.Web.Modules.Assets
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstToEmpRefCode;
+
+        /// <summary>
+        /// divStore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divStore;
+
+        /// <summary>
+        /// lstToStore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lstToStore;
 
         /// <summary>
         /// grdSelectedItems control.

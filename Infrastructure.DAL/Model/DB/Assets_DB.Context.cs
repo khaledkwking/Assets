@@ -28,7 +28,6 @@ namespace Infrastructure.DAL.Model.DB
         }
     
         public virtual DbSet<AssetsAvailabilityStatu> AssetsAvailabilityStatus { get; set; }
-        public virtual DbSet<AssetsItemUnit> AssetsItemUnits { get; set; }
         public virtual DbSet<AssetsTrackingAction> AssetsTrackingActions { get; set; }
         public virtual DbSet<D_AttachmentType> D_AttachmentType { get; set; }
         public virtual DbSet<D_Country> D_Country { get; set; }
@@ -36,7 +35,6 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<D_EmployeeLocations> D_EmployeeLocations { get; set; }
         public virtual DbSet<D_InboundDepositeStatusType> D_InboundDepositeStatusType { get; set; }
         public virtual DbSet<D_InboundType> D_InboundType { get; set; }
-        public virtual DbSet<D_ItemCard> D_ItemCard { get; set; }
         public virtual DbSet<D_ItemsCategory> D_ItemsCategory { get; set; }
         public virtual DbSet<D_ItemUsedStatus> D_ItemUsedStatus { get; set; }
         public virtual DbSet<D_JobTitle> D_JobTitle { get; set; }
@@ -49,7 +47,6 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<InboundNote> InboundNotes { get; set; }
         public virtual DbSet<InboundStatusTrack> InboundStatusTracks { get; set; }
         public virtual DbSet<InboundStoreEmployee> InboundStoreEmployees { get; set; }
-        public virtual DbSet<Item_tbl> Item_tbl { get; set; }
         public virtual DbSet<RequestAttachment> RequestAttachments { get; set; }
         public virtual DbSet<Security_pr_AdminType> Security_pr_AdminType { get; set; }
         public virtual DbSet<Security_pr_MainSystem> Security_pr_MainSystem { get; set; }
@@ -64,26 +61,35 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<Security_pr_adminPermittedLocations> Security_pr_adminPermittedLocations { get; set; }
         public virtual DbSet<D_OutboundRefType> D_OutboundRefType { get; set; }
         public virtual DbSet<D_OutboundType> D_OutboundType { get; set; }
-        public virtual DbSet<Outbound_Items> Outbound_Items { get; set; }
         public virtual DbSet<OutboundAttachment> OutboundAttachments { get; set; }
         public virtual DbSet<OutboundNote> OutboundNotes { get; set; }
         public virtual DbSet<View_OutboundItems> View_OutboundItems { get; set; }
         public virtual DbSet<Outbound> Outbounds { get; set; }
         public virtual DbSet<View_OutboundList> View_OutboundList { get; set; }
         public virtual DbSet<view_ItemCard> view_ItemCard { get; set; }
-        public virtual DbSet<view_AssetsEventTrackingHeader> view_AssetsEventTrackingHeader { get; set; }
         public virtual DbSet<AssetsTransferOut> AssetsTransferOuts { get; set; }
         public virtual DbSet<view_AssetEventLog> view_AssetEventLog { get; set; }
         public virtual DbSet<view_AssetsInventory> view_AssetsInventory { get; set; }
-        public virtual DbSet<view_AssetsList> view_AssetsList { get; set; }
         public virtual DbSet<view_CustodyListGrouped> view_CustodyListGrouped { get; set; }
         public virtual DbSet<view_Inventory> view_Inventory { get; set; }
         public virtual DbSet<Security_pr_admin> Security_pr_admin { get; set; }
         public virtual DbSet<Security_pr_adminPermittedOrgUnits> Security_pr_adminPermittedOrgUnits { get; set; }
-        public virtual DbSet<AssetsEventTrackingHeader> AssetsEventTrackingHeaders { get; set; }
-        public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
         public virtual DbSet<D_Locations> D_Locations { get; set; }
+        public virtual DbSet<AssetsEventTrackingHeader> AssetsEventTrackingHeaders { get; set; }
+        public virtual DbSet<AssetsStore> AssetsStores { get; set; }
+        public virtual DbSet<Store> Stores { get; set; }
+        public virtual DbSet<view_CustodyListTransfer> view_CustodyListTransfer { get; set; }
+        public virtual DbSet<view_AssetsEventTrackingHeader> view_AssetsEventTrackingHeader { get; set; }
         public virtual DbSet<view_CustodyList> view_CustodyList { get; set; }
+        public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
+        public virtual DbSet<AssetsItemUnit> AssetsItemUnits { get; set; }
+        public virtual DbSet<Outbound_Items> Outbound_Items { get; set; }
+        public virtual DbSet<ItemStatu> ItemStatus { get; set; }
+        public virtual DbSet<Item_tbl> Item_tbl { get; set; }
+        public virtual DbSet<D_ItemCard> D_ItemCard { get; set; }
+        public virtual DbSet<view_AssetsList> view_AssetsList { get; set; }
+        public virtual DbSet<SystemLog> SystemLogs { get; set; }
+        public virtual DbSet<D_ExcludedOrg> D_ExcludedOrg { get; set; }
     
         [DbFunction("AssetsEntitiesNew", "getChildNodeParentList")]
         public virtual IQueryable<getChildNodeParentList_Result> getChildNodeParentList(Nullable<int> childNodeId)
@@ -282,15 +288,6 @@ namespace Infrastructure.DAL.Model.DB
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual ObjectResult<sp_ItemAutoComp_Result> sp_ItemAutoComp(string pre)
-        {
-            var preParameter = pre != null ?
-                new ObjectParameter("pre", pre) :
-                new ObjectParameter("pre", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ItemAutoComp_Result>("sp_ItemAutoComp", preParameter);
-        }
-    
         public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
         {
             var diagramnameParameter = diagramname != null ?
@@ -381,6 +378,15 @@ namespace Infrastructure.DAL.Model.DB
         public virtual ObjectResult<sp_GetAllEmpsHaveAssetsDetails_Result> sp_GetAllEmpsHaveAssetsDetails()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAllEmpsHaveAssetsDetails_Result>("sp_GetAllEmpsHaveAssetsDetails");
+        }
+    
+        public virtual ObjectResult<sp_ItemAutoComp_Result> sp_ItemAutoComp(string pre)
+        {
+            var preParameter = pre != null ?
+                new ObjectParameter("pre", pre) :
+                new ObjectParameter("pre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ItemAutoComp_Result>("sp_ItemAutoComp", preParameter);
         }
     }
 }

@@ -33,6 +33,10 @@
           <DataField>ItemCode</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="ItemDate">
+          <DataField>ItemDate</DataField>
+          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
         <Field Name="ItemNameEn">
           <DataField>ItemNameEn</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -72,6 +76,14 @@
         <Field Name="TMonth">
           <DataField>TMonth</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="AssetOrgOwnerRefCode">
+          <DataField>AssetOrgOwnerRefCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AssetOrgOwnerName">
+          <DataField>AssetOrgOwnerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TYear">
           <DataField>TYear</DataField>
@@ -2473,14 +2485,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ActionDate">
+                        <Textbox Name="ItemDate">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ActionDate.Value</Value>
+                                  <Value>=Format(Fields!ItemDate.Value, "dd/MM/yyyy")</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <Format>d</Format>
@@ -2493,7 +2505,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ActionDate</rd:DefaultName>
+                          <rd:DefaultName>ItemDate</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -2506,6 +2518,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2557,7 +2570,6 @@
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <Format>0.000;(0.000)</Format>
-                                    <Color>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"White","#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2572,7 +2584,6 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"Red","White")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2593,7 +2604,6 @@
                                   <Value>=Fields!BuildingCity.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Color>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"White","#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2608,14 +2618,12 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"Red","White")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2630,7 +2638,6 @@
                                   <Value>=Fields!ORG_NAME.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Color>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"White","#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2645,7 +2652,6 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"Red","White")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2666,7 +2672,6 @@
                                   <Value>=Fields!DEPT_NAME.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Color>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"White","#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2681,7 +2686,6 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"Red","White")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2702,7 +2706,6 @@
                                   <Value>=Fields!Building.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Color>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"White","#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2717,7 +2720,6 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"Red","White")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2738,7 +2740,6 @@
                                   <Value>=Fields!Floors.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Color>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"White","#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2753,7 +2754,6 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"Red","White")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2771,10 +2771,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!EmpName.Value</Value>
+                                  <Value>=Fields!EmpName.Value + Fields!AssetOrgOwnerName.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Color>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"White","#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2789,7 +2788,6 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"Red","White")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2810,7 +2808,6 @@
                                   <Value />
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Color>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"White","#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2825,7 +2822,6 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"Red","White")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2846,7 +2842,6 @@
                                   <Value>=Fields!TYear.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Color>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"White","#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2861,7 +2856,6 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"Red","White")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2883,7 +2877,6 @@
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Color>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"White","#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2898,7 +2891,6 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"Red","White")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2920,7 +2912,6 @@
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Color>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"White","#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2935,7 +2926,6 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=iif((Fields!ItemServiceMonthes.Value/12)&gt;Fields!ServicePeriod.Value,"Red","White")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2997,7 +2987,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>1.8223in</Height>
+        <Height>1.68341in</Height>
         <Style />
       </Body>
       <Width>11.28391in</Width>
@@ -3166,7 +3156,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Page " + Globals!PageNumber.ToString() + " of " + Globals!TotalPages.ToString()</Value>
+                      <Value>=Parameters!TotalPagesBottom.Value</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                       </Style>
@@ -3235,6 +3225,12 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="TotalPagesBottom">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -3255,6 +3251,11 @@
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>CurrentPage</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>TotalPagesBottom</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

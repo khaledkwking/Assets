@@ -4,11 +4,105 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
+
+<!-- jQuery UI -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function () {
+          // Function to initialize the DatePicker
+          function initializeDatepicker() {
+              $(".date-pickers").datepicker({
+                  dateFormat: 'dd/mm/yy',   // Set the date format (optional)
+                  changeMonth: true,
+                  changeYear: true
+              });
+          }
+
+          // Initialize DatePicker when the page loads
+          initializeDatepicker();
+
+          // Reinitialize DatePicker after partial postbacks (AJAX)
+          Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+              initializeDatepicker();
+          });
+      });
+  </script>
     <script language="JavaScript" type="text/javascript">
+        function isNumberKeyq(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode == 13) {
+                var btn = getObjById("btnAddItem")
+                //alert("Enter Key "+btn.value);
+                btn.click();
+                return false
+            }
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
 
-</script>
+            return true;
+        }
 
+        const empCache = {};
+
+        function applyStatus(badgeId, status) {
+            var badge = document.getElementById(badgeId);
+            if (!badge) return;
+
+            var s = (status || "").toLowerCase();
+            if (s === "active") {
+                badge.className = "badge badge-dim badge-success";
+                badge.innerText = "فعال";
+            } else if (s === "not-active") {
+                badge.className = "badge badge-dim badge-danger";
+                badge.innerText = "غير فعال";
+            } else if (s === "error") {
+                badge.className = "badge badge-dim badge-warning";
+                badge.innerText = "فشل التحميل";
+            } else {
+                badge.className = "badge badge-dim badge-danger";
+                badge.innerText = "غير فعال";
+            }
+        }
+
+        function updateEmployeeStatus(empId, badgeId) {
+            if (empCache[empId]) {
+                applyStatus(badgeId, empCache[empId]);
+                return;
+            }
+
+            fetch("/api/hepler/GetEmployeeStatus?empId=" + empId)
+                .then(function (res) { return res.json(); })
+                .then(function (result) {
+                    var status = result && result.status ? result.status : "unknown";
+                    empCache[empId] = status;
+                    applyStatus(badgeId, status);
+                })
+                .catch(function () { applyStatus(badgeId, "error"); });
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            var spans = document.querySelectorAll("span[id^='empBadge_']");
+            for (var i = 0; i < spans.length; i++) {
+                var span = spans[i];
+                var parts = span.id.split("_"); // empBadge_{empId}_{Code}
+                var empId = parts[1];
+                updateEmployeeStatus(empId, span.id);
+            }
+        });
+    </script>
+    <style>
+        .autocomplete {
+            font-size: 15px !important;
+            line-height: normal;
+            padding: 10px 35px !important; /* Add padding around each item */
+            margin-bottom: 5px !important; /* Add space between items */
+            border-bottom: 1px solid #ddd !important; /* Optional: Add a bottom border for separation */
+            text-align: right; /* Increase font size for all items */
+            width: auto;
+        }
+    </style>
 
 
     <asp:UpdatePanel runat="server" ID="Updatepanel1" ChildrenAsTriggers="true" UpdateMode="conditional">
@@ -40,7 +134,7 @@
                 <div class="card-inner" data-select2-id="22">
                     <div class="card-title-group" data-select2-id="21">
                         <div class="card-title">
-                            <h5 class="title"> سجل إستمارات العهد (<asp:Label ID="lblCountTop" runat="server" tetx="0"></asp:Label>)</h5>
+                            <h5 class="title">سجل إستمارات العهد (<asp:Label ID="lblCountTop" runat="server" tetx="0"></asp:Label>)</h5>
                         </div>
                         <div class="card-tools mr-n1" data-select2-id="20">
                             <ul class="btn-toolbar gx-1" data-select2-id="19">
@@ -68,15 +162,16 @@
 
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","RequestActionType") %></label>
+                                                            <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","ProcessType") %></label>
                                                             <asp:DropDownList ID="lstFilterAction" runat="server" class="form-control form-select" data-search="on">
                                                                 <asp:ListItem Text="الكل" Value="0"></asp:ListItem>
                                                                 <asp:ListItem Text="عهدة شخصية" Value="1"></asp:ListItem>
                                                                 <asp:ListItem Text="عهدة تنضيمية" Value="2"></asp:ListItem>
+                                                                <asp:ListItem Text="عهدة غير محددة" Value="3"></asp:ListItem>
                                                             </asp:DropDownList>
                                                         </div>
                                                     </div>
-                                                       <div class="col-12">
+                                                    <div class="col-12">
                                                         <div class="form-group">
                                                             <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","EmpStatus") %></label>
                                                             <asp:DropDownList ID="lstFilterEmpStatus" runat="server" class="form-control form-select" data-search="on">
@@ -86,7 +181,25 @@
                                                             </asp:DropDownList>
                                                         </div>
                                                     </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="overline-title overline-title-alt">المواد</label>
 
+                                                            <asp:TextBox onkeypress="return NumberKey(event,3)" runat="server"
+                                                                ID="txtItemDesc" CssClass="form-control"></asp:TextBox>
+                                                            <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2"
+                                                                runat="server" TargetControlID="txtItemDesc"
+                                                                CompletionInterval="10" CompletionSetCount="10" MinimumPrefixLength="1" CompletionListItemCssClass="autocomplete"
+                                                                ServicePath="/modules/autocomplete/Services/TextAutoComplete.asmx" ServiceMethod="ItemAutoCompete" />
+                                                        </div>
+                                                    </div>
+                                                     <div class="col-12">
+     <div class="form-group">
+         <label class="overline-title overline-title-alt">موقع العهدة</label>
+
+    <asp:DropDownList ID="lstToLocation" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static"></asp:DropDownList>
+     </div>
+ </div>
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","ReceiptDateFrom") %></label>
@@ -94,7 +207,7 @@
                                                                 <div class="form-icon form-icon-right">
                                                                     <em class="icon ni ni-calendar-alt"></em>
                                                                 </div>
-                                                                <asp:TextBox runat="server" ID="txtTransDate" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                                                                <asp:TextBox runat="server" ID="txtTransDate" placeholder="__/__/____" class="form-control date-pickers"></asp:TextBox>
                                                             </div>
                                                         </div>
 
@@ -107,7 +220,7 @@
                                                                 <div class="form-icon form-icon-right">
                                                                     <em class="icon ni ni-calendar-alt"></em>
                                                                 </div>
-                                                                <asp:TextBox runat="server" ID="txtTransactionDateTo" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                                                                <asp:TextBox runat="server" ID="txtTransactionDateTo" placeholder="__/__/____" class="form-control date-pickers"></asp:TextBox>
                                                             </div>
 
                                                         </div>
@@ -135,7 +248,13 @@
                                             <ul class="link-check">
                                                 <li><a href="<%=GetGlobalResourceObject("Utilities","cutureRoute") %>/Modules/Assets/AssetCheckout.aspx?t=1"><span class='nk-menu-icon'><em class='icon ni ni-user-list-fill'></em></span><span class='nk-menu-text'><%=GetGlobalResourceObject("Pages","CustodyAdd") %></span></a></li>
                                                 <li><a href="<%=GetGlobalResourceObject("Utilities","cutureRoute") %>/Modules/Assets/AssetCheckout.aspx?t=2"><span class='nk-menu-icon'><em class='icon ni ni-focus'></em></span><span class='nk-menu-text'><%=GetGlobalResourceObject("Pages","CustodyAdd1") %></span></a></li>
+                                                <li>
+                                                    <asp:LinkButton OnClientClick="return checkDelete();" runat="server" ID="btnDelete" OnClick="btnDelete_Click">
+                                                        <i class="icon ni ni-trash"></i>&nbsp;<%=GetGlobalResourceObject("pages","DeleteSelectedData") %>
 
+                                                    </asp:LinkButton>
+
+                                                </li>
                                             </ul>
 
                                         </div>
@@ -162,8 +281,8 @@
                     <%--OnItemDataBound="grdData_ItemDataBound"--%>
 
                     <asp:DataGrid runat="server" ID="grdAssets" AutoGenerateColumns="False" OnItemDataBound="grdData_ItemDataBound"
-                        AllowPaging="true" PageSize="20" class="table table-hover table-striped table-bordered table-advanced tablesorter" data-auto-responsive="false" >
-                        
+                        AllowPaging="true" PageSize="20" class="table table-hover table-striped table-bordered table-advanced tablesorter" data-auto-responsive="false">
+
                         <PagerStyle Visible="false" />
                         <Columns>
                             <asp:TemplateColumn>
@@ -178,44 +297,90 @@
                                 </ItemTemplate>
                             </asp:TemplateColumn>
 
-                            
-                       
+
+
                             <asp:BoundColumn DataField="code" Visible="False"></asp:BoundColumn>
                             <asp:BoundColumn DataField="Serial" HeaderText="<%$ Resources:pages,Serial %> "></asp:BoundColumn>
-                             <asp:TemplateColumn HeaderText="<%$ Resources:pages,RequestType %>">
+                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,RequestType %>">
                                 <ItemTemplate>
-                                    <div class="text-primary"><%#( ZeroIntergerIFNull(gets(Eval("RequestActionType")))==2?"<em class='icon ni ni-building  text-info'></em>&nbsp; <span class='badge badge-outline-info'>عهدة تنظيمية</span>"    :"<em class='icon ni ni-user-list  text-primary'></em> &nbsp; <span class='badge badge-dim badge-light'>عهدة شخصية</span>")  %>   </div>
-
+                                    <div class="text-primary">
+                                        <%# 
+                                            // شخصية
+                                            (ZeroIntergerIFNull(gets(Eval("ProcessType"))) == 1 
+                                                && (ZeroIntergerIFNull(gets(Eval("EmpRefCode"))) != 0 
+                                                    || !string.IsNullOrEmpty(Convert.ToString(Eval("AssetOrgOwnerName")))))
+                                            ? "<em class='icon ni ni-user-list text-primary'></em> &nbsp; <span class='badge badge-dim badge-light'>عهدة شخصية</span>"
+                                            : (
+                                                // تنظيمية
+                                                (ZeroIntergerIFNull(gets(Eval("ProcessType"))) == 2 
+                                                    && ZeroIntergerIFNull(gets(Eval("OrgChartRefCode"))) != 0)
+                                                ? "<em class='icon ni ni-building text-info'></em> &nbsp; <span class='badge badge-outline-info'>عهدة تنظيمية</span>"
+                                                : 
+                                                // غير محددة
+                                                "<em class='icon ni ni-alert-circle text-danger'></em> &nbsp; <span class='badge badge-outline-danger'>عهدة غير محددة</span>"
+                                            )
+                                        %>
+                                    </div>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
-                              <asp:TemplateColumn HeaderText="<%$ Resources:pages,RequestLocation %>">
-                                <ItemTemplate>
-                                     <div class="text-info"><%#  ZeroIntergerIFNull(gets(Eval("EmpRefCode")))==0?"" :( ZeroIntergerIFNull(gets(Eval("Ora_EmpRefCode")))==0?gets(Eval("EmpName")): gets(Eval("Ora_EmpName"))) %> 
-                                         <%# Convert.ToInt32(Eval("RequestActionType")) == 2 ? "<span class=\"badge badge-dim badge-success\">فعال</span>" : (getBool(Eval("Emp_Active")) == true ? "<span class=\"badge badge-dim badge-success\">فعال</span>" : "<span class=\"badge badge-dim badge-danger\">غير فعال</span>") %>
+
+                           <%-- <asp:TemplateColumn HeaderText="<%$ Resources:pages,RequestType %>">
+                                <ItemTemplate>--%>
+                                    <%--<div class="text-primary"><%#( ZeroIntergerIFNull(gets(Eval("RequestActionType")))==2?"<em class='icon ni ni-building  text-info'></em>&nbsp; <span class='badge badge-outline-info'>عهدة تنظيمية</span>"    :"<em class='icon ni ni-user-list  text-primary'></em> &nbsp; <span class='badge badge-dim badge-light'>عهدة شخصية</span>")  %>   </div>--%>
+                                   <%-- <div class="text-primary">
+                                        <%#
+                                            (ZeroIntergerIFNull(gets(Eval("RequestActionType"))) == 1 && ZeroIntergerIFNull(gets(Eval("EmpRefCode"))) == 0)
+                                            || (ZeroIntergerIFNull(gets(Eval("RequestActionType"))) == 2 && ZeroIntergerIFNull(gets(Eval("OrgChartRefCode"))) == 0)
+                                            ? "<em class='icon ni ni-alert-circle text-danger'></em> &nbsp; <span class='badge badge-outline-danger'>عهدة غير محددة</span>"
+                                            : (
+                                                ZeroIntergerIFNull(gets(Eval("RequestActionType"))) == 2
+                                                ? "<em class='icon ni ni-building text-info'></em> &nbsp; <span class='badge badge-outline-info'>عهدة تنظيمية</span>"
+                                                : "<em class='icon ni ni-user-list text-primary'></em> &nbsp; <span class='badge badge-dim badge-light'>عهدة شخصية</span>"
+                                            )
+                                        %>
                                      </div>
-                                    <div class="text-indigo"><%# gets(Eval("LocationPath")) %></div>
-                                    
-                                       
 
                                 </ItemTemplate>
-                            </asp:TemplateColumn>
+                            </asp:TemplateColumn>--%>
+                           <%-- <asp:TemplateColumn HeaderText="<%$ Resources:pages,RequestLocation %>">
+                                <ItemTemplate>
+                                    <div class="text-info">
+                                        <%#  ZeroIntergerIFNull(gets(Eval("EmpRefCode")))==0?"" :( ZeroIntergerIFNull(gets(Eval("Ora_EmpRefCode")))==0?gets(Eval("EmpName")): gets(Eval("Ora_EmpName"))) %>
+                                        <%# Convert.ToInt32(Eval("RequestActionType")) == 2 ? "<span class=\"badge badge-dim badge-success\">فعال</span>" : (getBool(Eval("Emp_Active")) == true ? "<span class=\"badge badge-dim badge-success\">فعال</span>" : "<span class=\"badge badge-dim badge-danger\">غير فعال</span>") %>
+                                    </div>
+                                    <div class="text-indigo"><%# gets(Eval("LocationPath")) %></div>
 
-                          <%--  <asp:BoundColumn DataField="RequestRefCode" HeaderText="<%$ Resources:pages,RefCode %> "></asp:BoundColumn>--%>
+
+
+                                </ItemTemplate>
+                            </asp:TemplateColumn>--%>
+                         <asp:TemplateColumn HeaderText="مكان العهدة">
+                            <ItemTemplate>
+                                <div class="text-info">
+                                    <asp:Literal ID="litEmpNameBadge" runat="server"></asp:Literal>
+                                </div>
+                                <div class="text-indigo">
+                                    <%# gets(Eval("LocationPath")) %>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateColumn>
+
+                            <%--  <asp:BoundColumn DataField="RequestRefCode" HeaderText="<%$ Resources:pages,RefCode %> "></asp:BoundColumn>--%>
                             <asp:BoundColumn DataField="RequestDate" HeaderText=" <%$ Resources:pages,ReceiptDate %>  " DataFormatString="{0:dd/MM/yyyy}"></asp:BoundColumn>
                             <asp:BoundColumn DataField="CreatedAt" HeaderText=" <%$ Resources:pages,CreatedAt %>  " DataFormatString="{0:dd/MM/yyyy}"></asp:BoundColumn>
-                              <asp:BoundColumn DataField="RequestNotes" HeaderText="<%$ Resources:pages,RequestNotes %> "></asp:BoundColumn>
-                              <asp:TemplateColumn HeaderText="<%$ Resources:pages,Linked %>">
+                            <asp:BoundColumn DataField="RequestNotes" HeaderText="<%$ Resources:pages,RequestNotes %> "></asp:BoundColumn>
+                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,Linked %>">
                                 <ItemTemplate>
-                                  <asp:Label ID="lblOraEmpRefStatus" runat="server" Text='<%# Convert.ToInt32(Eval("RequestActionType")) == 2 
+                                    <asp:Label ID="lblOraEmpRefStatus" runat="server" Text='<%# Convert.ToInt32(Eval("RequestActionType")) == 2 
     ? "<span class=\"badge badge-dot badge-success\">نعم</span>" 
     : (ZeroIntergerIFNull(gets(Eval("Ora_EmpRefCode"))) != 0 
         ? "<span class=\"badge badge-dot badge-success\">نعم</span>" 
         : "<span class=\"badge badge-dot badge-danger\">لا</span>") %>'></asp:Label>
 
-                                   
+
                                 </ItemTemplate>
                             </asp:TemplateColumn>
-                          
+
                             <asp:TemplateColumn>
                                 <HeaderStyle HorizontalAlign="Center" />
                                 <ItemStyle Width="2%" />
@@ -231,7 +396,7 @@
                                                 <%-- <li>
                                                     <a href="../Reports/AssetReceipt.aspx?docId=<%#Eval("code") %>" class="btn btn-default btn-xs iframe75"><i class="icon ni ni-printer"></i>&nbsp; <%=GetGlobalResourceObject("pages","PrintRequest") %> </a>
                                                 </li>--%>
-                                               
+
                                                 <%--  <li runat="server" visible='<%# (ZeroIntergerIFNull(gets(Eval("InboundLastStatusCode")))>1?false: true) %>'>
                                                     <a href="InboundItemReceving.aspx?serial=<%#Eval("serial") %>" class="btn btn-default btn-xs"><i class="icon ni ni-shrink"></i>&nbsp; <%=GetGlobalResourceObject("pages","ReceiveItem") %> </a>
                                                 </li>

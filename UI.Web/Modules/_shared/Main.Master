@@ -20,6 +20,7 @@
     <link id="skin-default" rel="stylesheet" href="/wwwroot/assets/css/theme.css?ver=2.4.0">
     <link rel="stylesheet" href="/wwwroot/assets/css/libs/jstree.css?ver=2.4.0">
 
+
     <script src="/wwwroot/assets/js/bundle.js?ver=2.4.0"></script>
     <script src="/wwwroot/assets/js/scripts.js?ver=2.4.0"></script>
     <script src="/wwwroot/assets/js/FormValidation.js?ver=2.4.0"></script>
@@ -495,25 +496,27 @@
                                             <div class="dropdown-inner user-card-wrap bg-lighter">
                                                 <div class="user-card">
                                                     <div class="user-avatar">
-                                                        <span>AB</span>
+                                                        <em class="icon ni ni-user-alt"></em>
                                                     </div>
                                                     <div class="user-info">
-                                                        <span class="lead-text">Abu Bin Ishtiyak</span>
-                                                        <span class="sub-text">info@softnio.com</span>
+                                                        <div class="user-info d-none d-xl-block">
+                                                            <div class="user-status user-status-active"><%= Session["jobTitle"]!=null ?StringLimit(gets(Session["jobTitle"]),45) :""  %></div>
+                                                            <div class="user-name dropdown-indicator"><%= Session["AdminName"]!=null ?gets(Session["AdminName"]) :""  %></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
-                                                    <li><a href="html/user-profile-regular.html"><em class="icon ni ni-user-alt"></em><span>View Profile</span></a></li>
+                                                    <%--       <li><a href="html/user-profile-regular.html"><em class="icon ni ni-user-alt"></em><span>View Profile</span></a></li>
                                                     <li><a href="html/user-profile-setting.html"><em class="icon ni ni-setting-alt"></em><span>Account Setting</span></a></li>
                                                     <li><a href="html/user-profile-activity.html"><em class="icon ni ni-activity-alt"></em><span>Login Activity</span></a></li>
-                                                    <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
+                                                    <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>--%>
                                                 </ul>
                                             </div>
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
-                                                    <li><a href="#"><em class="icon ni ni-signout"></em><span>Sign out</span></a></li>
+                                                    <li><a href="/admin/pages/login.aspx?out=1"><em class="icon ni ni-signout"></em><span>Sign out</span></a></li>
                                                 </ul>
                                             </div>
                                         </div>

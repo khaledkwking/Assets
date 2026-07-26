@@ -87,6 +87,15 @@ namespace UI.Web.Admin.Pages
         protected global::System.Web.UI.WebControls.DropDownList lstadminType;
 
         /// <summary>
+        /// lstActivDirectoryUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lstActivDirectoryUser;
+
+        /// <summary>
         /// txtfullName control.
         /// </summary>
         /// <remarks>

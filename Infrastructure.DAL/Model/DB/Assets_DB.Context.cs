@@ -80,7 +80,6 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<Store> Stores { get; set; }
         public virtual DbSet<view_CustodyListTransfer> view_CustodyListTransfer { get; set; }
         public virtual DbSet<view_AssetsEventTrackingHeader> view_AssetsEventTrackingHeader { get; set; }
-        public virtual DbSet<view_CustodyList> view_CustodyList { get; set; }
         public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
         public virtual DbSet<AssetsItemUnit> AssetsItemUnits { get; set; }
         public virtual DbSet<Outbound_Items> Outbound_Items { get; set; }
@@ -90,6 +89,7 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<view_AssetsList> view_AssetsList { get; set; }
         public virtual DbSet<SystemLog> SystemLogs { get; set; }
         public virtual DbSet<D_ExcludedOrg> D_ExcludedOrg { get; set; }
+        public virtual DbSet<view_CustodyList> view_CustodyList { get; set; }
     
         [DbFunction("AssetsEntitiesNew", "getChildNodeParentList")]
         public virtual IQueryable<getChildNodeParentList_Result> getChildNodeParentList(Nullable<int> childNodeId)

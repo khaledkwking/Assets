@@ -10,7 +10,7 @@ namespace AssetsManament.ViewModels
     {
 
         public string ItemRefCode { get; set; }
-        public int ItemCode { get; set; }
+        public long ? ItemCode { get; set; }
         public string ItemNameAr { get; set; }
         public Nullable<double> ItemBasePrice { get; set; }
         public Nullable<int> ToLocationId { get; set; }

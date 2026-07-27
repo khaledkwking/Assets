@@ -17,13 +17,13 @@ namespace Infrastructure.DAL.Model.DB
         public int Code { get; set; }
         public string groupname { get; set; }
         public string ItemRefCode { get; set; }
-        public int ItemCode { get; set; }
+        public Nullable<long> ItemCode { get; set; }
         public Nullable<System.DateTime> ItemDate { get; set; }
         public string ItemNameEn { get; set; }
         public string ItemNameAr { get; set; }
         public Nullable<double> ItemBasePrice { get; set; }
         public int ReceivedQty { get; set; }
-        public Nullable<int> AssetCode { get; set; }
+        public Nullable<long> AssetCode { get; set; }
         public Nullable<int> RequestHeaderCode { get; set; }
         public Nullable<System.DateTime> RequestDate { get; set; }
         public string RequestRefCode { get; set; }

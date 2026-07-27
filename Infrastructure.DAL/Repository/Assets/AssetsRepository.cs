@@ -75,6 +75,22 @@ namespace Infrastructure.DAL
                 return result.ToList<view_CustodyList>();
             }
         }
+        public List<view_CustodyList> getAssetReceiptbyHeaderIds(int[] nodeIds)
+        {
+      
+                using (var DC = new AssetsEntitiesNew())
+                {
+                    var result =
+                        (from obj in DC.view_CustodyList
+                         where  (obj.RequestHeaderCode.HasValue) && nodeIds.Contains(obj.RequestHeaderCode.Value)
+                         
+                         select obj);
+
+                    return result.ToList<view_CustodyList>();
+                }
+
+           
+        }
 
         public List<view_AssetsList> getAssetReceipt(int EmprefCode, int targetLocation)
         {
@@ -324,6 +340,30 @@ namespace Infrastructure.DAL
                 return result.FirstOrDefault();
             }
         }
+
+        public List<AssetsEventTrackingHeader> getTrackingHeaderByNodeId(int NodeId)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.AssetsEventTrackingHeaders
+                     where obj.OrgChartRefCode == NodeId
+                     select obj);
+
+                return result.ToList();
+            }
+        }
+        public List<AssetsEventTrackingHeader> GetTrackingHeaderByNodeIds(int[] nodeIds)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                return DC.AssetsEventTrackingHeaders
+                         .Where(x => x.OrgChartRefCode.HasValue &&
+                                     nodeIds.Contains(x.OrgChartRefCode.Value))
+                         .ToList();
+            }
+        }
+
 
         #endregion "Assets Acting Tracking"
 

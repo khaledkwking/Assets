@@ -9,8 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.UI;
 using UI.Web.Admin.Controller;
+using UI.Web.Controllers;
 
 
 
@@ -38,7 +40,7 @@ namespace UI.Web.Modules.WHM.Forms
             lblerror.Text = "";
             if (!IsPostBack)
             {
-                fillReport(false);
+                fillReportAsync(false);
             }
         }
         private List<view_CustodyList> GetOrgData(List<view_CustodyList> objList , int nodeId)
@@ -119,14 +121,14 @@ namespace UI.Web.Modules.WHM.Forms
 
         protected void lnkQuick_Click(object sender, EventArgs e)
         {
-            fillReport(true);
+            fillReportAsync(true);
         }
         protected void btnFilter_Click(object sender, EventArgs e)
         {
-            fillReport(true);
+            fillReportAsync(true);
         }
 
-        private void fillReport(bool ForceFilter)
+        private async Task fillReportAsync(bool ForceFilter)
         {
             if (ForceFilter)
             {
@@ -196,7 +198,7 @@ namespace UI.Web.Modules.WHM.Forms
                             ReportViewer1.ProcessingMode = ProcessingMode.Local;
                             if (Request.QueryString["assetinv"] != null)
                                 ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsInventory.rdlc");
-                            else
+                            else //طباعة استمارة عهد
                                 ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailedDept.rdlc");
 
                             ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
@@ -231,7 +233,7 @@ namespace UI.Web.Modules.WHM.Forms
                                     expandedList.Add(clonedItem);
                                 }
                             }
-                            setChartInfo(expandedList, expandedList[0].EmpRefCode.Value);
+                            setChartInfo(expandedList, expandedList[0].EmpRefCode.Value); // set information of organization
 
                             ReportViewer1.ProcessingMode = ProcessingMode.Local;
                             if (Request.QueryString["assetinv"] != null)
@@ -339,6 +341,94 @@ namespace UI.Web.Modules.WHM.Forms
                                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
                             }
                         }
+                    }
+                    else if (Request.QueryString["nodeId"] != null && Request.QueryString["EmpFlag"] == "2")
+                    {
+
+                        int nodeId = ZeroIntergerIFNull(Request.QueryString["nodeId"].ToString());
+                        HeplerController obj = new HeplerController();
+                        //var orgList = await obj.orgChart(nodeId);
+                        var orgList= obj.GetOrgChartCustodyHeader(nodeId);
+                        //int[] nodeIds = orgList
+                        //    .Select(x => x.ENTITYCODE)
+                        //    .ToArray();
+
+                        //var headers = objRepository.GetTrackingHeaderByNodeIds(nodeIds);
+                                               
+
+                        int[] HeaderIds = orgList
+                            .Select(x => x.Code)
+                            .ToArray();
+
+                        var objList = objRepository.getAssetReceiptbyHeaderIds(HeaderIds);
+                        if (objList != null && objList.Count > 0)
+                        {
+                            var expandedList = new List<view_CustodyList>();
+                            int EmpCode = -1;
+                            foreach (var item in objList)
+                            {
+                                // Add the same item multiple times based on its quantity
+                                for (int i = 0; i < item.Qty; i++) // Assuming 'Quantity' is the property name
+                                {
+                                    var clonedItem = CloneObject(item);
+                                    //var Orgitem = orgList.Find(x => x.Code == item.OrgChartRefCode);
+                                    //.
+                                    //clonedItem.ORG_NAME = Orgitem.OrgEmpName;
+                                    //clonedItem.AMANA_NAME = Orgitem.AMANA_NAME;
+                                    //clonedItem.DEPT_NAME = Orgitem.DEPT_NAME;
+                                    //clonedItem.DIV_NAME = Orgitem.DIV_NAME;
+                                    //clonedItem.SEC_NAME = Orgitem.SEC_NAME;
+                                    //clonedItem.SUB_SEC_NAME = Orgitem.SUB_SEC_NAME;
+                                    //clonedItem.JOB_NAME = Orgitem.;
+                                    
+                                    if (clonedItem.EmpRefCode.HasValue)
+                                    {
+                                
+                                        EmpCode = clonedItem.EmpRefCode.Value;
+                                        var Empinfo = GetOraEmpDetails(EmpCode);
+                                        if (Empinfo != null)
+                                        {
+                                            clonedItem.ORG_NAME = Empinfo.ORG_NAME;
+                                            clonedItem.AMANA_NAME = Empinfo.AMANA_NAME;
+                                            clonedItem.DEPT_NAME = Empinfo.DEPT_NAME;
+                                            clonedItem.DIV_NAME = Empinfo.DIV_NAME;
+                                            clonedItem.SEC_NAME = Empinfo.SEC_NAME;
+                                            clonedItem.SUB_SEC_NAME = Empinfo.SUB_SEC_NAME;
+                                            clonedItem.JOB_NAME = Empinfo.JOB_NAME;
+                                        }
+                                        expandedList.Add(clonedItem);
+
+                                        //setChartInfo(expandedList, EmpCode);
+                                    }
+                                    
+
+
+
+                                }
+                            }
+                           // setChartInfo(expandedList, expandedList[0].EmpRefCode.Value); // set information of organization
+
+                            ReportViewer1.ProcessingMode = ProcessingMode.Local;
+                            //if (Request.QueryString["assetinv"] != null)
+                            //    ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsInventory.rdlc");
+                            //else
+                            ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_OrgCustodDetailed.rdlc");
+
+                            ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+                            ReportViewer1.LocalReport.SetParameters(new ReportParameter("AssetType", "بطاقة عهدة أصل شخصية"));
+
+                            //var objlist = objRepository.GetList();
+                            ReportDataSource datasource = new ReportDataSource("ds_RequestList", expandedList);
+
+                            ReportViewer1.LocalReport.DataSources.Clear();
+                            ReportViewer1.LocalReport.DataSources.Add(datasource);
+                        }
+                        else
+                        {
+                            string script = FormatErrorMSGSwal(Resources.Alerts.nodatafound, "1");
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                        }
+                        
                     }
                     else
                     {

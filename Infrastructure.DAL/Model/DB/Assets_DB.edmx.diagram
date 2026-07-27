@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1c98909adf3f43319d09422e08049f73" Name="Diagram1" ZoomLevel="50">
+      <Diagram DiagramId="1c98909adf3f43319d09422e08049f73" Name="Diagram1" ZoomLevel="81">
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsAvailabilityStatu" Width="1.5" PointX="3" PointY="26.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsTrackingAction" Width="1.5" PointX="3" PointY="38.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_AttachmentType" Width="1.5" PointX="6" PointY="7.75" IsExpanded="true" />
@@ -78,7 +78,6 @@
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsStores_Stores" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_CustodyListTransfer" Width="1.5" PointX="31.375" PointY="19.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_AssetsEventTrackingHeader" Width="1.5" PointX="8.375" PointY="26.75" />
-        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_CustodyList" Width="1.5" PointX="5.375" PointY="32.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.AssetsEventTracking" Width="1.5" PointX="15.25" PointY="23.375" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus" />
         <AssociationConnector Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" />
@@ -102,6 +101,7 @@
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_AssetsList" Width="1.5" PointX="20.375" PointY="13.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.SystemLog" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.D_ExcludedOrg" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="CMGS_AssetsMgmtModel.view_CustodyList" Width="1.5" PointX="20.375" PointY="30.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

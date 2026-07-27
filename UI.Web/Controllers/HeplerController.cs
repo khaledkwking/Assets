@@ -204,7 +204,7 @@ namespace UI.Web.Controllers
                 return JsonConvert.DeserializeObject<List<ORGANIZATION_CHART>>(result);
             }
         }
-
+        // عرض قائمة الموظفين للجهات
         [HttpGet]
         [ActionName("GetEmployeeHierarhcy")]
         public async Task<List<EmployeeViewModel>> GetEmployeeHierarhcy(int nodeId)
@@ -392,7 +392,7 @@ namespace UI.Web.Controllers
                 return Ok(new { status = "error", message = ex.Message });
             }
         }
-
+        // عرض header  الخاص بعهد الموظفين
         [HttpGet]
         [ActionName("GetOrgChartCustodyHeader")]
         public List<view_AssetsEventTrackingHeader> GetOrgChartCustodyHeader(int nodeId)

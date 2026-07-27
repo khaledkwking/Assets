@@ -343,6 +343,20 @@ function handelSelectedNode(nodeId) {
 
             // Trigger أول مرة
             table.draw();
+
+            // add print all button
+            $('#custodyList-datatableHeader_filter .btn-print-node').remove();
+
+            // Add Print button beside search box
+            $('#custodyList-datatableHeader_filter').append(
+                '<a href="javascript:void(0)" ' +
+                'class="btn btn-primary btn-sm ms-2 btn-print-node" ' +
+                'onclick="call_cbox(\'../Reports/AssetReceipt.aspx?hidemaster=1&EmpFlag=2&nodeId=' + nodeId + '\')">' +
+                '<em class="icon ni ni-printer"></em> Print' +
+                '</a>'
+            );
+
+
         },
         error: function (request, status, error) {
             toastr.clear();

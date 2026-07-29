@@ -14,7 +14,6 @@ namespace Infrastructure.DAL.Model.DB
     
     public partial class view_ItemCard
     {
-        public int Code { get; set; }
         public string ItemRefCode { get; set; }
         public string ItemBarCode { get; set; }
         public string ItemRFIDCode { get; set; }
@@ -46,5 +45,6 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<double> ItemMasterPrice { get; set; }
         public Nullable<double> TotalReceived { get; set; }
         public Nullable<double> TotalDelivered { get; set; }
+        public long Code { get; set; }
     }
 }

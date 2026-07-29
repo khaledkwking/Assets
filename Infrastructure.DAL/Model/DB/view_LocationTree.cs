@@ -12,10 +12,14 @@ namespace Infrastructure.DAL.Model.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class AssetsAvailabilityStatu
+    public partial class view_LocationTree
     {
-        public int Code { get; set; }
-        public string TitleEn { get; set; }
-        public string TitleAr { get; set; }
+        public long PKey { get; set; }
+        public Nullable<int> code { get; set; }
+        public Nullable<int> LocationParentId { get; set; }
+        public Nullable<int> LEVEL { get; set; }
+        public string LocationNameAr { get; set; }
+        public Nullable<int> LocationType { get; set; }
+        public string path { get; set; }
     }
 }

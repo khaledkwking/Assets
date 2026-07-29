@@ -151,6 +151,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to سجل عهد الغرف.
+        /// </summary>
+        internal static string AssetsRooms {
+            get {
+                return ResourceManager.GetString("AssetsRooms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AssetTransfer.
         /// </summary>
         internal static string AssetTransfer {
@@ -273,6 +282,15 @@ namespace Resources {
         internal static string CivilID {
             get {
                 return ResourceManager.GetString("CivilID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الكود.
+        /// </summary>
+        internal static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
             }
         }
         
@@ -2442,6 +2460,15 @@ namespace Resources {
         internal static string returnTostore {
             get {
                 return ResourceManager.GetString("returnTostore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to أسم الغرفة.
+        /// </summary>
+        internal static string RoomName {
+            get {
+                return ResourceManager.GetString("RoomName", resourceCulture);
             }
         }
         

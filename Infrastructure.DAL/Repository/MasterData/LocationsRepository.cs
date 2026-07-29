@@ -208,6 +208,90 @@ namespace Infrastructure.DAL
         /// </summary>
         /// <param name="locationTypeId">LocationType Code to filter by</param>
         /// <returns>List of D_Locations with parent names concatenated</returns>
+
+
+        public List<(D_Locations location, string parentPath)> GetLocationhasAssets( int? locationParentId ,int? EmpyFlag) // عرض الغرف التى لها اصوال
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var locationTypes = DataModel.Locationtypes?.Cast<int?>().ToList() ?? new List<int?>();
+                var query = DC.D_Locations
+                    .Where(loc => locationTypes.Contains(loc.LocationType));
+
+                // Apply the parent filter only if locationParentId > 0
+                //var query = DC.D_Locations.Where(x => x.LocationType == locationTypeId);
+
+                if (locationParentId.HasValue && locationParentId.Value > 0)
+                {
+                    var ids = GetAllChildIds(locationParentId.Value, DC);
+                    query = query.Where(x => x.LocationParentId.HasValue && ids.Contains(x.LocationParentId.Value));
+
+                }
+
+                var locations = query.ToList();
+
+                var result = new List<(D_Locations, string)>();
+
+                foreach (var location in locations)
+                {
+                    string parentPath = GetLocationPath(location.Code, DC);
+                    result.Add((location, parentPath));
+                }
+
+                return result;
+            }
+        }
+        public List<view_LocationTree> GetLocationWithAssets(int? locationParentId, int? EmpyFlag)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var locationTypes = DataModel.Locationtypes?.Cast<int?>().ToList() ?? new List<int?>();
+
+                var trackedLocationIds = DC.AssetsEventTrackingHeaders 
+                                           .Select(x => x.ToLocationId)
+                                           .Distinct();
+
+                var query = DC.view_LocationTree
+                              .Where(x => !locationTypes.Contains(x.LocationType)); //عرض التى مبنى او دور
+
+                // Parent filter
+                if (locationParentId.HasValue && locationParentId.Value > 0)
+                {
+                    var ids = GetAllChildIds(locationParentId.Value, DC);
+
+                    query = query.Where(x =>
+                        x.LocationParentId.HasValue &&
+                        ids.Contains(x.LocationParentId.Value));
+                }
+
+                // Assets filter
+                if (EmpyFlag == 1)
+                {
+                    // Locations with NO assets
+                    query = query.Where(x => !trackedLocationIds.Contains(x.code ));
+                }
+                else if (EmpyFlag == 0)
+                {
+                    // Locations WITH assets
+                    query = query.Where(x => trackedLocationIds.Contains(x.code));
+                }
+                // EmpyFlag == null => no filtering
+
+                //var locations = query.ToList();
+
+               // var result = new List<(D_Locations, string)>();
+
+                //foreach (var location in locations)
+                //{
+                //    string parentPath = GetLocationPath(location.code, DC);
+                //    result.Add((location, parentPath));
+                //}
+
+                return query.ToList();
+            }
+        }
+
+
         public List<D_Locations> GetLocationsByTypeWithParentPath(int locationTypeId)
         {
             using (var DC = new AssetsEntitiesNew())

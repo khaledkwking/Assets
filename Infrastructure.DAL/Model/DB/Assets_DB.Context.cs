@@ -66,7 +66,6 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<View_OutboundItems> View_OutboundItems { get; set; }
         public virtual DbSet<Outbound> Outbounds { get; set; }
         public virtual DbSet<View_OutboundList> View_OutboundList { get; set; }
-        public virtual DbSet<view_ItemCard> view_ItemCard { get; set; }
         public virtual DbSet<AssetsTransferOut> AssetsTransferOuts { get; set; }
         public virtual DbSet<view_AssetEventLog> view_AssetEventLog { get; set; }
         public virtual DbSet<view_AssetsInventory> view_AssetsInventory { get; set; }
@@ -80,16 +79,18 @@ namespace Infrastructure.DAL.Model.DB
         public virtual DbSet<Store> Stores { get; set; }
         public virtual DbSet<view_CustodyListTransfer> view_CustodyListTransfer { get; set; }
         public virtual DbSet<view_AssetsEventTrackingHeader> view_AssetsEventTrackingHeader { get; set; }
-        public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
-        public virtual DbSet<AssetsItemUnit> AssetsItemUnits { get; set; }
         public virtual DbSet<Outbound_Items> Outbound_Items { get; set; }
         public virtual DbSet<ItemStatu> ItemStatus { get; set; }
-        public virtual DbSet<Item_tbl> Item_tbl { get; set; }
-        public virtual DbSet<D_ItemCard> D_ItemCard { get; set; }
         public virtual DbSet<view_AssetsList> view_AssetsList { get; set; }
         public virtual DbSet<SystemLog> SystemLogs { get; set; }
         public virtual DbSet<D_ExcludedOrg> D_ExcludedOrg { get; set; }
         public virtual DbSet<view_CustodyList> view_CustodyList { get; set; }
+        public virtual DbSet<view_LocationTree> view_LocationTree { get; set; }
+        public virtual DbSet<view_ItemCard> view_ItemCard { get; set; }
+        public virtual DbSet<Item_tbl> Item_tbl { get; set; }
+        public virtual DbSet<D_ItemCard> D_ItemCard { get; set; }
+        public virtual DbSet<AssetsItemUnit> AssetsItemUnits { get; set; }
+        public virtual DbSet<AssetsEventTracking> AssetsEventTrackings { get; set; }
     
         [DbFunction("AssetsEntitiesNew", "getChildNodeParentList")]
         public virtual IQueryable<getChildNodeParentList_Result> getChildNodeParentList(Nullable<int> childNodeId)

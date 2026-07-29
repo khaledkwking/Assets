@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActionDate" xml:space="preserve">
-    <value>تاريخ العملية</value>
-  </data>
-  <data name="Active" xml:space="preserve">
-    <value>فعال</value>
-  </data>
   <data name="AddItem" xml:space="preserve">
     <value>إضافة المادة</value>
   </data>
@@ -209,6 +203,9 @@
   </data>
   <data name="CreatedAt" xml:space="preserve">
     <value>تاريخ العملية</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>العملة</value>
   </data>
   <data name="CustodtDate" xml:space="preserve">
     <value>تاريخ العهدة</value>
@@ -486,9 +483,6 @@
   <data name="InboundList" xml:space="preserve">
     <value>قائمة طلبات التوريد</value>
   </data>
-  <data name="InboundList1" xml:space="preserve">
-    <value>قائمة طلبات التوريد</value>
-  </data>
   <data name="InboundMasterData" xml:space="preserve">
     <value>بيانات طلب الإستلام</value>
   </data>
@@ -588,9 +582,6 @@
   <data name="LastPrice" xml:space="preserve">
     <value>اخر سعر للمادة</value>
   </data>
-  <data name="LastStatusLastStatus" xml:space="preserve">
-    <value>حالة الطلب</value>
-  </data>
   <data name="linkLocation" xml:space="preserve">
     <value>ربط الجهة بالمواقع</value>
   </data>
@@ -674,15 +665,6 @@
   </data>
   <data name="OutBoundOperationMenu" xml:space="preserve">
     <value>إدارة عمليات الصرف</value>
-  </data>
-  <data name="OutboundReferenceDate" xml:space="preserve">
-    <value>تاريخ مرجع التسليم</value>
-  </data>
-  <data name="OutboundReferenceNo" xml:space="preserve">
-    <value>رقم مرجع التسليم</value>
-  </data>
-  <data name="OutboundReferenceType" xml:space="preserve">
-    <value>نوع مرجع التسليم</value>
   </data>
   <data name="OutboundReftypes" xml:space="preserve">
     <value>نوع مرجع التسليم</value>
@@ -936,9 +918,6 @@
   <data name="StoreTransfer" xml:space="preserve">
     <value>تحويل مخزني</value>
   </data>
-  <data name="String" xml:space="preserve">
-    <value>Full Name</value>
-  </data>
   <data name="SubFrom" xml:space="preserve">
     <value>فرعي من</value>
   </data>
@@ -1053,11 +1032,11 @@
   <data name="StoreList" xml:space="preserve">
     <value>قائمة الاماكن</value>
   </data>
+  <data name="Active" xml:space="preserve">
+    <value>فعال</value>
+  </data>
   <data name="StoreOperation" xml:space="preserve">
     <value>إدارة المخاذن</value>
-  </data>
-  <data name="OutboundOperations1" xml:space="preserve">
-    <value>تسجيل إذن صرف</value>
   </data>
   <data name="RequestLocation" xml:space="preserve">
     <value>مكان العهدة</value>
@@ -1073,5 +1052,38 @@
   </data>
   <data name="EmpStatus" xml:space="preserve">
     <value>حالة الموظف</value>
+  </data>
+  <data name="AssetsRooms" xml:space="preserve">
+    <value>سجل عهد الغرف</value>
+  </data>
+  <data name="ActionDate" xml:space="preserve">
+    <value>تاريخ العملية</value>
+  </data>
+  <data name="InboundList1" xml:space="preserve">
+    <value>قائمة طلبات التوريد</value>
+  </data>
+  <data name="LastStatusLastStatus" xml:space="preserve">
+    <value>حالة الطلب</value>
+  </data>
+  <data name="OutboundReferenceDate" xml:space="preserve">
+    <value>تاريخ مرجع التسليم</value>
+  </data>
+  <data name="OutboundReferenceNo" xml:space="preserve">
+    <value>رقم مرجع التسليم</value>
+  </data>
+  <data name="OutboundReferenceType" xml:space="preserve">
+    <value>نوع مرجع التسليم</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="OutboundOperations1" xml:space="preserve">
+    <value>تسجيل إذن صرف</value>
+  </data>
+  <data name="RoomName" xml:space="preserve">
+    <value>أسم الغرفة</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>الكود</value>
   </data>
 </root>

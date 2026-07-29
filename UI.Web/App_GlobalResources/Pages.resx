@@ -1071,4 +1071,13 @@
   <data name="EmpStatus" xml:space="preserve">
     <value>حالة الموظف</value>
   </data>
+  <data name="AssetsRooms" xml:space="preserve">
+    <value>سجل عهد الغرف</value>
+  </data>
+  <data name="RoomName" xml:space="preserve">
+    <value>أسم الغرفة</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>الكود</value>
+  </data>
 </root>

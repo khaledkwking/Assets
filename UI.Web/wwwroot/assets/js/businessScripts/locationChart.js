@@ -55,7 +55,27 @@ function handelSelectedNode(selected_node) {
 
 }
 
-
+function getLocationIcon(locationType) {
+    // Return appropriate icon based on location type
+    switch (parseInt(locationType)) {
+        case 1:
+            return 'ni-building'; // Building - مبنى
+        case 2:
+            return 'ni-layers'; // Floor - دور
+        case 3:
+            return 'ni-home'; // Room - غرفة
+        case 4:
+            return 'ni-box'; // Store - مخزن
+        case 5:
+            return 'ni-fire'; // Kitchen - المطبخ
+        case 6:
+            return 'ni-arrow-long-right'; // Corridor - ممر
+        case 7:
+            return 'ni-img'; // Photography Room - غرفة تصوير
+        default:
+            return 'ni-map-pin'; // Default location icon
+    }
+}
 
 function fillLocationChart() {
     $.ajax({
@@ -73,6 +93,7 @@ function fillLocationChart() {
                     id: data.Code,
                     parent: data.LocationParentId === 0 ? "#" : data.LocationParentId,
                     text: data.LocationNameAr,
+                    type: data.LocationType,
                     // type: data.level
                 })
             })
@@ -82,9 +103,46 @@ function fillLocationChart() {
                     "themes": { "stripes": true },
                     "data": treeFinalResult
                 },
-                
-                "plugins": ["types", , "search",
-                    "state", "types", "wholerow"]
+                "types": {
+                    "default": {
+                        "icon": "icon ni ni-map-pin",
+                        "a_attr": { "class": "jstree-default-node" }
+                    },
+                    "#": {
+                        "icon": "icon ni ni-map-pin",
+                        "a_attr": { "class": "jstree-root-node" }
+                    },
+                    "1": {
+                        "icon": "icon ni ni-building",
+                        "a_attr": { "class": "jstree-building-node" }
+                    },
+                    "2": {
+                        "icon": "icon ni ni-layers",
+                        "a_attr": { "class": "jstree-floor-node" }
+                    },
+                    "3": {
+                        "icon": "icon ni ni-home",
+                        "a_attr": { "class": "jstree-room-node" }
+                    },
+                    "4": {
+                        "icon": "icon ni ni-box",
+                        "a_attr": { "class": "jstree-store-node" }
+                    },
+                    "5": {
+                        "icon": "icon ni ni-fire",
+                        "a_attr": { "class": "jstree-kitchen-node" }
+                    },
+                    "6": {
+                        "icon": "icon ni ni-arrow-long-right",
+                        "a_attr": { "class": "jstree-corridor-node" }
+                    },
+                    "7": {
+                        "icon": "icon ni ni-img",
+                        "a_attr": { "class": "jstree-photography-node" }
+                    }
+                },
+                "plugins": ["types", "search",
+                    "state", "wholerow"]
             }).bind('ready.jstree', function (e, data) {
                 $("#hdnSelectedNode").val(0);
                 $('#hdnSelectedEditNode').val(0);

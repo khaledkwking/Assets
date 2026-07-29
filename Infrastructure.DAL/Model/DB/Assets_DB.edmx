@@ -28,18 +28,18 @@
           <Property Name="EmpRefCode" Type="int" />
           <Property Name="EmpName" Type="nvarchar" MaxLength="250" />
           <Property Name="Notes" Type="nvarchar(max)" />
-          <Property Name="Qty" Type="float" />
-          <Property Name="MissedQty" Type="float" />
-          <Property Name="StoreRequestRefCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="RequestItemPrice" Type="float" />
-          <Property Name="ItemUsedStatus" Type="int" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
           <Property Name="LastModifiedAt" Type="datetime" />
+          <Property Name="Qty" Type="float" />
+          <Property Name="MissedQty" Type="float" />
+          <Property Name="StoreRequestRefCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="RequestItemPrice" Type="float" />
+          <Property Name="IsDeleted" Type="bit" />
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedOn" Type="datetime2" Precision="7" />
-          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ItemUsedStatus" Type="int" />
         </EntityType>
         <EntityType Name="AssetsEventTrackingHeader">
           <Key>
@@ -93,9 +93,9 @@
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
           <Property Name="LastModifiedAt" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedOn" Type="datetime2" Precision="7" />
-          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="AssetsStores">
           <Key>
@@ -210,6 +210,9 @@
           <Property Name="QUnitCode" Type="int" />
           <Property Name="MinQty" Type="int" />
           <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="LastModifiedAt" Type="datetime" />
           <Property Name="ItemImage" Type="nvarchar" MaxLength="50" />
           <Property Name="isActive" Type="bit" />
           <Property Name="ScrapPeriod" Type="float" />
@@ -220,14 +223,12 @@
           <Property Name="OrganizedFlag" Type="bit" />
           <Property Name="PictureName" Type="nvarchar(max)" />
           <Property Name="Item_StateId" Type="int" />
-          <Property Name="Age" Type="int" />
           <Property Name="OutFlag" Type="int" />
           <Property Name="TransFlag" Type="int" />
-          <Property Name="CreatedAt" Type="datetime" />
           <Property Name="CreatedBy" Type="int" />
-          <Property Name="LastModifiedBy" Type="int" />
-          <Property Name="LastModifiedAt" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
           <Property Name="DeletedBy" Type="int" />
+          <Property Name="UpdateOn" Type="datetime2" Precision="7" />
           <Property Name="DeletedOn" Type="datetime2" Precision="7" />
           <Property Name="IsDeleted" Type="bit" />
         </EntityType>
@@ -458,7 +459,7 @@
           <Property Name="Item_Name" Type="nvarchar" MaxLength="500" />
           <Property Name="Item_NameEn" Type="nvarchar" MaxLength="50" />
           <Property Name="Unit_Id" Type="int" />
-          <Property Name="CatSub_Id" Type="int" />
+          <Property Name="CatSub_Id" Type="bigint" />
           <Property Name="Item_State" Type="nvarchar" MaxLength="50" />
           <Property Name="Item_Dec" Type="nvarchar" MaxLength="50" />
           <Property Name="Item_Count" Type="int" />
@@ -469,6 +470,7 @@
           <Property Name="Item_Active" Type="int" />
           <Property Name="Item_BarCode" Type="nvarchar" MaxLength="500" />
           <Property Name="Item_RFID" Type="nvarchar" MaxLength="50" />
+          <Property Name="Item_Serial" Type="nvarchar" MaxLength="50" />
           <Property Name="Item_LastUpdate" Type="smalldatetime" />
           <Property Name="Room_Id" Type="bigint" />
           <Property Name="Emp_Id" Type="int" />
@@ -487,19 +489,13 @@
           <Property Name="OperationDate" Type="smalldatetime" />
           <Property Name="PurchasingPower" Type="nvarchar(max)" />
           <Property Name="Category" Type="nvarchar" MaxLength="50" />
-          <Property Name="CountableFlag" Type="bit" />
-          <Property Name="OrganizedFlag" Type="bit" />
-          <Property Name="PictureName" Type="nvarchar(max)" />
-          <Property Name="Item_StateId" Type="int" />
-          <Property Name="Age" Type="int" />
-          <Property Name="OutFlag" Type="int" />
-          <Property Name="TransFlag" Type="int" />
-          <Property Name="CreatedBy" Type="int" />
           <Property Name="UpdateBy" Type="int" />
           <Property Name="DeletedBy" Type="int" />
+          <Property Name="CreatedOn" Type="datetime2" Precision="7" />
           <Property Name="UpdateOn" Type="datetime2" Precision="7" />
           <Property Name="DeletedOn" Type="datetime2" Precision="7" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="ItemStatus">
           <Key>
@@ -717,14 +713,14 @@
           <Property Name="Timestamp" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_AssetEventLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_AssetEventLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="view_AssetEventLog">
           <Key>
             <PropertyRef Name="Code" />
           </Key>
           <Property Name="Code" Type="int" Nullable="false" />
           <Property Name="RequestHeaderCode" Type="int" />
-          <Property Name="AssetCode" Type="int" />
+          <Property Name="AssetCode" Type="bigint" />
           <Property Name="ActionDate" Type="datetime" />
           <Property Name="DueDate" Type="datetime" />
           <Property Name="actionId" Type="int" />
@@ -745,7 +741,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_AssetEventLog' does n
           <Property Name="LocationNameAr" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_AssetsEventTrackingHeader' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_AssetsEventTrackingHeader' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="view_AssetsEventTrackingHeader">
           <Key>
             <PropertyRef Name="Code" />
@@ -782,7 +778,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_AssetsEventTrackingHe
           <Property Name="AssetOrgOwnerName" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_AssetsInventory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_AssetsInventory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="view_AssetsInventory">
           <Key>
             <PropertyRef Name="PKey" />
@@ -804,7 +800,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_AssetsInventory' does
           </Key>
           <Property Name="PKey" Type="bigint" Nullable="false" />
           <Property Name="groupname" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Code" Type="bigint" Nullable="false" />
           <Property Name="CategoryTitleAr" Type="nvarchar" MaxLength="250" />
           <Property Name="CategoryTitleEn" Type="nvarchar" MaxLength="250" />
           <Property Name="ItemFinanceCode" Type="nvarchar" MaxLength="50" />
@@ -814,7 +810,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_AssetsInventory' does
           <Property Name="TMonth" Type="int" />
           <Property Name="TYear" Type="int" />
           <Property Name="InboundCode" Type="int" />
-          <Property Name="ItemCode" Type="int" />
+          <Property Name="ItemCode" Type="bigint" />
           <Property Name="ReceivedQty" Type="float" />
           <Property Name="EstimatedUnitCost" Type="float" />
           <Property Name="ToLocationId" Type="int" />
@@ -837,7 +833,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_AssetsInventory' does
           <Property Name="JOB_NAME" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_AssetsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_AssetsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="view_AssetsList">
           <Key>
             <PropertyRef Name="Code" />
@@ -863,13 +859,13 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_AssetsList' does not 
           <Property Name="Code" Type="int" Nullable="false" />
           <Property Name="groupname" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="ItemRefCode" Type="nvarchar" MaxLength="250" />
-          <Property Name="ItemCode" Type="int" Nullable="false" />
+          <Property Name="ItemCode" Type="bigint" Nullable="false" />
           <Property Name="ItemDate" Type="datetime" />
           <Property Name="ItemNameEn" Type="nvarchar" MaxLength="500" />
           <Property Name="ItemNameAr" Type="nvarchar" MaxLength="500" />
           <Property Name="ItemBasePrice" Type="float" />
           <Property Name="ReceivedQty" Type="int" Nullable="false" />
-          <Property Name="AssetCode" Type="int" />
+          <Property Name="AssetCode" Type="bigint" />
           <Property Name="RequestHeaderCode" Type="int" />
           <Property Name="RequestDate" Type="datetime" />
           <Property Name="RequestRefCode" Type="nvarchar" MaxLength="50" />
@@ -941,7 +937,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_AssetsList' does not 
           <Property Name="ItemUsedStatusTitle" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_CustodyList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_CustodyList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="view_CustodyList">
           <Key>
             <PropertyRef Name="Code" />
@@ -1044,7 +1040,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_CustodyList' does not
           <Property Name="OrgEmpName" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_CustodyListGrouped' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_CustodyListGrouped' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="view_CustodyListGrouped">
           <Key>
             <PropertyRef Name="PKey" />
@@ -1092,10 +1088,10 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_CustodyListGrouped' d
           <Property Name="SUB_SEC_NO" Type="int" Nullable="false" />
           <Property Name="SUB_SEC_NAME" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="JOB_NAME" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="AssetCode" Type="int" />
+          <Property Name="AssetCode" Type="bigint" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_CustodyListTransfer' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_CustodyListTransfer' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="view_CustodyListTransfer">
           <Key>
             <PropertyRef Name="Code" />
@@ -1121,13 +1117,13 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_CustodyListTransfer' 
           <Property Name="Code" Type="int" Nullable="false" />
           <Property Name="groupname" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="ItemRefCode" Type="nvarchar" MaxLength="250" />
-          <Property Name="ItemCode" Type="int" Nullable="false" />
+          <Property Name="ItemCode" Type="bigint" Nullable="false" />
           <Property Name="ItemDate" Type="datetime" />
           <Property Name="ItemNameEn" Type="nvarchar" MaxLength="500" />
           <Property Name="ItemNameAr" Type="nvarchar" MaxLength="500" />
           <Property Name="ItemBasePrice" Type="float" />
           <Property Name="ReceivedQty" Type="int" Nullable="false" />
-          <Property Name="AssetCode" Type="int" />
+          <Property Name="AssetCode" Type="bigint" />
           <Property Name="RequestHeaderCode" Type="int" />
           <Property Name="RequestDate" Type="datetime" />
           <Property Name="RequestRefCode" Type="nvarchar" MaxLength="50" />
@@ -1198,7 +1194,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_CustodyListTransfer' 
           <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_inboubdItems' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_inboubdItems' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="view_inboubdItems">
           <Key>
             <PropertyRef Name="InboubdItemId" />
@@ -1215,7 +1211,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_inboubdItems' does no
           <Property Name="FinanceRefCode" Type="nvarchar" MaxLength="250" />
           <Property Name="InboubdItemId" Type="int" Nullable="false" />
           <Property Name="InboundCode" Type="int" />
-          <Property Name="ItemCode" Type="int" />
+          <Property Name="ItemCode" Type="bigint" />
           <Property Name="UnitRefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ItemTag" Type="nvarchar" MaxLength="50" />
           <Property Name="Qty" Type="float" />
@@ -1238,7 +1234,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_inboubdItems' does no
           <Property Name="UnitNameEn" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.View_InboundList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.View_InboundList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="View_InboundList">
           <Key>
             <PropertyRef Name="Code" />
@@ -1269,14 +1265,14 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.View_InboundList' does not
           <Property Name="InboundLastStatusCode" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_Inventory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_Inventory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="view_Inventory">
           <Key>
             <PropertyRef Name="groupname" />
             <PropertyRef Name="Code" />
           </Key>
           <Property Name="groupname" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Code" Type="bigint" Nullable="false" />
           <Property Name="CategoryTitleAr" Type="nvarchar" MaxLength="250" />
           <Property Name="CategoryTitleEn" Type="nvarchar" MaxLength="250" />
           <Property Name="ItemFinanceCode" Type="nvarchar" MaxLength="50" />
@@ -1286,7 +1282,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_Inventory' does not h
           <Property Name="TMonth" Type="int" />
           <Property Name="TYear" Type="int" />
           <Property Name="InboundCode" Type="int" />
-          <Property Name="ItemCode" Type="int" />
+          <Property Name="ItemCode" Type="bigint" />
           <Property Name="ReceivedQty" Type="float" />
           <Property Name="EstimatedUnitCost" Type="float" />
           <Property Name="ToLocationId" Type="int" />
@@ -1296,12 +1292,12 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_Inventory' does not h
           <Property Name="TransDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_ItemCard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_ItemCard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="view_ItemCard">
           <Key>
             <PropertyRef Name="Code" />
           </Key>
-          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Code" Type="bigint" Nullable="false" />
           <Property Name="ItemRefCode" Type="nvarchar" MaxLength="250" />
           <Property Name="ItemBarCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ItemRFIDCode" Type="nvarchar" MaxLength="50" />
@@ -1335,7 +1331,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_ItemCard' does not ha
           <Property Name="TotalDelivered" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_ItemCategoryTree' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_ItemCategoryTree' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="view_ItemCategoryTree">
           <Key>
             <PropertyRef Name="PKey" />
@@ -1348,7 +1344,21 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.view_ItemCategoryTree' doe
           <Property Name="path" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.View_OutboundItems' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.view_LocationTree' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="view_LocationTree">
+          <Key>
+            <PropertyRef Name="PKey" />
+          </Key>
+          <Property Name="PKey" Type="bigint" Nullable="false" />
+          <Property Name="code" Type="int" />
+          <Property Name="LocationParentId" Type="int" />
+          <Property Name="LEVEL" Type="int" />
+          <Property Name="LocationNameAr" Type="nvarchar" MaxLength="250" />
+          <Property Name="LocationType" Type="int" />
+          <Property Name="path" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.View_OutboundItems' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="View_OutboundItems">
           <Key>
             <PropertyRef Name="Code" />
@@ -1359,7 +1369,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.View_OutboundItems' does n
           <Property Name="Qty" Type="float" />
           <Property Name="EstimatedAmount" Type="float" />
           <Property Name="OutTransDate" Type="datetime" />
-          <Property Name="ItemCode" Type="int" />
+          <Property Name="ItemCode" Type="bigint" />
           <Property Name="UnitStatus" Type="int" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedBy" Type="int" />
@@ -1385,7 +1395,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.View_OutboundItems' does n
           <Property Name="OutboundItemNotes" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.View_OutboundList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.View_OutboundList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="View_OutboundList">
           <Key>
             <PropertyRef Name="Code" />
@@ -1420,7 +1430,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.View_OutboundList' does no
           <Property Name="OutboundTypeTitleEn" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CMGS_AssetsMgmtDev.dbo.viewTemp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="viewTemp">
           <Key>
             <PropertyRef Name="InboubdItemId" />
@@ -1448,7 +1458,7 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
           <Property Name="FinanceRefCode" Type="nvarchar" MaxLength="250" />
           <Property Name="InboubdItemId" Type="int" Nullable="false" />
           <Property Name="InboundCode" Type="int" />
-          <Property Name="ItemCode" Type="int" />
+          <Property Name="ItemCode" Type="bigint" />
           <Property Name="UnitRefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ItemTag" Type="nvarchar" MaxLength="50" />
           <Property Name="Qty" Type="float" />
@@ -1488,18 +1498,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
           <Property Name="SUB_SEC_NAME" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="JOB_NAME" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
-        <Association Name="FK_AssetsEventTracking_AssetsAvailabilityStatus">
-          <End Role="AssetsAvailabilityStatus" Type="Self.AssetsAvailabilityStatus" Multiplicity="0..1" />
-          <End Role="AssetsEventTracking" Type="Self.AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsAvailabilityStatus">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="statusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1">
           <End Role="AssetsEventTrackingHeader" Type="Self.AssetsEventTrackingHeader" Multiplicity="0..1" />
           <End Role="AssetsEventTracking" Type="Self.AssetsEventTracking" Multiplicity="*" />
@@ -2555,6 +2553,17 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
     [view_ItemCategoryTree].[path] AS [path]
     FROM [dbo].[view_ItemCategoryTree] AS [view_ItemCategoryTree]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="view_LocationTree" EntityType="Self.view_LocationTree" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [view_LocationTree].[PKey] AS [PKey], 
+    [view_LocationTree].[code] AS [code], 
+    [view_LocationTree].[LocationParentId] AS [LocationParentId], 
+    [view_LocationTree].[LEVEL] AS [LEVEL], 
+    [view_LocationTree].[LocationNameAr] AS [LocationNameAr], 
+    [view_LocationTree].[LocationType] AS [LocationType], 
+    [view_LocationTree].[path] AS [path]
+    FROM [dbo].[view_LocationTree] AS [view_LocationTree]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="View_OutboundItems" EntityType="Self.View_OutboundItems" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [View_OutboundItems].[Code] AS [Code], 
@@ -2674,10 +2683,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
     [viewTemp].[JOB_NAME] AS [JOB_NAME]
     FROM [dbo].[viewTemp] AS [viewTemp]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_AssetsEventTracking_AssetsAvailabilityStatus" Association="Self.FK_AssetsEventTracking_AssetsAvailabilityStatus">
-            <End Role="AssetsAvailabilityStatus" EntitySet="AssetsAvailabilityStatus" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTracking" />
-          </AssociationSet>
           <AssociationSet Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1" Association="Self.FK_AssetsEventTracking_AssetsEventTrackingHeader1">
             <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeader" />
             <End Role="AssetsEventTracking" EntitySet="AssetsEventTracking" />
@@ -2824,7 +2829,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
           <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus" FromRole="AssetsAvailabilityStatu" ToRole="AssetsEventTracking" />
         </EntityType>
         <EntityType Name="AssetsTrackingAction">
           <Key>
@@ -2928,8 +2932,8 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
           <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AssetsItemUnits" Relationship="CMGS_AssetsMgmtModel.FK_D_ItemUnits_D_ItemStatus" FromRole="D_ItemUsedStatus" ToRole="AssetsItemUnit" />
           <NavigationProperty Name="Outbound_Items" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemUsedStatus" FromRole="D_ItemUsedStatus" ToRole="Outbound_Items" />
+          <NavigationProperty Name="AssetsItemUnits" Relationship="CMGS_AssetsMgmtModel.FK_D_ItemUnits_D_ItemStatus" FromRole="D_ItemUsedStatus" ToRole="AssetsItemUnit" />
         </EntityType>
         <EntityType Name="D_JobTitle">
           <Key>
@@ -2963,8 +2967,8 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
           <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AssetsItemUnits" Relationship="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_QtyUnit" FromRole="D_QtyUnit" ToRole="AssetsItemUnit" />
           <NavigationProperty Name="D_ItemCard" Relationship="CMGS_AssetsMgmtModel.FK_D_ItemCard_D_QtyUnit" FromRole="D_QtyUnit" ToRole="D_ItemCard" />
+          <NavigationProperty Name="AssetsItemUnits" Relationship="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_QtyUnit" FromRole="D_QtyUnit" ToRole="AssetsItemUnit" />
         </EntityType>
         <EntityType Name="D_VendorData">
           <Key>
@@ -3619,7 +3623,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
             <End Role="Outbound" EntitySet="Outbounds" />
             <End Role="OutboundNote" EntitySet="OutboundNotes" />
           </AssociationSet>
-          <EntitySet Name="view_ItemCard" EntityType="CMGS_AssetsMgmtModel.view_ItemCard" />
           <FunctionImport Name="sp_LocationTree" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_LocationTree_Result)">
           <Parameter Name="StartingNode" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -3662,36 +3665,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
           </AssociationSet>
           <EntitySet Name="view_CustodyListTransfer" EntityType="CMGS_AssetsMgmtModel.view_CustodyListTransfer" />
           <EntitySet Name="view_AssetsEventTrackingHeader" EntityType="CMGS_AssetsMgmtModel.view_AssetsEventTrackingHeader" />
-          <EntitySet Name="AssetsEventTrackings" EntityType="CMGS_AssetsMgmtModel.AssetsEventTracking" />
-          <AssociationSet Name="FK_AssetsEventTracking_AssetsAvailabilityStatus" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus">
-            <End Role="AssetsAvailabilityStatu" EntitySet="AssetsAvailabilityStatus" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1">
-            <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeaders" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsEventTracking_AssetsTrackingActions" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions">
-            <End Role="AssetsTrackingAction" EntitySet="AssetsTrackingActions" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssetsStores_AssetsEventTracking" Association="CMGS_AssetsMgmtModel.FK_AssetsStores_AssetsEventTracking">
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-            <End Role="AssetsStore" EntitySet="AssetsStores" />
-          </AssociationSet>
-          <EntitySet Name="AssetsItemUnits" EntityType="CMGS_AssetsMgmtModel.AssetsItemUnit" />
-          <AssociationSet Name="FK_D_ItemUnits_D_ItemStatus" Association="CMGS_AssetsMgmtModel.FK_D_ItemUnits_D_ItemStatus">
-            <End Role="D_ItemUsedStatus" EntitySet="D_ItemUsedStatus" />
-            <End Role="AssetsItemUnit" EntitySet="AssetsItemUnits" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InboundItemUnits_D_QtyUnit" Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_QtyUnit">
-            <End Role="D_QtyUnit" EntitySet="D_QtyUnit" />
-            <End Role="AssetsItemUnit" EntitySet="AssetsItemUnits" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InboundItemUnits_Inbound" Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_Inbound">
-            <End Role="Inbound" EntitySet="Inbounds" />
-            <End Role="AssetsItemUnit" EntitySet="AssetsItemUnits" />
-          </AssociationSet>
           <EntitySet Name="Outbound_Items" EntityType="CMGS_AssetsMgmtModel.Outbound_Items" />
           <AssociationSet Name="FK_Outbound_Items_D_ItemUsedStatus" Association="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemUsedStatus">
             <End Role="D_ItemUsedStatus" EntitySet="D_ItemUsedStatus" />
@@ -3702,16 +3675,17 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
             <End Role="Outbound_Items" EntitySet="Outbound_Items" />
           </AssociationSet>
           <EntitySet Name="ItemStatus" EntityType="CMGS_AssetsMgmtModel.ItemStatu" />
+          <EntitySet Name="view_AssetsList" EntityType="CMGS_AssetsMgmtModel.view_AssetsList" />
+          <EntitySet Name="SystemLogs" EntityType="CMGS_AssetsMgmtModel.SystemLog" />
+          <FunctionImport Name="sp_ItemAutoComp" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_ItemAutoComp_Result)">
+          <Parameter Name="pre" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="D_ExcludedOrg" EntityType="CMGS_AssetsMgmtModel.D_ExcludedOrg" />
+          <EntitySet Name="view_CustodyList" EntityType="CMGS_AssetsMgmtModel.view_CustodyList" />
+          <EntitySet Name="view_LocationTree" EntityType="CMGS_AssetsMgmtModel.view_LocationTree" />
+          <EntitySet Name="view_ItemCard" EntityType="CMGS_AssetsMgmtModel.view_ItemCard" />
           <EntitySet Name="Item_tbl" EntityType="CMGS_AssetsMgmtModel.Item_tbl" />
           <EntitySet Name="D_ItemCard" EntityType="CMGS_AssetsMgmtModel.D_ItemCard" />
-          <AssociationSet Name="FK_AssetsEventTracking_D_ItemCard" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard">
-            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
-            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InboundItemUnits_D_ItemCard" Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_ItemCard">
-            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
-            <End Role="AssetsItemUnit" EntitySet="AssetsItemUnits" />
-          </AssociationSet>
           <AssociationSet Name="FK_D_ItemCard_D_ItemsCategory" Association="CMGS_AssetsMgmtModel.FK_D_ItemCard_D_ItemsCategory">
             <End Role="D_ItemsCategory" EntitySet="D_ItemsCategory" />
             <End Role="D_ItemCard" EntitySet="D_ItemCard" />
@@ -3724,13 +3698,40 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
             <End Role="D_ItemCard" EntitySet="D_ItemCard" />
             <End Role="Outbound_Items" EntitySet="Outbound_Items" />
           </AssociationSet>
-          <EntitySet Name="view_AssetsList" EntityType="CMGS_AssetsMgmtModel.view_AssetsList" />
-          <EntitySet Name="SystemLogs" EntityType="CMGS_AssetsMgmtModel.SystemLog" />
-          <FunctionImport Name="sp_ItemAutoComp" ReturnType="Collection(CMGS_AssetsMgmtModel.sp_ItemAutoComp_Result)">
-          <Parameter Name="pre" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="D_ExcludedOrg" EntityType="CMGS_AssetsMgmtModel.D_ExcludedOrg" />
-          <EntitySet Name="view_CustodyList" EntityType="CMGS_AssetsMgmtModel.view_CustodyList" />
+          <EntitySet Name="AssetsItemUnits" EntityType="CMGS_AssetsMgmtModel.AssetsItemUnit" />
+          <AssociationSet Name="FK_D_ItemUnits_D_ItemStatus" Association="CMGS_AssetsMgmtModel.FK_D_ItemUnits_D_ItemStatus">
+            <End Role="D_ItemUsedStatus" EntitySet="D_ItemUsedStatus" />
+            <End Role="AssetsItemUnit" EntitySet="AssetsItemUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InboundItemUnits_D_ItemCard" Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_ItemCard">
+            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
+            <End Role="AssetsItemUnit" EntitySet="AssetsItemUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InboundItemUnits_D_QtyUnit" Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_QtyUnit">
+            <End Role="D_QtyUnit" EntitySet="D_QtyUnit" />
+            <End Role="AssetsItemUnit" EntitySet="AssetsItemUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InboundItemUnits_Inbound" Association="CMGS_AssetsMgmtModel.FK_InboundItemUnits_Inbound">
+            <End Role="Inbound" EntitySet="Inbounds" />
+            <End Role="AssetsItemUnit" EntitySet="AssetsItemUnits" />
+          </AssociationSet>
+          <EntitySet Name="AssetsEventTrackings" EntityType="CMGS_AssetsMgmtModel.AssetsEventTracking" />
+          <AssociationSet Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1">
+            <End Role="AssetsEventTrackingHeader" EntitySet="AssetsEventTrackingHeaders" />
+            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetsEventTracking_AssetsTrackingActions" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions">
+            <End Role="AssetsTrackingAction" EntitySet="AssetsTrackingActions" />
+            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetsEventTracking_D_ItemCard" Association="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard">
+            <End Role="D_ItemCard" EntitySet="D_ItemCard" />
+            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetsStores_AssetsEventTracking" Association="CMGS_AssetsMgmtModel.FK_AssetsStores_AssetsEventTracking">
+            <End Role="AssetsEventTracking" EntitySet="AssetsEventTrackings" />
+            <End Role="AssetsStore" EntitySet="AssetsStores" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="Security_SP_PRM_getJobPage_Result">
           <Property Type="Int32" Name="SystemID" Nullable="false" />
@@ -4056,43 +4057,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="view_ItemCard">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="Int32" Nullable="false" />
-          <Property Name="ItemRefCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ItemBarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemRFIDCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemFinanceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemQrCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ItemDescEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ItemDescAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ItemCategoryId" Type="Int32" />
-          <Property Name="ItemBasePrice" Type="Double" />
-          <Property Name="QUnitCode" Type="Int32" />
-          <Property Name="MinQty" Type="Int32" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="Int32" />
-          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="ItemImage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="D_ItemsCategoryTitleAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="D_ItemsCategoryTitleEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="D_QtyUnitTitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="D_QtyUnitTitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="EstimatedUnitCost" Type="Double" />
-          <Property Name="ItemNameArWithCode" Type="String" MaxLength="531" FixedLength="false" Unicode="true" />
-          <Property Name="ScrapPeriod" Type="Double" />
-          <Property Name="ScrapAmount" Type="Double" />
-          <Property Name="ItemMasterPrice" Type="Double" />
-          <Property Name="TotalReceived" Type="Double" />
-          <Property Name="TotalDelivered" Type="Double" />
-        </EntityType>
         <ComplexType Name="sp_LocationTree_Result">
           <Property Type="Int64" Name="PKey" Nullable="false" />
           <Property Type="Int32" Name="code" Nullable="true" />
@@ -4452,9 +4416,9 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
           <Property Name="OrgEmpRefCode" Type="Int32" />
           <Property Name="OrgEmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="RequestAttachments" Relationship="CMGS_AssetsMgmtModel.FK_RequestAttachments_AssetsEventTrackingHeader" FromRole="AssetsEventTrackingHeader" ToRole="RequestAttachment" />
-          <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" FromRole="AssetsEventTrackingHeader" ToRole="AssetsEventTracking" />
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="DeletedOn" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" FromRole="AssetsEventTrackingHeader" ToRole="AssetsEventTracking" />
         </EntityType>
         <Association Name="FK_RequestAttachments_AssetsEventTrackingHeader">
           <End Type="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Role="AssetsEventTrackingHeader" Multiplicity="0..1" />
@@ -4641,152 +4605,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
           <Property Name="AssetOrgOwnerRefCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AssetOrgOwnerName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="AssetsEventTracking">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RequestHeaderCode" Type="Int32" />
-          <Property Name="AssetCode" Type="Int64" />
-          <Property Name="ActionDate" Type="DateTime" Precision="3" />
-          <Property Name="DueDate" Type="DateTime" Precision="3" />
-          <Property Name="actionId" Type="Int32" />
-          <Property Name="statusId" Type="Int32" />
-          <Property Name="ToLocationId" Type="Int32" />
-          <Property Name="EmpRefCode" Type="Int32" />
-          <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="Int32" />
-          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="Qty" Type="Double" />
-          <Property Name="MissedQty" Type="Double" />
-          <Property Name="StoreRequestRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RequestItemPrice" Type="Double" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="ItemUsedStatus" Type="Int32" />
-          <NavigationProperty Name="AssetsAvailabilityStatu" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsAvailabilityStatus" FromRole="AssetsEventTracking" ToRole="AssetsAvailabilityStatu" />
-          <NavigationProperty Name="AssetsEventTrackingHeader" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" FromRole="AssetsEventTracking" ToRole="AssetsEventTrackingHeader" />
-          <NavigationProperty Name="AssetsTrackingAction" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions" FromRole="AssetsEventTracking" ToRole="AssetsTrackingAction" />
-          <NavigationProperty Name="AssetsStores" Relationship="CMGS_AssetsMgmtModel.FK_AssetsStores_AssetsEventTracking" FromRole="AssetsEventTracking" ToRole="AssetsStore" />
-          <Property Name="DeletedBy" Type="Int32" />
-          <Property Name="DeletedOn" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="D_ItemCard" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard" FromRole="AssetsEventTracking" ToRole="D_ItemCard" />
-        </EntityType>
-        <Association Name="FK_AssetsEventTracking_AssetsAvailabilityStatus">
-          <End Type="CMGS_AssetsMgmtModel.AssetsAvailabilityStatu" Role="AssetsAvailabilityStatu" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsAvailabilityStatu">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="statusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1">
-          <End Type="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Role="AssetsEventTrackingHeader" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsEventTrackingHeader">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="RequestHeaderCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsEventTracking_AssetsTrackingActions">
-          <End Type="CMGS_AssetsMgmtModel.AssetsTrackingAction" Role="AssetsTrackingAction" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsTrackingAction">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="actionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AssetsStores_AssetsEventTracking">
-          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsStore" Role="AssetsStore" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AssetsEventTracking">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsStore">
-              <PropertyRef Name="AssetId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="AssetsItemUnit">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InboundCode" Type="Int32" />
-          <Property Name="ItemCode" Type="Int64" />
-          <Property Name="UnitRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemTag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Qty" Type="Double" />
-          <Property Name="ReceivedQty" Type="Double" />
-          <Property Name="QUnitCode" Type="Int32" />
-          <Property Name="EstimatedUnitCost" Type="Double" />
-          <Property Name="UnitStatus" Type="Int32" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ExpireDate" Type="DateTime" Precision="3" />
-          <Property Name="LastEventTrackingId" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="Int32" />
-          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="D_ItemUsedStatus" Relationship="CMGS_AssetsMgmtModel.FK_D_ItemUnits_D_ItemStatus" FromRole="AssetsItemUnit" ToRole="D_ItemUsedStatus" />
-          <NavigationProperty Name="D_QtyUnit" Relationship="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_QtyUnit" FromRole="AssetsItemUnit" ToRole="D_QtyUnit" />
-          <NavigationProperty Name="Inbound" Relationship="CMGS_AssetsMgmtModel.FK_InboundItemUnits_Inbound" FromRole="AssetsItemUnit" ToRole="Inbound" />
-          <Property Name="DeletedBy" Type="Int32" />
-          <Property Name="DeletedOn" Type="DateTime" Precision="7" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="D_ItemCard" Relationship="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_ItemCard" FromRole="AssetsItemUnit" ToRole="D_ItemCard" />
-        </EntityType>
-        <Association Name="FK_D_ItemUnits_D_ItemStatus">
-          <End Type="CMGS_AssetsMgmtModel.D_ItemUsedStatus" Role="D_ItemUsedStatus" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsItemUnit" Role="AssetsItemUnit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_ItemUsedStatus">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsItemUnit">
-              <PropertyRef Name="UnitStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InboundItemUnits_D_QtyUnit">
-          <End Type="CMGS_AssetsMgmtModel.D_QtyUnit" Role="D_QtyUnit" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsItemUnit" Role="AssetsItemUnit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_QtyUnit">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsItemUnit">
-              <PropertyRef Name="QUnitCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InboundItemUnits_Inbound">
-          <End Type="CMGS_AssetsMgmtModel.Inbound" Role="Inbound" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsItemUnit" Role="AssetsItemUnit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inbound">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsItemUnit">
-              <PropertyRef Name="InboundCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Outbound_Items">
           <Key>
             <PropertyRef Name="Code" />
@@ -4840,162 +4658,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
           <Property Name="AName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="EName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Item_tbl">
-          <Key>
-            <PropertyRef Name="Item_Id" />
-          </Key>
-          <Property Name="Item_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Item_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Item_NameEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Unit_Id" Type="Int32" />
-          <Property Name="CatSub_Id" Type="Int32" />
-          <Property Name="Item_State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Item_Dec" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Item_Count" Type="Int32" />
-          <Property Name="Item_Price" Type="Double" />
-          <Property Name="Item_Discount" Type="Double" />
-          <Property Name="Item_Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="User_Id" Type="Int32" />
-          <Property Name="Item_Active" Type="Int32" />
-          <Property Name="Item_BarCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Item_RFID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Item_LastUpdate" Type="DateTime" Precision="0" />
-          <Property Name="Room_Id" Type="Int64" />
-          <Property Name="Emp_Id" Type="Int32" />
-          <Property Name="Depart_Id" Type="Int32" />
-          <Property Name="Item_AssDate" Type="DateTime" Precision="0" />
-          <Property Name="item_lowqty" Type="Int32" />
-          <Property Name="Item_Expire" Type="DateTime" Precision="0" />
-          <Property Name="Item_dayhint" Type="Int32" />
-          <Property Name="Item_FinCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Item_stopAlram" Type="Boolean" />
-          <Property Name="PurchaseOrder" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="InvoiceNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Model" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Origin" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="AssetCardNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OperationDate" Type="DateTime" Precision="0" />
-          <Property Name="PurchasingPower" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CountableFlag" Type="Boolean" />
-          <Property Name="OrganizedFlag" Type="Boolean" />
-          <Property Name="PictureName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Item_StateId" Type="Int32" />
-          <Property Name="Age" Type="Int32" />
-          <Property Name="OutFlag" Type="Int32" />
-          <Property Name="TransFlag" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="UpdateBy" Type="Int32" />
-          <Property Name="DeletedBy" Type="Int32" />
-          <Property Name="UpdateOn" Type="DateTime" Precision="7" />
-          <Property Name="DeletedOn" Type="DateTime" Precision="7" />
-          <Property Name="IsDeleted" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="D_ItemCard">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemRefCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ItemBarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemRFIDCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemFinanceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemQrCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ItemDescEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ItemDescAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ItemCategoryId" Type="Int32" />
-          <Property Name="ItemBasePrice" Type="Double" />
-          <Property Name="QUnitCode" Type="Int32" />
-          <Property Name="MinQty" Type="Int32" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ItemImage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="ScrapPeriod" Type="Double" />
-          <Property Name="ScrapAmount" Type="Double" />
-          <Property Name="ItemMasterPrice" Type="Double" />
-          <Property Name="REFID" Type="Int32" />
-          <Property Name="CountableFlag" Type="Boolean" />
-          <Property Name="OrganizedFlag" Type="Boolean" />
-          <Property Name="PictureName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Item_StateId" Type="Int32" />
-          <Property Name="Age" Type="Int32" />
-          <Property Name="OutFlag" Type="Int32" />
-          <Property Name="TransFlag" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="LastModifiedBy" Type="Int32" />
-          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="DeletedBy" Type="Int32" />
-          <Property Name="DeletedOn" Type="DateTime" Precision="7" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard" FromRole="D_ItemCard" ToRole="AssetsEventTracking" />
-          <NavigationProperty Name="AssetsItemUnits" Relationship="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_ItemCard" FromRole="D_ItemCard" ToRole="AssetsItemUnit" />
-          <NavigationProperty Name="D_ItemsCategory" Relationship="CMGS_AssetsMgmtModel.FK_D_ItemCard_D_ItemsCategory" FromRole="D_ItemCard" ToRole="D_ItemsCategory" />
-          <NavigationProperty Name="D_QtyUnit" Relationship="CMGS_AssetsMgmtModel.FK_D_ItemCard_D_QtyUnit" FromRole="D_ItemCard" ToRole="D_QtyUnit" />
-          <NavigationProperty Name="Outbound_Items" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemCard" FromRole="D_ItemCard" ToRole="Outbound_Items" />
-        </EntityType>
-        <Association Name="FK_AssetsEventTracking_D_ItemCard">
-          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_ItemCard">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsEventTracking">
-              <PropertyRef Name="AssetCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InboundItemUnits_D_ItemCard">
-          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.AssetsItemUnit" Role="AssetsItemUnit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_ItemCard">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="AssetsItemUnit">
-              <PropertyRef Name="ItemCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_D_ItemCard_D_ItemsCategory">
-          <End Type="CMGS_AssetsMgmtModel.D_ItemsCategory" Role="D_ItemsCategory" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_ItemsCategory">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="D_ItemCard">
-              <PropertyRef Name="ItemCategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_D_ItemCard_D_QtyUnit">
-          <End Type="CMGS_AssetsMgmtModel.D_QtyUnit" Role="D_QtyUnit" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_QtyUnit">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="D_ItemCard">
-              <PropertyRef Name="QUnitCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Outbound_Items_D_ItemCard">
-          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="0..1" />
-          <End Type="CMGS_AssetsMgmtModel.Outbound_Items" Role="Outbound_Items" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D_ItemCard">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Outbound_Items">
-              <PropertyRef Name="ItemCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="view_AssetsList">
           <Key>
             <PropertyRef Name="Code" />
@@ -5225,6 +4887,340 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
           <Property Name="OrgEmpRefCode" Type="Int32" />
           <Property Name="OrgEmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="view_LocationTree">
+          <Key>
+            <PropertyRef Name="PKey" />
+          </Key>
+          <Property Name="PKey" Type="Int64" Nullable="false" />
+          <Property Name="code" Type="Int32" />
+          <Property Name="LocationParentId" Type="Int32" />
+          <Property Name="LEVEL" Type="Int32" />
+          <Property Name="LocationNameAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LocationType" Type="Int32" />
+          <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="view_ItemCard">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="ItemRefCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ItemBarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemRFIDCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemFinanceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemQrCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCategoryId" Type="Int32" />
+          <Property Name="ItemBasePrice" Type="Double" />
+          <Property Name="QUnitCode" Type="Int32" />
+          <Property Name="MinQty" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="ItemImage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="D_ItemsCategoryTitleAr" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="D_ItemsCategoryTitleEn" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="D_QtyUnitTitleAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="D_QtyUnitTitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="EstimatedUnitCost" Type="Double" />
+          <Property Name="ItemNameArWithCode" Type="String" MaxLength="531" FixedLength="false" Unicode="true" />
+          <Property Name="ScrapPeriod" Type="Double" />
+          <Property Name="ScrapAmount" Type="Double" />
+          <Property Name="ItemMasterPrice" Type="Double" />
+          <Property Name="TotalReceived" Type="Double" />
+          <Property Name="TotalDelivered" Type="Double" />
+          <Property Name="Code" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item_tbl">
+          <Key>
+            <PropertyRef Name="Item_Id" />
+          </Key>
+          <Property Name="Item_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Item_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Item_NameEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Unit_Id" Type="Int32" />
+          <Property Name="CatSub_Id" Type="Int32" />
+          <Property Name="Item_State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Item_Dec" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Item_Count" Type="Int32" />
+          <Property Name="Item_Price" Type="Double" />
+          <Property Name="Item_Discount" Type="Double" />
+          <Property Name="Item_Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Item_Active" Type="Int32" />
+          <Property Name="Item_BarCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Item_RFID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Item_LastUpdate" Type="DateTime" Precision="0" />
+          <Property Name="Room_Id" Type="Int64" />
+          <Property Name="Emp_Id" Type="Int32" />
+          <Property Name="Depart_Id" Type="Int32" />
+          <Property Name="Item_AssDate" Type="DateTime" Precision="0" />
+          <Property Name="item_lowqty" Type="Int32" />
+          <Property Name="Item_Expire" Type="DateTime" Precision="0" />
+          <Property Name="Item_dayhint" Type="Int32" />
+          <Property Name="Item_FinCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Item_stopAlram" Type="Boolean" />
+          <Property Name="PurchaseOrder" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="InvoiceNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Origin" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AssetCardNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OperationDate" Type="DateTime" Precision="0" />
+          <Property Name="PurchasingPower" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="UpdateOn" Type="DateTime" Precision="7" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="7" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="Item_Serial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="D_ItemCard">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemRefCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ItemBarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemRFIDCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemFinanceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemQrCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCategoryId" Type="Int32" />
+          <Property Name="ItemBasePrice" Type="Double" />
+          <Property Name="QUnitCode" Type="Int32" />
+          <Property Name="MinQty" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="ItemImage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="ScrapPeriod" Type="Double" />
+          <Property Name="ScrapAmount" Type="Double" />
+          <Property Name="ItemMasterPrice" Type="Double" />
+          <Property Name="REFID" Type="Int32" />
+          <Property Name="CountableFlag" Type="Boolean" />
+          <Property Name="OrganizedFlag" Type="Boolean" />
+          <Property Name="PictureName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Item_StateId" Type="Int32" />
+          <Property Name="OutFlag" Type="Int32" />
+          <Property Name="TransFlag" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="UpdateOn" Type="DateTime" Precision="7" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="7" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="D_ItemsCategory" Relationship="CMGS_AssetsMgmtModel.FK_D_ItemCard_D_ItemsCategory" FromRole="D_ItemCard" ToRole="D_ItemsCategory" />
+          <NavigationProperty Name="D_QtyUnit" Relationship="CMGS_AssetsMgmtModel.FK_D_ItemCard_D_QtyUnit" FromRole="D_ItemCard" ToRole="D_QtyUnit" />
+          <NavigationProperty Name="Outbound_Items" Relationship="CMGS_AssetsMgmtModel.FK_Outbound_Items_D_ItemCard" FromRole="D_ItemCard" ToRole="Outbound_Items" />
+          <NavigationProperty Name="AssetsItemUnits" Relationship="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_ItemCard" FromRole="D_ItemCard" ToRole="AssetsItemUnit" />
+          <NavigationProperty Name="AssetsEventTrackings" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard" FromRole="D_ItemCard" ToRole="AssetsEventTracking" />
+        </EntityType>
+        <Association Name="FK_D_ItemCard_D_ItemsCategory">
+          <End Type="CMGS_AssetsMgmtModel.D_ItemsCategory" Role="D_ItemsCategory" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_ItemsCategory">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="D_ItemCard">
+              <PropertyRef Name="ItemCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_D_ItemCard_D_QtyUnit">
+          <End Type="CMGS_AssetsMgmtModel.D_QtyUnit" Role="D_QtyUnit" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_QtyUnit">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="D_ItemCard">
+              <PropertyRef Name="QUnitCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outbound_Items_D_ItemCard">
+          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.Outbound_Items" Role="Outbound_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_ItemCard">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Outbound_Items">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AssetsItemUnit">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InboundCode" Type="Int32" />
+          <Property Name="ItemCode" Type="Int64" />
+          <Property Name="UnitRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemTag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Double" />
+          <Property Name="ReceivedQty" Type="Double" />
+          <Property Name="QUnitCode" Type="Int32" />
+          <Property Name="EstimatedUnitCost" Type="Double" />
+          <Property Name="UnitStatus" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExpireDate" Type="DateTime" Precision="3" />
+          <Property Name="LastEventTrackingId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="D_ItemUsedStatus" Relationship="CMGS_AssetsMgmtModel.FK_D_ItemUnits_D_ItemStatus" FromRole="AssetsItemUnit" ToRole="D_ItemUsedStatus" />
+          <NavigationProperty Name="D_ItemCard" Relationship="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_ItemCard" FromRole="AssetsItemUnit" ToRole="D_ItemCard" />
+          <NavigationProperty Name="D_QtyUnit" Relationship="CMGS_AssetsMgmtModel.FK_InboundItemUnits_D_QtyUnit" FromRole="AssetsItemUnit" ToRole="D_QtyUnit" />
+          <NavigationProperty Name="Inbound" Relationship="CMGS_AssetsMgmtModel.FK_InboundItemUnits_Inbound" FromRole="AssetsItemUnit" ToRole="Inbound" />
+        </EntityType>
+        <Association Name="FK_D_ItemUnits_D_ItemStatus">
+          <End Type="CMGS_AssetsMgmtModel.D_ItemUsedStatus" Role="D_ItemUsedStatus" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsItemUnit" Role="AssetsItemUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_ItemUsedStatus">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsItemUnit">
+              <PropertyRef Name="UnitStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InboundItemUnits_D_ItemCard">
+          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsItemUnit" Role="AssetsItemUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_ItemCard">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsItemUnit">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InboundItemUnits_D_QtyUnit">
+          <End Type="CMGS_AssetsMgmtModel.D_QtyUnit" Role="D_QtyUnit" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsItemUnit" Role="AssetsItemUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_QtyUnit">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsItemUnit">
+              <PropertyRef Name="QUnitCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InboundItemUnits_Inbound">
+          <End Type="CMGS_AssetsMgmtModel.Inbound" Role="Inbound" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsItemUnit" Role="AssetsItemUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inbound">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsItemUnit">
+              <PropertyRef Name="InboundCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AssetsEventTracking">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestHeaderCode" Type="Int32" />
+          <Property Name="AssetCode" Type="Int64" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="actionId" Type="Int32" />
+          <Property Name="statusId" Type="Int32" />
+          <Property Name="ToLocationId" Type="Int32" />
+          <Property Name="EmpRefCode" Type="Int32" />
+          <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="Int32" />
+          <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="Qty" Type="Double" />
+          <Property Name="MissedQty" Type="Double" />
+          <Property Name="StoreRequestRefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RequestItemPrice" Type="Double" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="7" />
+          <Property Name="ItemUsedStatus" Type="Int32" />
+          <NavigationProperty Name="AssetsEventTrackingHeader" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsEventTrackingHeader1" FromRole="AssetsEventTracking" ToRole="AssetsEventTrackingHeader" />
+          <NavigationProperty Name="AssetsTrackingAction" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_AssetsTrackingActions" FromRole="AssetsEventTracking" ToRole="AssetsTrackingAction" />
+          <NavigationProperty Name="D_ItemCard" Relationship="CMGS_AssetsMgmtModel.FK_AssetsEventTracking_D_ItemCard" FromRole="AssetsEventTracking" ToRole="D_ItemCard" />
+          <NavigationProperty Name="AssetsStores" Relationship="CMGS_AssetsMgmtModel.FK_AssetsStores_AssetsEventTracking" FromRole="AssetsEventTracking" ToRole="AssetsStore" />
+        </EntityType>
+        <Association Name="FK_AssetsEventTracking_AssetsEventTrackingHeader1">
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTrackingHeader" Role="AssetsEventTrackingHeader" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetsEventTrackingHeader">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsEventTracking">
+              <PropertyRef Name="RequestHeaderCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetsEventTracking_AssetsTrackingActions">
+          <End Type="CMGS_AssetsMgmtModel.AssetsTrackingAction" Role="AssetsTrackingAction" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetsTrackingAction">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsEventTracking">
+              <PropertyRef Name="actionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetsEventTracking_D_ItemCard">
+          <End Type="CMGS_AssetsMgmtModel.D_ItemCard" Role="D_ItemCard" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="D_ItemCard">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsEventTracking">
+              <PropertyRef Name="AssetCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetsStores_AssetsEventTracking">
+          <End Type="CMGS_AssetsMgmtModel.AssetsEventTracking" Role="AssetsEventTracking" Multiplicity="0..1" />
+          <End Type="CMGS_AssetsMgmtModel.AssetsStore" Role="AssetsStore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetsEventTracking">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="AssetsStore">
+              <PropertyRef Name="AssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6040,44 +6036,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="view_ItemCard">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_ItemCard">
-              <MappingFragment StoreEntitySet="view_ItemCard">
-                <ScalarProperty Name="TotalDelivered" ColumnName="TotalDelivered" />
-                <ScalarProperty Name="TotalReceived" ColumnName="TotalReceived" />
-                <ScalarProperty Name="ItemMasterPrice" ColumnName="ItemMasterPrice" />
-                <ScalarProperty Name="ScrapAmount" ColumnName="ScrapAmount" />
-                <ScalarProperty Name="ScrapPeriod" ColumnName="ScrapPeriod" />
-                <ScalarProperty Name="ItemNameArWithCode" ColumnName="ItemNameArWithCode" />
-                <ScalarProperty Name="EstimatedUnitCost" ColumnName="EstimatedUnitCost" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="D_QtyUnitTitleEn" ColumnName="D_QtyUnitTitleEn" />
-                <ScalarProperty Name="D_QtyUnitTitleAr" ColumnName="D_QtyUnitTitleAr" />
-                <ScalarProperty Name="D_ItemsCategoryTitleEn" ColumnName="D_ItemsCategoryTitleEn" />
-                <ScalarProperty Name="D_ItemsCategoryTitleAr" ColumnName="D_ItemsCategoryTitleAr" />
-                <ScalarProperty Name="ItemImage" ColumnName="ItemImage" />
-                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="MinQty" ColumnName="MinQty" />
-                <ScalarProperty Name="QUnitCode" ColumnName="QUnitCode" />
-                <ScalarProperty Name="ItemBasePrice" ColumnName="ItemBasePrice" />
-                <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
-                <ScalarProperty Name="ItemDescAr" ColumnName="ItemDescAr" />
-                <ScalarProperty Name="ItemDescEn" ColumnName="ItemDescEn" />
-                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
-                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
-                <ScalarProperty Name="ItemQrCode" ColumnName="ItemQrCode" />
-                <ScalarProperty Name="ItemFinanceCode" ColumnName="ItemFinanceCode" />
-                <ScalarProperty Name="ItemRFIDCode" ColumnName="ItemRFIDCode" />
-                <ScalarProperty Name="ItemBarCode" ColumnName="ItemBarCode" />
-                <ScalarProperty Name="ItemRefCode" ColumnName="ItemRefCode" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_LocationTree" FunctionName="CMGS_AssetsMgmtModel.Store.sp_LocationTree">
             <ResultMapping>
               <ComplexTypeMapping TypeName="CMGS_AssetsMgmtModel.sp_LocationTree_Result">
@@ -6550,61 +6508,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AssetsEventTrackings">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsEventTracking">
-              <MappingFragment StoreEntitySet="AssetsEventTracking">
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="ItemUsedStatus" ColumnName="ItemUsedStatus" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="RequestItemPrice" ColumnName="RequestItemPrice" />
-                <ScalarProperty Name="StoreRequestRefCode" ColumnName="StoreRequestRefCode" />
-                <ScalarProperty Name="MissedQty" ColumnName="MissedQty" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-                <ScalarProperty Name="EmpRefCode" ColumnName="EmpRefCode" />
-                <ScalarProperty Name="ToLocationId" ColumnName="ToLocationId" />
-                <ScalarProperty Name="statusId" ColumnName="statusId" />
-                <ScalarProperty Name="actionId" ColumnName="actionId" />
-                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="AssetCode" ColumnName="AssetCode" />
-                <ScalarProperty Name="RequestHeaderCode" ColumnName="RequestHeaderCode" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AssetsItemUnits">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsItemUnit">
-              <MappingFragment StoreEntitySet="AssetsItemUnits">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="LastEventTrackingId" ColumnName="LastEventTrackingId" />
-                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="UnitStatus" ColumnName="UnitStatus" />
-                <ScalarProperty Name="EstimatedUnitCost" ColumnName="EstimatedUnitCost" />
-                <ScalarProperty Name="QUnitCode" ColumnName="QUnitCode" />
-                <ScalarProperty Name="ReceivedQty" ColumnName="ReceivedQty" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="ItemTag" ColumnName="ItemTag" />
-                <ScalarProperty Name="UnitRefCode" ColumnName="UnitRefCode" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="InboundCode" ColumnName="InboundCode" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Outbound_Items">
             <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.Outbound_Items">
               <MappingFragment StoreEntitySet="Outbound_Items">
@@ -6630,99 +6533,6 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
                 <ScalarProperty Name="EName" ColumnName="EName" />
                 <ScalarProperty Name="AName" ColumnName="AName" />
                 <ScalarProperty Name="Item_StateId" ColumnName="Item_StateId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Item_tbl">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.Item_tbl">
-              <MappingFragment StoreEntitySet="Item_tbl">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-                <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="TransFlag" ColumnName="TransFlag" />
-                <ScalarProperty Name="OutFlag" ColumnName="OutFlag" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="Item_StateId" ColumnName="Item_StateId" />
-                <ScalarProperty Name="PictureName" ColumnName="PictureName" />
-                <ScalarProperty Name="OrganizedFlag" ColumnName="OrganizedFlag" />
-                <ScalarProperty Name="CountableFlag" ColumnName="CountableFlag" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="PurchasingPower" ColumnName="PurchasingPower" />
-                <ScalarProperty Name="OperationDate" ColumnName="OperationDate" />
-                <ScalarProperty Name="AssetCardNo" ColumnName="AssetCardNo" />
-                <ScalarProperty Name="Origin" ColumnName="Origin" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
-                <ScalarProperty Name="PurchaseOrder" ColumnName="PurchaseOrder" />
-                <ScalarProperty Name="Item_stopAlram" ColumnName="Item_stopAlram" />
-                <ScalarProperty Name="Item_FinCode" ColumnName="Item_FinCode" />
-                <ScalarProperty Name="Item_dayhint" ColumnName="Item_dayhint" />
-                <ScalarProperty Name="Item_Expire" ColumnName="Item_Expire" />
-                <ScalarProperty Name="item_lowqty" ColumnName="item_lowqty" />
-                <ScalarProperty Name="Item_AssDate" ColumnName="Item_AssDate" />
-                <ScalarProperty Name="Depart_Id" ColumnName="Depart_Id" />
-                <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
-                <ScalarProperty Name="Room_Id" ColumnName="Room_Id" />
-                <ScalarProperty Name="Item_LastUpdate" ColumnName="Item_LastUpdate" />
-                <ScalarProperty Name="Item_RFID" ColumnName="Item_RFID" />
-                <ScalarProperty Name="Item_BarCode" ColumnName="Item_BarCode" />
-                <ScalarProperty Name="Item_Active" ColumnName="Item_Active" />
-                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
-                <ScalarProperty Name="Item_Remarks" ColumnName="Item_Remarks" />
-                <ScalarProperty Name="Item_Discount" ColumnName="Item_Discount" />
-                <ScalarProperty Name="Item_Price" ColumnName="Item_Price" />
-                <ScalarProperty Name="Item_Count" ColumnName="Item_Count" />
-                <ScalarProperty Name="Item_Dec" ColumnName="Item_Dec" />
-                <ScalarProperty Name="Item_State" ColumnName="Item_State" />
-                <ScalarProperty Name="CatSub_Id" ColumnName="CatSub_Id" />
-                <ScalarProperty Name="Unit_Id" ColumnName="Unit_Id" />
-                <ScalarProperty Name="Item_NameEn" ColumnName="Item_NameEn" />
-                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
-                <ScalarProperty Name="Item_Id" ColumnName="Item_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="D_ItemCard">
-            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.D_ItemCard">
-              <MappingFragment StoreEntitySet="D_ItemCard">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="TransFlag" ColumnName="TransFlag" />
-                <ScalarProperty Name="OutFlag" ColumnName="OutFlag" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="Item_StateId" ColumnName="Item_StateId" />
-                <ScalarProperty Name="PictureName" ColumnName="PictureName" />
-                <ScalarProperty Name="OrganizedFlag" ColumnName="OrganizedFlag" />
-                <ScalarProperty Name="CountableFlag" ColumnName="CountableFlag" />
-                <ScalarProperty Name="REFID" ColumnName="REFID" />
-                <ScalarProperty Name="ItemMasterPrice" ColumnName="ItemMasterPrice" />
-                <ScalarProperty Name="ScrapAmount" ColumnName="ScrapAmount" />
-                <ScalarProperty Name="ScrapPeriod" ColumnName="ScrapPeriod" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="ItemImage" ColumnName="ItemImage" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="MinQty" ColumnName="MinQty" />
-                <ScalarProperty Name="QUnitCode" ColumnName="QUnitCode" />
-                <ScalarProperty Name="ItemBasePrice" ColumnName="ItemBasePrice" />
-                <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
-                <ScalarProperty Name="ItemDescAr" ColumnName="ItemDescAr" />
-                <ScalarProperty Name="ItemDescEn" ColumnName="ItemDescEn" />
-                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
-                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
-                <ScalarProperty Name="ItemQrCode" ColumnName="ItemQrCode" />
-                <ScalarProperty Name="ItemFinanceCode" ColumnName="ItemFinanceCode" />
-                <ScalarProperty Name="ItemRFIDCode" ColumnName="ItemRFIDCode" />
-                <ScalarProperty Name="ItemBarCode" ColumnName="ItemBarCode" />
-                <ScalarProperty Name="ItemRefCode" ColumnName="ItemRefCode" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6924,6 +6734,201 @@ warning 6002: The table/view 'CMGS_AssetsMgmtProd.dbo.viewTemp' does not have a 
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="ItemRefCode" ColumnName="ItemRefCode" />
                 <ScalarProperty Name="groupname" ColumnName="groupname" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_LocationTree">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_LocationTree">
+              <MappingFragment StoreEntitySet="view_LocationTree">
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="LocationType" ColumnName="LocationType" />
+                <ScalarProperty Name="LocationNameAr" ColumnName="LocationNameAr" />
+                <ScalarProperty Name="LEVEL" ColumnName="LEVEL" />
+                <ScalarProperty Name="LocationParentId" ColumnName="LocationParentId" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="PKey" ColumnName="PKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_ItemCard">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.view_ItemCard">
+              <MappingFragment StoreEntitySet="view_ItemCard">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="TotalDelivered" ColumnName="TotalDelivered" />
+                <ScalarProperty Name="TotalReceived" ColumnName="TotalReceived" />
+                <ScalarProperty Name="ItemMasterPrice" ColumnName="ItemMasterPrice" />
+                <ScalarProperty Name="ScrapAmount" ColumnName="ScrapAmount" />
+                <ScalarProperty Name="ScrapPeriod" ColumnName="ScrapPeriod" />
+                <ScalarProperty Name="ItemNameArWithCode" ColumnName="ItemNameArWithCode" />
+                <ScalarProperty Name="EstimatedUnitCost" ColumnName="EstimatedUnitCost" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="D_QtyUnitTitleEn" ColumnName="D_QtyUnitTitleEn" />
+                <ScalarProperty Name="D_QtyUnitTitleAr" ColumnName="D_QtyUnitTitleAr" />
+                <ScalarProperty Name="D_ItemsCategoryTitleEn" ColumnName="D_ItemsCategoryTitleEn" />
+                <ScalarProperty Name="D_ItemsCategoryTitleAr" ColumnName="D_ItemsCategoryTitleAr" />
+                <ScalarProperty Name="ItemImage" ColumnName="ItemImage" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="MinQty" ColumnName="MinQty" />
+                <ScalarProperty Name="QUnitCode" ColumnName="QUnitCode" />
+                <ScalarProperty Name="ItemBasePrice" ColumnName="ItemBasePrice" />
+                <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
+                <ScalarProperty Name="ItemDescAr" ColumnName="ItemDescAr" />
+                <ScalarProperty Name="ItemDescEn" ColumnName="ItemDescEn" />
+                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
+                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
+                <ScalarProperty Name="ItemQrCode" ColumnName="ItemQrCode" />
+                <ScalarProperty Name="ItemFinanceCode" ColumnName="ItemFinanceCode" />
+                <ScalarProperty Name="ItemRFIDCode" ColumnName="ItemRFIDCode" />
+                <ScalarProperty Name="ItemBarCode" ColumnName="ItemBarCode" />
+                <ScalarProperty Name="ItemRefCode" ColumnName="ItemRefCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_tbl">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.Item_tbl">
+              <MappingFragment StoreEntitySet="Item_tbl">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Item_Serial" ColumnName="Item_Serial" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="PurchasingPower" ColumnName="PurchasingPower" />
+                <ScalarProperty Name="OperationDate" ColumnName="OperationDate" />
+                <ScalarProperty Name="AssetCardNo" ColumnName="AssetCardNo" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
+                <ScalarProperty Name="PurchaseOrder" ColumnName="PurchaseOrder" />
+                <ScalarProperty Name="Item_stopAlram" ColumnName="Item_stopAlram" />
+                <ScalarProperty Name="Item_FinCode" ColumnName="Item_FinCode" />
+                <ScalarProperty Name="Item_dayhint" ColumnName="Item_dayhint" />
+                <ScalarProperty Name="Item_Expire" ColumnName="Item_Expire" />
+                <ScalarProperty Name="item_lowqty" ColumnName="item_lowqty" />
+                <ScalarProperty Name="Item_AssDate" ColumnName="Item_AssDate" />
+                <ScalarProperty Name="Depart_Id" ColumnName="Depart_Id" />
+                <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
+                <ScalarProperty Name="Room_Id" ColumnName="Room_Id" />
+                <ScalarProperty Name="Item_LastUpdate" ColumnName="Item_LastUpdate" />
+                <ScalarProperty Name="Item_RFID" ColumnName="Item_RFID" />
+                <ScalarProperty Name="Item_BarCode" ColumnName="Item_BarCode" />
+                <ScalarProperty Name="Item_Active" ColumnName="Item_Active" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Item_Remarks" ColumnName="Item_Remarks" />
+                <ScalarProperty Name="Item_Discount" ColumnName="Item_Discount" />
+                <ScalarProperty Name="Item_Price" ColumnName="Item_Price" />
+                <ScalarProperty Name="Item_Count" ColumnName="Item_Count" />
+                <ScalarProperty Name="Item_Dec" ColumnName="Item_Dec" />
+                <ScalarProperty Name="Item_State" ColumnName="Item_State" />
+                <ScalarProperty Name="CatSub_Id" ColumnName="CatSub_Id" />
+                <ScalarProperty Name="Unit_Id" ColumnName="Unit_Id" />
+                <ScalarProperty Name="Item_NameEn" ColumnName="Item_NameEn" />
+                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
+                <ScalarProperty Name="Item_Id" ColumnName="Item_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="D_ItemCard">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.D_ItemCard">
+              <MappingFragment StoreEntitySet="D_ItemCard">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="TransFlag" ColumnName="TransFlag" />
+                <ScalarProperty Name="OutFlag" ColumnName="OutFlag" />
+                <ScalarProperty Name="Item_StateId" ColumnName="Item_StateId" />
+                <ScalarProperty Name="PictureName" ColumnName="PictureName" />
+                <ScalarProperty Name="OrganizedFlag" ColumnName="OrganizedFlag" />
+                <ScalarProperty Name="CountableFlag" ColumnName="CountableFlag" />
+                <ScalarProperty Name="REFID" ColumnName="REFID" />
+                <ScalarProperty Name="ItemMasterPrice" ColumnName="ItemMasterPrice" />
+                <ScalarProperty Name="ScrapAmount" ColumnName="ScrapAmount" />
+                <ScalarProperty Name="ScrapPeriod" ColumnName="ScrapPeriod" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="ItemImage" ColumnName="ItemImage" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="MinQty" ColumnName="MinQty" />
+                <ScalarProperty Name="QUnitCode" ColumnName="QUnitCode" />
+                <ScalarProperty Name="ItemBasePrice" ColumnName="ItemBasePrice" />
+                <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
+                <ScalarProperty Name="ItemDescAr" ColumnName="ItemDescAr" />
+                <ScalarProperty Name="ItemDescEn" ColumnName="ItemDescEn" />
+                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
+                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
+                <ScalarProperty Name="ItemQrCode" ColumnName="ItemQrCode" />
+                <ScalarProperty Name="ItemFinanceCode" ColumnName="ItemFinanceCode" />
+                <ScalarProperty Name="ItemRFIDCode" ColumnName="ItemRFIDCode" />
+                <ScalarProperty Name="ItemBarCode" ColumnName="ItemBarCode" />
+                <ScalarProperty Name="ItemRefCode" ColumnName="ItemRefCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetsItemUnits">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsItemUnit">
+              <MappingFragment StoreEntitySet="AssetsItemUnits">
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastEventTrackingId" ColumnName="LastEventTrackingId" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="UnitStatus" ColumnName="UnitStatus" />
+                <ScalarProperty Name="EstimatedUnitCost" ColumnName="EstimatedUnitCost" />
+                <ScalarProperty Name="QUnitCode" ColumnName="QUnitCode" />
+                <ScalarProperty Name="ReceivedQty" ColumnName="ReceivedQty" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ItemTag" ColumnName="ItemTag" />
+                <ScalarProperty Name="UnitRefCode" ColumnName="UnitRefCode" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="InboundCode" ColumnName="InboundCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetsEventTrackings">
+            <EntityTypeMapping TypeName="CMGS_AssetsMgmtModel.AssetsEventTracking">
+              <MappingFragment StoreEntitySet="AssetsEventTracking">
+                <ScalarProperty Name="ItemUsedStatus" ColumnName="ItemUsedStatus" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="RequestItemPrice" ColumnName="RequestItemPrice" />
+                <ScalarProperty Name="StoreRequestRefCode" ColumnName="StoreRequestRefCode" />
+                <ScalarProperty Name="MissedQty" ColumnName="MissedQty" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpRefCode" ColumnName="EmpRefCode" />
+                <ScalarProperty Name="ToLocationId" ColumnName="ToLocationId" />
+                <ScalarProperty Name="statusId" ColumnName="statusId" />
+                <ScalarProperty Name="actionId" ColumnName="actionId" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="AssetCode" ColumnName="AssetCode" />
+                <ScalarProperty Name="RequestHeaderCode" ColumnName="RequestHeaderCode" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
               </MappingFragment>
             </EntityTypeMapping>

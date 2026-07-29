@@ -66,9 +66,27 @@ function handelSelectedNode(nodeId) {
                                         : data
                                 );
                             }
-                        }
-
-                        //,
+                        },
+                        //{
+                        //    data: "AssetsStatus", title: "العهد",
+                        //    render: function (data, type, row) {
+                        //        return (data == 'العهده مسجله' ? '<span class="badge badge-pill badge-outline-success font-size-12">' + data + '</span>'
+                        //            : data == 'العهده غير مسجله' ? '<span class="badge badge-pill badge-outline-danger font-size-12">' + data + '</span>'
+                        //                : data
+                        //        );
+                        //    }
+                        //},
+                        {
+                            data: "AssetsStatusFlag",  title: "العهد  ",
+                            render: function (data, type, row) {
+                                return (data == '1' ? '<span class="badge badge-pill badge-outline-success font-size-12">' + 'العهد مسجلة' + '</span>'
+                                    : data == '0' ? '<span class="badge badge-pill badge-outline-danger font-size-12">' + 'العهدة غير مسجلة' + '</span>'
+                                        : data
+                                );
+                            }
+                        },
+                        //{ data: "AssetsStatus", title: "العهد  " },
+                        ////,
                         //{
                         //    data: "EMP_ID", title: "", orderable: false,
                             //render: function (data, type, row) {

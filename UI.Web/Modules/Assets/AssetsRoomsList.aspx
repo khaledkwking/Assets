@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Modules/_shared/Main.Master" AutoEventWireup="true" CodeBehind="InventoryList.aspx.cs" Inherits="UI.Web.Modules.MasterData.InventoryList" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Modules/_shared/Main.Master" AutoEventWireup="true" CodeBehind="AssetsRoomsList.aspx.cs" Inherits="UI.Web.Modules.Assets.AssetsRoomsList" %>
 
 <%@ Register TagPrefix="cc1" Namespace="CutePager" Assembly="ASPnetPagerV2netfx2_0" %>
 
@@ -57,7 +57,7 @@
                 </ul>
             </div>
 
-
+          
         </div>
         <!-- .nk-block-between -->
     </div>
@@ -243,6 +243,18 @@
                                                             <asp:DropDownList ID="lstFilterlocation" runat="server" class="form-control form-select" data-search="on"></asp:DropDownList>
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="overline-title overline-title-alt">حالة الغرفة</label>
+                                                            <asp:DropDownList ID="lstRoomStatus" runat="server" class="form-control form-select" data-search="on" ClientIDMode="Static">
+                                                                <asp:ListItem Value="-1" Text="الكل"></asp:ListItem>
+                                                                <asp:ListItem Value="1" Text="غرف فارغة العهد"></asp:ListItem>
+                                                                <asp:ListItem Value="0" Text="غرف بها عهد"></asp:ListItem>
+                                                            </asp:DropDownList>
+                                                        </div>
+                                                    </div>
+
                                                    <%-- <div class="col-6">
                                                         <div class="form-group">
                                                             <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","QUnitCode") %> </label>
@@ -269,7 +281,7 @@
                                         </div>
                                     </div>
                                 </li>
-                 <%--               <li>
+                                <li>
                                     <div class="dropdown">
                                         <a href="#" class="btn btn-trigger btn-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                             <em class="icon ni ni-setting"></em>
@@ -277,12 +289,14 @@
                                         <div class="dropdown-menu  dropdown-menu-right" style="">
                                             <ul class="link-check">
                                                 <li>
-                                                    <asp:LinkButton OnClientClick="return checkDelete();" runat="server" ID="btnDelete" OnClick="btnDelete_Click"><i class="icon ni ni-trash"></i>&nbsp;<%=GetGlobalResourceObject("pages","DeleteSelectedData") %></asp:LinkButton></li>
+                                                    <%--<asp:LinkButton  runat="server" ID="btnDelete"><i class="icon ni ni-trash"></i>&nbsp;<%=GetGlobalResourceObject("pages","Print") %></asp:LinkButton>--%>
+                                                    <a href="../Reports/AssetReceipt.aspx?locationId=<%=ZeroIntergerIFNull(lstFilterlocation.SelectedValue)%>&EmptyFlag=<%=ZeroIntergerIFNull(lstRoomStatus.SelectedValue)%>" class="btn btn-default btn-xs iframe75"><i class="icon ni ni-printer"></i>&nbsp; <%=GetGlobalResourceObject("pages","Print") %> </a>
+                                                </li>
                                             </ul>
 
                                         </div>
                                     </div>
-                                </li>--%>
+                                </li>
                               <%--  <li>
                                     <asp:LinkButton runat="server" ID="btnNew" class="btn btn-icon btn-primary" OnClick="btnNew_Click"><em class="icon ni ni-plus"></em></asp:LinkButton>
 
@@ -323,8 +337,8 @@
 
                             <%--<asp:BoundColumn DataField="D_ItemsCategoryTitleAr" HeaderText="<%$ Resources:pages,Category %>"></asp:BoundColumn>--%>
                             <asp:BoundColumn DataField="Code" HeaderText="<%$ Resources:pages,Code %>"></asp:BoundColumn>
-                            <asp:BoundColumn DataField="LocationNameAr" HeaderText="<%$ Resources:pages,Store %>"></asp:BoundColumn>
-                            <asp:BoundColumn DataField="ParentLocationNameAr" HeaderText="<%$ Resources:pages,ParentLocation %>"></asp:BoundColumn>
+                            <asp:BoundColumn DataField="LocationNameAr" HeaderText="<%$ Resources:pages,RoomName %>"></asp:BoundColumn>
+                            <asp:BoundColumn DataField="path" HeaderText="<%$ Resources:pages,ParentLocation %>"></asp:BoundColumn>
                            
                             
                            
@@ -348,9 +362,9 @@
                                                     <a><em class="icon ni ni-histroy"></em><span><%=GetGlobalResourceObject("pages","DisplayItems") %></span> </a></li>--%>
                                                                                               
                                                  <li>
-                                                <a href='<%# "Inventoryitems.aspx?id=" + DataBinder.Eval(Container.DataItem, "Code") %>'>
+                                                <a href='<%# "AssetsRequestList.aspx?locationcode=" + DataBinder.Eval(Container.DataItem, "Code") %>'>
                                                       <em class="icon ni ni-package"></em>
-                                                    <span><%= GetGlobalResourceObject("pages", "DisplayItems") %></span>
+                                                    <span><%= GetGlobalResourceObject("pages", "viewDetails") %></span>
                                                 </a>
                                             </li>
 
@@ -383,8 +397,6 @@
 
             </div>
         </div>
-
-
 
 
 

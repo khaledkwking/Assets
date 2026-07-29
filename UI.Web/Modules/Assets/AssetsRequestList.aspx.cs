@@ -194,8 +194,18 @@ namespace UI.Web.Modules.MasterData
         #region "Fill Information"
         private void FillGrid()
         {
+            int locationcode = 0;
+            if (Request.QueryString["locationcode"] != null)
+            {
+                locationcode = ZeroIntergerIFNull(Request.QueryString["locationcode"]);
+            }
+            else if (lstToLocation.SelectedValue==null)
+            {
+                locationcode = ZeroIntergerIFNull(lstToLocation.SelectedValue.ToString());
+            }
+           
             var objlist = objRepository.getAssetsRequestList(txtPartOfName.Text,ZeroIntergerIFNull(lstFilterAction.SelectedValue), 
-                NullDateifEmptyNew(txtTransDate.Text), NullDateifEmptyNew(txtTransactionDateTo.Text), ZeroIntergerIFNull(lstToLocation.SelectedValue), 0,0,ZeroIntergerIFNull(lstFilterEmpStatus.SelectedValue), txtItemDesc.Text);
+                NullDateifEmptyNew(txtTransDate.Text), NullDateifEmptyNew(txtTransactionDateTo.Text), locationcode, 0,0,ZeroIntergerIFNull(lstFilterEmpStatus.SelectedValue), txtItemDesc.Text);
             //var duplicatedList = objlist.SelectMany(t =>
             //     Enumerable.Repeat(t, 2)).ToList();
 

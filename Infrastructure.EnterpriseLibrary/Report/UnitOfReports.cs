@@ -26,6 +26,13 @@ namespace BOL.Model
             var entities = new List<EmployeeViewModel>();
             return entities.ToList();
         }
+
+        public static List<view_LocationTree> GetLocationTree()
+        {
+
+            var entities = new List<view_LocationTree>();
+            return entities.ToList();
+        }
         //public static List<tbl_ItemsStock> GetAllItemStock()
         //{
 

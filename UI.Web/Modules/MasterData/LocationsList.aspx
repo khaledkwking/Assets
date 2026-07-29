@@ -5,7 +5,7 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-       
+           <link rel="stylesheet" href="/wwwroot/assets/css/locationTree-colors.css" />
     <script language="JavaScript" type="text/javascript">
         function chkImage() {
             var txt = document.getElementById("<%=txttitleEn.ClientID %>")
@@ -276,4 +276,5 @@
     </div>
 
     <script src="/wwwroot/assets/js/businessScripts/locationChart.js"></script>
+
 </asp:Content>

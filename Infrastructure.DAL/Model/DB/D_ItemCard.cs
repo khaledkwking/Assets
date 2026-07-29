@@ -17,9 +17,9 @@ namespace Infrastructure.DAL.Model.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public D_ItemCard()
         {
-            this.AssetsEventTrackings = new HashSet<AssetsEventTracking>();
-            this.AssetsItemUnits = new HashSet<AssetsItemUnit>();
             this.Outbound_Items = new HashSet<Outbound_Items>();
+            this.AssetsItemUnits = new HashSet<AssetsItemUnit>();
+            this.AssetsEventTrackings = new HashSet<AssetsEventTracking>();
         }
     
         public long Code { get; set; }
@@ -37,6 +37,9 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> QUnitCode { get; set; }
         public Nullable<int> MinQty { get; set; }
         public string Notes { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<System.DateTime> LastModifiedAt { get; set; }
         public string ItemImage { get; set; }
         public Nullable<bool> isActive { get; set; }
         public Nullable<double> ScrapPeriod { get; set; }
@@ -47,24 +50,22 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<bool> OrganizedFlag { get; set; }
         public string PictureName { get; set; }
         public Nullable<int> Item_StateId { get; set; }
-        public Nullable<int> Age { get; set; }
         public Nullable<int> OutFlag { get; set; }
         public Nullable<int> TransFlag { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<int> CreatedBy { get; set; }
-        public Nullable<int> LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedAt { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
         public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> UpdateOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssetsEventTracking> AssetsEventTrackings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssetsItemUnit> AssetsItemUnits { get; set; }
         public virtual D_ItemsCategory D_ItemsCategory { get; set; }
         public virtual D_QtyUnit D_QtyUnit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Outbound_Items> Outbound_Items { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AssetsItemUnit> AssetsItemUnits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AssetsEventTracking> AssetsEventTrackings { get; set; }
     }
 }

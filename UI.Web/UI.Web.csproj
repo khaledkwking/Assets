@@ -207,10 +207,10 @@
     <Content Include="Modules\Assets\AssetDetails.aspx" />
     <Content Include="Modules\Assets\AssetCheckout.aspx" />
     <Content Include="Modules\Assets\assetsListPopup.aspx" />
+    <Content Include="Modules\Assets\AssetsRoomsList.aspx" />
     <Content Include="Modules\Assets\MigrateDataaspx.aspx" />
     <Content Include="Modules\AutoComplete\Services\TextAutoComplete.asmx" />
     <Content Include="Modules\Dashboard\Dashboard.aspx" />
-    <Content Include="Modules\MasterData\AssetsList.aspx" />
     <Content Include="Modules\MasterData\EmployeeLocation.aspx" />
     <Content Include="Modules\MasterData\InventoryList.aspx" />
     <Content Include="Modules\MasterData\ItemsCardMasterPrice.aspx" />
@@ -260,6 +260,7 @@
     <Content Include="wwwroot\assets\css\libs\fontawesome-icons.css" />
     <Content Include="wwwroot\assets\css\libs\jstree.css" />
     <Content Include="wwwroot\assets\css\libs\themify-icons.css" />
+    <Content Include="wwwroot\assets\css\locationTree-colors.css" />
     <Content Include="wwwroot\assets\css\skins\theme-blue.css" />
     <Content Include="wwwroot\assets\css\skins\theme-bluelite.css" />
     <Content Include="wwwroot\assets\css\skins\theme-egyptian.css" />
@@ -267,6 +268,7 @@
     <Content Include="wwwroot\assets\css\skins\theme-red.css" />
     <Content Include="wwwroot\assets\css\style-email.css" />
     <Content Include="wwwroot\assets\css\theme.css" />
+    <Content Include="wwwroot\assets\js\businessScripts\locationChart.js" />
     <Content Include="wwwroot\assets\js\businessScripts\orgchart.js" />
     <Content Include="wwwroot\assets\js\FormValidation.js" />
     <Content Include="wwwroot\assets\js\libs\colorbox\colorbox\jquery.colorbox.js" />
@@ -501,6 +503,13 @@
     <Compile Include="Modules\Assets\assetsListPopup.aspx.designer.cs">
       <DependentUpon>assetsListPopup.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Assets\AssetsRoomsList.aspx.cs">
+      <DependentUpon>AssetsRoomsList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Assets\AssetsRoomsList.aspx.designer.cs">
+      <DependentUpon>AssetsRoomsList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Assets\MigrateDataaspx.aspx.cs">
       <DependentUpon>MigrateDataaspx.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -518,13 +527,6 @@
     </Compile>
     <Compile Include="Modules\Dashboard\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\MasterData\AssetsList.aspx.cs">
-      <DependentUpon>AssetsList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Modules\MasterData\AssetsList.aspx.designer.cs">
-      <DependentUpon>AssetsList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\MasterData\EmployeeLocation.aspx.cs">
       <DependentUpon>EmployeeLocation.aspx</DependentUpon>
@@ -845,6 +847,7 @@
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsListWithServicePeriod.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_OrgCustodDetailedDept.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_OrgCustodDetailed - Copy.rdlc" />
+    <EmbeddedResource Include="Modules\Reports\RDLC\rpt_rooms.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\Sub_AssetsReceipt.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_AssetsReceipt.rdlc" />
     <EmbeddedResource Include="Modules\Reports\RDLC\rpt_Inventory.rdlc" />

@@ -137,7 +137,7 @@ namespace UI.Web.Modules._shared
         {
             string _out = "";
 
-            if (ShowSystem("4"))
+            if (ShowSystem("4")) // إدارة العهد
             {//Assets
                 _out += " <li class='nk-menu-item'>";
                 _out += " <a href = '#' class='nk-menu-link nk-menu-switch' data-target='navAssetsOperation'>";
@@ -146,7 +146,7 @@ namespace UI.Web.Modules._shared
                 _out += "</li>";
 
             }
-            if (ShowSystem("7"))
+            if (ShowSystem("7")) //مؤشرات النظام
             {//OutBound
                 _out += " <li class='nk-menu-item'>";
                 _out += " <a href='#' class='nk-menu-link nk-menu-switch' data-target='navDashboards'>";
@@ -154,7 +154,7 @@ namespace UI.Web.Modules._shared
                 _out += "</a>";
                 _out += "</li>";
             }
-            if (ShowSystem("3"))
+            if (ShowSystem("3")) //إدارة عمليات المخاذن
             {//Inbound
                 _out += " <li class='nk-menu-item'>";
                 _out += " <a href = '#' class='nk-menu-link nk-menu-switch' data-target='navStoreOperations'>";
@@ -207,7 +207,7 @@ namespace UI.Web.Modules._shared
             StringBuilder strmenu = new StringBuilder();
             // /************************New Menu**************************/
 
-            if (ShowSystem("7"))
+            if (ShowSystem("7")) //مؤشرات النظام
             {
                 strmenu.Append(("<div class='nk-menu-content' data-content='navDashboards'>"));
                 strmenu.Append(("<h5 class='title'>" + Resources.Pages.Dashboard + "</h5>"));
@@ -411,7 +411,7 @@ namespace UI.Web.Modules._shared
             }
 
             // End of module
-            if (ShowSystem("3")) // Store Opertaon
+            if (ShowSystem("3")) // إدارة عمليات المخاذن
             {
 
 
@@ -531,7 +531,7 @@ namespace UI.Web.Modules._shared
                 strmenu.Append(("</div>"));
             }
 
-            if (ShowSystem("4")) 
+            if (ShowSystem("4")) // إدارة العهد
             {
 
                 strmenu.Append(("<div class='nk-menu-content' data-content='navAssetsOperation'>"));
@@ -584,6 +584,14 @@ namespace UI.Web.Modules._shared
 
                 }
 
+                if (ShowPage("AssetsRoomsList.aspx"))
+                {
+                    strmenu.Append(("<li class='nk-menu-item'>"));
+                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/Assets/AssetsRoomsList.aspx' class='nk-menu-link'>"));
+                    strmenu.Append(("    <span class='nk-menu-icon'><em class='icon ni ni-article'></em></span><span class='nk-menu-text'>" + Resources.Pages.AssetsRooms + "</span>"));
+                    strmenu.Append(("</a>"));
+                    strmenu.Append(("</li>"));
+                }
 
                 if (ShowPage("AssetCheckin.aspx"))
                 {
@@ -657,7 +665,7 @@ namespace UI.Web.Modules._shared
             }
 
             // End of module
-            if (ShowSystem("5"))
+            if (ShowSystem("5")) // تقارير النظام
             {
 
                 strmenu.Append(("<div class='nk-menu-content' data-content='navReports'>"));
@@ -701,7 +709,7 @@ namespace UI.Web.Modules._shared
             }
 
             // End of module
-            if (ShowSystem("1"))
+            if (ShowSystem("1")) //إدارة مستخدمي النظام والصلاحيات
             {
 
 

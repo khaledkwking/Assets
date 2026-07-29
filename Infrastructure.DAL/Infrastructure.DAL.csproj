@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class Extenders\Extenders.cs" />
+    <Compile Include="Constants\DataModel.cs" />
     <Compile Include="Entities\Collection\EntityCollection.cs" />
     <Compile Include="Entities\KeyListItem.cs" />
     <Compile Include="Model\DB\AssetsAvailabilityStatu.cs">
@@ -321,6 +322,9 @@
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\view_ItemCategoryTree.cs">
+      <DependentUpon>Assets_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DB\view_LocationTree.cs">
       <DependentUpon>Assets_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DB\View_OutboundItems.cs">

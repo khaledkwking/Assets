@@ -327,6 +327,28 @@ namespace Infrastructure.DAL
                 return result.FirstOrDefault();
             }
         }
+        public AssetsEventTrackingHeader GetTrackingRequestHeaderByEmpId(int empCode)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.AssetsEventTrackingHeaders
+                     where obj.EmpRefCode == empCode
+                     select obj);
+
+                return result.FirstOrDefault();
+            }
+        }
+
+        public List<AssetsEventTrackingHeader> GetTrackingRequestHeadersByEmpIds(List<int> empCodes)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                return DC.AssetsEventTrackingHeaders
+                    .Where(x => empCodes.Contains(x.EmpRefCode ?? 0))
+                    .ToList();
+            }
+        }
 
         public AssetsEventTrackingHeader getTrackingRequestHeaderByCode(string headerCode)
         {

@@ -74,7 +74,8 @@ namespace AssetsManament.ViewModels
         public int? SEC_NO { get; set; }
         public string SEC_NAME { get; set; }
         public int? SUB_SEC_NO { get; set; }
-
+        public string AssetsStatus { get; set; }
+        public string AssetsStatusFlag { get; set; }
 
 
     }

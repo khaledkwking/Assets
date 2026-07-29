@@ -1,0 +1,102 @@
+﻿/* Location Tree Node Styles with Colors */
+
+/* Building - مبنى - Blue */
+.jstree-building-node > a {
+    color: #2563eb !important;
+    background-color: #eff6ff !important;
+    border-left: 4px solid #2563eb !important;
+    padding-left: 8px !important;
+}
+
+.jstree-building-node > a:hover {
+    background-color: #dbeafe !important;
+}
+
+/* Floor - دور - Green */
+.jstree-floor-node > a {
+    color: #059669 !important;
+    background-color: #f0fdf4 !important;
+    border-left: 4px solid #059669 !important;
+    padding-left: 8px !important;
+}
+
+.jstree-floor-node > a:hover {
+    background-color: #dcfce7 !important;
+}
+
+/* Room - غرفة - Orange */
+.jstree-room-node > a {
+    color: #d97706 !important;
+    background-color: #fffbeb !important;
+    border-left: 4px solid #d97706 !important;
+    padding-left: 8px !important;
+}
+
+.jstree-room-node > a:hover {
+    background-color: #fef3c7 !important;
+}
+
+/* Store - مخزن - Red */
+.jstree-store-node > a {
+    color: #dc2626 !important;
+    background-color: #fef2f2 !important;
+    border-left: 4px solid #dc2626 !important;
+    padding-left: 8px !important;
+}
+
+.jstree-store-node > a:hover {
+    background-color: #fee2e2 !important;
+}
+
+/* Kitchen - المطبخ - Purple */
+.jstree-kitchen-node > a {
+    color: #7c3aed !important;
+    background-color: #faf5ff !important;
+    border-left: 4px solid #7c3aed !important;
+    padding-left: 8px !important;
+}
+
+.jstree-kitchen-node > a:hover {
+    background-color: #f3e8ff !important;
+}
+
+/* Corridor - ممر - Teal */
+.jstree-corridor-node > a {
+    color: #0891b2 !important;
+    background-color: #f0f9fa !important;
+    border-left: 4px solid #0891b2 !important;
+    padding-left: 8px !important;
+}
+
+.jstree-corridor-node > a:hover {
+    background-color: #cffafe !important;
+}
+
+/* Photography Room - غرفة تصوير - Pink */
+.jstree-photography-node > a {
+    color: #be185d !important;
+    background-color: #fdf2f8 !important;
+    border-left: 4px solid #be185d !important;
+    padding-left: 8px !important;
+}
+
+.jstree-photography-node > a:hover {
+    background-color: #fbce7b !important;
+}
+
+/* Default Node */
+.jstree-default-node > a {
+    color: #6366f1 !important;
+    background-color: #f0f4ff !important;
+    border-left: 4px solid #6366f1 !important;
+    padding-left: 8px !important;
+}
+
+.jstree-default-node > a:hover {
+    background-color: #e0e7ff !important;
+}
+
+/* Root Node */
+.jstree-root-node > a {
+    color: #64748b !important;
+}

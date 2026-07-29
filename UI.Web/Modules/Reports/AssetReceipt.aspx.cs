@@ -2,6 +2,7 @@
 using Infrastructure;
 using Infrastructure.DAL;
 using Infrastructure.DAL.Model.DB;
+using Microsoft.Reporting.Map.WebForms.BingMaps;
 using Microsoft.Reporting.WebForms;
 using Newtonsoft.Json;
 using System;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 using System.Web.UI;
 using UI.Web.Admin.Controller;
 using UI.Web.Controllers;
+using UI.Web.Modules.MasterData;
 
 
 
@@ -22,6 +24,7 @@ namespace UI.Web.Modules.WHM.Forms
     {
         #region "Page Members"
         public AssetsRepository objRepository = IoC.Resolve<AssetsRepository>();
+        public LocationsRepository objlocationRepository = IoC.Resolve<LocationsRepository>();
         public string _PageTitle = Resources.Pages.CustodyRecepit;
 
         #endregion
@@ -313,33 +316,79 @@ namespace UI.Web.Modules.WHM.Forms
                                 throw new Exception(Res.ToString());
 
                             var result = Res.Content.ReadAsStringAsync().Result;
+                            //var objList = JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
+                            List<EmployeeViewModel> EmployeesList = JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
 
-                            var objList = JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
+                            if (EmployeesList != null && EmployeesList.Count > 0)
+                            {
+                                // Get all employee codes
+                                var empCodes = EmployeesList
+                                    .Select(e => ZeroIntergerIFNull(e.EMP_ID))
+                                    .Where(code => code > 0)
+                                    .Distinct()  // ← Added: Avoid duplicate queries
+                                    .ToList();
+
+                                // Only fetch if there are employee codes
+                                if (empCodes.Count > 0)  // ← Added: Guard clause
+                                {
+                                    var trackingHeadersList = objRepository.GetTrackingRequestHeadersByEmpIds(empCodes);
+                                    // Use HashSet for checking existence instead of Dictionary to handle duplicates
+                                    var empCodesWithAssets = trackingHeadersList != null
+                                        ? new HashSet<int>(trackingHeadersList.Select(h => h.EmpRefCode ?? 0))
+                                        : new HashSet<int>();
+
+                                    // Update employee list with asset status
+                                    foreach (var item in EmployeesList)
+                                    {
+                                        int empCode = ZeroIntergerIFNull(item.EMP_ID);
+                                        if (empCodesWithAssets.Contains(empCode))
+                                        {
+                                            item.AssetsStatus = DataModel.HasAsset;
+                                            item.AssetsStatusFlag = "1";
+                                        }
+                                        else
+                                        {
+                                            item.AssetsStatus = DataModel.HasNotAsset;
+                                            item.AssetsStatusFlag = "0";
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // No valid employee codes, mark all as no assets
+                                    foreach (var item in EmployeesList)
+                                    {
+                                        item.AssetsStatus = DataModel.HasNotAsset;
+                                        item.AssetsStatusFlag = "0";
+                                    }
+                                }
+                                if (EmployeesList != null && EmployeesList.Count > 0)
+                                {
+                                    ReportViewer1.ProcessingMode = ProcessingMode.Local;
+
+                                    ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_Employees.rdlc");
+
+                                    ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+                                    ReportViewer1.LocalReport.SetParameters(new ReportParameter("OrgName", EmployeesList.FirstOrDefault().ENTITYNAME));
+
+                                    //var objlist = objRepository.GetList();
+                                    ReportDataSource datasource = new ReportDataSource("dsEmployees", EmployeesList.ToList());
+
+                                    ReportViewer1.LocalReport.DataSources.Clear();
+                                    ReportViewer1.LocalReport.DataSources.Add(datasource);
+                                }
+                                else
+                                {
+                                    string script = FormatErrorMSGSwal(Resources.Alerts.nodatafound, "1");
+                                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                                }
+                            }
+                          
+
+
 
                             //var objList = objRepository.getEntityEmployeeList(0, ZeroIntergerIFNull(Request.QueryString["nodeId"].ToString()));
-                            if (objList != null && objList.Count > 0)
-                            {
-                                
-
-                                ReportViewer1.ProcessingMode = ProcessingMode.Local;
-                                
-                                ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_Employees.rdlc");
-                                                              
-
-                                ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
-                                ReportViewer1.LocalReport.SetParameters(new ReportParameter("OrgName", objList.FirstOrDefault().ENTITYNAME));
-
-                                //var objlist = objRepository.GetList();
-                                ReportDataSource datasource = new ReportDataSource("dsEmployees", objList.ToList());
-
-                                ReportViewer1.LocalReport.DataSources.Clear();
-                                ReportViewer1.LocalReport.DataSources.Add(datasource);
-                            }
-                            else
-                            {
-                                string script = FormatErrorMSGSwal(Resources.Alerts.nodatafound, "1");
-                                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
-                            }
+                            
                         }
                     }
                     else if (Request.QueryString["nodeId"] != null && Request.QueryString["EmpFlag"] == "2")
@@ -429,6 +478,42 @@ namespace UI.Web.Modules.WHM.Forms
                             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
                         }
                         
+                    }
+                    else if (Request.QueryString["locationId"] != null && Request.QueryString["EmptyFlag"] != null)
+                    {
+                       
+                        int locationId = ZeroIntergerIFNull(Request.QueryString["locationId"].ToString());
+                        int EmptyFlag = ZeroIntergerIFNull(Request.QueryString["EmptyFlag"].ToString());
+                        HeplerController obj = new HeplerController();
+                        //var orgList = await obj.orgChart(nodeId);
+                        var objList = objlocationRepository.GetLocationWithAssets(locationId, EmptyFlag);
+                        
+
+                     
+                        if (objList != null && objList.Count > 0)
+                        {
+                          
+                            ReportViewer1.ProcessingMode = ProcessingMode.Local;
+                            //if (Request.QueryString["assetinv"] != null)
+                            //    ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_AssetsInventory.rdlc");
+                            //else
+                            ReportViewer1.LocalReport.ReportPath = Server.MapPath("/Modules/Reports/RDLC/rpt_rooms.rdlc");
+
+                            ReportViewer1.LocalReport.SetParameters(new ReportParameter("username", gets(ReadSession("AdminName"))));
+                            ReportViewer1.LocalReport.SetParameters(new ReportParameter("OrgName", "بيانات الغرف"));
+
+                            //var objlist = objRepository.GetList();
+                            ReportDataSource datasource = new ReportDataSource("dsLocationTree", objList);
+
+                            ReportViewer1.LocalReport.DataSources.Clear();
+                            ReportViewer1.LocalReport.DataSources.Add(datasource);
+                        }
+                        else
+                        {
+                            string script = FormatErrorMSGSwal(Resources.Alerts.nodatafound, "1");
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                        }
+
                     }
                     else
                     {

@@ -6,17 +6,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Script.Services;
-using System.Web.Services;
-using System.Web.UI;
 
 namespace UI.Web.Controllers
 {
@@ -45,20 +39,30 @@ namespace UI.Web.Controllers
 
         [HttpGet]
         [ActionName("GetCategoryItemList")]
-        public async Task<List<ItemViewModel>> GetCategoryItemList(int nodeId)
+        public List<ItemViewModel> GetCategoryItemList(int nodeId)
         {
-
             return objRepository.GetCategoryItemList(nodeId);
-
         }
 
 
         [HttpGet]
         [ActionName("GetLocationTree")]
-        public List<LocationViewModelEdit> GetLocationTree()
+        public List<dynamic> GetLocationTree()
         {
-            return objRepository.GetLocationList();
+            var locations = objRepository.GetLocationList();
 
+            var result = locations.Select(loc => new
+            {
+                Code = loc.Code,
+                LocationNameAr = loc.LocationNameAr,
+                LocationNameEn = loc.LocationNameEn,
+                LocationParentId = loc.LocationParentId,
+                LocationType = loc.LocationType ?? 0,  // Ensure LocationType is not null
+                LocationRefCode = loc.LocationRefCode,
+                City = loc.City
+            }).ToList<dynamic>();
+
+            return result;
         }
         [HttpGet]
         [ActionName("GetEntityLocationTree")]
@@ -111,11 +115,9 @@ namespace UI.Web.Controllers
         //}
         [HttpGet]
         [ActionName("EntityEmployeeList")]
-        public async Task<List<EntityEmployeeViewModel>> getEntityEmployeeList(int nodeId)
+        public List<EntityEmployeeViewModel> getEntityEmployeeList(int nodeId)
         {
-
             return objRepository.getEntityEmployeeList(nodeId);
-
         }
 
 
@@ -209,25 +211,74 @@ namespace UI.Web.Controllers
         [ActionName("GetEmployeeHierarhcy")]
         public async Task<List<EmployeeViewModel>> GetEmployeeHierarhcy(int nodeId)
         {
-
+          
             using (var client = new HttpClient())
             {
+                try
+                {
+                    client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    HttpResponseMessage Res = await client.GetAsync(string.Format("OrgChart/EmployeeHierarchy/{0}", nodeId));
 
-                client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["centeralApi"].ToString());
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync(string.Format("OrgChart/EmployeeHierarchy/{0}", nodeId));
+                    if (!Res.IsSuccessStatusCode)
+                        throw new Exception(Res.ToString());
 
-                if (!Res.IsSuccessStatusCode)
-                    throw new Exception(Res.ToString());
+                    var result = await Res.Content.ReadAsStringAsync();
 
-                var result = Res.Content.ReadAsStringAsync().Result;
+                    List<EmployeeViewModel> EmployeesList = JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
+                    
+                    if (EmployeesList != null && EmployeesList.Count > 0)
+                    {
+                        // Get all employee codes
+                        var empCodes = EmployeesList
+                            .Select(e => ZeroIntergerIFNull(e.EMP_ID))
+                            .Where(code => code > 0)
+                            .Distinct()  // ← Added: Avoid duplicate queries
+                            .ToList();
 
-                // Get Employee Location 
-                //var assignedLocations =   objRepository.GetLocationList();
+                        // Only fetch if there are employee codes
+                        if (empCodes.Count > 0)  // ← Added: Guard clause
+                        {
+                            var trackingHeadersList = objRepository2.GetTrackingRequestHeadersByEmpIds(empCodes);
+                            // Use HashSet for checking existence instead of Dictionary to handle duplicates
+                            var empCodesWithAssets = trackingHeadersList != null 
+                                ? new HashSet<int>(trackingHeadersList.Select(h => h.EmpRefCode ?? 0))
+                                : new HashSet<int>();
 
-                return JsonConvert.DeserializeObject<List<EmployeeViewModel>>(result);
-
+                            // Update employee list with asset status
+                            foreach (var item in EmployeesList)
+                            {
+                                int empCode = ZeroIntergerIFNull(item.EMP_ID);
+                                if (empCodesWithAssets.Contains(empCode))
+                                {
+                                    item.AssetsStatus = DataModel.HasAsset;
+                                    item.AssetsStatusFlag = "1";
+                                }
+                                else
+                                {
+                                    item.AssetsStatus = DataModel.HasNotAsset;
+                                    item.AssetsStatusFlag = "0";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // No valid employee codes, mark all as no assets
+                            foreach (var item in EmployeesList)
+                            {
+                                item.AssetsStatus = DataModel.HasNotAsset;
+                                item.AssetsStatusFlag = "0";
+                            }
+                        }
+                    }
+                    return EmployeesList;
+                }
+                catch (Exception ex)
+                {
+                    return null;
+                }
+               
 
             }
 

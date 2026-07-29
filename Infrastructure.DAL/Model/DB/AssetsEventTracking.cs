@@ -40,15 +40,14 @@ namespace Infrastructure.DAL.Model.DB
         public string StoreRequestRefCode { get; set; }
         public Nullable<double> RequestItemPrice { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<int> ItemUsedStatus { get; set; }
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<int> ItemUsedStatus { get; set; }
     
-        public virtual AssetsAvailabilityStatu AssetsAvailabilityStatu { get; set; }
         public virtual AssetsEventTrackingHeader AssetsEventTrackingHeader { get; set; }
         public virtual AssetsTrackingAction AssetsTrackingAction { get; set; }
+        public virtual D_ItemCard D_ItemCard { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssetsStore> AssetsStores { get; set; }
-        public virtual D_ItemCard D_ItemCard { get; set; }
     }
 }

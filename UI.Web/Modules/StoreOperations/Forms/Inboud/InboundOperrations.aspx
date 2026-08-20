@@ -94,9 +94,59 @@
 
             return true;
         }
-        function setActiveTab(tab) {
-            var txt = document.getElementById("<%=hdnActiveTab.ClientID %>")
+        function setActiveTab(tab, event) {
+            // Check if trying to access tabs 2-5 without saving master data first
+            if (tab != "1") {
+                var hdnMasterID = document.getElementById("<%=hdnMasterID.ClientID %>");
+                if (hdnMasterID.value == "" || hdnMasterID.value == "0") {
+                    // Prevent default tab behavior
+                    if (event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    
+                    Swal.fire({
+                        icon: "warning",
+                        title: "تحذير",
+                        text: "يرجى حفظ البيانات الأساسية للطلب أولاً قبل الوصول للعلامات الأخرى",
+                        confirmButtonText: "حسناً"
+                    });
+                    
+                    // Reset to MasterData tab
+                    var txt = document.getElementById("<%=hdnActiveTab.ClientID %>");
+                    txt.value = "1";
+                    
+                    // Wait a moment then force active tab to MasterData
+                    setTimeout(function() {
+                        // Remove active class from all nav-links
+                        document.querySelectorAll('.nav-link').forEach(function(link) {
+                            link.classList.remove('active', 'show');
+                        });
+                        
+                        // Remove active class from all tab panes
+                        document.querySelectorAll('.tab-pane').forEach(function(pane) {
+                            pane.classList.remove('active', 'show', 'in');
+                        });
+                        
+                        // Add active class to MasterData
+                        var masterDataLink = document.querySelector('[href="#MasterData"]');
+                        var masterDataTab = document.querySelector('#MasterData');
+                        
+                        if (masterDataLink) {
+                            masterDataLink.classList.add('active', 'show');
+                        }
+                        if (masterDataTab) {
+                            masterDataTab.classList.add('active', 'show', 'in');
+                        }
+                    }, 100);
+                    
+                    return false;
+                }
+            }
+            
+            var txt = document.getElementById("<%=hdnActiveTab.ClientID %>");
             txt.value = tab;
+            return true;
 
         }
 
@@ -176,11 +226,11 @@
                                                 <div class="col-lg-12">
 
                                                     <ul class="nav nav-tabs">
-                                                        <li class="nav-item" onclick="setActiveTab('1')"><a class="nav-link <%=getActiveTab("1") %>" data-toggle="tab" href="#MasterData"><em class="icon ni ni-list-thumb-alt"></em><span><%=GetGlobalResourceObject("pages","RequestData") %> </span></a></li>
-                                                        <li class="nav-item" onclick="setActiveTab('2')"><a class="nav-link <%=getActiveTab("2") %> " data-toggle="tab" href="#Items"><em class="icon ni ni-list-thumb-alt"></em><span><%=GetGlobalResourceObject("pages","ItemsList") %> </span>(<asp:Label ID="lblItemCount" runat="server" ClientIDMode="Static">0</asp:Label>)</a></li>
-                                                        <li class="nav-item" onclick="setActiveTab('3')"><a class="nav-link <%=getActiveTab("3") %>" data-toggle="tab" href="#StatusTracking"><em class="icon ni ni-tranx"></em><span><%=GetGlobalResourceObject("pages","StatusTracking") %> </span></a></li>
-                                                        <li class="nav-item" onclick="setActiveTab('4')"><a class="nav-link <%=getActiveTab("4") %>" data-toggle="tab" href="#Attachments"><em class="icon ni ni-folders"></em><span><%=GetGlobalResourceObject("pages","Attachments") %> </span></a></li>
-                                                        <li class="nav-item" onclick="setActiveTab('5')"><a class="nav-link <%=getActiveTab("5") %>" data-toggle="tab" href="#Notes"><em class="icon ni ni-list-round"></em><span><%=GetGlobalResourceObject("pages","Notes") %> </span></a></li>
+                                                        <li class="nav-item" onclick="return setActiveTab('1', event)"><a class="nav-link <%=getActiveTab("1") %>" data-toggle="tab" href="#MasterData"><em class="icon ni ni-list-thumb-alt"></em><span><%=GetGlobalResourceObject("pages","RequestData") %> </span></a></li>
+                                                        <li class="nav-item" onclick="return setActiveTab('2', event)"><a class="nav-link <%=getActiveTab("2") %> " data-toggle="tab" href="#Items"><em class="icon ni ni-list-thumb-alt"></em><span><%=GetGlobalResourceObject("pages","ItemsList") %> </span>(<asp:Label ID="lblItemCount" runat="server" ClientIDMode="Static">0</asp:Label>)</a></li>
+                                                        <li class="nav-item" onclick="return setActiveTab('3', event)"><a class="nav-link <%=getActiveTab("3") %>" data-toggle="tab" href="#StatusTracking"><em class="icon ni ni-tranx"></em><span><%=GetGlobalResourceObject("pages","StatusTracking") %> </span></a></li>
+                                                        <li class="nav-item" onclick="return setActiveTab('4', event)"><a class="nav-link <%=getActiveTab("4") %>" data-toggle="tab" href="#Attachments"><em class="icon ni ni-folders"></em><span><%=GetGlobalResourceObject("pages","Attachments") %> </span></a></li>
+                                                        <li class="nav-item" onclick="return setActiveTab('5', event)"><a class="nav-link <%=getActiveTab("5") %>" data-toggle="tab" href="#Notes"><em class="icon ni ni-list-round"></em><span><%=GetGlobalResourceObject("pages","Notes") %> </span></a></li>
                                                     </ul>
                                                     <div class="tab-content">
                                                         <div class="tab-pane fade in <%=getActiveTab("1") %>" id="MasterData">
@@ -193,6 +243,14 @@
 
                                                                             <div class="row">
                                                                                 <div class="col-md-4">
+                                                                   
+                                                                                     <div class="form-group">
+                                                                                             <label class="control-label" for=""><%=GetGlobalResourceObject("pages","TargetLocationCode") %>  </label>
+
+                                                                                             <asp:DropDownList ID="lstTargetLocationCode" runat="server" class="form-control form-select" data-search="on"></asp:DropDownList>
+
+                                                                                         </div>
+                                                                                 
                                                                                     <div class="form-group" runat="server" id="divVendor" visible="false">
                                                                                         <label class="control-label" for=""><%=GetGlobalResourceObject("pages","FromVendorCode") %>  </label>
 
@@ -209,21 +267,10 @@
                                                                                     <div class="form-group">
                                                                                         <label class="control-label" for=""><%=GetGlobalResourceObject("pages","Serial") %></label>
                                                                                         <asp:TextBox runat="server" ID="txtSerial" placeholder="IN\S.N\CMGSYY" class="form-control"></asp:TextBox>
+                                                                                       <%-- <asp:RequiredFieldValidator ID="rfvSerial" runat="server" ControlToValidate="txtSerial" ErrorMessage="يرجى إدخال رقم المسلسل" CssClass="text-danger" Display="Dynamic" Font-Size="Small"></asp:RequiredFieldValidator>--%>
                                                                                     </div>
 
-                                                                                    <div class="form-group">
-                                                                                        <label class="control-label" for=""><%=GetGlobalResourceObject("pages","TransDate") %></label>
-
-                                                                                        <div class="form-control-wrap">
-                                                                                            <div class="form-icon form-icon-right">
-                                                                                                <em class="icon ni ni-calendar-alt"></em>
-                                                                                            </div>
-                                                                                            <asp:TextBox runat="server" ID="txtTransDate" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
-                                                                                        </div>
-
-
-                                                                                    </div>
-
+                                                                                
 
 
 
@@ -237,18 +284,13 @@
 
                                                                                     </div>
 
-                                                                                    <div class="form-group">
-                                                                                        <label class="control-label" for=""><%=GetGlobalResourceObject("pages","TargetLocationCode") %>  </label>
-
-                                                                                        <asp:DropDownList ID="lstTargetLocationCode" runat="server" class="form-control form-select" data-search="on"></asp:DropDownList>
-
-                                                                                    </div>
+                                                                                   
 
 
 
 
                                                                                     <div class="form-group">
-                                                                                        <label class="control-label" for=""><%=GetGlobalResourceObject("pages","RefNo") %> </label>
+                                                                                        <label class="control-label" for=""><%=GetGlobalResourceObject("pages","RefCode") %> </label>
                                                                                         <asp:TextBox runat="server" ID="txtRefNo" class="form-control"></asp:TextBox>
 
                                                                                     </div>
@@ -266,6 +308,19 @@
 
                                                                                     </div>
 
+                                                                                                                                                                <div class="form-group">
+                                                                                <label class="control-label" for=""><%=GetGlobalResourceObject("pages","TransDate") %></label>
+
+                                                                                                <div class="form-control-wrap">
+                                                                                                    <div class="form-icon form-icon-right">
+                                                                                                        <em class="icon ni ni-calendar-alt"></em>
+                                                                                                    </div>
+                                                                                                    <asp:TextBox runat="server" ID="txtTransDate" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                                                                                                 <%--   <asp:RequiredFieldValidator ID="rfvTransDate" runat="server" ControlToValidate="txtTransDate" ErrorMessage="يرجى إدخال تاريخ الطلب" CssClass="text-danger" Display="Dynamic" Font-Size="Small"></asp:RequiredFieldValidator>--%>
+                                                                                                </div>
+
+
+                                                                            </div>
 
 
                                                                                 </div>
@@ -332,14 +387,43 @@
                                                                                 <div class="portlet-body">
                                                                                     <div role="form" class="form-body pal">
                                                                                         <div class="row">
-                                                                                            <div class="col-md-4">
+                                                                                            
+                                                                                            <div class="col-md-3">
                                                                                                 <div class="form-group">
-                                                                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","PurchaseItems") %></label>
+                                                                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","Type") %></label>
 
                                                                                                     <asp:DropDownList ID="lstPurchaseItems" runat="server" AutoPostBack="true" OnSelectedIndexChanged="lstPurchaseItems_SelectedIndexChanged" class="form-control form-select" data-search="on"></asp:DropDownList>
+                                                                                                    <%--<asp:RequiredFieldValidator ID="rfvPurchaseItems" runat="server" ControlToValidate="lstPurchaseItems" InitialValue="0" ErrorMessage="يرجى إختيار وصف المادة" CssClass="text-danger" Display="Dynamic" Font-Size="Small"></asp:RequiredFieldValidator>--%>
 
                                                                                                 </div>
                                                                                             </div>
+                                                                                            <div class="col-md-1">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="control-label"><%=GetGlobalResourceObject("pages","Countable") %></label>
+                                                                                                    <div style="margin-top: 8px;">
+                                                                                                        <asp:CheckBox ID="chkCountableFlag" runat="server" Enabled="false" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-2">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","BarCode") %></label>
+                                                                                                    <asp:TextBox runat="server" ID="txtBarCode" class="form-control"></asp:TextBox>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-2">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","SerialNo") %></label>
+                                                                                                    <asp:TextBox runat="server" ID="txtSerialNo" class="form-control"></asp:TextBox>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                                   <div class="col-md-2">
+                                                                                                   <div class="form-group">
+                                                                                                       <label class="control-label" for=""><%=GetGlobalResourceObject("pages","Qty") %></label>
+                                                                                                       <asp:TextBox runat="server" ID="txtQty" Text="1" class="form-control"></asp:TextBox>
+                                                                                                       <%--<asp:RequiredFieldValidator ID="rfvQty" runat="server" ControlToValidate="txtQty" ErrorMessage="يرجى إدخال كمية المادة" CssClass="text-danger" Display="Dynamic" Font-Size="Small"></asp:RequiredFieldValidator>--%>
+                                                                                                   </div>
+                                                                                               </div>
                                                                                             <div class="col-md-2" style="display:none">
                                                                                                 <div class="form-group">
                                                                                                     <div class="col-md-12">
@@ -348,57 +432,44 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="col-md-2"  >
-                                                                                                <div class="form-group">
-                                                                                                    <div class="col-md-12">
-                                                                                                        <label class="control-label" for=""><%=GetGlobalResourceObject("pages","Qty") %></label>
-                                                                                                        <asp:TextBox runat="server" ID="txtQty" Text="1" class="form-control"></asp:TextBox>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-2">
-                                                                                                <div class="form-group">
-                                                                                                    <div class="col-md-12">
-                                                                                                        <label class="control-label" for=""><%=GetGlobalResourceObject("pages","EstimatedCost") %></label>
-                                                                                                        <asp:TextBox runat="server" ID="txtUnitCost" Text="0" class="form-control"></asp:TextBox>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-2">
-                                                                                                <div class="form-group">
-                                                                                                    <div class="col-md-12">
-                                                                                                        <label class="control-label" for=""><%=GetGlobalResourceObject("pages","Status") %> </label>
-                                                                                                        <asp:DropDownList ID="lstStatusCode" runat="server" class="form-control"></asp:DropDownList>
-                                                                                                    </div>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-2">
-                                                                                                <div class="form-group">
-                                                                                                    <div class="col-md-12">
-                                                                                                        <label class="control-label" for=""><%=GetGlobalResourceObject("pages","QUnit") %> </label>
-                                                                                                        <asp:DropDownList ID="lstQtyUnitCode" Enabled="false" runat="server" class="form-control"></asp:DropDownList>
-                                                                                                    </div>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-2">
-                                                                                                <div class="form-group">
-                                                                                                    <label class="control-label" for=""><%=GetGlobalResourceObject("pages","ExpiryDate") %></label>
-
-                                                                                                    <div class="form-control-wrap">
-                                                                                                        <div class="form-icon form-icon-right">
-                                                                                                            <em class="icon ni ni-calendar-alt"></em>
-                                                                                                        </div>
-                                                                                                        <asp:TextBox runat="server" ID="txtexpireyDate" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
-                                                                                                    </div>
-
-
-                                                                                                </div>
-                                                                                            </div>
+                                                                                              
                                                                                         </div>
+                                                                                    <div class="row">
+                                                                             
+                                                                                    <div class="col-md-2">
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label" for=""><%=GetGlobalResourceObject("pages","EstimatedCost") %></label>
+                                                                                            <asp:TextBox runat="server" ID="txtUnitCost" Text="0" class="form-control"></asp:TextBox>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2">
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label" for=""><%=GetGlobalResourceObject("pages","Status") %></label>
+                                                                                            <asp:DropDownList ID="lstStatusCode" runat="server" class="form-control"></asp:DropDownList>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2">
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label" for=""><%=GetGlobalResourceObject("pages","QUnit") %></label>
+                                                                                            <asp:DropDownList ID="lstQtyUnitCode" Enabled="false" runat="server" class="form-control"></asp:DropDownList>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2">
+                                                                                        <div class="form-group">
+                                                                                            <label class="control-label" for=""><%=GetGlobalResourceObject("pages","ExpiryDate") %></label>
 
-                                                                                        <div class="row">
+                                                                                            <div class="form-control-wrap">
+                                                                                                <div class="form-icon form-icon-right">
+                                                                                                    <em class="icon ni ni-calendar-alt"></em>
+                                                                                                </div>
+                                                                                                <asp:TextBox runat="server" ID="txtexpireyDate" placeholder="__/__/____" class="form-control date-picker"></asp:TextBox>
+                                                                                            </div>
+
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                          </div>
+                                                                                      <%--  <div class="row">
 
                                                                                             <div class="col-md-12">
                                                                                                 <div class="form-group">
@@ -407,7 +478,7 @@
 
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </div>
+                                                                                        </div>--%>
 
 
                                                                                         <div class="row">
@@ -421,11 +492,12 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
 
-                                                                    </div>
+                                                            
 
                                                                     <div class="row" id="DivinboundItemsShow" runat="server">
                                                                         <div class="col-lg-12">
@@ -463,11 +535,13 @@
                                                                                             <%--<asp:BoundColumn DataField="ItemTag" HeaderText="<%$ Resources:pages,Tagid %>"></asp:BoundColumn>--%>
                                                                                             <asp:BoundColumn DataField="ItemFinanceCode" HeaderText="<%$ Resources:pages,ItemFinanceCode %>"></asp:BoundColumn>
                                                                                             <%--<asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,ItemNameAr %>"></asp:BoundColumn>--%>
-                                                                                            <asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,PurchaseItems %>  "></asp:BoundColumn>
+                                                                                            <asp:BoundColumn DataField="ItemNameAr" HeaderText="<%$ Resources:pages,Type %>  "></asp:BoundColumn>
                                                                                             <asp:BoundColumn DataField="Qty" HeaderText="<%$ Resources:pages,Qty %>"></asp:BoundColumn>
                                                                                             <asp:BoundColumn DataField="EstimatedUnitCost" HeaderText="<%$ Resources:pages,EstimatedCost %>"></asp:BoundColumn>
-                                                                                            <asp:BoundColumn DataField="ReceivedQty" HeaderText="<%$ Resources:pages,ReceivedQty %>"></asp:BoundColumn>
+                                                                                            <asp:BoundColumn DataField="CurrentQty" HeaderText="<%$ Resources:pages,CurrentQty %>"></asp:BoundColumn>
                                                                                             <asp:BoundColumn DataField="UnitNameAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
+                                                                                             <asp:BoundColumn DataField="Item_BarCode" HeaderText="<%$ Resources:pages,BarCode %> "></asp:BoundColumn>
+                                                                                             <asp:BoundColumn DataField="ItemSerial" HeaderText="<%$ Resources:pages,SerialNo %> "></asp:BoundColumn>
                                                                                             <asp:BoundColumn DataField="StatusTitleAr" HeaderText="<%$ Resources:pages,status %>"></asp:BoundColumn>
 
                                                                                             <asp:TemplateColumn>
@@ -511,9 +585,9 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
+                                                                    </div>
                                                               
-                                                        </div>
+                                                
 
                                                         <div class="tab-pane fade <%=getActiveTab("3") %>" id="Attachments">
                                                             <asp:UpdatePanel ID="UpdatePanel4" runat="server" ChildrenAsTriggers="true" UpdateMode="conditional">
@@ -984,6 +1058,7 @@
 
                                                             </asp:UpdatePanel>
                                                         </div>
+                                                                </div>
 
                                                     </div>
                                                 </div>

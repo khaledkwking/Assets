@@ -25,9 +25,9 @@
                 return false;
             }
 
-            txt = document.getElementById("<%=txtPass.ClientID %>")
+            txt = document.getElementById("<%=txtPass.ClientID %>");
             if (txt.value == "") {
-                Swal.fire("فظلا ، يرجى ادخال كلمة المرور     ");
+                Swal.fire("فظلا ، يرجى ادخال كلمة المرور     ")
                  
                 txt.focus();
                 return false;

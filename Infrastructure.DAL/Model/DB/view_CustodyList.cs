@@ -14,8 +14,8 @@ namespace Infrastructure.DAL.Model.DB
     
     public partial class view_CustodyList
     {
-        public int Code { get; set; }
         public string groupname { get; set; }
+        public long Code { get; set; }
         public string ItemRefCode { get; set; }
         public Nullable<long> ItemCode { get; set; }
         public Nullable<System.DateTime> ItemDate { get; set; }
@@ -38,7 +38,7 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> EmpRefCode { get; set; }
         public string EmpName { get; set; }
         public Nullable<double> Qty { get; set; }
-        public int EventCode { get; set; }
+        public long EventCode { get; set; }
         public int Total { get; set; }
         public string Notes { get; set; }
         public Nullable<int> QUnitCode { get; set; }

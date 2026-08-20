@@ -14,14 +14,15 @@ using QRCoder;
 using UI.Web.Admin.Controller;
 using UI.Web.Helper;
 
-namespace UI.Web.Modules.MasterData
+namespace UI.Web.Modules.Inventory
 {
-    public partial class ItemsCard : BaseFormAdmin
+    public partial class InventoryItemsList : BaseFormAdmin
     {
         #region "Page Members"
-        public ItemRepository objRepository = IoC.Resolve<ItemRepository>();
-        public string _PageTitle = Resources.Pages.ItemsList;
-
+        public ItemRepository itemRepository = IoC.Resolve<ItemRepository>();
+        public AssetsRepository assetsRepository = IoC.Resolve<AssetsRepository>();
+        public string _PageTitle = Resources.Pages.InventoryItems;
+        public string _StoreName = "";
         #endregion
 
         #region "Page Events"
@@ -33,7 +34,9 @@ namespace UI.Web.Modules.MasterData
 
             lblerror.Text = "";
             btnCancel.Attributes.Add("onclick", "Page_ValidationActive=false;");
-            btnSave.Attributes.Add("onclick", "return chkImage();");
+            //btnSave.Attributes.Add("onclick", "return chkImage();");
+
+            _StoreName=Request.QueryString["LocationName"]!=null? Server.UrlDecode(Request.QueryString["LocationName"]) : "";
             if (!IsPostBack)
             {
                 //if ((Request.UrlReferrer == null))
@@ -41,7 +44,7 @@ namespace UI.Web.Modules.MasterData
                 //    Response.Redirect("/admin/pages/main.aspx");
                 //}
 
-                ViewState["itemID"] = "0";
+                 ViewState["StockID"] = "0";
                 fillLookups();
                 FillGrid();
             }
@@ -76,10 +79,10 @@ namespace UI.Web.Modules.MasterData
                             }
 
                             // Delete from D_ItemCard repository
-                            var itemCard = objRepository.GetDetails(assetCode);
+                            var itemCard = itemRepository.GetDetails(assetCode);
                             if (itemCard != null)
                             {
-                                objRepository.Delete((D_ItemCard)itemCard);
+                                itemRepository.Delete((D_ItemCard)itemCard);
                             }
 
                             // Log the deletion
@@ -114,7 +117,7 @@ namespace UI.Web.Modules.MasterData
         {
             string id = e.Item.Cells[0].Text;
             ClearForm();
-            ViewState["itemID"] = id;
+            ViewState["StockID"] = id;
             FillForm();
             tblshow.Visible = false;
             tblAdd.Visible = true;
@@ -154,90 +157,106 @@ namespace UI.Web.Modules.MasterData
             string script = "";
             try
             {
-                D_ItemCard obj = new D_ItemCard();
+                AssetsEventTracking obj = new AssetsEventTracking();
 
-                string _img = UploadFileoServer(txtImage, Server.MapPath("/Layout/uploads/ItemsData/"));
+                //string _img = UploadFileoServer(txtImage, Server.MapPath("/Layout/uploads/ItemsData/"));
 
-                if (gets(ViewState["itemID"]).Equals("0"))
+                if (gets(ViewState["StockID"]).Equals("0"))
                 {//Save
 
                     obj.ItemQrCode = Guid.NewGuid().ToString();
 
-                    obj.ItemRefCode = txtItemRefCode.Text;
-                    // obj.ItemBarCode = txtItemBarCode.Text;
-                    obj.ItemRFIDCode = txtItemRFIDCode.Text;
-                    obj.ItemFinanceCode = txtItemFinanceCode.Text;
-                    obj.ItemNameEn = txtItemNameEn.Text;
-                    obj.ItemNameAr = txtItemNameAr.Text;
-                    obj.ItemDescEn = txtItemDescEn.Text;
-                    obj.ItemDescAr = txtItemDescAr.Text;
-                    //obj.ItemMasterPrice = ZeroIFNull(txtPrice.Text);
-                    obj.ItemCategoryId = ZeroIntergerIFNull(lstCategory.SelectedValue);
-                    obj.QUnitCode = ZeroIntergerIFNull(lstQunit.SelectedValue);
+                    obj.Item_BarCode = txtBarcode.Text;
+
+                    obj.ItemRFID = txtItemRFIDCode.Text;
+                    obj.Age = ZerodecimalIFNull(txtAge.Text);
+                    obj.Qty = ZeroIFNull(txtQty.Text);
+                    obj.Item_Stock_Limit = ZerodecimalIFNull(txtMinQty.Text);
+                    //obj.ItemDescEn = txtItemDescEn.Text;
+                    //obj.ItemDescAr = txtItemDescAr.Text;
+                    obj.RequestItemPrice = ZeroIFNull(txtPrice.Text);
+                    //obj.ItemCategoryId = ZeroIntergerIFNull(lstCategory.SelectedValue);
+                    //obj.QUnitCode = ZeroIntergerIFNull(lstQunit.SelectedValue);
 
                     //obj.CreatedAt = NullDateifEmptyNew(txtItemDate.Text);
 
                     //obj.MinQty = ZeroIntergerIFNull(txtMinQty.Text);
 
                     //obj.ScrapPeriod = ZeroIFNull(txtScrapPeriod.Text);
-                    obj.ScrapAmount = ZeroIFNull(txtScrapAmount.Text);
+                    //obj.ScrapAmount = ZeroIFNull(txtScrapAmount.Text);
 
-                    obj.isActive = chkisactive.Checked;
-                    if (_img != "")
-                    {
-                        obj.ItemImage = _img;
-                    }
+                    //obj.isActive = chkisactive.Checked;
+                    //if (_img != "")
+                    //{
+                    //    obj.ItemImage = _img;
+                    //}
 
-                    objRepository.Add(obj);
+                    assetsRepository.AddEventTracking(obj);
 
                     Logger.Log(
                             userId: ReadSession("userId").ToString(),
                             userName: ReadSession("AdminName").ToString(),
-                            tableName: "D_ItemCard",
+                            tableName: "AssetsEventTracking",
                             action: "Insert",
                             recordId: obj.Code.ToString()
                             );
                 }
                 else
                 { //Update 
-                    obj = objRepository.GetDetails(ZeroIntergerIFNull(ViewState["itemID"].ToString()));
-
-                    obj.ItemRefCode = txtItemRefCode.Text;
-                    // obj.ItemBarCode = txtItemBarCode.Text;
-                    obj.ItemRFIDCode = txtItemRFIDCode.Text;
-                    obj.ItemFinanceCode = txtItemFinanceCode.Text;
-                    obj.ItemNameEn = txtItemNameEn.Text;
-                    obj.ItemNameAr = txtItemNameAr.Text;
-                    obj.ItemDescEn = txtItemDescEn.Text;
-                    obj.ItemDescAr = txtItemDescAr.Text;
-                    //obj.ItemMasterPrice = ZeroIFNull(txtPrice.Text);
-                    obj.ItemCategoryId = ZeroIntergerIFNull(lstCategory.SelectedValue);
-                    obj.QUnitCode = ZeroIntergerIFNull(lstQunit.SelectedValue);
-
-                    //obj.CreatedAt = NullDateifEmptyNew(txtItemDate.Text);
-
-                    //obj.MinQty = ZeroIntergerIFNull(txtMinQty.Text);
-
-                    //obj.ScrapPeriod = ZeroIFNull(txtScrapPeriod.Text);
-                    obj.ScrapAmount = ZeroIFNull(txtScrapAmount.Text);
-
-
-                    obj.isActive = chkisactive.Checked;
-                    if (_img != "")
+                    if (ViewState["StockID"] == null || ViewState["StockID"].ToString() == "0")
                     {
-                        obj.ItemImage = _img;
+                        throw new Exception("Invalid Stock ID for update.");
                     }
+                    else
+                    {
+                        int stockId = ZeroIntergerIFNull(ViewState["StockID"].ToString());
+                        obj = assetsRepository.getTrackingDetails(stockId);
+
+                        // Check if object exists before updating
+                        if (obj == null)
+                        {
+                            throw new Exception("Stock item not found for update.");
+                        }
+
+                        obj.Item_BarCode = txtBarcode.Text;
+
+                        obj.ItemRFID = txtItemRFIDCode.Text;
+                        obj.Age = ZerodecimalIFNull(txtAge.Text);
+                        obj.Qty = ZeroIFNull(txtQty.Text);
+                        obj.Item_Stock_Limit = ZerodecimalIFNull(txtMinQty.Text);
+                        //obj.ItemDescEn = txtItemDescEn.Text;
+                        //obj.ItemDescAr = txtItemDescAr.Text;
+                        obj.RequestItemPrice = ZeroIFNull(txtPrice.Text);
+                        //obj.ItemDescEn = txtItemDescEn.Text;
+                        //obj.ItemDescAr = txtItemDescAr.Text;
+                        //obj.ItemMasterPrice = ZeroIFNull(txtPrice.Text);
+                        //obj.ItemCategoryId = ZeroIntergerIFNull(lstCategory.SelectedValue);
+                        //obj.QUnitCode = ZeroIntergerIFNull(lstQunit.SelectedValue);
+
+                        //obj.CreatedAt = NullDateifEmptyNew(txtItemDate.Text);
+
+                        //obj.MinQty = ZeroIntergerIFNull(txtMinQty.Text);
+
+                        //obj.ScrapPeriod = ZeroIFNull(txtScrapPeriod.Text);
+                        //obj.ScrapAmount = ZeroIFNull(txtScrapAmount.Text);
 
 
-                    objRepository.Update(obj);
+                        //obj.isActive = chkisactive.Checked;
+                        //if (_img != "")
+                        //{
+                        //    obj.ItemImage = _img;
+                        //}
 
-                    Logger.Log(
-                           userId: ReadSession("userId").ToString(),
-                           userName: ReadSession("AdminName").ToString(),
-                           tableName: "D_ItemCard",
-                           action: "Update",
-                           recordId: obj.Code.ToString()
-                           );
+                        assetsRepository.UpdateEventTracking(obj);
+
+                        Logger.Log(
+                               userId: ReadSession("userId").ToString(),
+                               userName: ReadSession("AdminName").ToString(),
+                               tableName: "AssetsEventTracking",
+                               action: "Update",
+                               recordId: obj.Code.ToString()
+                               );
+                    }
 
                 }
 
@@ -250,7 +269,6 @@ namespace UI.Web.Modules.MasterData
             }
             catch (Exception ex)
             {
-
 
                 script = FormatpopupErrorMSG(Resources.Alerts.FailToSaveData + ex.Message.ToString(), "1");
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), "Updatepanel1", script, true);
@@ -279,28 +297,31 @@ namespace UI.Web.Modules.MasterData
         #region "Fill Information"
         private void FillGrid()
         {
-            var objList = objRepository.GetList(txtPartOfName.Text,ZeroIntergerIFNull( lstFilterCategory.SelectedValue), ZeroIntergerIFNull(lstFilterQUnit.SelectedValue),txtFilterCode.Text);
-            lblcount.Text = (Resources.Utilities.foundTotal + (objList.Count.ToString()).ToString() + Resources.Utilities.records);
-
-            decimal c = System.Math.Ceiling(Convert.ToDecimal(objList.Count / grdItems.PageSize));
-            if ((c <= grdItems.CurrentPageIndex))
+            if (Request.QueryString["InvCode"] != null)
             {
-                grdItems.CurrentPageIndex = 0;
+                int InvCode = ZeroIntergerIFNull(Request.QueryString["InvCode"].ToString());
+                var objList = assetsRepository.GetInventoryItems(txtPartOfName.Text, ZeroIntergerIFNull(lstFilterCategory.SelectedValue), ZeroIntergerIFNull(lstFilterQUnit.SelectedValue), txtFilterCode.Text, InvCode);
+                lblcount.Text = (Resources.Utilities.foundTotal + (objList.Count.ToString()).ToString() + Resources.Utilities.records);
+
+                decimal c = System.Math.Ceiling(Convert.ToDecimal(objList.Count / grdItems.PageSize));
+                if ((c <= grdItems.CurrentPageIndex))
+                {
+                    grdItems.CurrentPageIndex = 0;
+                }
+
+                grdItems.DataSource = objList;
+                grdItems.DataBind();
+                int _totalCount = objList.Count;
+                pager1.ItemCount = objList.Count;
             }
-
-            grdItems.DataSource = objList;
-            grdItems.DataBind();
-            int _totalCount = objList.Count;
-            pager1.ItemCount = objList.Count;
-
 
         }
         private void fillLookups()
         {
 
-            FillDllwithoptional(LooksUpsRepository.ins.FillItemCategory(), lstCategory, Resources.Pages.TitleFiled, "Code");
+            //FillDllwithoptional(LooksUpsRepository.ins.FillItemCategory(), lstCategory, Resources.Pages.TitleFiled, "Code");
             FillDllwithoptional_ALL(LooksUpsRepository.ins.FillItemCategory(), lstFilterCategory, Resources.Pages.TitleFiled, "Code" ,Resources.Pages.all);
-            FillDllwithoptional(LooksUpsRepository.ins.FillQUnit(), lstQunit, Resources.Pages.TitleFiled, "Code");
+            //FillDllwithoptional(LooksUpsRepository.ins.FillQUnit(), lstQunit, Resources.Pages.TitleFiled, "Code");
             FillDllwithoptional_ALL(LooksUpsRepository.ins.FillQUnit(), lstFilterQUnit, Resources.Pages.TitleFiled, "Code", Resources.Pages.all);
 
         }
@@ -318,37 +339,38 @@ namespace UI.Web.Modules.MasterData
         }
         private void FillForm()
         {
-            var objList = objRepository.GetDetails(ZeroIntergerIFNull(ViewState["itemID"].ToString()));
+            var objList = assetsRepository.GetInventoryItemById(ZeroIntergerIFNull( ViewState["StockID"].ToString()));
             if ((objList != null))
             {
 
 
-                txtItemDescAr.Text = gets(objList.ItemDescAr);
-                txtItemDescEn.Text = gets(objList.ItemDescAr);
+                //txtItemDescAr.Text = gets(objList.ItemDescAr);
+               
                 txtItemNameAr.Text = gets(objList.ItemNameAr);
                 txtItemNameEn.Text = gets(objList.ItemNameEn);
-               // txtMinQty.Text = gets(objList.MinQty);
-                txtItemRefCode.Text = gets(objList.ItemRefCode);
-                txtItemRFIDCode.Text = gets(objList.ItemRFIDCode);
+                txtMinQty.Text = gets(objList.Item_Stock_Limit);
+                txtItemRefCode.Text = gets(objList.AssetCode);
+                txtItemRFIDCode.Text = gets(objList.ItemRFID);
                 txtItemFinanceCode.Text = gets(objList.ItemFinanceCode);
-                //txtPrice.Text = gets(objList.ItemMasterPrice.ToString());
-                chkisactive.Checked = getBool(objList.isActive);
+                txtPrice.Text = gets(objList.RequestItemPrice.ToString());
+                //chkisactive.Checked = getBool(objList.isActive);
 
-               // txtItemDate.Text = getDBDate(objList.CreatedAt);
-               // txtScrapPeriod.Text = gets(objList.ScrapPeriod);
-                txtScrapAmount.Text = gets(objList.ScrapAmount);
+                txtItemDate.Text = getDBDate(objList.OperatedDate);
+                txtAge.Text = gets(objList.Age);
+                txtUnitName.Text = objList.D_QtyUnitTitleAr;
+                txtCategoryName.Text = gets(objList.D_ItemsCategoryTitleAr);
 
 
-                if (objList.ItemImage != "")
-                {
-                    lblimage.Text = "<img width='50px' src='" + Resources.Utilities.resourcespath + "uploads/ItemsData/" + gets(objList.ItemImage) + "'>";
+                //if (objList.ItemImage != "")
+                //{
+                //    lblimage.Text = "<img width='50px' src='" + Resources.Utilities.resourcespath + "uploads/ItemsData/" + gets(objList.ItemImage) + "'>";
 
-                }
+                //}
                 try
                 {
 
-                    lstCategory.SelectedValue = gets(objList.ItemCategoryId);
-                    lstQunit.SelectedValue = gets(objList.QUnitCode);
+                    //lstCategory.SelectedValue = gets(objList.ItemCategoryId);
+                    //lstQunit.SelectedValue = gets(objList.QUnitCode);
                 }
                 catch (Exception)
                 {
@@ -365,23 +387,23 @@ namespace UI.Web.Modules.MasterData
         }
         private void ClearForm()
         {
-            txtItemDescAr.Text = "";
-            txtItemDescEn.Text = "";
+            //txtItemDescAr.Text = "";
+            //txtItemDescEn.Text = "";
             txtItemNameAr.Text = "";
             txtItemNameEn.Text = "";
-            //txtMinQty.Text = "";
-            //txtItemDate.Text = "";
+            txtMinQty.Text = "";
+            txtItemDate.Text = "";
             txtItemRefCode.Text = "";
             txtItemRFIDCode.Text = "";
             txtItemFinanceCode.Text = "";
-            chkisactive.Checked = true;
-            ViewState["itemID"] = 0;
+            //chkisactive.Checked = true;
+             ViewState["StockID"] = 0;
             tblAdd.Visible = false;
             tblshow.Visible = true;
             lblSubTitle.Text = GetTitle(true);
-            lblimage.Text = "";
+            //lblimage.Text = "";
 
-            txtScrapAmount.Text = "";
+           // txtScrapAmount.Text = "";
             //txtScrapPeriod.Text = "";
 
         }
@@ -434,6 +456,76 @@ namespace UI.Web.Modules.MasterData
             FillGrid();
         }
 
-         
+        /// <summary>
+        /// Get display text and styling for CountableFlag column
+        /// </summary>
+        public string GetCountableFlagDisplay(object countableFlagObj)
+        {
+            try
+            {
+                bool? countableFlag = countableFlagObj as bool?;
+
+                if (countableFlag == true)
+                {
+                    return "<span style='background-color: #90EE90; color: #000; padding: 5px 10px; border-radius: 3px; font-weight: bold;'>نثري</span>";
+                }
+                else
+                {
+                    return "<span style='background-color: #FFB6C1; color: #000; padding: 5px 10px; border-radius: 3px; font-weight: bold;'>غير نثري</span>";
+                }
+            }
+            catch
+            {
+                return "<span style='background-color: #CCCCCC; color: #000; padding: 5px 10px; border-radius: 3px;'>غير محدد</span>";
+            }
+        }
+
+        /// <summary>
+        /// Get styling for MinQty column - highlight when stock is low
+        /// </summary>
+        public string GetMinQtyStyle(object qtyObj, object minQtyObj)
+        {
+            try
+            {
+                double qty = ZeroIFNull(qtyObj.ToString());
+                decimal minQty = ZerodecimalIFNull(minQtyObj.ToString());
+
+                // If stock quantity is less than or equal to minimum threshold, highlight in red
+                if (qty <= (double)minQty && minQty > 0)
+                {
+                    return "background-color: #FFE0E0; color: #FF0000; font-weight: bold; padding: 5px; border-radius: 3px;";
+                }
+
+                return "";
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Get formatted date from ActionDate field
+        /// </summary>
+        public string GetFormattedDate(object dateObj)
+        {
+            try
+            {
+                if (dateObj == null || dateObj == DBNull.Value)
+                    return "-";
+
+                if (DateTime.TryParse(dateObj.ToString(), out DateTime date))
+                {
+                    return date.ToString("dd/MM/yyyy");
+                }
+
+                return "-";
+            }
+            catch
+            {
+                return "-";
+            }
+        }
+
     }
 }

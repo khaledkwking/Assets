@@ -99,9 +99,24 @@
         
 
         function setActiveTab(tab) {
+            // Validate that master is saved before switching to Items tab (Tab 2)
+            if (tab === '2') {
+                var masterID = document.getElementById("<%=hdnMasterID.ClientID %>")
+                if (masterID.value == "" || masterID.value == "0") {
+                    Swal.fire("من فضلك، احفظ بيانات الطلب أولاً قبل الانتقال إلى قائمة المواد");
+                    // Focus on Tab 1 (BasicInfo)
+                    setActiveTab('1');
+                    var basicInfoTab = document.querySelector('[href="#BasicInfo"]');
+                    if (basicInfoTab) {
+                        basicInfoTab.click();
+                    }
+                    return false;
+                }
+            }
+
             var txt = document.getElementById("<%=hdnActiveTab.ClientID %>")
             txt.value = tab;
-
+            return true;
         }
     </script>
 
@@ -155,7 +170,7 @@
                                         <div id="tblShow">
                                             <ul class="nav nav-tabs">
                                                 <li class="nav-item" onclick="setActiveTab('1')"><a class="nav-link <%=getActiveTab("1") %>" data-toggle="tab" href="#BasicInfo"><em class="icon ni ni-server"></em><span>بيانات الطلب     </span></a></li>
-                                                <li class="nav-item" onclick="setActiveTab('2')">
+                                                <li class="nav-item" onclick="return setActiveTab('2')">
                                                     <a class="nav-link <%=getActiveTab("2") %>" data-toggle="tab" href="#ItemList"><em class="icon ni ni-menu-circled"></em><span>قائمة المواد (<asp:Label ID="lblItemCount" runat="server" ClientIDMode="Static">0</asp:Label>)</span></a>
                                                 </li>
                                             </ul>
@@ -221,7 +236,7 @@
                                                             <div class="form-group" id="divOwnerLocation">
                                                                 <label class="control-label" for=""><%=GetGlobalResourceObject("pages","OutOwnerLocation") %>  </label>
 
-                                                                <asp:DropDownList ID="lstOwnerLocationCode" runat="server" class="form-control form-select" data-search="on"></asp:DropDownList>
+                                                                <asp:DropDownList ID="lstOwnerLocationCode" runat="server" AutoPostBack="true" OnSelectedIndexChanged="lstOwnerLocationCode_SelectedIndexChanged" class="form-control form-select" data-search="on"></asp:DropDownList>
 
                                                             </div>
 

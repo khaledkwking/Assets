@@ -12,15 +12,8 @@ namespace Infrastructure.DAL.Model.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class AssetsEventTracking
+    public partial class view_ItemsStock
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AssetsEventTracking()
-        {
-            this.AssetsStores = new HashSet<AssetsStore>();
-        }
-    
-        public long Code { get; set; }
         public Nullable<int> RequestHeaderCode { get; set; }
         public Nullable<long> AssetCode { get; set; }
         public Nullable<System.DateTime> ActionDate { get; set; }
@@ -31,10 +24,17 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> EmpRefCode { get; set; }
         public string EmpName { get; set; }
         public string Notes { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<System.DateTime> LastModifiedAt { get; set; }
         public Nullable<double> Qty { get; set; }
         public Nullable<double> MissedQty { get; set; }
         public string StoreRequestRefCode { get; set; }
         public Nullable<double> RequestItemPrice { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<int> ItemUsedStatus { get; set; }
         public Nullable<System.DateTime> Item_AssDate { get; set; }
         public Nullable<System.DateTime> Item_Expire { get; set; }
@@ -43,27 +43,30 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<decimal> Item_Stock_Limit { get; set; }
         public Nullable<bool> MatchFlag { get; set; }
         public Nullable<int> OldItemQty { get; set; }
-        public Nullable<int> ContractId { get; set; }
         public string PruchaseOrderNo { get; set; }
-        public string InvoiceNo { get; set; }
         public string Model { get; set; }
         public string Country { get; set; }
+        public string InvoiceNo { get; set; }
         public Nullable<System.DateTime> OperatedDate { get; set; }
         public Nullable<decimal> Age { get; set; }
-        public Nullable<int> LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedAt { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<int> DeletedBy { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public string ItemNameEn { get; set; }
+        public string ItemNameAr { get; set; }
+        public Nullable<int> ItemCategoryId { get; set; }
+        public Nullable<bool> isActive { get; set; }
+        public Nullable<bool> CountableFlag { get; set; }
+        public string PictureName { get; set; }
+        public string ItemDescEn { get; set; }
+        public string ItemDescAr { get; set; }
+        public Nullable<int> Item_StateId { get; set; }
+        public Nullable<bool> OrganizedFlag { get; set; }
+        public Nullable<int> ContractId { get; set; }
         public string ItemQrCode { get; set; }
+        public string ItemFinanceCode { get; set; }
         public string ItemRFID { get; set; }
-    
-        public virtual AssetsEventTrackingHeader AssetsEventTrackingHeader { get; set; }
-        public virtual AssetsTrackingAction AssetsTrackingAction { get; set; }
-        public virtual D_ItemCard D_ItemCard { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssetsStore> AssetsStores { get; set; }
+        public string ItemImage { get; set; }
+        public string D_ItemsCategoryTitleAr { get; set; }
+        public string D_QtyUnitTitleAr { get; set; }
+        public Nullable<int> QUnitCode { get; set; }
+        public long Code { get; set; }
     }
 }

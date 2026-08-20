@@ -291,11 +291,11 @@ namespace UI.Web.Modules._shared
 
                     }
 
-                    strmenu.Append(("<li class='nk-menu-item'>"));
-                    strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/StoreList.aspx' class='nk-menu-link'>"));
-                    strmenu.Append(("<span class='nk-menu-text'>" + Resources.Pages.StoreList + "</span>"));
-                    strmenu.Append(("</a>"));
-                    strmenu.Append(("</li>"));
+                    //strmenu.Append(("<li class='nk-menu-item'>"));
+                    //strmenu.Append(("<a href=\'" + Resources.Utilities.cutureRoute + "/Modules/MasterData/StoreList.aspx' class='nk-menu-link'>"));
+                    //strmenu.Append(("<span class='nk-menu-text'>" + Resources.Pages.StoreList + "</span>"));
+                    //strmenu.Append(("</a>"));
+                    //strmenu.Append(("</li>"));
 
 
                     strmenu.Append("</ul> ");

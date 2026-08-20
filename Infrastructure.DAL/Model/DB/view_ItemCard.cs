@@ -14,6 +14,7 @@ namespace Infrastructure.DAL.Model.DB
     
     public partial class view_ItemCard
     {
+        public long Code { get; set; }
         public string ItemRefCode { get; set; }
         public string ItemBarCode { get; set; }
         public string ItemRFIDCode { get; set; }
@@ -38,13 +39,12 @@ namespace Infrastructure.DAL.Model.DB
         public string D_QtyUnitTitleAr { get; set; }
         public string D_QtyUnitTitleEn { get; set; }
         public Nullable<bool> isActive { get; set; }
-        public Nullable<double> EstimatedUnitCost { get; set; }
+        public Nullable<double> ItemMasterPrice { get; set; }
         public string ItemNameArWithCode { get; set; }
         public Nullable<double> ScrapPeriod { get; set; }
         public Nullable<double> ScrapAmount { get; set; }
-        public Nullable<double> ItemMasterPrice { get; set; }
+        public Nullable<double> Expr1 { get; set; }
         public Nullable<double> TotalReceived { get; set; }
         public Nullable<double> TotalDelivered { get; set; }
-        public long Code { get; set; }
     }
 }

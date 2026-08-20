@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Microsoft.Reporting.Map.WebForms.BingMaps;
 using Microsoft.Reporting.WebForms;
+using System.Web.Security;
 
 namespace UI.Web.Admin.Controller
 {
@@ -293,6 +294,60 @@ namespace UI.Web.Admin.Controller
 
             }
             return Session[sessionKey];
+        }
+
+        /// <summary>
+        /// Gets user ID from the authentication cookie
+        /// </summary>
+        /// <returns>User ID or "0" if not authenticated</returns>
+        public string GetUserID()
+        {
+            try
+            {
+                // Check if authentication cookie exists
+                HttpCookie authCookie = Request.Cookies["CMGS_CON"];
+                if (authCookie != null && !string.IsNullOrEmpty(authCookie.Value))
+                {
+                    // Decrypt the authentication ticket
+                    FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                    if (authTicket != null)
+                    {
+                        // The UserData contains the username
+                        return authTicket.UserData;
+                    }
+                    // Fallback to cookie subvalue
+                    string userInfo = authCookie["CMGS_CON"];
+                    if (!string.IsNullOrEmpty(userInfo))
+                    {
+                        return userInfo;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log exception if needed
+            }
+            return "0";
+        }
+
+        /// <summary>
+        /// Gets current logged-in user from authentication cookie
+        /// </summary>
+        /// <returns>Username or "0" if not authenticated</returns>
+        public string GetCurrentUsername()
+        {
+            try
+            {
+                if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    return User.Identity.Name;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log exception if needed
+            }
+            return "0";
         }
 
         public string GetFileName(AjaxControlToolkit.AsyncFileUpload txtImage)
@@ -804,6 +859,28 @@ namespace UI.Web.Admin.Controller
             else
             {
                 return Convert.ToDouble(obj);
+            }
+        }
+        protected decimal ZerodecimalIFNull(string obj)
+        {
+            if (obj.Equals("") || obj == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return (decimal)Convert.ToDouble(obj);
+            }
+        }
+        protected long ZerolongIFNull(string obj)
+        {
+            if (obj.Equals("") || obj == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt64(obj);
             }
         }
         protected string EmptyIfZero(string obj)

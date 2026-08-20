@@ -105,6 +105,25 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
             this.FillGrid();
         }
 
+        protected void lstOwnerLocationCode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Load items available in the selected store location
+            int locationId = ZeroIntergerIFNull(lstOwnerLocationCode.SelectedValue);
+
+            if (locationId > 0)
+            {
+                var itemsList = InboundobjRepository.fillItemsByLocation(locationId);
+                FillDllwithoptional_ALL(itemsList, lstPurchaseItems, "ItemNameAr", "Code", "اختر ");
+            }
+            else
+            {
+                // If no location is selected, clear the items dropdown
+                lstPurchaseItems.Items.Clear();
+                lstPurchaseItems.Items.Insert(0, new ListItem("اختر ", "0"));
+                txtBalance.Text = "0";
+            }
+        }
+
         #endregion "Page Events"
 
         #region "Fill Information"
@@ -118,13 +137,15 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
 
         private void fillLookups()
         {
-            FillDllwithoptional_ALL(InboundobjRepository.fillItems(), lstPurchaseItems, "ItemNameAr", "Code", "اختر ");
+            // Don't load all items initially - they will be loaded based on selected store location
+            FillDllwithoptional_ALL(new List<view_ItemCard>(), lstPurchaseItems, "ItemNameAr", "Code", "اختر ");
+
             var LocationsList = LooksUpsRepository.ins.FillInboundStoreLocations();
 
             FillDllwithoptional(LocationsList, lstOwnerLocationCode, "LocationNameAr", "Code");
             FillDllwithoptional(LocationsList, lstToStore, "LocationNameAr", "Code");
 
-            
+
 
             FillDllwithoptional(LooksUpsRepository.ins.FillQUnit(), lstQtyUnitCode, "TitleAr", "Code");
             FillDllwithoptional(LooksUpsRepository.ins.fillUsedStatus(), lstStatusCode, Resources.Pages.TitleFiled, "Code");
@@ -211,6 +232,15 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
             {
                 txtSerial.Text = gets(objList.Serial);
                 lstOwnerLocationCode.SelectedValue = gets(objList.FromLocationCode);
+
+                // Load items for the selected store location
+                int locationId = ZeroIntergerIFNull(lstOwnerLocationCode.SelectedValue);
+                if (locationId > 0)
+                {
+                    var itemsList = InboundobjRepository.fillItemsByLocation(locationId);
+                    FillDllwithoptional_ALL(itemsList, lstPurchaseItems, "ItemNameAr", "Code", "اختر ");
+                }
+
                 if (objList.ToLocationCode == 0)
                 {
                     lstToStore.SelectedValue = gets(objList.ToLocationCode);
@@ -228,7 +258,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
                 txtTransDate.Text = objList.TransDate.Value.ToString("MM/dd/yyyy");
                 txtNotes.Text = gets(objList.Notes);
                 hdnMasterID.Value = gets(objList.Code);
-                
+
             }
         }
 
@@ -243,7 +273,10 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
             var objInboundunit = objRepository.getItemCardDetails(ZeroIntergerIFNull(lstPurchaseItems.SelectedValue));
             if (objInboundunit != null )
             {
-                lstQtyUnitCode.SelectedValue = objInboundunit.QUnitCode.ToString();
+                if (objInboundunit.QUnitCode != null)
+                {
+                    lstQtyUnitCode.SelectedValue = objInboundunit.QUnitCode.ToString();
+                }
                // lstStatusCode.SelectedValue = objInboundunit.sta.ToString();
                 txtBalance.Text = (objInboundunit.TotalReceived - objInboundunit.TotalDelivered).ToString();
             }
@@ -369,6 +402,10 @@ namespace UI.Web.Modules.StoreOperations.Forms.Outbound
 
                 ClearForm();
                 FillOutboundMasterInformation();
+
+                // Switch to Items tab (Tab 2) after successful save
+                hdnActiveTab.Value = "2";
+
                 string script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
             }

@@ -334,9 +334,9 @@
                             <asp:BoundColumn DataField="ItemRefCode" HeaderText="<%$ Resources:pages,ItemRefCode %>"></asp:BoundColumn>
                             <asp:BoundColumn DataField="ItemNameEn" HeaderText="<%$ Resources:pages,ItemNameAr %>"></asp:BoundColumn>
                             <asp:BoundColumn DataField="D_QtyUnitTitleAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
-                            <asp:BoundColumn DataField="EstimatedUnitCost" HeaderText="<%$ Resources:pages,LastPrice %>">
+                           <%-- <asp:BoundColumn DataField="EstimatedUnitCost" HeaderText="<%$ Resources:pages,LastPrice %>">
                                 <ItemStyle HorizontalAlign="Center" />
-                            </asp:BoundColumn>
+                            </asp:BoundColumn>--%>
                             <asp:BoundColumn DataField="MinQty" HeaderText="<%$ Resources:pages,MinQty %>">
                                 <ItemStyle HorizontalAlign="Center" />
 

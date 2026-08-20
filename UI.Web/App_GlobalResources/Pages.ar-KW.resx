@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddItem" xml:space="preserve">
-    <value>إضافة المادة</value>
+    <value>إضافة الصنف</value>
   </data>
   <data name="AddNewRecord" xml:space="preserve">
     <value>إضافة جديد</value>
@@ -625,7 +625,7 @@
     <value>السعر المعتمد</value>
   </data>
   <data name="MinQty" xml:space="preserve">
-    <value>اقل كمية بالمخزن</value>
+    <value>حد نفاذ الكمية</value>
   </data>
   <data name="Mobile" xml:space="preserve">
     <value>موبيل</value>
@@ -925,7 +925,7 @@
     <value>حفظ البيانات</value>
   </data>
   <data name="SubmitAddItems" xml:space="preserve">
-    <value>حفظ وإضافة المواد</value>
+    <value>حفظ وإضافة الاصناف</value>
   </data>
   <data name="suppliers" xml:space="preserve">
     <value>الجهة الموردة</value>
@@ -1056,11 +1056,26 @@
   <data name="AssetsRooms" xml:space="preserve">
     <value>سجل عهد الغرف</value>
   </data>
+  <data name="RoomName" xml:space="preserve">
+    <value>أسم الغرفة</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>الكود</value>
+  </data>
+  <data name="Countable" xml:space="preserve">
+    <value>نثري</value>
+  </data>
+  <data name="DisplayItems" xml:space="preserve">
+    <value>عرض الاصناف</value>
+  </data>
+  <data name="InventoryItems" xml:space="preserve">
+    <value>أصناف المخزن</value>
+  </data>
+  <data name="SerialNo" xml:space="preserve">
+    <value>السيريال</value>
+  </data>
   <data name="ActionDate" xml:space="preserve">
     <value>تاريخ العملية</value>
-  </data>
-  <data name="InboundList1" xml:space="preserve">
-    <value>قائمة طلبات التوريد</value>
   </data>
   <data name="LastStatusLastStatus" xml:space="preserve">
     <value>حالة الطلب</value>
@@ -1080,10 +1095,7 @@
   <data name="OutboundOperations1" xml:space="preserve">
     <value>تسجيل إذن صرف</value>
   </data>
-  <data name="RoomName" xml:space="preserve">
-    <value>أسم الغرفة</value>
-  </data>
-  <data name="Code" xml:space="preserve">
-    <value>الكود</value>
+  <data name="CurrentQty" xml:space="preserve">
+    <value>الكمية الحالية</value>
   </data>
 </root>

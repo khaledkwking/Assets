@@ -17,6 +17,7 @@ LoadContents = function () {
 };
 function handelSelectedNode(nodeId) {
     console.log(nodeId);
+
     $.ajax({
         url: "/api/hepler/GetEmployeeHierarhcy",
         dataType: "json",

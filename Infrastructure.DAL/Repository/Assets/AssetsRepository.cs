@@ -36,6 +36,44 @@ namespace Infrastructure.DAL
             }
         }
 
+
+        public List<view_ItemsStock> GetInventoryItems(string _FilterPartOfName, int CategoryId, int Qunit, string RefCode, int InvCode)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.view_ItemsStock
+                     where 1 == 1
+                    && (!_FilterPartOfName.Equals("") ? obj.ItemNameEn.Contains(_FilterPartOfName) 
+                        || obj.ItemNameAr.Contains(_FilterPartOfName)
+                        || obj.ItemFinanceCode == _FilterPartOfName 
+                        || obj.ItemQrCode == _FilterPartOfName 
+                        || obj.ItemRFID == _FilterPartOfName
+                        || obj.Item_BarCode == _FilterPartOfName
+                        || obj.Item_Serial == _FilterPartOfName
+                        : true)
+                    && (CategoryId != 0 ? obj.ItemCategoryId == CategoryId : true)
+                    && (InvCode != 0 ? obj.ToLocationId == InvCode : true)
+                    && (!RefCode.Equals("") ? (obj.Item_BarCode == RefCode || obj.ItemFinanceCode == RefCode || obj.ItemQrCode == RefCode || obj.ItemRFID == RefCode) : true)
+                     select obj);
+                return result.ToList<view_ItemsStock>();
+            }
+        }
+        public view_ItemsStock GetInventoryItemById(int StockId)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.view_ItemsStock
+                     where 1 == 1
+                   
+                    && (StockId != 0 ? obj.Code == StockId : true)                  
+                     select obj);
+                return result.ToList<view_ItemsStock>().FirstOrDefault();
+            }
+        }
+
+
         public IList<view_AssetsList> getAssetsList(string inboundSerial, DateTime TransactionDatFrom, DateTime TransactionDatTo,
             int vendorCode, int LastStatusId, int LastActionId, int ItemCategoryId, int ItemCode, int EmprefCode, int targetLocation)
         {
@@ -61,7 +99,7 @@ namespace Infrastructure.DAL
             }
         }
 
-        public List<view_CustodyList> getAssetReceiptbyRequestCode(int headerCode, int EmprefCode)
+        public List<view_CustodyList> getAssetReceiptbyRequestCode(long headerCode, int EmprefCode)
         {
             using (var DC = new AssetsEntitiesNew())
             {
@@ -75,21 +113,21 @@ namespace Infrastructure.DAL
                 return result.ToList<view_CustodyList>();
             }
         }
-        public List<view_CustodyList> getAssetReceiptbyHeaderIds(int[] nodeIds)
+        public List<view_CustodyList> getAssetReceiptbyHeaderIds(long[] nodeIds)
         {
-      
-                using (var DC = new AssetsEntitiesNew())
-                {
-                    var result =
-                        (from obj in DC.view_CustodyList
-                         where  (obj.RequestHeaderCode.HasValue) && nodeIds.Contains(obj.RequestHeaderCode.Value)
-                         
-                         select obj);
+            using (var DC = new AssetsEntitiesNew())
+            {
+                // Convert long array to list for SQL query
+                var nodeIdList = nodeIds.ToList();
 
-                    return result.ToList<view_CustodyList>();
-                }
+                // Filter at the database level using LINQ-to-Entities
+                // This will generate proper SQL with WHERE IN clause
+                var result = DC.view_CustodyList
+                    .Where(obj => obj.RequestHeaderCode.HasValue && nodeIdList.Contains(obj.RequestHeaderCode.Value))
+                    .ToList();
 
-           
+                return result;
+            }
         }
 
         public List<view_AssetsList> getAssetReceipt(int EmprefCode, int targetLocation)
@@ -265,7 +303,7 @@ namespace Infrastructure.DAL
 
         #region "Assets Acting Tracking"
 
-        public AssetsEventTracking getTrackingDetails(int TrackingId)
+        public AssetsEventTracking getTrackingDetails(long TrackingId)
         {
             using (var DC = new AssetsEntitiesNew())
             {
@@ -495,7 +533,7 @@ namespace Infrastructure.DAL
             && (empRef != 0 ? obj.EmpRefCode == empRef : true)
             && (OrgRefCode != 0 ? obj.OrgChartRefCode == OrgRefCode : true)
             && (string.IsNullOrEmpty(itemNameAr) ||
-                DC.view_CustodyList.Any(c => c.RequestHeaderCode == obj.Code && c.ItemNameAr.Contains(itemNameAr)))
+                DC.view_CustodyList.Any(c => c.RequestHeaderCode == (long?)obj.Code && c.ItemNameAr.Contains(itemNameAr)))
         select obj; // ← هذه ضرورية
 
 
@@ -635,7 +673,7 @@ namespace Infrastructure.DAL
             }
         }
 
-        public IList<view_CustodyList> getRequestAssets(int requestCode)
+        public IList<view_CustodyList> getRequestAssets(long requestCode)
         {
             using (var DC = new AssetsEntitiesNew())
             {
@@ -783,7 +821,7 @@ namespace Infrastructure.DAL
             }
         }
 
-        public List<view_CustodyList> getCustodyList(int RequestHeaderCode, int ToLocationId, int EmpRefCode)
+        public List<view_CustodyList> getCustodyList(long RequestHeaderCode, int ToLocationId, int EmpRefCode)
         {
             using (var DC = new AssetsEntitiesNew())
             {
@@ -799,7 +837,7 @@ namespace Infrastructure.DAL
             }
         }
 
-        public List<view_CustodyList> getCustodyListByMasterData(int RequestHeaderCode, int ToLocationId, int EmpRefCode)
+        public List<view_CustodyList> getCustodyListByMasterData(long RequestHeaderCode, int ToLocationId, int EmpRefCode)
         {
             bool filter = true;
             if (RequestHeaderCode == 0 && ToLocationId == 0 && EmpRefCode == 0)
@@ -811,15 +849,15 @@ namespace Infrastructure.DAL
                 var result =
                     (from obj in DC.view_CustodyList
                      where filter
-                    && (EmpRefCode != 0 ? obj.EmpRefCode == EmpRefCode : true)
-                    && (ToLocationId != 0 ? obj.ToLocationId == ToLocationId : true)
-                    && (RequestHeaderCode != 0 ? obj.RequestHeaderCode == RequestHeaderCode : true)
+                    && (EmpRefCode != 0 ? obj.EmpRefCode == (int?)EmpRefCode : true)
+                    && (ToLocationId != 0 ? obj.ToLocationId == (int?)ToLocationId : true)
+                    && (RequestHeaderCode != 0 ? obj.RequestHeaderCode == (long?)RequestHeaderCode : true)
                      select obj);
 
                 return result.ToList<view_CustodyList>();
             }
         }
-        public List<view_CustodyListTransfer> getCustodyListByAssets(List<int?> assetIds)
+        public List<view_CustodyListTransfer> getCustodyListByAssets(List<long?> assetIds)
         {
             if (assetIds == null || assetIds.Count == 0)
             {

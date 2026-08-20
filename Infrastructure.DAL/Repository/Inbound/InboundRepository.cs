@@ -211,6 +211,24 @@ namespace Infrastructure.DAL
             }
         }
 
+        /// <summary>
+        /// Get items available in a specific location (store)
+        /// </summary>
+        public List<view_ItemCard> fillItemsByLocation(int locationId)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from tracking in DC.AssetsEventTrackings
+                     join item in DC.view_ItemCard on tracking.AssetCode equals item.Code
+                     where tracking.ToLocationId == locationId
+                     group item by item.Code into grp
+                     select grp.FirstOrDefault())
+                    .ToList();
+
+                return result;
+            }
+        }
 
         public List<view_inboubdItems> FillInboundItems(int InboundCode)
         {
@@ -571,6 +589,50 @@ namespace Infrastructure.DAL
         }
 
 
+        #endregion
+
+        #region "Asset Validation"
+        /// <summary>
+        /// Check if an asset exists in AssetsEventTracking by AssetCode and ToLocationId
+        /// </summary>
+        public AssetsEventTracking CheckAssetInEventTracking(long assetCode, int toLocationId)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                var result =
+                    (from obj in DC.AssetsEventTrackings
+                     where obj.AssetCode == assetCode
+                     && obj.ToLocationId == toLocationId
+                     select obj).FirstOrDefault();
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Check if barcode or serial already exists in the same location (ToLocationId)
+        /// Returns the existing AssetsEventTracking if found, null otherwise
+        /// </summary>
+        public AssetsEventTracking CheckBarcodeOrSerialInLocation(string barcode, string serial, int toLocationId)
+        {
+            using (var DC = new AssetsEntitiesNew())
+            {
+                // Only check if both barcode and serial are not empty
+                if (string.IsNullOrEmpty(barcode) && string.IsNullOrEmpty(serial))
+                {
+                    return null; // No validation needed if both are empty
+                }
+
+                var result =
+                    (from obj in DC.AssetsEventTrackings
+                     where obj.ToLocationId == toLocationId
+                     && ((!string.IsNullOrEmpty(barcode) && obj.Item_BarCode == barcode)
+                         || (!string.IsNullOrEmpty(serial) && obj.Item_Serial == serial))
+                     select obj).FirstOrDefault();
+
+                return result;
+            }
+        }
         #endregion
 
         #endregion

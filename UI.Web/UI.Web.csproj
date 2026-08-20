@@ -233,6 +233,7 @@
     <Content Include="Modules\StoreOperations\Forms\Inboud\InboundList.aspx" />
     <Content Include="Modules\StoreOperations\Forms\Inboud\InboundOperrations.aspx" />
     <Content Include="Modules\StoreOperations\Forms\Inboud\ManageStoreRequest.aspx" />
+    <Content Include="Modules\StoreOperations\Forms\Inventory\InventoryItemsList.aspx" />
     <Content Include="Modules\StoreOperations\Forms\Outbound\OutboundList.aspx" />
     <Content Include="Modules\StoreOperations\Forms\Outbound\OutboundOperations.aspx" />
     <Content Include="Web.config">
@@ -686,6 +687,13 @@
     </Compile>
     <Compile Include="Modules\StoreOperations\Forms\Inboud\ManageStoreRequest.aspx.designer.cs">
       <DependentUpon>ManageStoreRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\StoreOperations\Forms\Inventory\InventoryItemsList.aspx.cs">
+      <DependentUpon>InventoryItemsList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\StoreOperations\Forms\Inventory\InventoryItemsList.aspx.designer.cs">
+      <DependentUpon>InventoryItemsList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\StoreOperations\Forms\Outbound\OutboundList.aspx.cs">
       <DependentUpon>OutboundList.aspx</DependentUpon>

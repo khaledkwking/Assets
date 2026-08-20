@@ -121,7 +121,7 @@
     <value>Active</value>
   </data>
   <data name="AddItem" xml:space="preserve">
-    <value>AddItem</value>
+    <value>إضافة الصنف</value>
   </data>
   <data name="AddNewRecord" xml:space="preserve">
     <value>إضافة جديد</value>
@@ -292,7 +292,7 @@
     <value>تسليم الاصناف</value>
   </data>
   <data name="DeliverItemsListReport" xml:space="preserve">
-    <value>DeliverItemsListReport</value>
+    <value>تقرير سندات الصرف</value>
   </data>
   <data name="DeliverOperations" xml:space="preserve">
     <value>عمليات التسليم</value>
@@ -361,7 +361,7 @@
     <value>وحدات القياس</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value />
+    <value>تعديل البيانات</value>
   </data>
   <data name="editData" xml:space="preserve">
     <value>تعديل البيانات</value>
@@ -556,7 +556,7 @@
     <value>ItemsCategory</value>
   </data>
   <data name="ItemsList" xml:space="preserve">
-    <value>ItemsList</value>
+    <value>قائمة المواد</value>
   </data>
   <data name="ItemsQuantity" xml:space="preserve">
     <value>وحدات قياس المنتجات</value>
@@ -820,7 +820,7 @@
     <value>إستلام البضائع</value>
   </data>
   <data name="ReceivingItemsListReport" xml:space="preserve">
-    <value>ReceivingItemsListReport</value>
+    <value>تقرير سندات الاستلام</value>
   </data>
   <data name="ReceivingList" xml:space="preserve">
     <value>قائمة طلبات الإستلام</value>
@@ -940,7 +940,7 @@
     <value>حفظ البيانات</value>
   </data>
   <data name="SubmitAddItems" xml:space="preserve">
-    <value>Submit &amp; Add Items</value>
+    <value>حفظ وإضافة الاصناف</value>
   </data>
   <data name="suppliers" xml:space="preserve">
     <value>الجهة الموردة</value>
@@ -1079,5 +1079,23 @@
   </data>
   <data name="Code" xml:space="preserve">
     <value>الكود</value>
+  </data>
+  <data name="Countable" xml:space="preserve">
+    <value>نثري</value>
+  </data>
+  <data name="DisplayItems" xml:space="preserve">
+    <value>عرض الاصناف</value>
+    <comment>DisplayItems</comment>
+  </data>
+  <data name="InventoryItems" xml:space="preserve">
+    <value>أصناف المخزن</value>
+    <comment>أصناف المخزن</comment>
+  </data>
+  <data name="SerialNo" xml:space="preserve">
+    <value>السيريال</value>
+    <comment>SerialNo</comment>
+  </data>
+  <data name="CurrentQty" xml:space="preserve">
+    <value>الكمية الحالية</value>
   </data>
 </root>

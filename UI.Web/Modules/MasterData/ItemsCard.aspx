@@ -66,7 +66,7 @@
             }
 
         }
-        $(document).ready(function () {
+<%--        $(document).ready(function () {
           
             var civilIdInput = $('#<%= txtPrice.ClientID %>');
 
@@ -86,7 +86,7 @@
                  }
              });
 
-         });
+         });--%>
     </script>
 
 
@@ -155,13 +155,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-md-12 control-label" for=""><%=GetGlobalResourceObject("pages","QUnitCode") %> </label>
-                                <div class="col-md-12">
-                                    <asp:DropDownList ID="lstQunit" runat="server" class="form-control"></asp:DropDownList>
-                                </div>
-                            </div>
-
+                          
 
 
 
@@ -194,13 +188,28 @@
                                     <asp:TextBox runat="server" ID="txtItemNameAr" class="form-control"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="form-group">
+                              <div class="form-group">
+                                  <label class="col-md-12 control-label" for=""><%=GetGlobalResourceObject("pages","QUnitCode") %> </label>
+                                  <div class="col-md-12">
+                                      <asp:DropDownList ID="lstQunit" runat="server" class="form-control"></asp:DropDownList>
+                                  </div>
+                              </div>
+
+                          <div class="form-group">
+
+                             <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","Active") %>  </label>
+
+                             <div class="col-md-12">
+                                 <asp:CheckBox ID="chkisactive" runat="server" class=" " ClientIDMode="Static" />
+                             </div>
+                         </div>
+                            <%--<div class="form-group">
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","MinQty") %></label>
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtMinQty" class="form-control"></asp:TextBox>
                                 </div>
-                            </div>
-                            <div class="form-group">
+                            </div>--%>
+                           <%-- <div class="form-group">
                                 <label class="control-label" for="">تاريخ التشغيل</label>
 
                                 <div class="form-control-wrap">
@@ -210,7 +219,7 @@
                                     <asp:TextBox runat="server" ID="txtItemDate"  placeholder="__/__/____" class="form-control date-pickers"></asp:TextBox>
 
                                 </div>
-                            </div>
+                            </div>--%>
                         </div>
                         <div class="col-md-4">
 
@@ -228,13 +237,20 @@
                                     <asp:TextBox runat="server" ID="txtItemDescAr" TextMode="MultiLine" class="form-control"></asp:TextBox>
                                 </div>
                             </div>
+                             <div class="form-group">
 
-                            <div class="form-group" style="display: none">
+                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","Countable") %>  </label>
+
+                                <div class="col-md-12">
+                                    <asp:CheckBox ID="chkCountableFlag" runat="server" class=" " ClientIDMode="Static" />
+                                </div>
+                            </div>
+                            <%--<div class="form-group" style="display: none">
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ScrapPeriod") %></label>
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtScrapPeriod" class="form-control"></asp:TextBox>
                                 </div>
-                            </div>
+                            </div>--%>
                             <div class="form-group" style="display: none">
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ScrapAmount") %></label>
                                 <div class="col-md-12">
@@ -247,19 +263,13 @@
                                      <asp:TextBox runat="server" ID="TextBox1" class="form-control"></asp:TextBox>
                                  </div>
                              </div>
-                              <div class="form-group">
+                             <%-- <div class="form-group">
                                   <label class="col-md-12 control-label" for="">السعر</label>
                                   <div class="col-md-12">
                                       <asp:TextBox runat="server" ID="txtPrice" class="form-control"></asp:TextBox>
                                   </div>
-                              </div>
-                            <div class="form-group">
-                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","Active") %>  </label>
-
-                                <div class="col-md-12">
-                                    <asp:CheckBox ID="chkisactive" runat="server" class=" " ClientIDMode="Static" />
-                                </div>
-                            </div>
+                              </div>--%>
+                           
 
 
                         </div>
@@ -408,9 +418,9 @@
                             <asp:BoundColumn DataField="ItemRefCode" HeaderText="<%$ Resources:pages,ItemRefCode %>"></asp:BoundColumn>
                             <asp:BoundColumn DataField="ItemNameEn" HeaderText="<%$ Resources:pages,ItemNameAr %>"></asp:BoundColumn>
                             <asp:BoundColumn DataField="D_QtyUnitTitleAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
-                            <asp:BoundColumn DataField="EstimatedUnitCost" HeaderText="<%$ Resources:pages,LastPrice %>">
+                          <%--  <asp:BoundColumn DataField="EstimatedUnitCost" HeaderText="<%$ Resources:pages,LastPrice %>">
                                 <ItemStyle HorizontalAlign="Center" />
-                            </asp:BoundColumn>
+                            </asp:BoundColumn>--%>
 
                             <%--                            <asp:BoundColumn DataField="ItemFinanceCode" HeaderText="<%$ Resources:pages,ItemFinanceCode %>"></asp:BoundColumn>--%>
                             <asp:BoundColumn DataField="MinQty" HeaderText="<%$ Resources:pages,MinQty %>">

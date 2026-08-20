@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AddItem.
+        ///   Looks up a localized string similar to إضافة الصنف.
         /// </summary>
         internal static string AddItem {
             get {
@@ -331,6 +331,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to نثري.
+        /// </summary>
+        internal static string Countable {
+            get {
+                return ResourceManager.GetString("Countable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to الدوله.
         /// </summary>
         internal static string Country {
@@ -354,6 +363,15 @@ namespace Resources {
         internal static string Currency {
             get {
                 return ResourceManager.GetString("Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الكمية الحالية.
+        /// </summary>
+        internal static string CurrentQty {
+            get {
+                return ResourceManager.GetString("CurrentQty", resourceCulture);
             }
         }
         
@@ -610,7 +628,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DeliverItemsListReport.
+        ///   Looks up a localized string similar to تقرير سندات الصرف.
         /// </summary>
         internal static string DeliverItemsListReport {
             get {
@@ -727,6 +745,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عرض الاصناف.
+        /// </summary>
+        internal static string DisplayItems {
+            get {
+                return ResourceManager.GetString("DisplayItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to اسم السائق.
         /// </summary>
         internal static string DriverName {
@@ -817,7 +844,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to تعديل البيانات.
         /// </summary>
         internal static string Edit {
             get {
@@ -1267,6 +1294,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to أصناف المخزن.
+        /// </summary>
+        internal static string InventoryItems {
+            get {
+                return ResourceManager.GetString("InventoryItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IsOperation.
         /// </summary>
         internal static string IsOperation {
@@ -1411,7 +1447,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ItemsList.
+        ///   Looks up a localized string similar to قائمة المواد.
         /// </summary>
         internal static string ItemsList {
             get {
@@ -2239,7 +2275,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ReceivingItemsListReport.
+        ///   Looks up a localized string similar to تقرير سندات الاستلام.
         /// </summary>
         internal static string ReceivingItemsListReport {
             get {
@@ -2518,6 +2554,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to السيريال.
+        /// </summary>
+        internal static string SerialNo {
+            get {
+                return ResourceManager.GetString("SerialNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to الحالة.
         /// </summary>
         internal static string Status {
@@ -2653,7 +2698,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submit &amp; Add Items.
+        ///   Looks up a localized string similar to حفظ وإضافة الاصناف.
         /// </summary>
         internal static string SubmitAddItems {
             get {

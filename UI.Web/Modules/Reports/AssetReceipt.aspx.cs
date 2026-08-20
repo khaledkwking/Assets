@@ -409,7 +409,10 @@ namespace UI.Web.Modules.WHM.Forms
                             .Select(x => x.Code)
                             .ToArray();
 
-                        var objList = objRepository.getAssetReceiptbyHeaderIds(HeaderIds);
+                        // Convert int array to long array for the repository method
+                        long[] longHeaderIds = HeaderIds.Select(x => (long)x).ToArray();
+
+                        var objList = objRepository.getAssetReceiptbyHeaderIds(longHeaderIds);
                         if (objList != null && objList.Count > 0)
                         {
                             var expandedList = new List<view_CustodyList>();

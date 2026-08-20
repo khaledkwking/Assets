@@ -20,6 +20,13 @@ namespace Infrastructure.DAL.Model.DB
         public string Notes { get; set; }
         public Nullable<int> AttachmentTypCode { get; set; }
         public Nullable<System.DateTime> TransDate { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> UpdateOn { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         public virtual D_AttachmentType D_AttachmentType { get; set; }
         public virtual Inbound Inbound { get; set; }

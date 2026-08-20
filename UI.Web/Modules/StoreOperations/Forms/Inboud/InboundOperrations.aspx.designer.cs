@@ -69,6 +69,15 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
         protected global::System.Web.UI.WebControls.Label lblerror;
 
         /// <summary>
+        /// lstTargetLocationCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lstTargetLocationCode;
+
+        /// <summary>
         /// divVendor control.
         /// </summary>
         /// <remarks>
@@ -105,15 +114,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
         protected global::System.Web.UI.WebControls.TextBox txtSerial;
 
         /// <summary>
-        /// txtTransDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTransDate;
-
-        /// <summary>
         /// divOwnerLocation control.
         /// </summary>
         /// <remarks>
@@ -132,15 +132,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
         protected global::System.Web.UI.WebControls.DropDownList lstOwnerLocationCode;
 
         /// <summary>
-        /// lstTargetLocationCode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList lstTargetLocationCode;
-
-        /// <summary>
         /// txtRefNo control.
         /// </summary>
         /// <remarks>
@@ -157,6 +148,15 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRefDate;
+
+        /// <summary>
+        /// txtTransDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTransDate;
 
         /// <summary>
         /// txtDeliveryOrderNo control.
@@ -240,13 +240,31 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
         protected global::System.Web.UI.WebControls.DropDownList lstPurchaseItems;
 
         /// <summary>
-        /// txtTagId control.
+        /// chkCountableFlag control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTagId;
+        protected global::System.Web.UI.WebControls.CheckBox chkCountableFlag;
+
+        /// <summary>
+        /// txtBarCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBarCode;
+
+        /// <summary>
+        /// txtSerialNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSerialNo;
 
         /// <summary>
         /// txtQty control.
@@ -256,6 +274,15 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtQty;
+
+        /// <summary>
+        /// txtTagId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTagId;
 
         /// <summary>
         /// txtUnitCost control.
@@ -292,15 +319,6 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtexpireyDate;
-
-        /// <summary>
-        /// txtGoodNotes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtGoodNotes;
 
         /// <summary>
         /// lnkSaveItems control.

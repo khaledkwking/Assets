@@ -636,7 +636,7 @@ namespace UI.Web.Modules.Assets
 
                     var newItem = new view_CustodyList();
                     newItem.ItemCode = itemobj.Code;
-                    newItem.EstimatedUnitCost = itemobj.EstimatedUnitCost.Value;
+                    //newItem.EstimatedUnitCost = itemobj.EstimatedUnitCost.Value;
                     newItem.ItemRefCode = itemobj.ItemRefCode;
                     newItem.ItemNameAr = itemobj.ItemNameAr;
                     newItem.ItemNameEn = itemobj.ItemNameEn;

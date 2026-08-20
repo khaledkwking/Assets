@@ -26,7 +26,7 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> UnitStatus { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> ExpireDate { get; set; }
-        public Nullable<int> LastEventTrackingId { get; set; }
+        public Nullable<long> LastEventTrackingId { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
@@ -34,6 +34,12 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
+        public string Item_BarCode { get; set; }
+        public string Serial { get; set; }
+        public Nullable<bool> CountableFlag { get; set; }
+        public string Item_RFID { get; set; }
+        public Nullable<double> InStoreQty { get; set; }
+        public Nullable<System.DateTime> ExpiredDate { get; set; }
     
         public virtual D_ItemUsedStatus D_ItemUsedStatus { get; set; }
         public virtual D_ItemCard D_ItemCard { get; set; }

@@ -16,6 +16,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
     {
         #region "Page Members"
         public InboundRepository objRepository = IoC.Resolve<InboundRepository>();
+        public AssetsRepository assetsRepository = IoC.Resolve<AssetsRepository>();
         public string _PageTitle = Resources.Pages.InboundOperations;
 
         #endregion
@@ -245,7 +246,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
             ViewState["inboundItemID"] = "0";
             txtTagId.Text = "";
             txtexpireyDate.Text = "";
-            txtGoodNotes.Text = "";
+            //txtGoodNotes.Text = "";
              txtQty.Text = "0";
             txtUnitCost.Text = "0";
             lstPurchaseItems.SelectedValue = "0";
@@ -253,12 +254,14 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
             //divinboundItemsAdd.Visible = false;
             //DivinboundItemsShow.Visible = true;
         }
-        private void SaveItemInformation()
+        private bool SaveItemInformation()
         {
+            bool ret= true;
 
             string script = "";
             try
             {
+
                 AssetsItemUnit obj = new AssetsItemUnit();
                 if (gets(ViewState["inboundItemID"]).Equals("0"))
                 {//Save
@@ -267,23 +270,91 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
 
                     if (objPurchaseItem != null)
                     {
+                        // Get the target location ID from the inbound master
+                        var inboundMaster = objRepository.FillDetails(ZeroIntergerIFNull(ViewState["itemID"].ToString()));
+                        if (inboundMaster == null)
+                        {
+                            script = FormatpopupErrorMSG("خطأ: لم يتم العثور على بيانات الاستيراد الرئيسية.", "1");
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                            return false;
+                        }
+
+                        int toLocationId = inboundMaster.TargetLocationCode.HasValue ? inboundMaster.TargetLocationCode.Value : 0;
+
+                        // Validate CountableFlag requirement
+                        if (objPurchaseItem.CountableFlag == true) // لو العنصر نثري
+                        {
+                            // Check if the asset exists in AssetsEventTracking
+                            AssetsEventTracking assetExists = objRepository.CheckAssetInEventTracking(objPurchaseItem.Code, toLocationId);
+
+                            if (assetExists == null)
+                            {
+                                script = FormatpopupErrorMSG("هذا الصنف الذي يتم توريده لم يتم العثور عليه في المخزن المختار. يرجى التحقق من رمز الأصل والموقع المستهدف.", "2");
+                                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                                return false;
+                            }
+                            else
+                            {
+                                obj.LastEventTrackingId = assetExists.Code;
+                                obj.InStoreQty = assetExists.Qty;
+                            }
+
+                        }
+                        else
+                        {
+                            // For non-countable items, check if barcode or serial already exists in the same location
+                            // Only check if at least one of them is provided (not empty)
+                            string barcode = txtBarCode.Text.Trim();
+                            string serial = txtSerialNo.Text.Trim();
+
+                            if (!string.IsNullOrEmpty(barcode) || !string.IsNullOrEmpty(serial))
+                            {
+                                AssetsEventTracking existingItem = objRepository.CheckBarcodeOrSerialInLocation(barcode, serial, toLocationId);
+
+                                if (existingItem != null)
+                                {
+                                    string duplicateInfo = "";
+                                    if (barcode == existingItem.Item_BarCode)
+                                        duplicateInfo = "الباركود: " + barcode;
+                                    if (serial == existingItem.Item_Serial)
+                                    {
+                                        if (!string.IsNullOrEmpty(duplicateInfo))
+                                            duplicateInfo += " و ";
+                                        duplicateInfo += "السيريال: " + serial;
+                                    }
+
+                                    script = FormatpopupErrorMSG("هذا العنصر موجود بالفعل في نفس المخزن. " + duplicateInfo, "2");
+                                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                                    return false;
+                                }
+                            }
+
+                            obj.InStoreQty = 1;
+
+                        }
+
                         obj.InboundCode = ZeroIntergerIFNull(ViewState["itemID"].ToString());
                         obj.ItemCode = objPurchaseItem.Code;
                         obj.QUnitCode = objPurchaseItem.QUnitCode;
                         obj.Qty = ZeroIFNull(txtQty.Text);
                         obj.EstimatedUnitCost = ZeroIFNull(txtUnitCost.Text);
                         obj.UnitStatus = ZeroIntergerIFNull(lstStatusCode.SelectedValue);
-                        obj.Notes = txtGoodNotes.Text;
+                        obj.Item_BarCode = txtBarCode.Text;
+                        obj.Serial = txtSerialNo.Text;
+                        obj.CountableFlag = objPurchaseItem.CountableFlag;
 
-                        if (txtexpireyDate.Text!="")
+                        //obj.Notes = txtGoodNotes.Text;
+
+                        if (txtexpireyDate.Text != "")
                         {
                             obj.ExpireDate = NullDateifEmpty(txtexpireyDate.Text);
                         }
-                        
+
                         obj.ItemTag = (txtTagId.Text);
                         obj.CreatedAt = DateTime.Now;
                         obj.CreatedBy = ZeroIntergerIFNull(gets(ReadSession("userid")));
                         objRepository.AddItemsUnit(obj);
+
 
                     }
 
@@ -292,41 +363,85 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
                 }
                 else
                 { //Update 
+
                     obj = objRepository.GetInboundItemDetails(ZeroIntergerIFNull(ViewState["inboundItemID"].ToString()));
+                    var objPurchaseItem = objRepository.getItemCardDetails(ZeroIntergerIFNull(lstPurchaseItems.SelectedValue));
 
-                    obj.InboundCode = ZeroIntergerIFNull(ViewState["itemID"].ToString());
-                    obj.QUnitCode = ZeroIntergerIFNull(lstQtyUnitCode.SelectedValue);
-                    obj.Qty = ZeroIFNull(txtQty.Text);
-                    obj.EstimatedUnitCost = ZeroIFNull(txtUnitCost.Text);
-                    obj.Notes = txtGoodNotes.Text;
-                    obj.UnitStatus = ZeroIntergerIFNull(lstStatusCode.SelectedValue);
-                    obj.ExpireDate = NullDateifEmpty(txtexpireyDate.Text);
-                    obj.ItemTag = (txtTagId.Text);
+                    if (objPurchaseItem != null)
+                    {
+                        // Validate CountableFlag requirement
+                        if (objPurchaseItem.CountableFlag == true) // لو العنصر نثري
+                        {
+                            // Get the target location ID from the inbound master
+                            var inboundMaster = objRepository.FillDetails(ZeroIntergerIFNull(ViewState["itemID"].ToString()));
+                            if (inboundMaster != null)
+                            {
+                                int toLocationId = inboundMaster.TargetLocationCode.HasValue ? inboundMaster.TargetLocationCode.Value : 0;
 
-                    obj.LastModifiedAt = DateTime.Now;
-                    obj.LastModifiedBy = ZeroIntergerIFNull(gets(ReadSession("userid")));
+                                // Check if the asset exists in AssetsEventTracking
+                                AssetsEventTracking assetExists = objRepository.CheckAssetInEventTracking(objPurchaseItem.Code, toLocationId);
 
-                    objRepository.UpdateItemunit(obj);
+                                if (assetExists == null)
+                                {
+                                    script = FormatpopupErrorMSG("هذا الصنف المحسوب لم يتم العثور عليه في السجلات. يرجى التحقق من رمز الأصل والموقع المستهدف.", "2");
+                                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                                    return false;
+                                }
+                                else
+                                {
+                                    obj.LastEventTrackingId = assetExists.Code;
+                                    obj.InStoreQty = assetExists.Qty;
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            obj.InStoreQty = 1;
+                        }
+
+                        obj.InboundCode = ZeroIntergerIFNull(ViewState["itemID"].ToString());
+                        obj.QUnitCode = ZeroIntergerIFNull(lstQtyUnitCode.SelectedValue);
+                        obj.Qty = ZeroIFNull(txtQty.Text);
+                        obj.EstimatedUnitCost = ZeroIFNull(txtUnitCost.Text);
+                        //obj.Notes = txtGoodNotes.Text;
+                        obj.UnitStatus = ZeroIntergerIFNull(lstStatusCode.SelectedValue);
+                        obj.ExpireDate = NullDateifEmpty(txtexpireyDate.Text);
+                        obj.ItemTag = (txtTagId.Text);
+                        obj.Item_BarCode = txtBarCode.Text;
+                        obj.Serial = txtSerialNo.Text;
+
+                        obj.LastModifiedAt = DateTime.Now;
+                        obj.LastModifiedBy = ZeroIntergerIFNull(GetUserID());// ZeroIntergerIFNull(gets(ReadSession("userid")));
+
+                        objRepository.UpdateItemunit(obj);
 
 
+                    }
                 }
+                if (ret)
+                {
+                    ClearItemForm();
 
-                ClearItemForm();
+                    FillInboundItems();
 
-                FillInboundItems();
-
-                script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                    script = FormatpopupErrorMSG(Resources.Alerts.DataSavedSuccessfully, "3");
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
+                }
+                else
+                {
+                    ret = false;
+                }
+                
 
             }
             catch (Exception ex)
             {
-
-
+                ret = false;
                 script = FormatpopupErrorMSG(Resources.Alerts.FailToSaveData + ex.Message.ToString(), "1");
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Updatepanel1", script, true);
             }
-
+            return ret;
         }
 
         private void FillInboundItems()
@@ -405,8 +520,30 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
 
                 if (objPurchaseItem != null)
                 {
+                    if (objPurchaseItem.QUnitCode != null)
+                    {
+                        lstQtyUnitCode.SelectedValue = objPurchaseItem.QUnitCode.ToString();
+                    }
+                    if (objPurchaseItem.CountableFlag != null)
+                    {
+                        if (objPurchaseItem.CountableFlag.Value == true) // فى حالة الصنف نثري
+                        {
+                            
+                            txtQty.ReadOnly = false;
+                            txtSerialNo.ReadOnly = true;
+                            txtBarCode.ReadOnly = true;
 
-                    lstQtyUnitCode.SelectedValue = objPurchaseItem.QUnitCode.ToString();
+
+                        }
+                        else// فى حالة الصنف غير نثري
+                        {
+                            txtQty.Text = "1";
+                            txtQty.ReadOnly = true;
+                           
+                        }
+                        chkCountableFlag.Checked = objPurchaseItem.CountableFlag.Value;
+
+                    }
 
 
                 }
@@ -424,9 +561,12 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
 
         protected void lnkSaveItems_Click(object sender, EventArgs e)
         {
-            SaveItemInformation();
-            ClearItemForm();
-            FillInboundItems();
+           bool ret= SaveItemInformation();
+           if (ret)
+           {
+                ClearItemForm();
+                FillInboundItems();
+           }
 
         }
 
@@ -444,7 +584,7 @@ namespace UI.Web.Modules.StoreOperations.Forms.Inboud.Inboud
                 txtQty.Text = gets(objList.Qty);
                 txtTagId.Text = gets(objList.ItemTag);
                 txtUnitCost.Text = gets(objList.EstimatedUnitCost);
-                txtGoodNotes.Text = gets(objList.Notes);
+                //txtGoodNotes.Text = gets(objList.Notes);
                      txtexpireyDate.Text = NullDateifEmptyText(objList.ExpireDate);
             }
 

@@ -47,5 +47,23 @@ namespace Infrastructure.DAL.Model.DB
         public Nullable<int> TargetLocationCode { get; set; }
         public string UnitNameAr { get; set; }
         public string UnitNameEn { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<System.DateTime> LastModifiedAt { get; set; }
+        public string Item_BarCode { get; set; }
+        public Nullable<bool> CountableFlag { get; set; }
+        public Nullable<double> InStoreQty { get; set; }
+        public string Item_RFID { get; set; }
+        public Nullable<System.DateTime> ExpiredDate { get; set; }
+        public string LocationNameEn { get; set; }
+        public string LocationNameAr { get; set; }
+        public Nullable<int> LocationType { get; set; }
+        public Nullable<int> OrgChartRefCode { get; set; }
+        public Nullable<double> CurrentQty { get; set; }
+        public string ItemSerial { get; set; }
     }
 }

@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UI.Web.Modules.MasterData
+namespace UI.Web.Modules.Inventory
 {
 
 
-    public partial class ItemsCard
+    public partial class InventoryItemsList
     {
 
         /// <summary>
@@ -51,13 +51,13 @@ namespace UI.Web.Modules.MasterData
         protected global::System.Web.UI.WebControls.Label lblerror;
 
         /// <summary>
-        /// lstCategory control.
+        /// txtCategoryName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList lstCategory;
+        protected global::System.Web.UI.WebControls.TextBox txtCategoryName;
 
         /// <summary>
         /// txtItemRefCode control.
@@ -69,15 +69,6 @@ namespace UI.Web.Modules.MasterData
         protected global::System.Web.UI.WebControls.TextBox txtItemRefCode;
 
         /// <summary>
-        /// txtItemRFIDCode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtItemRFIDCode;
-
-        /// <summary>
         /// txtItemFinanceCode control.
         /// </summary>
         /// <remarks>
@@ -87,22 +78,22 @@ namespace UI.Web.Modules.MasterData
         protected global::System.Web.UI.WebControls.TextBox txtItemFinanceCode;
 
         /// <summary>
-        /// lblimage control.
+        /// txtItemDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblimage;
+        protected global::System.Web.UI.WebControls.TextBox txtItemDate;
 
         /// <summary>
-        /// txtImage control.
+        /// txtItemRFIDCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload txtImage;
+        protected global::System.Web.UI.WebControls.TextBox txtItemRFIDCode;
 
         /// <summary>
         /// txtItemNameEn control.
@@ -123,67 +114,58 @@ namespace UI.Web.Modules.MasterData
         protected global::System.Web.UI.WebControls.TextBox txtItemNameAr;
 
         /// <summary>
-        /// lstQunit control.
+        /// txtUnitName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList lstQunit;
+        protected global::System.Web.UI.WebControls.TextBox txtUnitName;
 
         /// <summary>
-        /// chkisactive control.
+        /// txtMinQty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkisactive;
+        protected global::System.Web.UI.WebControls.TextBox txtMinQty;
 
         /// <summary>
-        /// txtItemDescEn control.
+        /// txtAge control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtItemDescEn;
+        protected global::System.Web.UI.WebControls.TextBox txtAge;
 
         /// <summary>
-        /// txtItemDescAr control.
+        /// txtPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtItemDescAr;
+        protected global::System.Web.UI.WebControls.TextBox txtPrice;
 
         /// <summary>
-        /// chkCountableFlag control.
+        /// txtQty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkCountableFlag;
+        protected global::System.Web.UI.WebControls.TextBox txtQty;
 
         /// <summary>
-        /// txtScrapAmount control.
+        /// txtBarcode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtScrapAmount;
-
-        /// <summary>
-        /// TextBox1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox txtBarcode;
 
         /// <summary>
         /// btnSave control.

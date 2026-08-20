@@ -1,12 +1,41 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Modules/_shared/Main.Master" AutoEventWireup="true" CodeBehind="InventoryList.aspx.cs" Inherits="UI.Web.Modules.MasterData.InventoryList" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Modules/_shared/Main.Master" AutoEventWireup="true" CodeBehind="InventoryItemsList.aspx.cs" Inherits="UI.Web.Modules.Inventory.InventoryItemsList" %>
 
 <%@ Register TagPrefix="cc1" Namespace="CutePager" Assembly="ASPnetPagerV2netfx2_0" %>
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+
+<!-- jQuery UI -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function () {
+          // Function to initialize the DatePicker
+          function initializeDatepicker() {
+              $(".date-pickers").datepicker({
+                  dateFormat: 'dd/mm/yy',   // Set the date format (optional)
+                  changeMonth: true,
+                  changeYear: true
+              });
+          }
+
+          // Initialize DatePicker when the page loads
+          initializeDatepicker();
+
+          // Reinitialize DatePicker after partial postbacks (AJAX)
+          Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+              initializeDatepicker();
+          });
+      });
+  </script>
     <script language="JavaScript" type="text/javascript">
-       <%-- function chkImage() {
+       
+        function chkImage() {
 
             var txt = document.getElementById("<%=txtItemNameEn.ClientID %>")
             if (txt.value == "") {
@@ -22,21 +51,42 @@
                 txt.focus();
                 return false;
             }
-            var txt = document.getElementById("<%=lstCategory.ClientID %>")
+            <%--var txt = document.getElementById("<%=lstCategory.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
                 Swal.fire("فضلا ، إختر التصنيف");
                 txt.focus();
                 return false;
-            }
+            }--%>
 
-            var txt = document.getElementById("<%=lstQunit.ClientID %>")
+           <%-- var txt = document.getElementById("<%=lstQunit.ClientID %>")
             if (txt.value == "" || txt.value == "0") {
                 Swal.fire("فضلا ، إختر ,وحدة القياس");
                 txt.focus();
                 return false;
-            }
+            }--%>
 
-        }--%>
+        }
+<%--        $(document).ready(function () {
+          
+            var civilIdInput = $('#<%= txtPrice.ClientID %>');
+
+             // Allow only digits and prevent more than 12 digits
+             civilIdInput.on('keypress', function (e) {
+                 var charCode = e.which ? e.which : e.keyCode;
+
+                 // Block non-digit characters
+                 if (charCode < 48 || charCode > 57) {
+                     e.preventDefault();
+                     return;
+                 }
+
+                 // Prevent input if already 12 digits
+                 if ($(this).val().length >= 12) {
+                     e.preventDefault();
+                 }
+             });
+
+         });--%>
     </script>
 
 
@@ -53,7 +103,7 @@
                 <h3 class="nk-block-title page-title"><%=_PageTitle %></h3>
                 <ul class="breadcrumb breadcrumb-arrow">
                     <li><i class="icon ni ni-home"></i>&nbsp;<a href="/admin/pages/home.aspx"><%=GetGlobalResourceObject("pages","home") %></a>&nbsp;&nbsp;<i class="icon ni ni-chevrons-left"></i>&nbsp;&nbsp;</li>
-                    <li class="active"><%=_PageTitle %></li>
+                    <li class="active"><a href="/Modules/MasterData/InventoryList.aspx"><%=_PageTitle %></a></li> -&nbsp;&nbsp; <li class="active"><%=_StoreName %></li> 
                 </ul>
             </div>
 
@@ -64,8 +114,8 @@
 
     <div class="nk-block">
 
-        <%--Add Sector to new row--%>
-     <%--   <div class="card card-bordered" id="tblAdd" runat="server" visible="false">
+
+        <div class="card card-bordered" id="tblAdd" runat="server" visible="false">
             <div class="card-header border-bottom">
                 <asp:Label runat="server" ID="lblSubTitle"><%=GetGlobalResourceObject("pages","AddNewRecord") %></asp:Label>
             </div>
@@ -79,43 +129,48 @@
                             <div class="form-group">
                                 <label class="col-md-12 control-label" for=""><%=GetGlobalResourceObject("pages","Category") %> </label>
                                 <div class="col-md-12">
-                                    <asp:DropDownList ID="lstCategory" runat="server" class="form-control form-select" data-search="on"></asp:DropDownList>
+                                  <%--  <asp:DropDownList ID="lstCategory" runat="server" class="form-control form-select" data-search="on"></asp:DropDownList>--%>
+                                      <asp:TextBox runat="server" ID="txtCategoryName" class="form-control" ReadOnly ="true" ></asp:TextBox>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemRefCode") %></label>
+                                <label class="col-md-12 control-label" for="">كود المادة / رقم بطاقة الأصل</label>
                                 <div class="col-md-12">
-                                    <asp:TextBox runat="server" ID="txtItemRefCode" class="form-control"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtItemRefCode" class="form-control" ReadOnly ="true"></asp:TextBox>
                                 </div>
                             </div>
 
 
 
-                            <div class="form-group" style="display: none">
-                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemRFIDCode") %></label>
-                                <div class="col-md-12">
-                                    <asp:TextBox runat="server" ID="txtItemRFIDCode" class="form-control"></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="form-group"  >
+                           
+                            <div class="form-group">
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemFinanceCode") %></label>
                                 <div class="col-md-12">
-                                    <asp:TextBox runat="server" ID="txtItemFinanceCode" class="form-control"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtItemFinanceCode" class="form-control" ReadOnly ="true"></asp:TextBox>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-12 control-label" for=""><%=GetGlobalResourceObject("pages","QUnitCode") %> </label>
-                                <div class="col-md-12">
-                                    <asp:DropDownList ID="lstQunit" runat="server" class="form-control"></asp:DropDownList>
-                                </div>
-                            </div>
+                              <label class="col-md-12 control-label" for="">تاريخ التشغيل</label>
+
+                              <div class="form-control-wrap">
+                                  <div class="form-icon form-icon-right">
+                                      <em class="icon ni ni-calendar-alt"></em>
+                                  </div>
+                                  <asp:TextBox runat="server" ID="txtItemDate"  placeholder="__/__/____" class="form-control date-pickers"></asp:TextBox>
+
+                              </div>
+                          </div>
+                                    <div class="form-group" >
+                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemRFIDCode") %></label>
+                                 <div class="col-md-12">
+                                     <asp:TextBox runat="server" ID="txtItemRFIDCode" class="form-control"></asp:TextBox>
+                                 </div>
+                             </div>
 
 
-
-
-                            <div class="form-group">
+                           <%-- <div class="form-group">
                                 <label class="col-md-12 control-label"><%= GetGlobalResourceObject("pages","ItemImage") %></label>
 
                                 <div class="col-md-12">
@@ -126,7 +181,7 @@
 
                                     </div>
                                 </div>
-                            </div>
+                            </div>--%>
 
                         </div>
                         <div class="col-md-4">
@@ -134,61 +189,97 @@
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemNameEn") %>  </label>
 
                                 <div class="col-md-12">
-                                    <asp:TextBox runat="server" ID="txtItemNameEn" class="form-control"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtItemNameEn" class="form-control" ReadOnly ="true"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemNameAr") %>  </label>
+                                <label class="col-md-12 control-label" for="">اسم المادة Ar </label>
 
                                 <div class="col-md-12">
-                                    <asp:TextBox runat="server" ID="txtItemNameAr" class="form-control"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtItemNameAr" class="form-control" ReadOnly ="true"></asp:TextBox>
                                 </div>
                             </div>
+                              <div class="form-group">
+                                  <label class="col-md-12 control-label" for=""><%=GetGlobalResourceObject("pages","QUnitCode") %> </label>
+                                  <div class="col-md-12">
+                                      <%--<asp:DropDownList ID="lstQunit" runat="server" class="form-control"></asp:DropDownList>--%>
+                                       <asp:TextBox runat="server" ID="txtUnitName" class="form-control" ReadOnly ="true"></asp:TextBox>
+                                  </div>
+                              </div>
+
+                         <%-- <div class="form-group">
+
+                             <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","Active") %>  </label>
+
+                             <div class="col-md-12">
+                                 <asp:CheckBox ID="chkisactive" runat="server" class=" " ClientIDMode="Static" />
+                             </div>
+                         </div>--%>
                             <div class="form-group">
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","MinQty") %></label>
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtMinQty" class="form-control"></asp:TextBox>
                                 </div>
                             </div>
-
+                          
                         </div>
                         <div class="col-md-4">
 
-                            <div class="form-group">
-                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","Store") %>  </label>
+                           <%-- <div class="form-group">
+                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemDescEn") %>  </label>
 
                                 <div class="col-md-12">
-                                    <asp:TextBox runat="server" ID="txtItemDescEn" TextMode="MultiLine" class="form-control"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtItemDescEn" TextMode="MultiLine" class="form-control" ReadOnly ="true"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ItemDescAr") %>  </label>
+                                <label class="col-md-12 control-label" for="">وصف المادة Ar  </label>
 
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtItemDescAr" TextMode="MultiLine" class="form-control"></asp:TextBox>
                                 </div>
-                            </div>
+                            </div>--%>
+                    <%--         <div class="form-group">
 
-                              <div class="form-group" style="display:none">
+                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","Countable") %>  </label>
+
+                                <div class="col-md-12">
+                                    <asp:CheckBox ID="chkCountableFlag" runat="server" class=" " ClientIDMode="Static" />
+                                </div>
+                            </div>--%>
+                            <div class="form-group" >
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ScrapPeriod") %></label>
                                 <div class="col-md-12">
-                                    <asp:TextBox runat="server" ID="txtScrapPeriod" class="form-control"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtAge" class="form-control"  ReadOnly ="true"></asp:TextBox>
                                 </div>
                             </div>
-                              <div class="form-group" style="display:none">
+                            <%--<div class="form-group" style="display: none">
                                 <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","ScrapAmount") %></label>
                                 <div class="col-md-12">
                                     <asp:TextBox runat="server" ID="txtScrapAmount" class="form-control"></asp:TextBox>
                                 </div>
+                            </div>--%>
+                          
+                              <div class="form-group">
+                                  <label class="col-md-12 control-label" for="">القيمة الشرائية</label>
+                                  <div class="col-md-12">
+                                      <asp:TextBox runat="server" ID="txtPrice" class="form-control"></asp:TextBox>
+                                  </div>
+                              </div>
+                           
+                                  <div class="form-group">
+                                 <label class="col-md-12 control-label" for="">الكمية</label>
+                                 <div class="col-md-12">
+                                     <asp:TextBox runat="server" ID="txtQty" class="form-control" ReadOnly ="true"></asp:TextBox>
+                                 </div>
+                           </div>
+                                 <div class="form-group">
+                            <label class="col-md-12 control-label" for="">الباركود</label>
+                            <div class="col-md-12">
+                                <asp:TextBox runat="server" ID="txtBarcode" class="form-control"></asp:TextBox>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-md-12 control-label" for=""><%= GetGlobalResourceObject("pages","Active") %>  </label>
-
-                                <div class="col-md-12">
-                                    <asp:CheckBox ID="chkisactive" runat="server" class=" " ClientIDMode="Static" />
-                                </div>
-                            </div>
+                        </div>
+                                        
                         </div>
                     </div>
                 </div>
@@ -201,13 +292,12 @@
                 </div>
 
             </div>
-        </div>--%>
+        </div>
 
 
 
         <div class="card card-stretch" id="tblshow" runat="server">
             <div class="card-inner-group">
-               <%-- advanced search--%>
                 <div class="card-inner" data-select2-id="22">
                     <div class="card-title-group" data-select2-id="21">
                         <div class="card-title">
@@ -239,11 +329,11 @@
                                                     <div class="col-12">
 
                                                         <div class="form-group">
-                                                            <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","LocationNameArabic") %></label>
-                                                            <asp:DropDownList ID="lstFilterlocation" runat="server" class="form-control form-select" data-search="on"></asp:DropDownList>
+                                                            <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","Category") %></label>
+                                                            <asp:DropDownList ID="lstFilterCategory" runat="server" class="form-control form-select" data-search="on"></asp:DropDownList>
                                                         </div>
                                                     </div>
-                                                   <%-- <div class="col-6">
+                                                    <div class="col-6">
                                                         <div class="form-group">
                                                             <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","QUnitCode") %> </label>
                                                             <asp:DropDownList ID="lstFilterQUnit" runat="server" class="form-control form-select" data-search="on"></asp:DropDownList>
@@ -254,7 +344,7 @@
                                                             <label class="overline-title overline-title-alt"><%=GetGlobalResourceObject("pages","ItemRefCode") %></label>
                                                             <asp:TextBox runat="server" ID="txtFilterCode" class="form-control"></asp:TextBox>
                                                         </div>
-                                                    </div>--%>
+                                                    </div>
 
 
 
@@ -269,7 +359,7 @@
                                         </div>
                                     </div>
                                 </li>
-                 <%--               <li>
+                                <li>
                                     <div class="dropdown">
                                         <a href="#" class="btn btn-trigger btn-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                             <em class="icon ni ni-setting"></em>
@@ -282,11 +372,11 @@
 
                                         </div>
                                     </div>
-                                </li>--%>
-                              <%--  <li>
+                                </li>
+                                <li>
                                     <asp:LinkButton runat="server" ID="btnNew" class="btn btn-icon btn-primary" OnClick="btnNew_Click"><em class="icon ni ni-plus"></em></asp:LinkButton>
 
-                                </li>--%>
+                                </li>
                             </ul>
                         </div>
                         <div class="card-search search-wrap" data-search="search">
@@ -306,7 +396,7 @@
                         <PagerStyle Visible="false" />
                         <Columns>
                             <asp:BoundColumn DataField="code" Visible="False"></asp:BoundColumn>
-                         <%--   <asp:TemplateColumn>
+                            <asp:TemplateColumn>
                                 <HeaderStyle Wrap="False" HorizontalAlign="Center" />
                                 <ItemStyle Width="2%" />
                                 <HeaderTemplate>
@@ -316,55 +406,83 @@
                                     <asp:CheckBox runat="server" ID="chkItem" CssClass="check" />
 
                                 </ItemTemplate>
-                            </asp:TemplateColumn>--%>
-                                                       
+                            </asp:TemplateColumn>
 
-                            
 
-                            <%--<asp:BoundColumn DataField="D_ItemsCategoryTitleAr" HeaderText="<%$ Resources:pages,Category %>"></asp:BoundColumn>--%>
-                            <asp:BoundColumn DataField="Code" HeaderText="<%$ Resources:pages,Code %>"></asp:BoundColumn>
-                            <asp:BoundColumn DataField="LocationNameAr" HeaderText="<%$ Resources:pages,Store %>"></asp:BoundColumn>
-                            <asp:BoundColumn DataField="ParentLocationNameAr" HeaderText="<%$ Resources:pages,ParentLocation %>"></asp:BoundColumn>
-                           
-                            
-                           
-                       
-
-                            <asp:TemplateColumn>
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle Width="2%" />
+                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,image %>">
+                                <ItemStyle Width="5%" />
                                 <ItemTemplate>
-                                    <div class="drodown">
-                                        <a href="#" class="btn btn-sm btn-icon btn-trigger dropdown-toggle" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <ul class="link-list-opt no-bdr">
-                                               <%-- <li>
-                                                    <asp:LinkButton runat="server" ID="lnkEdit" CommandName="Edit" class="btn btn-default btn-xs"><em class="icon ni ni-cards-fill"></em>
-                                                        <span> <%=GetGlobalResourceObject("pages","Edit") %></span>
-
-                                                    </asp:LinkButton></li>
-
-                                                <li>
-                                                    <a><em class="icon ni ni-histroy"></em><span><%=GetGlobalResourceObject("pages","DisplayItems") %></span> </a></li>--%>
-                                                                                              
-                                                <li>
-                                                <a href='<%# "../StoreOperations/Forms/Inventory/InventoryItemsList.aspx?InvCode="
-                                                    + Server.UrlEncode(Eval("Code").ToString())
-                                                    + "&LocationName="
-                                                    + Server.UrlEncode(Eval("LocationNameAr").ToString()) %>'>
-                                                    <em class="icon ni ni-package"></em>
-                                                    <span><%= GetGlobalResourceObject("pages", "DisplayItems") %></span>
-                                                </a>
-                                            </li>
-
-
-
-                                            </ul>
-                                        </div>
-                                    </div>
-
+                                    <%# gets(Eval("ItemImage")).Equals("") ? "<img src='" + Resources.Utilities.resourcespath +"uploads/no.png' height='20px' />": FillImage(gets(Eval("ItemImage")), Resources.Utilities.resourcespath+"uploads/ItemsData/", 35, 25,"")%>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
+
+                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,Category %>">
+                                <ItemTemplate>
+                                    <a href="ItemsCategory.aspx?id=<%#Eval("itemCategoryId") %>"><%#Eval("D_ItemsCategoryTitleAr") %></a>
+                                </ItemTemplate>
+                            </asp:TemplateColumn>
+
+                            <%--<asp:BoundColumn DataField="D_ItemsCategoryTitleAr" HeaderText="<%$ Resources:pages,Category %>"></asp:BoundColumn>--%>
+                            <asp:BoundColumn DataField="AssetCode" HeaderText="<%$ Resources:pages,ItemRefCode %>"></asp:BoundColumn>
+                            <asp:BoundColumn DataField="ItemNameEn" HeaderText="<%$ Resources:pages,ItemNameAr %>"></asp:BoundColumn>
+                            <asp:BoundColumn DataField="D_QtyUnitTitleAr" HeaderText="<%$ Resources:pages,QUnit %>"></asp:BoundColumn>
+                            <asp:BoundColumn DataField="RequestItemPrice" HeaderText="<%$ Resources:pages,LastPrice %>">
+                                <ItemStyle HorizontalAlign="Center" />
+                            </asp:BoundColumn>
+
+                            <%--                            <asp:BoundColumn DataField="ItemFinanceCode" HeaderText="<%$ Resources:pages,ItemFinanceCode %>"></asp:BoundColumn>--%>
+                            <asp:TemplateColumn HeaderText="<%$ Resources:pages,MinQty %>">
+                                <ItemStyle HorizontalAlign="Center" />
+                                <ItemTemplate>
+                                    <span style="<%# GetMinQtyStyle(Eval("Qty"), Eval("Item_Stock_Limit")) %>">
+                                        <%#Eval("Item_Stock_Limit") %>
+                                    </span>
+                                </ItemTemplate>
+                            </asp:TemplateColumn>
+                                 <asp:BoundColumn DataField="Item_BarCode" HeaderText="<%$ Resources:pages,ItemBarCode %>">
+                                 <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundColumn>
+                             <asp:BoundColumn DataField="Item_Serial" HeaderText="السيريال">
+                                 <ItemStyle HorizontalAlign="Center" />
+                             </asp:BoundColumn>
+                             <asp:TemplateColumn HeaderText="النوع">
+                                 <ItemStyle HorizontalAlign="Center" />
+                                 <ItemTemplate>
+                                     <%# GetCountableFlagDisplay(Eval("CountableFlag")) %>
+                                 </ItemTemplate>
+                             </asp:TemplateColumn>
+                             <asp:TemplateColumn HeaderText="تاريخ اخر توريد">
+                                 <ItemStyle HorizontalAlign="Center" />
+                                 <ItemTemplate>
+                                     <%# GetFormattedDate(Eval("ActionDate")) %>
+                                 </ItemTemplate>
+                             </asp:TemplateColumn>
+                           <%--  <asp:TemplateColumn HeaderText="<%$ Resources:pages,Active %>">
+                                 <ItemTemplate>
+                                     <%#ShowYesNo(getBool(Eval("IsActive")))%>
+                                 </ItemTemplate>
+                             </asp:TemplateColumn>--%>
+
+                             <asp:TemplateColumn>
+                                 <HeaderStyle HorizontalAlign="Center" />
+                                 <ItemStyle Width="2%" />
+                                 <ItemTemplate>
+                                     <div class="drodown">
+                                         <a href="#" class="btn btn-sm btn-icon btn-trigger dropdown-toggle" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                         <div class="dropdown-menu dropdown-menu-right">
+                                             <ul class="link-list-opt no-bdr">
+                                                 <li>
+                                                     <asp:LinkButton runat="server" ID="lnkEdit" CommandName="Edit" class="btn btn-default btn-xs"><em class="icon ni ni-cards-fill"></em><span> <%=GetGlobalResourceObject("pages","Edit") %></span> </asp:LinkButton></li>
+
+                                              <%--   <li>
+                                                     <a><em class="icon ni ni-histroy"></em><span><%=GetGlobalResourceObject("pages","ItemTracking") %></span> </a></li>--%>
+
+                                             </ul>
+                                         </div>
+                                     </div>
+
+                                 </ItemTemplate>
+                             </asp:TemplateColumn>
 
 
                         </Columns>

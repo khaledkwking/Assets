@@ -16,12 +16,12 @@ namespace Infrastructure.DAL.Model.DB
     {
         public int Id { get; set; }
         public Nullable<int> StoreId { get; set; }
-        public Nullable<int> AssetId { get; set; }
+        public Nullable<long> AssetId { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
     
-        public virtual Store Store { get; set; }
         public virtual AssetsEventTracking AssetsEventTracking { get; set; }
+        public virtual Store Store { get; set; }
     }
 }

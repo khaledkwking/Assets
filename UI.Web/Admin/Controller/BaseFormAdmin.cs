@@ -286,6 +286,7 @@ namespace UI.Web.Admin.Controller
             bar = (bar + id);
             return bar;
         }
+
         public object ReadSession(string sessionKey)
         {
             if (Session[sessionKey] == null)
